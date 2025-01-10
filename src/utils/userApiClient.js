@@ -132,7 +132,7 @@ const userApi = {
         try {
             const get_refreshToken = getRefreshToken();
             const get_userId = getUserId();
-            const response = await apiClient.post('user/refresh-token', { get_refreshToken, get_userId });
+            const response = await apiClient.post('users/refresh-token', { get_refreshToken, get_userId });
             const { accessToken, refreshToken } = response.data.data;
 
             if (accessToken && refreshToken) {
