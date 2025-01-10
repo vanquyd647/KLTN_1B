@@ -106,11 +106,11 @@ const userApi = {
     // Logout user
     logout: async () => {
         try {
-            const userId = getUserId(); // Retrieve the user ID
-            const refreshToken = getRefreshToken(); // Retrieve the refresh token
-            await apiClient.post('users/logout', { refreshToken, userId }); // Call the logout endpoint
-            setToken(null); // Clear the stored token
-            setRefreshToken(null); // Clear the stored refresh token
+            const userId = getUserId(); 
+            const refreshToken = getRefreshToken(); 
+            await apiClient.post('users/logout', { refreshToken, userId }); 
+            setToken(null); 
+            setRefreshToken(null); 
             return { message: 'Logout successful' };
         } catch (error) {
             throw error.response?.data || 'Đăng xuất thất bại';
@@ -121,7 +121,7 @@ const userApi = {
     getUserProfile: async () => {
         try {
             const response = await apiClient.get('users/profile');
-            return response.data;
+            return response.data.data;
         } catch (error) {
             throw error.response?.data || 'Không thể lấy thông tin người dùng';
         }
