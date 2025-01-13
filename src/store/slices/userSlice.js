@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import userApi from '../../utils/userApiClient';
+import { userApi } from '../../utils/apiClient.js';
 
 // Async actions
 export const registerUser = createAsyncThunk(

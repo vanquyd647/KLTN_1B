@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { registerUser, verifyOtp } from '../store/slices/userSlice';
+import { registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { useRouter } from 'next/router';
 
 export default function Register() {

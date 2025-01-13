@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { loginUser } from '../store/slices/userSlice';
+import { loginUser } from '../../store/slices/userSlice';
 import { useRouter } from 'next/router';
 
 export default function Login() {

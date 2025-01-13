@@ -151,4 +151,44 @@ const userApi = {
     }
 };
 
-export default userApi;
+// **Product API**
+const productApi = {
+    // Tạo sản phẩm mới
+    createProduct: async (productData) => {
+        const response = await apiClient.post('products/', productData);
+        return response.data;
+    },
+
+    // Lấy danh sách sản phẩm
+    getProducts: async () => {
+        const response = await apiClient.get('products/');
+        return response.data.data;
+    },
+
+    // Lấy chi tiết sản phẩm qua slug
+    getProductDetail: async (slug) => {
+        const response = await apiClient.get(`products/${slug}`);
+        return response.data.data;
+    },
+
+    // Cập nhật sản phẩm qua slug
+    updateProduct: async (slug, productData) => {
+        const response = await apiClient.put(`products/${slug}`, productData);
+        return response.data;
+    },
+
+    // Xóa sản phẩm qua slug
+    deleteProduct: async (slug) => {
+        const response = await apiClient.delete(`products/${slug}`);
+        return response.data;
+    },
+
+    // Lấy sản phẩm với phân trang
+    getProductsByPagination: async (page, limit) => {
+        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        return response.data;
+    },
+};
+
+
+export { userApi, productApi };
