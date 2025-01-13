@@ -1,8 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'; 
-import { productApi } from '../../utils/apiClient'; // Import productApi
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { productApi } from '../../utils/apiClient'; // Import API client
 
 // **Async Actions**
-// Lấy danh sách sản phẩm
+
+// Lấy danh sách sản phẩm không phân trang
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
     try {
         const products = await productApi.getProducts();
@@ -63,17 +64,18 @@ export const deleteProduct = createAsyncThunk('products/deleteProduct', async (s
 });
 
 // **Slice**
+
 const productSlice = createSlice({
     name: 'products',
     initialState: {
-        items: [], // Danh sách sản phẩm
+        items: [], // Danh sách sản phẩm toàn bộ
         currentProduct: null, // Chi tiết sản phẩm hiện tại
         pagination: {
-            items: [], // Sản phẩm phân trang
-            totalItems: 0,
-            totalPages: 0,
-            currentPage: 1,
-            pageSize: 10,
+            items: [], // Sản phẩm trong phân trang
+            totalItems: 0, // Tổng số sản phẩm
+            totalPages: 0, // Tổng số trang
+            currentPage: 1, // Trang hiện tại
+            pageSize: 10, // Số sản phẩm mỗi trang
         },
         loading: false, // Trạng thái tải
         error: null, // Lỗi
@@ -116,12 +118,14 @@ const productSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchProductsByPagination.fulfilled, (state, action) => {
+                const { products, pagination } = action.payload.data; // Extract data
+
                 state.pagination = {
-                    items: action.payload.products,
-                    totalItems: action.payload.pagination.totalItems,
-                    totalPages: action.payload.pagination.totalPages,
-                    currentPage: action.payload.pagination.currentPage,
-                    pageSize: action.payload.pagination.pageSize,
+                    items: products || [], // Sản phẩm phân trang
+                    totalItems: pagination.totalItems || 0, // Tổng sản phẩm
+                    totalPages: pagination.totalPages || 0, // Tổng số trang
+                    currentPage: pagination.currentPage || 1, // Trang hiện tại
+                    pageSize: pagination.pageSize || 10, // Số sản phẩm mỗi trang
                 };
                 state.loading = false;
             })
