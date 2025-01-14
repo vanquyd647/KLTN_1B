@@ -48,6 +48,10 @@ export default function Index() {
         setCurrentPage(newPage);
     };
 
+    const handleProductClick = (slug) => {
+        router.push(`/productdetail?slug=${slug}`);
+    };
+
     if (userLoading) {
         return <div className="text-center py-10 text-xl">Loading user data...</div>;
     }
@@ -100,7 +104,8 @@ export default function Index() {
                                 {pagination.items.map((product) => (
                                     <div
                                         key={product.id}
-                                        className="bg-white rounded shadow p-4 hover:shadow-lg transition"
+                                        className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                                        onClick={() => handleProductClick(product.slug)}
                                     >
                                         <img
                                             src={
@@ -120,14 +125,6 @@ export default function Index() {
                                         <p className="text-gray-500 line-through">
                                             {product.price.toLocaleString('vi-VN')} VND
                                         </p>
-                                        <button
-                                            className="bg-blue-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition"
-                                            onClick={() =>
-                                                alert(`Thêm ${product.product_name} vào giỏ hàng!`)
-                                            }
-                                        >
-                                            Thêm vào giỏ hàng
-                                        </button>
                                     </div>
                                 ))}
                             </div>
