@@ -49,7 +49,8 @@ export default function Index() {
     };
 
     const handleProductClick = (slug) => {
-        router.push(`/productdetail?slug=${slug}`);
+        router.push(`/productdetail/${slug}`);
+
     };
 
     if (userLoading) {
