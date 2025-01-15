@@ -70,7 +70,7 @@ apiClient.interceptors.response.use(
         // Xử lý lỗi (giữ nguyên logic cũ)
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if (error.response?.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             if (originalRequest.url.includes('/users/refresh-token')) {
@@ -181,9 +181,9 @@ const userApi = {
     // Refresh token
     refreshToken: async () => {
         try {
-            const refreshToken = getRefreshToken();
-            const userId = getUserId();
-            const response = await apiClient.post('users/refresh-token', { refreshToken, userId });
+            const get_refreshToken = getRefreshToken();
+            const get_userId = getUserId();
+            const response = await apiClient.post('users/refresh-token', { get_refreshToken, get_userId });
 
             const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
