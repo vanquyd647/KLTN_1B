@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getCartId } from '../../utils/storage';
+import { getToken, getCartId } from '../../utils/storage';
 import { fetchProductDetail } from '../../store/slices/productSlice';
+import { createCartForGuest, createCartForUser} from '../../store/slices/cartSlice';
 import { addItemToCart } from '../../store/slices/cartSlice';
 
 import Layout from '../../components/Layout';
@@ -32,40 +33,57 @@ export default function Slug() {
         }
     }, [currentProduct]);
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (!selectedColor || !selectedSize) {
             alert('Please select a color and size.');
             return;
         }
-    
-        if (!cartId) {
-            alert('No cart found. Please create a cart first.');
-            console.error('Cart ID is undefined');
-            return;
+
+        try {
+            let activeCartId = cartId;
+
+            // Tự động tạo giỏ hàng nếu chưa có
+            if (!activeCartId) {
+                console.warn('No cart found. Attempting to create a new cart.');
+
+                let cartResponse;
+                if (!getToken()) {
+                    // Tạo giỏ hàng cho khách
+                    cartResponse = await dispatch(createCartForGuest()).unwrap();
+                } else {
+                    // Tạo giỏ hàng cho người dùng đã đăng nhập
+                    cartResponse = await dispatch(createCartForUser()).unwrap();
+                }
+
+                if (cartResponse?.id) {
+                    activeCartId = cartResponse.id;
+                } else {
+                    throw new Error('Failed to create cart.');
+                }
+            }
+
+            const cartItemData = {
+                cart_id: activeCartId,
+                product_id: currentProduct?.id,
+                color_id: selectedColor?.id,
+                size_id: selectedSize?.id,
+                quantity,
+            };
+
+            console.log('Cart ID in handleAddToCart:', activeCartId);
+            console.log('Cart item data:', cartItemData);
+
+            // Thêm sản phẩm vào giỏ hàng
+            await dispatch(addItemToCart({ cartId: activeCartId, itemData: cartItemData })).unwrap();
+            alert('Item added to cart successfully!');
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
+            alert(`Failed to add item to cart: ${error.message || 'An error occurred'}`);
         }
-    
-        const cartItemData = {
-            cart_id: cartId,
-            product_id: currentProduct?.id,
-            color_id: selectedColor?.id,
-            size_id: selectedSize?.id,
-            quantity,
-        };
-    
-        console.log('Cart ID in handleAddToCart:', cartId);
-        console.log('Cart item data:', cartItemData);
-    
-        dispatch(addItemToCart({ cartId, itemData: cartItemData }))
-            .unwrap()
-            .then(() => {
-                alert('Item added to cart successfully!');
-            })
-            .catch((error) => {
-                alert(`Failed to add item to cart: ${error.message || 'An error occurred'}`);
-            });
     };
-    
-    
+
+
+
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
