@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getUserInfo } from '../store/slices/userSlice';
 import { fetchProductsByPagination } from '../store/slices/productSlice';
-import { getToken, getUserId } from '../utils/storage';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar';
 
@@ -11,7 +9,7 @@ export default function Index() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { user, loading: userLoading, error: userError } = useSelector((state) => state.auth);
+    
     const { pagination, loading: productsLoading, error: productsError } = useSelector(
         (state) => state.products
     );
@@ -19,26 +17,6 @@ export default function Index() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10;
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const token = getToken();
-            const userId = getUserId();
-
-            if (token && userId) {
-                try {
-                    await dispatch(getUserInfo()).unwrap();
-                } catch (error) {
-                    console.error('Failed to fetch user info:', error);
-                    router.push('/account/login');
-                }
-            } else {
-                router.push('/account/login');
-            }
-        };
-
-        fetchUserData();
-    }, [dispatch, router]);
 
     useEffect(() => {
         dispatch(fetchProductsByPagination({ page: currentPage, limit: pageSize }));
@@ -52,14 +30,6 @@ export default function Index() {
         router.push(`/productdetail/${slug}`);
 
     };
-
-    if (userLoading) {
-        return <div className="text-center py-10 text-xl">Loading user data...</div>;
-    }
-
-    if (userError) {
-        return <div className="text-center text-red-500 py-10">{userError}</div>;
-    }
 
     return (
         <Layout>

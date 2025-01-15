@@ -1,64 +1,100 @@
 import axios from 'axios';
-import { getToken, setToken, getRefreshToken, setRefreshToken, getUserId, setUserId } from './storage';
+import {
+    getToken,
+    setToken,
+    getRefreshToken,
+    setRefreshToken,
+    getUserId,
+    setUserId,
+    setSessionId,
+    getSessionId,
+    removeSessionId,
+    removeRefreshToken,
+    removeUserId,
+    removeToken,
+    setCartId,
+    getCartId,
+    removeCartId,
+} from './storage';
 import { resetAuthState } from '../store/slices/userSlice';
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:5551/api/',
 });
 
-// Interceptor: Tự động thêm access token vào headers
+// **Request Interceptor**
 apiClient.interceptors.request.use(
     async (config) => {
         try {
+            // Retrieve access token and session ID from cookies
             const accessToken = getToken();
+            const sessionId = getSessionId();
+
+            // Add Authorization header if token exists
             if (accessToken) {
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
             }
+
+            // Add session ID header if session ID exists
+            if (sessionId) {
+                config.headers['x-session-id'] = sessionId; // Add session ID to headers
+            }
         } catch (error) {
-            console.error('Lỗi khi lấy access token:', error);
+            console.error('Error adding headers:', error);
         }
         return config;
     },
     (error) => Promise.reject(error)
 );
 
-// In your interceptor
 apiClient.interceptors.response.use(
-    (response) => response, // Return the response if no error
-    async (error) => {
-        const originalRequest = error.config;
+    (response) => {
+        // Log toàn bộ response để kiểm tra
+        console.log('Response received:', response);
+        console.log('Response headers:', response.headers['x-session-id']);
 
-        // Tạo bộ đếm retry nếu chưa tồn tại
-        if (!originalRequest._retryCount) {
-            originalRequest._retryCount = 0;
+
+        // Lưu session ID nếu có trong headers của response
+        const sessionId = response.headers['x-session-id'];
+        if (sessionId) {
+            setSessionId(sessionId); // Lưu vào cookie hoặc storage
+            console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
         }
 
-        if (error.response?.status === 403 && originalRequest._retryCount < 3) {
+        return response;
+    },
+    async (error) => {
+        // Log toàn bộ error response
+        console.error('Error response:', error.response);
+
+        // Xử lý lỗi (giữ nguyên logic cũ)
+        const originalRequest = error.config;
+
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
             if (originalRequest.url.includes('/users/refresh-token')) {
                 console.error('Token refresh failed. Redirecting to login...');
-                setToken(null);
-                setRefreshToken(null);
-                // Làm mới trạng thái đăng nhập
+                removeSessionId(); // Xóa session ID
                 store.dispatch(resetAuthState());
                 return Promise.reject(new Error('Please log in again.'));
             }
 
-            originalRequest._retry = true;
-            originalRequest._retryCount += 1; // Tăng bộ đếm retry
-
             try {
                 const newAccessToken = await userApi.refreshToken();
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                return apiClient(originalRequest); // Thử lại request với token mới
+                return apiClient(originalRequest); // Retry request với token mới
             } catch (refreshError) {
+                console.error('Error during token refresh:', refreshError);
                 return Promise.reject(refreshError);
             }
         }
 
-        // Nếu đã retry tối đa hoặc gặp lỗi khác, từ chối request
         return Promise.reject(error);
     }
 );
+
+
 
 // **User API**
 const userApi = {
@@ -89,12 +125,20 @@ const userApi = {
             const { accessToken, refreshToken, userId } = response.data.data;
 
             if (accessToken && refreshToken) {
-                setToken(accessToken); // Store the access token
-                setRefreshToken(refreshToken); // Store the refresh token
+                setToken(accessToken); // Lưu access token
+                setRefreshToken(refreshToken); // Lưu refresh token
+                removeCartId(); // Xóa cart ID khi đăng nhập
             }
 
             if (userId) {
-                setUserId(userId); // Store the user ID
+                setUserId(userId); // Lưu user ID
+            }
+
+            // Kiểm tra và lưu session ID từ headers của response
+            const sessionId = response.headers['x-session-id'];
+            if (sessionId) {
+                setSessionId(sessionId); // Lưu session ID vào cookie hoặc storage
+                console.log('Session ID received and saved during login:', sessionId); // Log kiểm tra
             }
 
             return response.data;
@@ -103,17 +147,24 @@ const userApi = {
         }
     },
 
+
     // Logout user
     logout: async () => {
         try {
-            const userId = getUserId(); 
-            const refreshToken = getRefreshToken(); 
-            await apiClient.post('users/logout', { refreshToken, userId }); 
-            setToken(null); 
-            setRefreshToken(null); 
+            const refreshToken = getRefreshToken();
+            const userId = getUserId();
+            await apiClient.post('users/logout', { refreshToken, userId });
+
+            // Clear all stored tokens and session ID
+            removeSessionId();
+            removeRefreshToken();
+            removeUserId();
+            removeSessionId();
+            removeToken();
+            removeCartId();
             return { message: 'Logout successful' };
         } catch (error) {
-            throw error.response?.data || 'Đăng xuất thất bại';
+            throw error.response?.data || 'Logout failed';
         }
     },
 
@@ -123,72 +174,143 @@ const userApi = {
             const response = await apiClient.get('users/profile');
             return response.data.data;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thông tin người dùng';
+            throw error.response?.data || 'Failed to fetch user profile';
         }
     },
 
     // Refresh token
     refreshToken: async () => {
         try {
-            const get_refreshToken = getRefreshToken();
-            const get_userId = getUserId();
-            const response = await apiClient.post('users/refresh-token', { get_refreshToken, get_userId });
-            const { accessToken, refreshToken } = response.data.data;
+            const refreshToken = getRefreshToken();
+            const userId = getUserId();
+            const response = await apiClient.post('users/refresh-token', { refreshToken, userId });
 
-            if (accessToken && refreshToken) {
-                // Xóa token cũ trước khi lưu mới
-                setToken(null);
-                setRefreshToken(null);
-                // Lưu token mới
-                setToken(accessToken); // Store the access token
-                setRefreshToken(refreshToken); // Store the refresh token
+            const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+
+            if (accessToken && newRefreshToken) {
+                setToken(accessToken); // Update access token
+                setRefreshToken(newRefreshToken); // Update refresh token
             }
-            
-            return response.data;
+
+            return accessToken; // Return the new access token
         } catch (error) {
-            throw new Error('Vui lòng đăng nhập lại.');
+            throw new Error('Token refresh failed. Please log in again.');
         }
-    }
+    },
 };
 
 // **Product API**
 const productApi = {
-    // Tạo sản phẩm mới
+    // Create a new product
     createProduct: async (productData) => {
         const response = await apiClient.post('products/', productData);
         return response.data;
     },
 
-    // Lấy danh sách sản phẩm
+    // Get all products
     getProducts: async () => {
         const response = await apiClient.get('products/');
         return response.data.data;
     },
 
-    // Lấy chi tiết sản phẩm qua slug
+    // Get product details by slug
     getProductDetail: async (slug) => {
         const response = await apiClient.get(`products/${slug}`);
         return response.data.data;
     },
 
-    // Cập nhật sản phẩm qua slug
+    // Update product by slug
     updateProduct: async (slug, productData) => {
         const response = await apiClient.put(`products/${slug}`, productData);
         return response.data;
     },
 
-    // Xóa sản phẩm qua slug
+    // Delete product by slug
     deleteProduct: async (slug) => {
         const response = await apiClient.delete(`products/${slug}`);
         return response.data;
     },
 
-    // Lấy sản phẩm với phân trang
+    // Get products with pagination
     getProductsByPagination: async (page, limit) => {
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
         return response.data;
     },
 };
 
+const cartApi = {
+    // Tạo giỏ hàng cho khách
+    createCartForGuest: async (cartData) => {
+        try {
+            const response = await apiClient.post('carts/guest', cartData);
+            const { id } = response.data.data;
+            if (id) {
+                console.log('Cart ID:', id);
+                setCartId(id); // Lưu cart ID vào cookie hoặc storage
+            }
 
-export { userApi, productApi };
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create cart for guest.';
+        }
+    },
+
+    // Tạo hoặc lấy giỏ hàng cho người dùng đã đăng nhập
+    createCartForUser: async () => {
+        try {
+            const response = await apiClient.post('carts/user');
+            const { id } = response.data.data;
+            if (id) {
+                console.log('Cart ID:', id);
+                setCartId(id); // Lưu cart ID vào cookie hoặc storage
+            }
+
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create or retrieve cart for user.';
+        }
+    },
+
+    // Lấy chi tiết giỏ hàng theo ID
+    getCartById: async (cartId) => {
+        try {
+            const response = await apiClient.get(`carts/${cartId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch cart details.';
+        }
+    },
+
+    // Thêm sản phẩm vào giỏ hàng
+    addItemToCart: async (cartId, itemData) => {
+        try {
+            const response = await apiClient.post(`carts/${cartId}/items`, itemData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to add item to cart.';
+        }
+    },
+    
+    
+    // Xóa sản phẩm khỏi giỏ hàng
+    removeCartItem: async (itemId) => {
+        try {
+            const response = await apiClient.delete(`carts/items/${itemId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to remove item from cart.';
+        }
+    },
+
+    // Lấy tất cả sản phẩm trong giỏ hàng
+    getCartItems: async (cartId) => {
+        try {
+            const response = await apiClient.get(`carts/${cartId}/items`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch cart items.';
+        }
+    },
+};
+
+export { apiClient, userApi, productApi, cartApi };

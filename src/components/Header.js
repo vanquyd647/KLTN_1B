@@ -92,7 +92,7 @@ export default function Header() {
 
                             {/* User Icon */}
                             <li>
-                                <Link href="/account" className="hover:underline">
+                                <Link href="/account/profile" className="hover:underline">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-6 w-6"

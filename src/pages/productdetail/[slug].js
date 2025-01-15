@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { getCartId } from '../../utils/storage';
 import { fetchProductDetail } from '../../store/slices/productSlice';
+import { addItemToCart } from '../../store/slices/cartSlice';
+
 import Layout from '../../components/Layout';
 
 export default function Slug() {
     const dispatch = useDispatch();
     const router = useRouter();
     const { slug } = router.query;
-
+    const cartId = getCartId();
     const { currentProduct, loading, error } = useSelector((state) => state.products);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -34,17 +37,37 @@ export default function Slug() {
             alert('Please select a color and size.');
             return;
         }
-        const cartItem = {
-            productId: currentProduct.id,
-            productName: currentProduct.product_name,
-            color: selectedColor.color,
-            size: selectedSize.size,
+    
+        if (!cartId) {
+            alert('No cart found. Please create a cart first.');
+            console.error('Cart ID is undefined');
+            return;
+        }
+    
+        const cartItemData = {
+            cart_id: cartId,
+            product_id: currentProduct?.id,
+            color_id: selectedColor?.id,
+            size_id: selectedSize?.id,
             quantity,
-            price: currentProduct.discount_price,
         };
-        console.log('Adding to cart:', cartItem);
-        alert('Item added to cart!');
+    
+        console.log('Cart ID in handleAddToCart:', cartId);
+        console.log('Cart item data:', cartItemData);
+    
+        dispatch(addItemToCart({ cartId, itemData: cartItemData }))
+            .unwrap()
+            .then(() => {
+                alert('Item added to cart successfully!');
+            })
+            .catch((error) => {
+                alert(`Failed to add item to cart: ${error.message || 'An error occurred'}`);
+            });
     };
+    
+    
+    const increaseQuantity = () => setQuantity((prev) => prev + 1);
+    const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
     if (loading) {
         return <div className="text-center py-10 text-xl">Loading product details...</div>;
@@ -63,21 +86,21 @@ export default function Slug() {
             <div className="container mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
                     {/* Product Image */}
-                    <div className="md:w-1/2">
+                    <div className="md:w-1/2 max-h-96 overflow-hidden">
                         <img
                             src={
                                 selectedColor?.ProductColor?.image ||
                                 'https://via.placeholder.com/500'
                             }
                             alt={currentProduct.product_name}
-                            className="w-full h-auto object-cover rounded"
+                            className="w-full h-full object-contain rounded"
                         />
                     </div>
 
                     {/* Product Details */}
                     <div className="md:w-1/2">
                         <h1 className="text-2xl font-bold mb-4">{currentProduct.product_name}</h1>
-                        <p className="text-gray-700 mb-4">{currentProduct.description}</p>
+                        <p className="text-gray-700 mb-4 line-clamp-3">{currentProduct.description}</p>
                         <p className="text-red-500 font-bold text-xl mb-2">
                             {currentProduct.discount_price.toLocaleString('vi-VN')} VND
                         </p>
@@ -91,9 +114,8 @@ export default function Slug() {
                                 {currentProduct.productSizes.map((size) => (
                                     <button
                                         key={size.id}
-                                        className={`px-4 py-2 border rounded hover:bg-gray-100 transition ${
-                                            selectedSize?.id === size.id ? 'bg-blue-100' : ''
-                                        }`}
+                                        className={`px-4 py-2 border rounded hover:bg-gray-100 transition ${selectedSize?.id === size.id ? 'bg-blue-100' : ''
+                                            }`}
                                         onClick={() => setSelectedSize(size)}
                                     >
                                         {size.size}
@@ -108,9 +130,8 @@ export default function Slug() {
                                 {currentProduct.productColors.map((color) => (
                                     <div
                                         key={color.id}
-                                        className={`w-8 h-8 rounded-full border cursor-pointer hover:shadow-md ${
-                                            selectedColor?.id === color.id ? 'ring-2 ring-blue-500' : ''
-                                        }`}
+                                        className={`w-8 h-8 rounded-full border cursor-pointer hover:shadow-md ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500' : ''
+                                            }`}
                                         style={{ backgroundColor: color.hex_code }}
                                         title={color.color}
                                         onClick={() => setSelectedColor(color)}
@@ -121,13 +142,27 @@ export default function Slug() {
 
                         <div className="mb-4">
                             <h2 className="text-lg font-semibold mb-2">Quantity:</h2>
-                            <input
-                                type="number"
-                                className="w-16 px-2 py-1 border rounded"
-                                min="1"
-                                value={quantity}
-                                onChange={(e) => setQuantity(Number(e.target.value))}
-                            />
+                            <div className="flex items-center gap-4">
+                                <button
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                    onClick={decreaseQuantity}
+                                >
+                                    -
+                                </button>
+                                <input
+                                    type="number"
+                                    className="w-16 px-2 py-1 border rounded text-center"
+                                    min="1"
+                                    value={quantity}
+                                    readOnly
+                                />
+                                <button
+                                    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                                    onClick={increaseQuantity}
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
 
                         <button
