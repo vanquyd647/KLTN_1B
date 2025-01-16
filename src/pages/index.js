@@ -31,6 +31,14 @@ export default function Index() {
         router.push(`/productdetail/${slug}`);
     };
 
+    const handlePagination = (setPage, page) => {
+        setPage(page);
+
+        // Prevent page scroll when switching pages
+        const scrollOptions = { top: window.scrollY, left: 0, behavior: 'smooth' };
+        window.scrollTo(scrollOptions);
+    };
+
     return (
         <Layout>
             <Banner />
@@ -55,9 +63,7 @@ export default function Index() {
 
             {/* Main Content */}
             <div className="w-full px-4 py-6">
-                {productsLoading ? (
-                    <div className="text-center py-10 text-xl">Loading products...</div>
-                ) : productsError ? (
+                {productsError ? (
                     <div className="text-center text-red-500">{productsError}</div>
                 ) : (
                     <div>
@@ -99,12 +105,11 @@ export default function Index() {
                                 (_, i) => (
                                     <button
                                         key={i + 1}
-                                        className={`px-4 py-2 mx-1 rounded ${
-                                            newProductsPage === i + 1
+                                        className={`px-4 py-2 mx-1 rounded ${newProductsPage === i + 1
                                                 ? 'bg-blue-600 text-white'
                                                 : 'bg-gray-200 text-gray-800'
-                                        }`}
-                                        onClick={() => setNewProductsPage(i + 1)}
+                                            }`}
+                                        onClick={() => handlePagination(setNewProductsPage, i + 1)}
                                     >
                                         {i + 1}
                                     </button>
@@ -150,12 +155,11 @@ export default function Index() {
                                 (_, i) => (
                                     <button
                                         key={i + 1}
-                                        className={`px-4 py-2 mx-1 rounded ${
-                                            featuredProductsPage === i + 1
+                                        className={`px-4 py-2 mx-1 rounded ${featuredProductsPage === i + 1
                                                 ? 'bg-blue-600 text-white'
                                                 : 'bg-gray-200 text-gray-800'
-                                        }`}
-                                        onClick={() => setFeaturedProductsPage(i + 1)}
+                                            }`}
+                                        onClick={() => handlePagination(setFeaturedProductsPage, i + 1)}
                                     >
                                         {i + 1}
                                     </button>
