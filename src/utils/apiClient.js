@@ -236,7 +236,20 @@ const productApi = {
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
         return response.data;
     },
+
+    // Get new products with pagination
+    getNewProductsByPagination: async (page, limit) => {
+        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
+        return response.data;
+    },
+
+    // Get featured products with pagination
+    getFeaturedProductsByPagination: async (page, limit) => {
+        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
+        return response.data;
+    },
 };
+
 
 const cartApi = {
     // Tạo giỏ hàng cho khách
