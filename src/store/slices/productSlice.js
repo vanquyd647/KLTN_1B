@@ -111,10 +111,8 @@ export const deleteProduct = createAsyncThunk(
 const productSlice = createSlice({
     name: 'products',
     initialState: {
-        items: [], // All products
-        currentProduct: null, // Current product details
         newProducts: {
-            items: [], // New products
+            items: [], // All new products
             pagination: {
                 totalItems: 0,
                 totalPages: 0,
@@ -122,8 +120,9 @@ const productSlice = createSlice({
                 pageSize: 10,
             },
         },
+        visibleNewProducts: [], // New products visible on the index page
         featuredProducts: {
-            items: [], // Featured products
+            items: [], // All featured products
             pagination: {
                 totalItems: 0,
                 totalPages: 0,
@@ -131,20 +130,20 @@ const productSlice = createSlice({
                 pageSize: 10,
             },
         },
-        pagination: {
-            items: [], // Paginated products
-            totalItems: 0,
-            totalPages: 0,
-            currentPage: 1,
-            pageSize: 10,
-        },
+        visibleFeaturedProducts: [], // Featured products visible on the index page
         loading: false,
         error: null,
     },
     reducers: {
+        // Set visible products for index page
+        setVisibleNewProducts: (state, action) => {
+            state.visibleNewProducts = action.payload;
+        },
+        setVisibleFeaturedProducts: (state, action) => {
+            state.visibleFeaturedProducts = action.payload;
+        },
+        // Clear product state
         clearProductState: (state) => {
-            state.items = [];
-            state.currentProduct = null;
             state.newProducts = {
                 items: [],
                 pagination: {
@@ -154,6 +153,7 @@ const productSlice = createSlice({
                     pageSize: 10,
                 },
             };
+            state.visibleNewProducts = [];
             state.featuredProducts = {
                 items: [],
                 pagination: {
@@ -163,13 +163,7 @@ const productSlice = createSlice({
                     pageSize: 10,
                 },
             };
-            state.pagination = {
-                items: [],
-                totalItems: 0,
-                totalPages: 0,
-                currentPage: 1,
-                pageSize: 10,
-            };
+            state.visibleFeaturedProducts = [];
             state.loading = false;
             state.error = null;
         },
@@ -220,13 +214,21 @@ const productSlice = createSlice({
             })
             .addCase(fetchNewProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
-                state.newProducts.items = products || [];
+
+                // Append new products to the existing list
+                state.newProducts.items = [...state.newProducts.items, ...products];
                 state.newProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
                     currentPage: pagination.currentPage || 1,
                     pageSize: pagination.pageSize || 10,
                 };
+
+                // Set visible products for index (first 10 products)
+                if (state.visibleNewProducts.length === 0) {
+                    state.visibleNewProducts = products.slice(0, 10);
+                }
+
                 state.loading = false;
             })
             .addCase(fetchNewProductsByPagination.rejected, (state, action) => {
@@ -242,20 +244,27 @@ const productSlice = createSlice({
             })
             .addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
-                state.featuredProducts.items = products || [];
+
+                // Append featured products to the existing list
+                state.featuredProducts.items = [...state.featuredProducts.items, ...products];
                 state.featuredProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
                     currentPage: pagination.currentPage || 1,
                     pageSize: pagination.pageSize || 10,
                 };
+
+                // Set visible featured products for index (first 10 products)
+                if (state.visibleFeaturedProducts.length === 0) {
+                    state.visibleFeaturedProducts = products.slice(0, 10);
+                }
+
                 state.loading = false;
             })
             .addCase(fetchFeaturedProductsByPagination.rejected, (state, action) => {
                 state.error = action.payload;
                 state.loading = false;
             });
-
         // Fetch product details
         builder
             .addCase(fetchProductDetail.pending, (state) => {
@@ -321,5 +330,5 @@ const productSlice = createSlice({
     },
 });
 
-export const { clearProductState } = productSlice.actions;
+export const { setVisibleNewProducts, setVisibleFeaturedProducts, clearProductState } = productSlice.actions;
 export default productSlice.reducer;

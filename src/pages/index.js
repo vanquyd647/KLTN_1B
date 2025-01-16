@@ -1,62 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { fetchNewProductsByPagination, fetchFeaturedProductsByPagination } from '../store/slices/productSlice';
+import {
+    fetchNewProductsByPagination,
+    fetchFeaturedProductsByPagination,
+    setVisibleNewProducts,
+    setVisibleFeaturedProducts,
+} from '../store/slices/productSlice';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
+import Link from 'next/link';
 
 export default function Index() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { newProducts, featuredProducts, loading: productsLoading, error: productsError } = useSelector(
-        (state) => state.products
-    );
+    const {
+        visibleNewProducts,
+        visibleFeaturedProducts,
+        newProducts,
+        featuredProducts,
+        loading: productsLoading,
+        error: productsError,
+    } = useSelector((state) => state.products);
 
-    const [newProductsPage, setNewProductsPage] = useState(1);
-    const [featuredProductsPage, setFeaturedProductsPage] = useState(1);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const pageSize = 10;
+    const pageSize = 10; // Mặc định mỗi lần fetch 10 sản phẩm
 
+    // Fetch dữ liệu sản phẩm mới khi lần đầu load
     useEffect(() => {
-        dispatch(fetchNewProductsByPagination({ page: newProductsPage, limit: pageSize }));
-    }, [dispatch, newProductsPage]);
+        if (newProducts.items.length === 0) {
+            dispatch(fetchNewProductsByPagination({ page: 1, limit: pageSize }));
+        } else {
+            dispatch(setVisibleNewProducts(newProducts.items.slice(0, 10)));
+        }
+    }, [dispatch, newProducts.items]);
 
+    // Fetch dữ liệu sản phẩm nổi bật khi lần đầu load
     useEffect(() => {
-        dispatch(fetchFeaturedProductsByPagination({ page: featuredProductsPage, limit: pageSize }));
-    }, [dispatch, featuredProductsPage]);
+        if (featuredProducts.items.length === 0) {
+            dispatch(fetchFeaturedProductsByPagination({ page: 1, limit: pageSize }));
+        } else {
+            dispatch(setVisibleFeaturedProducts(featuredProducts.items.slice(0, 10)));
+        }
+    }, [dispatch, featuredProducts.items]);
 
     const handleProductClick = (slug) => {
         router.push(`/productdetail/${slug}`);
-    };
-
-    const handlePagination = (setPage, page) => {
-        setPage(page);
-
-        // Prevent page scroll when switching pages
-        const scrollOptions = { top: window.scrollY, left: 0, behavior: 'smooth' };
-        window.scrollTo(scrollOptions);
     };
 
     return (
         <Layout>
             <Banner />
 
-            {/* Sidebar below the banner */}
+            {/* Sidebar dưới banner */}
             <div className="mt-6 px-6">
-                <div className="md:hidden mb-4">
-                    <button
-                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-3 bg-blue-500 text-white text-lg font-bold rounded-lg shadow-md"
-                    >
-                        {isSidebarOpen ? 'Đóng Danh Mục' : 'Mở Danh Mục'}
-                    </button>
-                </div>
-
-                <div
-                    className={`${isSidebarOpen ? 'flex' : 'hidden'} md:flex justify-center gap-4`}
-                >
+                <div className="hidden md:flex justify-center gap-4">
                     <Sidebar />
                 </div>
             </div>
@@ -67,10 +66,10 @@ export default function Index() {
                     <div className="text-center text-red-500">{productsError}</div>
                 ) : (
                     <div>
-                        {/* New Products Section */}
+                        {/* Section for New Products */}
                         <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
                         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                            {newProducts.items.map((product) => (
+                            {visibleNewProducts.map((product) => (
                                 <div
                                     key={product.id}
                                     className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
@@ -84,9 +83,7 @@ export default function Index() {
                                         alt={product.product_name}
                                         className="w-full h-40 object-cover rounded"
                                     />
-                                    <h3 className="text-lg font-semibold mt-2">
-                                        {product.product_name}
-                                    </h3>
+                                    <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
                                     <p className="text-gray-600">{product.description}</p>
                                     <p className="text-red-500 font-bold">
                                         {product.discount_price.toLocaleString('vi-VN')} VND
@@ -97,30 +94,16 @@ export default function Index() {
                                 </div>
                             ))}
                         </div>
-
-                        {/* Pagination for New Products */}
                         <div className="flex justify-center mt-6">
-                            {Array.from(
-                                { length: Math.ceil(newProducts.pagination.totalPages) },
-                                (_, i) => (
-                                    <button
-                                        key={i + 1}
-                                        className={`px-4 py-2 mx-1 rounded ${newProductsPage === i + 1
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-200 text-gray-800'
-                                            }`}
-                                        onClick={() => handlePagination(setNewProductsPage, i + 1)}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                )
-                            )}
+                            <Link href="/new-products" className="px-4 py-2 rounded bg-blue-600 text-white">
+                                Xem tất cả
+                            </Link>
                         </div>
 
-                        {/* Featured Products Section */}
-                        <h3 className="text-lg font-bold mb-4">Sản phẩm nổi bật</h3>
+                        {/* Section for Featured Products */}
+                        <h3 className="text-lg font-bold mt-10 mb-4">Sản phẩm nổi bật</h3>
                         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            {featuredProducts.items.map((product) => (
+                            {visibleFeaturedProducts.map((product) => (
                                 <div
                                     key={product.id}
                                     className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
@@ -134,9 +117,7 @@ export default function Index() {
                                         alt={product.product_name}
                                         className="w-full h-40 object-cover rounded"
                                     />
-                                    <h3 className="text-lg font-semibold mt-2">
-                                        {product.product_name}
-                                    </h3>
+                                    <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
                                     <p className="text-gray-600">{product.description}</p>
                                     <p className="text-red-500 font-bold">
                                         {product.discount_price.toLocaleString('vi-VN')} VND
@@ -147,24 +128,10 @@ export default function Index() {
                                 </div>
                             ))}
                         </div>
-
-                        {/* Pagination for Featured Products */}
                         <div className="flex justify-center mt-6">
-                            {Array.from(
-                                { length: Math.ceil(featuredProducts.pagination.totalPages) },
-                                (_, i) => (
-                                    <button
-                                        key={i + 1}
-                                        className={`px-4 py-2 mx-1 rounded ${featuredProductsPage === i + 1
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-200 text-gray-800'
-                                            }`}
-                                        onClick={() => handlePagination(setFeaturedProductsPage, i + 1)}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                )
-                            )}
+                            <Link href="/featured-products" className="px-4 py-2 rounded bg-blue-600 text-white">
+                                Xem tất cả
+                            </Link>
                         </div>
                     </div>
                 )}

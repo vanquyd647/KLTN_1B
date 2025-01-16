@@ -122,16 +122,12 @@ const userApi = {
     login: async (credentials) => {
         try {
             const response = await apiClient.post('users/login', credentials);
-            const { accessToken, refreshToken, userId } = response.data.data;
+            const { accessToken, refreshToken } = response.data.data;
 
             if (accessToken && refreshToken) {
                 setToken(accessToken); // Lưu access token
                 setRefreshToken(refreshToken); // Lưu refresh token
                 removeCartId(); // Xóa cart ID khi đăng nhập
-            }
-
-            if (userId) {
-                setUserId(userId); // Lưu user ID
             }
 
             // Kiểm tra và lưu session ID từ headers của response
@@ -183,7 +179,7 @@ const userApi = {
         try {
             const get_refreshToken = getRefreshToken();
             const get_userId = getUserId();
-            const response = await apiClient.post('users/refresh-token', { get_refreshToken, get_userId });
+            const response = await apiClient.post('users/refresh-token', { get_refreshToken });
 
             const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
