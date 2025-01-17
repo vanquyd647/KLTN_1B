@@ -43,7 +43,7 @@ export default function Index() {
         } else {
             dispatch(setVisibleFeaturedProducts(featuredProducts.items.slice(0, pageSize)));
         }
-    }, [dispatch, featuredProducts.items]);
+    }, [dispatch, newProducts.items, featuredProducts.items, pageSize]);
 
     const handleProductClick = (slug) => {
         router.push(`/productdetail/${slug}`);

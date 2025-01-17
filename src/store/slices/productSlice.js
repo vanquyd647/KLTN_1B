@@ -215,8 +215,13 @@ const productSlice = createSlice({
             .addCase(fetchNewProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
 
-                // Append new products to the existing list
-                state.newProducts.items = [...state.newProducts.items, ...products];
+                // Filter out duplicate products
+                const uniqueProducts = products.filter(
+                    (product) => !state.newProducts.items.some((existing) => existing.id === product.id)
+                );
+
+                // Append only unique products
+                state.newProducts.items = [...state.newProducts.items, ...uniqueProducts];
                 state.newProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
@@ -224,10 +229,8 @@ const productSlice = createSlice({
                     pageSize: pagination.pageSize || 10,
                 };
 
-                // Set visible products for index (first 10 products)
-                if (state.visibleNewProducts.length === 0) {
-                    state.visibleNewProducts = products.slice(0, 10);
-                }
+                // Update visible products
+                state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
 
                 state.loading = false;
             })
@@ -245,8 +248,13 @@ const productSlice = createSlice({
             .addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
 
-                // Append featured products to the existing list
-                state.featuredProducts.items = [...state.featuredProducts.items, ...products];
+                // Filter out duplicate products
+                const uniqueProducts = products.filter(
+                    (product) => !state.featuredProducts.items.some((existing) => existing.id === product.id)
+                );
+
+                // Append only unique products
+                state.featuredProducts.items = [...state.featuredProducts.items, ...uniqueProducts];
                 state.featuredProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
@@ -254,10 +262,8 @@ const productSlice = createSlice({
                     pageSize: pagination.pageSize || 10,
                 };
 
-                // Set visible featured products for index (first 10 products)
-                if (state.visibleFeaturedProducts.length === 0) {
-                    state.visibleFeaturedProducts = products.slice(0, 10);
-                }
+                // Update visible products
+                state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
 
                 state.loading = false;
             })
