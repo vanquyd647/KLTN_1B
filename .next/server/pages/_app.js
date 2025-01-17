@@ -1,1 +1,5 @@
-"use strict";(()=>{var r={};r.id=636,r.ids=[636],r.modules={8732:r=>{r.exports=require("react/jsx-runtime")},9198:r=>{r.exports=import("@reduxjs/toolkit")},1428:r=>{r.exports=import("axios")},6338:r=>{r.exports=import("js-cookie")},4062:r=>{r.exports=import("react-redux")}};var e=require("../webpack-runtime.js");e.C(r);var t=r=>e(e.s=r),o=e.X(0,[538],()=>t(3538));module.exports=o})();
+const CHUNK_PUBLIC_PATH = "server/pages/_app.js";
+const runtime = require("../chunks/ssr/[turbopack]_runtime.js");
+runtime.loadChunk("server/chunks/ssr/[root of the server]__f1954e._.js");
+runtime.loadChunk("server/chunks/ssr/src_styles_globals_070f83.css");
+module.exports = runtime.getOrInstantiateRuntimeModule("[project]/src/pages/_app.js [ssr] (ecmascript)", CHUNK_PUBLIC_PATH).exports;

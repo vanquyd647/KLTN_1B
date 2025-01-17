@@ -43,11 +43,15 @@ export default function Index() {
         } else {
             dispatch(setVisibleFeaturedProducts(featuredProducts.items.slice(0, pageSize)));
         }
-    }, [dispatch, newProducts.items, featuredProducts.items, pageSize]);
+    }, [dispatch, featuredProducts.items]);
 
     const handleProductClick = (slug) => {
         router.push(`/productdetail/${slug}`);
     };
+
+    const hasNoProducts =
+        (!visibleNewProducts.length && !visibleFeaturedProducts.length) ||
+        (!!productsError && visibleNewProducts.length === 0 && visibleFeaturedProducts.length === 0);
 
     return (
         <Layout>
@@ -62,10 +66,12 @@ export default function Index() {
 
             {/* Main Content */}
             <div className="w-full px-4 py-6">
-                {productsError ? (
-                    <div className="text-center text-red-500">{productsError}</div>
+                {hasNoProducts ? (
+                    <div className="text-center text-gray-500 text-lg">
+                        Không có sản phẩm
+                    </div>
                 ) : (
-                    <div>
+                    <>
                         {/* Section for New Products */}
                         <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
                         {visibleNewProducts.length > 0 ? (
@@ -141,7 +147,7 @@ export default function Index() {
                                 Xem tất cả
                             </Link>
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         </Layout>

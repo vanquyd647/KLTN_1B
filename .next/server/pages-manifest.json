@@ -1,1 +1,6 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/account/login":"pages/account/login.html","/account/register":"pages/account/register.html","/account/profile":"pages/account/profile.html","/featured-products":"pages/featured-products.html","/cart":"pages/cart.html","/new-products":"pages/new-products.html","/":"pages/index.html","/productdetail/[slug]":"pages/productdetail/[slug].html","/_document":"pages/_document.js","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/account/register": "pages/account/register.js",
+  "/": "pages/index.js"
+}
