@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFeaturedProductsByPagination } from '../store/slices/productSlice';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
 
 export default function FeaturedProducts() {
+    const router = useRouter();
     const dispatch = useDispatch();
     const { featuredProducts, loading, error } = useSelector((state) => state.products);
 
@@ -19,6 +21,10 @@ export default function FeaturedProducts() {
 
     const handleLoadMore = () => {
         setCurrentPage((prevPage) => prevPage + 1); // Tăng số trang để tải thêm dữ liệu
+    };
+
+    const handleProductClick = (slug) => {
+        router.push(`/productdetail/${slug}`);
     };
 
     return (
@@ -44,6 +50,7 @@ export default function FeaturedProducts() {
                         <div
                             key={product.id}
                             className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                            onClick={() => handleProductClick(product.slug)}
                         >
                             <img
                                 src={

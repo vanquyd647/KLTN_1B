@@ -18,7 +18,7 @@ export default function Banner() {
     }, []);
 
     return (
-        <div className="relative w-full h-[40rem] overflow-hidden">
+        <div className="relative w-full h-[50rem] overflow-hidden">
             {images.map((image, index) => (
                 <div
                     key={index}

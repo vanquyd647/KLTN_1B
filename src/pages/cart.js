@@ -60,6 +60,10 @@ const CartPage = () => {
         }
     };
 
+    const handleProductClick = (slug) => {
+        router.push(`/productdetail/${slug}`);
+    };
+
     if (loading) return <div className="text-center py-10 text-xl">Loading cart...</div>;
 
     if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
@@ -83,6 +87,7 @@ const CartPage = () => {
                                 <li
                                     key={item.id}
                                     className="flex gap-4 p-4 border rounded shadow-md"
+                                    onClick={() => handleProductClick(product.slug)}
                                 >
                                     <img
                                         src={

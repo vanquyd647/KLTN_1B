@@ -299,8 +299,8 @@ const cartApi = {
             throw error.response?.data || 'Failed to add item to cart.';
         }
     },
-    
-    
+
+
     // Xóa sản phẩm khỏi giỏ hàng
     removeCartItem: async (itemId) => {
         try {
@@ -322,4 +322,46 @@ const cartApi = {
     },
 };
 
-export { apiClient, userApi, productApi, cartApi };
+const reviewApi = {
+    // Tạo mới một review
+    createReview: async (reviewData) => {
+        try {
+            const response = await apiClient.post('reviews/', reviewData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create review.';
+        }
+    },
+
+    // Lấy danh sách review của một sản phẩm
+    getReviewsByProduct: async (productId, page, limit) => {
+        try {
+            const response = await apiClient.get(`reviews/product/${productId}?page=${page}&limit=${limit}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch reviews.';
+        }
+    },
+
+    // Lấy điểm trung bình của một sản phẩm
+    getAverageRating: async (productId) => {
+        try {
+            const response = await apiClient.get(`reviews/product/${productId}/average-rating`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch average rating.';
+        }
+    },
+
+    // Xóa một review
+    deleteReview: async (reviewId) => {
+        try {
+            const response = await apiClient.delete(`reviews/${reviewId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete review.';
+        }
+    },
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi };

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNewProductsByPagination } from '../store/slices/productSlice';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
 
 export default function NewProducts() {
     const dispatch = useDispatch();
+    const router = useRouter();
     const { newProducts, loading, error } = useSelector((state) => state.products);
 
     const [currentPage, setCurrentPage] = useState(1); // Theo dõi trang hiện tại
@@ -19,6 +21,10 @@ export default function NewProducts() {
 
     const handleLoadMore = () => {
         setCurrentPage((prevPage) => prevPage + 1); // Tăng số trang để tải thêm dữ liệu
+    };
+
+    const handleProductClick = (slug) => {
+        router.push(`/productdetail/${slug}`);
     };
 
     return (
@@ -44,6 +50,7 @@ export default function NewProducts() {
                         <div
                             key={product.id}
                             className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                            onClick={() => handleProductClick(product.slug)}
                         >
                             <img
                                 src={
@@ -51,7 +58,7 @@ export default function NewProducts() {
                                     'https://via.placeholder.com/150'
                                 }
                                 alt={product.product_name}
-                                className="w-full h-40 object-cover rounded"
+                                className="w-full h-80 object-cover rounded"
                             />
                             <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
                             <p className="text-gray-600">{product.description}</p>
