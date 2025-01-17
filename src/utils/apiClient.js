@@ -18,7 +18,7 @@ import {
 } from './storage';
 import { resetAuthState } from '../store/slices/userSlice';
 
-// https://kltn-1a.onrender.com
+// https://kltn-1a.onrender.com - API URL
 
 const apiClient = axios.create({
     baseURL: 'https://kltn-1a.onrender.com/api/',  
