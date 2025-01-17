@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { getToken } from '../../utils/storage';
 import Layout from '../../components/Layout';
@@ -10,13 +12,18 @@ export default function Profile() {
     const router = useRouter();
 
     const { user, loading, error } = useSelector((state) => state.auth);
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Xác định xem người dùng đã đăng nhập
-    const [authStep, setAuthStep] = useState('login'); // 'login', 'register', hoặc 'otp'
-    const [selectedTab, setSelectedTab] = useState('info'); // Tab trong Profile
-    const [otp, setOtp] = useState(''); // OTP nhập từ người dùng
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [authStep, setAuthStep] = useState('login');
+    const [selectedTab, setSelectedTab] = useState('info');
+    const [otp, setOtp] = useState('');
+    const [passwordVisibility, setPasswordVisibility] = useState({
+        password: false,
+        confirmPassword: false,
+    });
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        confirmPassword: '',
         firstname: '',
         lastname: '',
         phone: '',
@@ -56,9 +63,15 @@ export default function Profile() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match. Please try again.');
+            return;
+        }
+
         const result = await dispatch(registerUser(formData));
         if (result.meta.requestStatus === 'fulfilled') {
-            setAuthStep('otp'); // Chuyển sang bước OTP
+            setAuthStep('otp');
         }
     };
 
@@ -67,14 +80,20 @@ export default function Profile() {
         const result = await dispatch(verifyOtp({ email: formData.email, otp }));
         if (result.meta.requestStatus === 'fulfilled') {
             alert('Verification successful! You can now log in.');
-            setAuthStep('login'); // Quay lại bước đăng nhập
+            setAuthStep('login');
         } else {
             alert('Invalid OTP. Please try again.');
         }
     };
 
+    const togglePasswordVisibility = (field) => {
+        setPasswordVisibility({
+            ...passwordVisibility,
+            [field]: !passwordVisibility[field],
+        });
+    };
+
     if (!isAuthenticated) {
-        // Giao diện Authentication
         return (
             <Layout>
                 <div className="container mx-auto px-4 py-6">
@@ -95,14 +114,25 @@ export default function Profile() {
                                 </div>
                                 <div className="mb-4">
                                     <label>Password:</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="w-full border p-2 rounded"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <input
+                                            type={passwordVisibility.password ? 'text' : 'password'}
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            className="w-full border p-2 rounded"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className="absolute right-2 top-2 text-gray-600"
+                                            onClick={() => togglePasswordVisibility('password')}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={passwordVisibility.password ? faEyeSlash : faEye}
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                                 <button
                                     type="submit"
@@ -162,14 +192,47 @@ export default function Profile() {
                                 </div>
                                 <div className="mb-4">
                                     <label>Password:</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="w-full border p-2 rounded"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <input
+                                            type={passwordVisibility.password ? 'text' : 'password'}
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            className="w-full border p-2 rounded"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className="absolute right-2 top-2 text-gray-600"
+                                            onClick={() => togglePasswordVisibility('password')}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={passwordVisibility.password ? faEyeSlash : faEye}
+                                            />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="mb-4">
+                                    <label>Confirm Password:</label>
+                                    <div className="relative">
+                                        <input
+                                            type={passwordVisibility.confirmPassword ? 'text' : 'password'}
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleChange}
+                                            className="w-full border p-2 rounded"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className="absolute right-2 top-2 text-gray-600"
+                                            onClick={() => togglePasswordVisibility('confirmPassword')}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={passwordVisibility.confirmPassword ? faEyeSlash : faEye}
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="mb-4">
                                     <label>Phone:</label>

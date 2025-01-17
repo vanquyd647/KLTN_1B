@@ -383,6 +383,14 @@ img, video {
   top: 1rem;
 }
 
+.right-2 {
+  right: .5rem;
+}
+
+.top-2 {
+  top: .5rem;
+}
+
 .z-50 {
   z-index: 50;
 }

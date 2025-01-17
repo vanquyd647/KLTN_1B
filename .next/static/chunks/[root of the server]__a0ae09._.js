@@ -637,7 +637,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1602,12 +1602,16 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@fortawesome/react-fontawesome/index.es.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/userSlice.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@fortawesome/free-solid-svg-icons/index.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
+;
+;
 ;
 ;
 ;
@@ -1621,13 +1625,18 @@ function Profile() {
     const { user, loading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
         "Profile.useSelector": (state)=>state.auth
     }["Profile.useSelector"]);
-    const [isAuthenticated, setIsAuthenticated] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false); // Xác định xem người dùng đã đăng nhập
-    const [authStep, setAuthStep] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('login'); // 'login', 'register', hoặc 'otp'
-    const [selectedTab, setSelectedTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('info'); // Tab trong Profile
-    const [otp, setOtp] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(''); // OTP nhập từ người dùng
+    const [isAuthenticated, setIsAuthenticated] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [authStep, setAuthStep] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('login');
+    const [selectedTab, setSelectedTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('info');
+    const [otp, setOtp] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [passwordVisibility, setPasswordVisibility] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        password: false,
+        confirmPassword: false
+    });
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
         email: '',
         password: '',
+        confirmPassword: '',
         firstname: '',
         lastname: '',
         phone: '',
@@ -1674,9 +1683,13 @@ function Profile() {
     };
     const handleRegister = async (e)=>{
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match. Please try again.');
+            return;
+        }
         const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["registerUser"])(formData));
         if (result.meta.requestStatus === 'fulfilled') {
-            setAuthStep('otp'); // Chuyển sang bước OTP
+            setAuthStep('otp');
         }
     };
     const handleOtpSubmit = async (e)=>{
@@ -1687,13 +1700,18 @@ function Profile() {
         }));
         if (result.meta.requestStatus === 'fulfilled') {
             alert('Verification successful! You can now log in.');
-            setAuthStep('login'); // Quay lại bước đăng nhập
+            setAuthStep('login');
         } else {
             alert('Invalid OTP. Please try again.');
         }
     };
+    const togglePasswordVisibility = (field)=>{
+        setPasswordVisibility({
+            ...passwordVisibility,
+            [field]: !passwordVisibility[field]
+        });
+    };
     if (!isAuthenticated) {
-        // Giao diện Authentication
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "container mx-auto px-4 py-6",
@@ -1706,7 +1724,7 @@ function Profile() {
                                 children: "Login"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 83,
+                                lineNumber: 102,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1719,7 +1737,7 @@ function Profile() {
                                                 children: "Email:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 86,
+                                                lineNumber: 105,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1731,13 +1749,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 87,
+                                                lineNumber: 106,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 85,
+                                        lineNumber: 104,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1747,25 +1765,50 @@ function Profile() {
                                                 children: "Password:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 97,
+                                                lineNumber: 116,
                                                 columnNumber: 37
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "password",
-                                                name: "password",
-                                                value: formData.password,
-                                                onChange: handleChange,
-                                                className: "w-full border p-2 rounded",
-                                                required: true
-                                            }, void 0, false, {
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: passwordVisibility.password ? 'text' : 'password',
+                                                        name: "password",
+                                                        value: formData.password,
+                                                        onChange: handleChange,
+                                                        className: "w-full border p-2 rounded",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 118,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "button",
+                                                        className: "absolute right-2 top-2 text-gray-600",
+                                                        onClick: ()=>togglePasswordVisibility('password'),
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__["FontAwesomeIcon"], {
+                                                            icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/account/profile.js",
+                                                            lineNumber: 131,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 126,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 98,
+                                                lineNumber: 117,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 96,
+                                        lineNumber: 115,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1775,13 +1818,13 @@ function Profile() {
                                         children: loading ? 'Logging in...' : 'Login'
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 107,
+                                        lineNumber: 137,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 84,
+                                lineNumber: 103,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1795,19 +1838,19 @@ function Profile() {
                                         children: "Register"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 117,
+                                        lineNumber: 147,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 115,
+                                lineNumber: 145,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/account/profile.js",
-                        lineNumber: 82,
+                        lineNumber: 101,
                         columnNumber: 25
                     }, this),
                     authStep === 'register' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1818,7 +1861,7 @@ function Profile() {
                                 children: "Register"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 128,
+                                lineNumber: 158,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1831,7 +1874,7 @@ function Profile() {
                                                 children: "First Name:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 131,
+                                                lineNumber: 161,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1843,13 +1886,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 132,
+                                                lineNumber: 162,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 130,
+                                        lineNumber: 160,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1859,7 +1902,7 @@ function Profile() {
                                                 children: "Last Name:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 142,
+                                                lineNumber: 172,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1871,13 +1914,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 143,
+                                                lineNumber: 173,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 141,
+                                        lineNumber: 171,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1887,7 +1930,7 @@ function Profile() {
                                                 children: "Email:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 153,
+                                                lineNumber: 183,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1899,13 +1942,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 154,
+                                                lineNumber: 184,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 152,
+                                        lineNumber: 182,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1915,25 +1958,103 @@ function Profile() {
                                                 children: "Password:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 164,
+                                                lineNumber: 194,
                                                 columnNumber: 37
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "password",
-                                                name: "password",
-                                                value: formData.password,
-                                                onChange: handleChange,
-                                                className: "w-full border p-2 rounded",
-                                                required: true
-                                            }, void 0, false, {
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: passwordVisibility.password ? 'text' : 'password',
+                                                        name: "password",
+                                                        value: formData.password,
+                                                        onChange: handleChange,
+                                                        className: "w-full border p-2 rounded",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 196,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "button",
+                                                        className: "absolute right-2 top-2 text-gray-600",
+                                                        onClick: ()=>togglePasswordVisibility('password'),
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__["FontAwesomeIcon"], {
+                                                            icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/account/profile.js",
+                                                            lineNumber: 209,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 204,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 165,
+                                                lineNumber: 195,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 163,
+                                        lineNumber: 193,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                children: "Confirm Password:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/account/profile.js",
+                                                lineNumber: 216,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: passwordVisibility.confirmPassword ? 'text' : 'password',
+                                                        name: "confirmPassword",
+                                                        value: formData.confirmPassword,
+                                                        onChange: handleChange,
+                                                        className: "w-full border p-2 rounded",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 218,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "button",
+                                                        className: "absolute right-2 top-2 text-gray-600",
+                                                        onClick: ()=>togglePasswordVisibility('confirmPassword'),
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__["FontAwesomeIcon"], {
+                                                            icon: passwordVisibility.confirmPassword ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/account/profile.js",
+                                                            lineNumber: 231,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/account/profile.js",
+                                                        lineNumber: 226,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/pages/account/profile.js",
+                                                lineNumber: 217,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/account/profile.js",
+                                        lineNumber: 215,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1943,7 +2064,7 @@ function Profile() {
                                                 children: "Phone:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 175,
+                                                lineNumber: 238,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1955,13 +2076,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 176,
+                                                lineNumber: 239,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 174,
+                                        lineNumber: 237,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1971,7 +2092,7 @@ function Profile() {
                                                 children: "Gender:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 186,
+                                                lineNumber: 249,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1986,7 +2107,7 @@ function Profile() {
                                                         children: "Select"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/account/profile.js",
-                                                        lineNumber: 194,
+                                                        lineNumber: 257,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1994,7 +2115,7 @@ function Profile() {
                                                         children: "Male"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/account/profile.js",
-                                                        lineNumber: 195,
+                                                        lineNumber: 258,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2002,7 +2123,7 @@ function Profile() {
                                                         children: "Female"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/account/profile.js",
-                                                        lineNumber: 196,
+                                                        lineNumber: 259,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2010,19 +2131,19 @@ function Profile() {
                                                         children: "Other"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/account/profile.js",
-                                                        lineNumber: 197,
+                                                        lineNumber: 260,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 187,
+                                                lineNumber: 250,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 185,
+                                        lineNumber: 248,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2032,13 +2153,13 @@ function Profile() {
                                         children: loading ? 'Registering...' : 'Register'
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 200,
+                                        lineNumber: 263,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 129,
+                                lineNumber: 159,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2052,19 +2173,19 @@ function Profile() {
                                         children: "Login"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 210,
+                                        lineNumber: 273,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 208,
+                                lineNumber: 271,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/account/profile.js",
-                        lineNumber: 127,
+                        lineNumber: 157,
                         columnNumber: 25
                     }, this),
                     authStep === 'otp' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2075,7 +2196,7 @@ function Profile() {
                                 children: "Verify OTP"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 221,
+                                lineNumber: 284,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2088,7 +2209,7 @@ function Profile() {
                                                 children: "Enter OTP:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 224,
+                                                lineNumber: 287,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2099,13 +2220,13 @@ function Profile() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/account/profile.js",
-                                                lineNumber: 225,
+                                                lineNumber: 288,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 223,
+                                        lineNumber: 286,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2115,30 +2236,30 @@ function Profile() {
                                         children: loading ? 'Verifying...' : 'Verify OTP'
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/account/profile.js",
-                                        lineNumber: 233,
+                                        lineNumber: 296,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/account/profile.js",
-                                lineNumber: 222,
+                                lineNumber: 285,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/account/profile.js",
-                        lineNumber: 220,
+                        lineNumber: 283,
                         columnNumber: 25
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 80,
+                lineNumber: 99,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 79,
+            lineNumber: 98,
             columnNumber: 13
         }, this);
     }
@@ -2152,7 +2273,7 @@ function Profile() {
                     children: "Profile"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/account/profile.js",
-                    lineNumber: 251,
+                    lineNumber: 314,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2167,7 +2288,7 @@ function Profile() {
                                     children: "Personal Info"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 254,
+                                    lineNumber: 317,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2176,7 +2297,7 @@ function Profile() {
                                     children: "Orders"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 261,
+                                    lineNumber: 324,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2185,7 +2306,7 @@ function Profile() {
                                     children: "Address Book"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 268,
+                                    lineNumber: 331,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2194,13 +2315,13 @@ function Profile() {
                                     children: "Logout"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 275,
+                                    lineNumber: 338,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/account/profile.js",
-                            lineNumber: 253,
+                            lineNumber: 316,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2215,7 +2336,7 @@ function Profile() {
                                                     children: "First Name:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 286,
+                                                    lineNumber: 349,
                                                     columnNumber: 37
                                                 }, this),
                                                 " ",
@@ -2223,7 +2344,7 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 285,
+                                            lineNumber: 348,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2233,7 +2354,7 @@ function Profile() {
                                                     children: "Last Name:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 289,
+                                                    lineNumber: 352,
                                                     columnNumber: 37
                                                 }, this),
                                                 " ",
@@ -2241,7 +2362,7 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 288,
+                                            lineNumber: 351,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2251,7 +2372,7 @@ function Profile() {
                                                     children: "Email:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 292,
+                                                    lineNumber: 355,
                                                     columnNumber: 37
                                                 }, this),
                                                 " ",
@@ -2259,7 +2380,7 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 291,
+                                            lineNumber: 354,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2269,7 +2390,7 @@ function Profile() {
                                                     children: "Phone:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 295,
+                                                    lineNumber: 358,
                                                     columnNumber: 37
                                                 }, this),
                                                 " ",
@@ -2277,7 +2398,7 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 294,
+                                            lineNumber: 357,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2287,7 +2408,7 @@ function Profile() {
                                                     children: "Gender:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 298,
+                                                    lineNumber: 361,
                                                     columnNumber: 37
                                                 }, this),
                                                 " ",
@@ -2295,7 +2416,7 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 297,
+                                            lineNumber: 360,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2305,7 +2426,7 @@ function Profile() {
                                                     children: "Joined:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/account/profile.js",
-                                                    lineNumber: 301,
+                                                    lineNumber: 364,
                                                     columnNumber: 37
                                                 }, this),
                                                 ' ',
@@ -2313,54 +2434,54 @@ function Profile() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/account/profile.js",
-                                            lineNumber: 300,
+                                            lineNumber: 363,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 284,
+                                    lineNumber: 347,
                                     columnNumber: 29
                                 }, this),
                                 selectedTab === 'orders' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     children: "No orders available."
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 308,
+                                    lineNumber: 371,
                                     columnNumber: 54
                                 }, this),
                                 selectedTab === 'address' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     children: "No addresses available."
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/account/profile.js",
-                                    lineNumber: 309,
+                                    lineNumber: 372,
                                     columnNumber: 55
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/account/profile.js",
-                            lineNumber: 282,
+                            lineNumber: 345,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/account/profile.js",
-                    lineNumber: 252,
+                    lineNumber: 315,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 250,
+            lineNumber: 313,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 249,
+        lineNumber: 312,
         columnNumber: 9
     }, this);
 }
-_s(Profile, "kxIxwguV0HGca7XS7aUcEvMUPlQ=", false, function() {
+_s(Profile, "v2So5vFESQc0rnFO8HJ2zuOYmaI=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
