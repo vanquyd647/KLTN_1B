@@ -2504,7 +2504,7 @@ function Profile() {
                     className: "flex flex-col md:flex-row gap-6",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "md:w-1/4 bg-gray-100 p-4 rounded shadow-md",
+                            className: "md:w-1/4 bg-100 p-4 rounded shadow-md",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                     className: `w-full text-left px-4 py-2 mb-2 rounded ${selectedTab === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`,

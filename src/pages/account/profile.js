@@ -313,7 +313,7 @@ export default function Profile() {
             <div className="container mx-auto px-4 py-6">
                 <h1 className="text-2xl font-bold mb-4">Profile</h1>
                 <div className="flex flex-col md:flex-row gap-6">
-                    <div className="md:w-1/4 bg-gray-100 p-4 rounded shadow-md">
+                    <div className="md:w-1/4 bg-100 p-4 rounded shadow-md">
                         <button
                             className={`w-full text-left px-4 py-2 mb-2 rounded ${selectedTab === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-200'
                                 }`}
