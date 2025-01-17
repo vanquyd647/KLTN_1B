@@ -226,6 +226,10 @@ export default function Slug() {
                     </div>
                 </div>
 
+                <div>
+                    thêm thông tin sản phẩm 
+                </div>
+
                 {/* Reviews Section */}
                 <div className="mt-8">
                     <h2 className="text-2xl font-bold mb-4">Reviews</h2>
@@ -249,16 +253,16 @@ export default function Slug() {
                     </div>
 
                     {/* Pagination Controls */}
-                    <div className="flex justify-center items-center gap-2 mt-4">
+                    <div className="flex flex-wrap justify-center items-center gap-2 mt-4">
                         <button
-                            className={`px-3 py-2 border rounded ${pagination.currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                             disabled={pagination.currentPage <= 1}
                             onClick={() => handlePageChange(1)} // Go to the first page
                         >
                             First
                         </button>
                         <button
-                            className={`px-3 py-2 border rounded ${pagination.currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                             disabled={pagination.currentPage <= 1}
                             onClick={() => handlePageChange(pagination.currentPage - 1)} // Go to the previous page
                         >
@@ -281,9 +285,9 @@ export default function Slug() {
                                     index > 0 && page - pages[index - 1] > 1; // Add ellipsis if there is a gap between pages
                                 return (
                                     <span key={page}>
-                                        {isEllipsis && <span className="px-3">...</span>}
+                                        {isEllipsis && <span className="px-2 text-sm">...</span>}
                                         <button
-                                            className={`px-3 py-2 border rounded ${pagination.currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+                                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
                                             onClick={() => handlePageChange(page)}
                                         >
                                             {page}
@@ -293,21 +297,20 @@ export default function Slug() {
                             })}
 
                         <button
-                            className={`px-3 py-2 border rounded ${pagination.currentPage >= pagination.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage >= pagination.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                             disabled={pagination.currentPage >= pagination.totalPages}
                             onClick={() => handlePageChange(pagination.currentPage + 1)} // Go to the next page
                         >
                             Next
                         </button>
                         <button
-                            className={`px-3 py-2 border rounded ${pagination.currentPage >= pagination.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage >= pagination.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
                             disabled={pagination.currentPage >= pagination.totalPages}
                             onClick={() => handlePageChange(pagination.totalPages)} // Go to the last page
                         >
                             Last
                         </button>
                     </div>
-
 
                     {/* Add a Review Section */}
                     <div className="mt-6">
