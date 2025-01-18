@@ -371,6 +371,10 @@ img, video {
   left: 50%;
 }
 
+.right-2 {
+  right: .5rem;
+}
+
 .right-4 {
   right: 1rem;
 }
@@ -379,16 +383,12 @@ img, video {
   top: 0;
 }
 
-.top-4 {
-  top: 1rem;
-}
-
-.right-2 {
-  right: .5rem;
-}
-
 .top-2 {
   top: .5rem;
+}
+
+.top-4 {
+  top: 1rem;
 }
 
 .z-50 {
@@ -869,10 +869,6 @@ img, video {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity, 1));
-}
-
-.underline {
-  text-decoration-line: underline;
 }
 
 .line-through {

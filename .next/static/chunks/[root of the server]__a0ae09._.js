@@ -626,6 +626,7 @@ __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "productApi": (()=>productApi),
+    "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
     "userApi": (()=>userApi)
 });
@@ -637,7 +638,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -932,6 +933,17 @@ const reviewApi = {
         }
     }
 };
+const productsByCategoryApi = {
+    // Lấy tất cả sản phẩm theo danh mục
+    getProductsByCategory: async (categoryId, page, limit)=>{
+        try {
+            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    }
+};
 ;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -1099,11 +1111,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx
 ;
 function Sidebar() {
     const categories = [
-        'Áo Thun',
-        'Quần Jeans',
-        'Váy',
-        'Áo Khoác',
-        'Phụ Kiện'
+        {
+            id: 1,
+            name: 'Áo Thun'
+        },
+        {
+            id: 2,
+            name: 'Quần Jeans'
+        },
+        {
+            id: 3,
+            name: 'Váy'
+        },
+        {
+            id: 4,
+            name: 'Áo Khoác'
+        },
+        {
+            id: 5,
+            name: 'Phụ Kiện'
+        }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
         className: "p-6",
@@ -1113,35 +1140,35 @@ function Sidebar() {
                 children: "Danh mục"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 6,
+                lineNumber: 12,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
                 className: "space-y-4",
-                children: categories.map((category, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                            href: `/products?category=${category}`,
+                            href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
                             className: "hover:underline block",
-                            children: category
+                            children: category.name
                         }, void 0, false, {
                             fileName: "[project]/src/components/Sidebar.js",
-                            lineNumber: 10,
+                            lineNumber: 16,
                             columnNumber: 25
                         }, this)
-                    }, index, false, {
+                    }, category.id, false, {
                         fileName: "[project]/src/components/Sidebar.js",
-                        lineNumber: 9,
+                        lineNumber: 15,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 7,
+                lineNumber: 13,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar.js",
-        lineNumber: 5,
+        lineNumber: 11,
         columnNumber: 9
     }, this);
 }

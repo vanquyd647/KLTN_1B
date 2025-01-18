@@ -21,7 +21,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi
 
 const apiClient = axios.create({
-    baseURL: 'https://kltn-1a.onrender.com/api/',  
+    baseURL: 'http://localhost:5551/api/',
 });
 
 // **Request Interceptor**
@@ -366,4 +366,16 @@ const reviewApi = {
     },
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi };
+const productsByCategoryApi = {
+    // Lấy tất cả sản phẩm theo danh mục
+    getProductsByCategory: async (categoryId, page, limit) => {
+        try {
+            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    },
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi };
