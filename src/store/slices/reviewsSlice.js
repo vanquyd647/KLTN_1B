@@ -5,7 +5,7 @@ import { reviewApi } from '../../utils/apiClient';
 // Async thunk for fetching reviews with pagination
 export const fetchReviewsByProduct = createAsyncThunk(
     'reviews/fetchReviewsByProduct',
-    async ({ productId, page , limit }, thunkAPI) => {
+    async ({ productId, page, limit }, thunkAPI) => {
         try {
             // API call to fetch paginated reviews
             const response = await reviewApi.getReviewsByProduct(productId, page, limit);
@@ -32,12 +32,23 @@ export const fetchAverageRating = createAsyncThunk(
     async (productId, thunkAPI) => {
         try {
             const response = await reviewApi.getAverageRating(productId);
-            return response.data;
+
+            if (response.status === 'success' && response.data?.averageRating) {
+                return {
+                    averageRating: parseFloat(response.data.averageRating.averageRating) || 0,
+                    totalReviews: parseInt(response.data.averageRating.totalReviews, 10) || 0,
+                };
+            } else {
+                throw new Error('Invalid API response structure');
+            }
         } catch (error) {
-            return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch average rating');
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || 'Failed to fetch average rating'
+            );
         }
     }
 );
+
 
 export const createReview = createAsyncThunk(
     'reviews/createReview',
@@ -111,12 +122,12 @@ const reviewsSlice = createSlice({
             .addCase(fetchAverageRating.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.averageRating = action.payload?.averageRating || 0;
+                state.pagination.totalReviews = action.payload?.totalReviews || 0;
             })
             .addCase(fetchAverageRating.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
-
         // Create review
         builder
             .addCase(createReview.pending, (state) => {

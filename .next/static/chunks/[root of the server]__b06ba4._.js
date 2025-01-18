@@ -1575,9 +1575,16 @@ const fetchReviewsByProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2
 const fetchAverageRating = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('reviews/fetchAverageRating', async (productId, thunkAPI)=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["reviewApi"].getAverageRating(productId);
-        return response.data;
+        if (response.status === 'success' && response.data?.averageRating) {
+            return {
+                averageRating: parseFloat(response.data.averageRating.averageRating) || 0,
+                totalReviews: parseInt(response.data.averageRating.totalReviews, 10) || 0
+            };
+        } else {
+            throw new Error('Invalid API response structure');
+        }
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch average rating');
+        return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to fetch average rating');
     }
 });
 const createReview = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('reviews/createReview', async (reviewData, thunkAPI)=>{
@@ -1637,6 +1644,7 @@ const reviewsSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         }).addCase(fetchAverageRating.fulfilled, (state, action)=>{
             state.isLoading = false;
             state.averageRating = action.payload?.averageRating || 0;
+            state.pagination.totalReviews = action.payload?.totalReviews || 0;
         }).addCase(fetchAverageRating.rejected, (state, action)=>{
             state.isLoading = false;
             state.error = action.payload;
