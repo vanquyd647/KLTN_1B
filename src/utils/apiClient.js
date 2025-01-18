@@ -55,7 +55,6 @@ apiClient.interceptors.response.use(
         console.log('Response received:', response);
         console.log('Response headers:', response.headers['x-session-id']);
 
-
         // Lưu session ID nếu có trong headers của response
         const sessionId = response.headers['x-session-id'];
         if (sessionId) {
@@ -69,11 +68,16 @@ apiClient.interceptors.response.use(
         // Log toàn bộ error response
         console.error('Error response:', error.response);
 
-        // Xử lý lỗi (giữ nguyên logic cũ)
         const originalRequest = error.config;
 
-        if (error.response?.status === 403 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // Thêm thuộc tính _retryCount nếu chưa có
+        if (!originalRequest._retryCount) {
+            originalRequest._retryCount = 0;
+        }
+
+        // Nếu lỗi 403 và chưa đạt giới hạn retry
+        if (error.response?.status === 403 && originalRequest._retryCount < 5) {
+            originalRequest._retryCount += 1; // Tăng số lần retry
 
             if (originalRequest.url.includes('/users/refresh-token')) {
                 console.error('Token refresh failed. Redirecting to login...');
@@ -92,10 +96,15 @@ apiClient.interceptors.response.use(
             }
         }
 
+        // Nếu vượt quá số lần retry, trả về lỗi
+        if (originalRequest._retryCount >= 5) {
+            console.error('Maximum retry attempts reached.');
+            return Promise.reject(new Error('Request failed after maximum retries.'));
+        }
+
         return Promise.reject(error);
     }
 );
-
 
 
 // **User API**

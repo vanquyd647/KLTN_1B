@@ -6,7 +6,6 @@ const images = [
     'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.39.08%20-%20A%20horizontal%20banner%20for%20a%20clothing%20shop%20featuring%20a%20minimalistic%20streetwear%20theme%20for%20youth.%20The%20design%20showcases%20stylish%20hoodies%2C%20oversized%20t-shirts%2C.webp?alt=media&token=bda0c9ce-0cdd-4cfb-ab36-13a0a7455aea', 
 ];
 
-
 export default function Banner() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,7 +17,7 @@ export default function Banner() {
     }, []);
 
     return (
-        <div className="relative w-full h-[50rem] overflow-hidden">
+        <div className="relative w-full h-[30rem] md:h-[50rem] overflow-hidden">
             {images.map((image, index) => (
                 <div
                     key={index}

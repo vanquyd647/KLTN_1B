@@ -2,11 +2,8 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/_error": "pages/_error.js",
-  "/featured-products": "pages/featured-products.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/cart": "pages/cart.js",
   "/account/profile": "pages/account/profile.js",
-  "/new-products": "pages/new-products.js"
+  "/_error": "pages/_error.js",
+  "/productdetail/[slug]": "pages/productdetail/[slug].js",
+  "/featured-products": "pages/featured-products.js"
 }

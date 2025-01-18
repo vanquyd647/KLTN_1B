@@ -220,10 +220,14 @@ apiClient.interceptors.response.use((response)=>{
 }, async (error)=>{
     // Log toàn bộ error response
     console.error('Error response:', error.response);
-    // Xử lý lỗi (giữ nguyên logic cũ)
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
+    // Thêm thuộc tính _retryCount nếu chưa có
+    if (!originalRequest._retryCount) {
+        originalRequest._retryCount = 0;
+    }
+    // Nếu lỗi 403 và chưa đạt giới hạn retry
+    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
+        originalRequest._retryCount += 1; // Tăng số lần retry
         if (originalRequest.url.includes('/users/refresh-token')) {
             console.error('Token refresh failed. Redirecting to login...');
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
@@ -238,6 +242,11 @@ apiClient.interceptors.response.use((response)=>{
             console.error('Error during token refresh:', refreshError);
             return Promise.reject(refreshError);
         }
+    }
+    // Nếu vượt quá số lần retry, trả về lỗi
+    if (originalRequest._retryCount >= 5) {
+        console.error('Maximum retry attempts reached.');
+        return Promise.reject(new Error('Request failed after maximum retries.'));
     }
     return Promise.reject(error);
 });
@@ -1134,9 +1143,16 @@ const fetchReviewsByProduct = (0, __TURBOPACK__imported__module__$5b$externals$5
 const fetchAverageRating = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('reviews/fetchAverageRating', async (productId, thunkAPI)=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["reviewApi"].getAverageRating(productId);
-        return response.data;
+        if (response.status === 'success' && response.data?.averageRating) {
+            return {
+                averageRating: parseFloat(response.data.averageRating.averageRating) || 0,
+                totalReviews: parseInt(response.data.averageRating.totalReviews, 10) || 0
+            };
+        } else {
+            throw new Error('Invalid API response structure');
+        }
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.response?.data || 'Failed to fetch average rating');
+        return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to fetch average rating');
     }
 });
 const createReview = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('reviews/createReview', async (reviewData, thunkAPI)=>{
@@ -1196,6 +1212,7 @@ const reviewsSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         }).addCase(fetchAverageRating.fulfilled, (state, action)=>{
             state.isLoading = false;
             state.averageRating = action.payload?.averageRating || 0;
+            state.pagination.totalReviews = action.payload?.totalReviews || 0;
         }).addCase(fetchAverageRating.rejected, (state, action)=>{
             state.isLoading = false;
             state.error = action.payload;

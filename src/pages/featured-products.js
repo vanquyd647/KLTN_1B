@@ -58,7 +58,7 @@ export default function FeaturedProducts() {
                                     'https://via.placeholder.com/150'
                                 }
                                 alt={product.product_name}
-                                className="w-full h-40 object-cover rounded"
+                                className="w-full h-60 sm:h-72 md:h-80 object-cover rounded"
                             />
                             <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
                             <p className="text-gray-600">{product.description}</p>

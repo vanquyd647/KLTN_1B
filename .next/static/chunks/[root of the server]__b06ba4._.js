@@ -638,7 +638,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'https://kltn-1a.onrender.com/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -673,10 +673,14 @@ apiClient.interceptors.response.use((response)=>{
 }, async (error)=>{
     // Log toàn bộ error response
     console.error('Error response:', error.response);
-    // Xử lý lỗi (giữ nguyên logic cũ)
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
+    // Thêm thuộc tính _retryCount nếu chưa có
+    if (!originalRequest._retryCount) {
+        originalRequest._retryCount = 0;
+    }
+    // Nếu lỗi 403 và chưa đạt giới hạn retry
+    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
+        originalRequest._retryCount += 1; // Tăng số lần retry
         if (originalRequest.url.includes('/users/refresh-token')) {
             console.error('Token refresh failed. Redirecting to login...');
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
@@ -691,6 +695,11 @@ apiClient.interceptors.response.use((response)=>{
             console.error('Error during token refresh:', refreshError);
             return Promise.reject(refreshError);
         }
+    }
+    // Nếu vượt quá số lần retry, trả về lỗi
+    if (originalRequest._retryCount >= 5) {
+        console.error('Maximum retry attempts reached.');
+        return Promise.reject(new Error('Request failed after maximum retries.'));
     }
     return Promise.reject(error);
 });
