@@ -2642,67 +2642,81 @@ function Slug() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
                                     className: "text-lg font-semibold mb-2",
-                                    children: "Add a Review"
+                                    children: "THÊM ĐÁNH GIÁ"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
                                     lineNumber: 403,
                                     columnNumber: 25
                                 }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center mb-4",
-                                    children: [
-                                        1,
-                                        2,
-                                        3,
-                                        4,
-                                        5
-                                    ].map((rating)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
-                                            xmlns: "http://www.w3.org/2000/svg",
-                                            viewBox: "0 0 24 24",
-                                            fill: rating <= reviewRating ? "currentColor" : "none",
-                                            stroke: "currentColor",
-                                            strokeWidth: 2,
-                                            className: `w-8 h-8 cursor-pointer ${rating <= reviewRating ? "text-yellow-500" : "text-gray-300"}`,
-                                            onClick: ()=>setReviewRating(rating),
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
-                                                strokeLinecap: "round",
-                                                strokeLinejoin: "round",
-                                                d: "M12 3.172l2.828 5.734 6.337.919-4.582 4.46 1.081 6.312L12 17.711 6.336 20.597l1.08-6.312-4.582-4.46 6.337-.919L12 3.172z"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                lineNumber: 417,
-                                                columnNumber: 37
-                                            }, this)
-                                        }, rating, false, {
-                                            fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 407,
-                                            columnNumber: 33
-                                        }, this))
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 405,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("textarea", {
-                                    value: reviewText,
-                                    onChange: (e)=>setReviewText(e.target.value),
-                                    className: "w-full border p-2 rounded mb-4",
-                                    rows: "4",
-                                    placeholder: "Write your review here..."
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 426,
-                                    columnNumber: 25
-                                }, this),
+                                !(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])() ? // Show login prompt if the user is not logged in
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                    onClick: handleSubmitReview,
+                                    onClick: ()=>router.push('/account/profile'),
                                     className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition",
-                                    children: "Submit Review"
+                                    children: "Vui lòng đăng nhập để đánh giá sản phẩm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 434,
-                                    columnNumber: 25
-                                }, this)
+                                    lineNumber: 406,
+                                    columnNumber: 29
+                                }, this) : // Show review form if the user is logged in
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center mb-4",
+                                            children: [
+                                                1,
+                                                2,
+                                                3,
+                                                4,
+                                                5
+                                            ].map((rating)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
+                                                    xmlns: "http://www.w3.org/2000/svg",
+                                                    viewBox: "0 0 24 24",
+                                                    fill: rating <= reviewRating ? "currentColor" : "none",
+                                                    stroke: "currentColor",
+                                                    strokeWidth: 2,
+                                                    className: `w-8 h-8 cursor-pointer ${rating <= reviewRating ? "text-yellow-500" : "text-gray-300"}`,
+                                                    onClick: ()=>setReviewRating(rating),
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
+                                                        strokeLinecap: "round",
+                                                        strokeLinejoin: "round",
+                                                        d: "M12 3.172l2.828 5.734 6.337.919-4.582 4.46 1.081 6.312L12 17.711 6.336 20.597l1.08-6.312-4.582-4.46 6.337-.919L12 3.172z"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/productdetail/[slug].js",
+                                                        lineNumber: 428,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, rating, false, {
+                                                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                                                    lineNumber: 418,
+                                                    columnNumber: 41
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                                            lineNumber: 416,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("textarea", {
+                                            value: reviewText,
+                                            onChange: (e)=>setReviewText(e.target.value),
+                                            className: "w-full border p-2 rounded mb-4",
+                                            rows: "4",
+                                            placeholder: "Write your review here..."
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                                            lineNumber: 437,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                            onClick: handleSubmitReview,
+                                            className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition",
+                                            children: "Submit Review"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                                            lineNumber: 445,
+                                            columnNumber: 33
+                                        }, this)
+                                    ]
+                                }, void 0, true)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
