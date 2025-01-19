@@ -3,15 +3,23 @@ import { productsByCategoryApi } from '../../utils/apiClient';
 
 export const fetchProductsByCategory = createAsyncThunk(
     'productsByCategory/fetchProductsByCategory',
-    async ({ categoryId, page, limit }, { rejectWithValue }) => {
+    async ({ categoryId, page, limit, sort, priceRange, colorIds }, { rejectWithValue }) => {
         try {
-            const data = await productsByCategoryApi.getProductsByCategory(categoryId, page, limit);
+            const data = await productsByCategoryApi.getProductsByCategory(
+                categoryId,
+                page,
+                limit,
+                sort,
+                priceRange,
+                colorIds
+            );
             return data;
         } catch (error) {
             return rejectWithValue(error);
         }
     }
 );
+
 
 const productsByCategorySlice = createSlice({
     name: 'productsByCategory',

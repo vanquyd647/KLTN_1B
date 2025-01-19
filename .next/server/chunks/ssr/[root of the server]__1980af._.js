@@ -450,10 +450,17 @@ const reviewApi = {
     }
 };
 const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
+    // Fetch all products by category
+    getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds)=>{
         try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products-by-category/${categoryId}?${query}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
@@ -1227,9 +1234,9 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ([__TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
-const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('productsByCategory/fetchProductsByCategory', async ({ categoryId, page, limit }, { rejectWithValue })=>{
+const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('productsByCategory/fetchProductsByCategory', async ({ categoryId, page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
     try {
-        const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productsByCategoryApi"].getProductsByCategory(categoryId, page, limit);
+        const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productsByCategoryApi"].getProductsByCategory(categoryId, page, limit, sort, priceRange, colorIds);
         return data;
     } catch (error) {
         return rejectWithValue(error);

@@ -823,10 +823,14 @@ apiClient.interceptors.response.use((response)=>{
 }, async (error)=>{
     // Log toàn bộ error response
     console.error('Error response:', error.response);
-    // Xử lý lỗi (giữ nguyên logic cũ)
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
+    // Thêm thuộc tính _retryCount nếu chưa có
+    if (!originalRequest._retryCount) {
+        originalRequest._retryCount = 0;
+    }
+    // Nếu lỗi 403 và chưa đạt giới hạn retry
+    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
+        originalRequest._retryCount += 1; // Tăng số lần retry
         if (originalRequest.url.includes('/users/refresh-token')) {
             console.error('Token refresh failed. Redirecting to login...');
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
@@ -841,6 +845,11 @@ apiClient.interceptors.response.use((response)=>{
             console.error('Error during token refresh:', refreshError);
             return Promise.reject(refreshError);
         }
+    }
+    // Nếu vượt quá số lần retry, trả về lỗi
+    if (originalRequest._retryCount >= 5) {
+        console.error('Maximum retry attempts reached.');
+        return Promise.reject(new Error('Request failed after maximum retries.'));
     }
     return Promise.reject(error);
 });
@@ -2008,7 +2017,7 @@ function Banner() {
         }
     }["Banner.useEffect"], []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "relative w-full h-[50rem] overflow-hidden",
+        className: "relative w-full h-[30rem] md:h-[50rem] overflow-hidden",
         children: [
             images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
@@ -2018,12 +2027,12 @@ function Banner() {
                         className: "w-full h-full object-cover"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 33,
+                        lineNumber: 32,
                         columnNumber: 21
                     }, this)
                 }, index, false, {
                     fileName: "[project]/src/components/Banner.js",
-                    lineNumber: 23,
+                    lineNumber: 22,
                     columnNumber: 17
                 }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2033,18 +2042,18 @@ function Banner() {
                         className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
                     }, index, false, {
                         fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 44,
+                        lineNumber: 43,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Banner.js",
-                lineNumber: 42,
+                lineNumber: 41,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Banner.js",
-        lineNumber: 21,
+        lineNumber: 20,
         columnNumber: 9
     }, this);
 }
@@ -2162,7 +2171,7 @@ function NewProducts() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                         src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
                                         alt: product.product_name,
-                                        className: "w-full h-80 object-cover rounded"
+                                        className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/new-products.js",
                                         lineNumber: 55,

@@ -1094,9 +1094,9 @@ const reviewApi = {
 };
 const productsByCategoryApi = {
     // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
+    getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds)=>{
         try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}&sort=${sort}&priceRange=${priceRange}&colorIds=${colorIds}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';

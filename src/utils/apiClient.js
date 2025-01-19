@@ -376,15 +376,24 @@ const reviewApi = {
 };
 
 const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit) => {
+    // Fetch all products by category
+    getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds) => {
         try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || '',
+            }).toString();
+
+            const response = await apiClient.get(`products-by-category/${categoryId}?${query}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
         }
     },
 };
+
 
 export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi };

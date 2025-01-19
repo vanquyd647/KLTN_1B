@@ -943,10 +943,17 @@ const reviewApi = {
     }
 };
 const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
+    // Fetch all products by category
+    getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds)=>{
         try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products-by-category/${categoryId}?${query}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
@@ -1705,9 +1712,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
 ;
 ;
-const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('productsByCategory/fetchProductsByCategory', async ({ categoryId, page, limit }, { rejectWithValue })=>{
+const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('productsByCategory/fetchProductsByCategory', async ({ categoryId, page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
     try {
-        const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productsByCategoryApi"].getProductsByCategory(categoryId, page, limit);
+        const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productsByCategoryApi"].getProductsByCategory(categoryId, page, limit, sort, priceRange, colorIds);
         return data;
     } catch (error) {
         return rejectWithValue(error);
