@@ -186,7 +186,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'https://kltn-1a.onrender.com/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1998,580 +1998,960 @@ function Layout({ children }) {
     }, this);
 }
 }}),
-"[project]/src/components/Sidebar2.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"[externals]/@fortawesome/react-fontawesome [external] (@fortawesome/react-fontawesome, cjs)": (function(__turbopack_context__) {
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
+{
+const mod = __turbopack_external_require__("@fortawesome/react-fontawesome", () => require("@fortawesome/react-fontawesome"));
+
+module.exports = mod;
+}}),
+"[externals]/@fortawesome/free-solid-svg-icons [external] (@fortawesome/free-solid-svg-icons, esm_import)": ((__turbopack_context__) => {
 "use strict";
 
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>Sidebar)
-});
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
-;
-;
-function Sidebar() {
-    // Danh sách danh mục với id và name
-    const categories = [
-        {
-            id: 1,
-            name: 'Áo Thun'
-        },
-        {
-            id: 2,
-            name: 'Quần Jeans'
-        },
-        {
-            id: 3,
-            name: 'Váy'
-        },
-        {
-            id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
-        }
-    ];
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { categoryId } = router.query;
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "flex flex-wrap justify-center gap-6 p-6 bg-white rounded-lg shadow-lg",
-        children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                onClick: ()=>router.push(`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`),
-                className: `px-6 py-3 text-lg font-semibold rounded-lg border-2 transition-all ${parseInt(categoryId, 10) === category.id ? 'bg-blue-500 text-white border-blue-500 shadow-md' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
-                children: category.name
-            }, category.id, false, {
-                fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 19,
-                columnNumber: 17
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 17,
-        columnNumber: 9
-    }, this);
-}
-}}),
-"[project]/src/components/Banner.js [ssr] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+__turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+const mod = await __turbopack_external_import__("@fortawesome/free-solid-svg-icons");
 
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>Banner)
-});
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
-;
-;
-const images = [
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.46.23%20-%20A%20horizontal%20banner%20for%20the%20brand%20\'Fashion%20Store%2C\'%20designed%20to%20appeal%20to%20a%20diverse%20audience.%20The%20logo%20is%20prominently%20placed%20in%20the%20center%20of%20the%20banne.webp?alt=media&token=b2c95f9e-35c9-4da0-a5ba-1d293ec3f1ee',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.35.06%20-%20A%20set%20of%20three%20horizontal%20banners%20for%20a%20clothing%20shop%2C%20each%20designed%20for%20a%20modern%2C%20stylish%20theme.%20The%20first%20banner%20features%20casual%20summer%20outfits%20in%20v.webp?alt=media&token=2aa6f64f-7efd-4bed-9373-1c388eaad463',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.39.08%20-%20A%20horizontal%20banner%20for%20a%20clothing%20shop%20featuring%20a%20minimalistic%20streetwear%20theme%20for%20youth.%20The%20design%20showcases%20stylish%20hoodies%2C%20oversized%20t-shirts%2C.webp?alt=media&token=bda0c9ce-0cdd-4cfb-ab36-13a0a7455aea'
-];
-function Banner() {
-    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
-    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        const interval = setInterval(()=>{
-            setCurrentIndex((prevIndex)=>(prevIndex + 1) % images.length);
-        }, 3000); // Change image every 3 seconds
-        return ()=>clearInterval(interval); // Cleanup on unmount
-    }, []);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "relative w-full h-[30rem] md:h-[50rem] overflow-hidden",
-        children: [
-            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                        src: image,
-                        alt: `Banner ${index + 1}`,
-                        className: "w-full h-full object-cover"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 32,
-                        columnNumber: 21
-                    }, this)
-                }, index, false, {
-                    fileName: "[project]/src/components/Banner.js",
-                    lineNumber: 22,
-                    columnNumber: 17
-                }, this)),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
-                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setCurrentIndex(index),
-                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
-                    }, index, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 43,
-                        columnNumber: 21
-                    }, this))
-            }, void 0, false, {
-                fileName: "[project]/src/components/Banner.js",
-                lineNumber: 41,
-                columnNumber: 13
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/Banner.js",
-        lineNumber: 20,
-        columnNumber: 9
-    }, this);
-}
-}}),
-"[project]/src/pages/category/productsByCategory.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+__turbopack_export_namespace__(mod);
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, true);}),
+"[project]/src/components/profiles/AuthInterface.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_esm__({
-    "default": (()=>ProductsByCategory)
+    "default": (()=>AuthInterface)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productsByCategorySlice.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/colorsSlice.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$react$2d$fontawesome__$5b$external$5d$__$2840$fortawesome$2f$react$2d$fontawesome$2c$__cjs$29$__ = __turbopack_import__("[externals]/@fortawesome/react-fontawesome [external] (@fortawesome/react-fontawesome, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__ = __turbopack_import__("[externals]/@fortawesome/free-solid-svg-icons [external] (@fortawesome/free-solid-svg-icons, esm_import)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
-    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
 ;
-;
-;
-;
-;
-;
-;
-function ProductsByCategory() {
-    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { products, totalPages, loading, error } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.productsByCategory);
-    const { data: colors, loading: colorsLoading, error: colorsError } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.colors);
-    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
-    const [sort, setSort] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('newest');
-    const [selectedColors, setSelectedColors] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
-    const [priceRange, setPriceRange] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
-    const pageSize = 10;
-    const { categoryId, categoryName } = router.query;
-    // Fetch products when filters or pagination change
-    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        if (categoryId) {
-            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["fetchProductsByCategory"])({
-                categoryId,
-                page: currentPage,
-                limit: pageSize,
-                sort,
-                colorIds: selectedColors.join(','),
-                priceRange
-            }));
-        }
-    }, [
-        dispatch,
-        categoryId,
-        currentPage,
-        sort,
-        selectedColors,
-        priceRange
-    ]);
-    // Fetch colors on component mount
-    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["fetchColors"])());
-    }, [
-        dispatch
-    ]);
-    const handleColorChange = (colorId)=>{
-        setSelectedColors((prevColors)=>prevColors.includes(colorId) ? prevColors.filter((id)=>id !== colorId) : [
-                ...prevColors,
-                colorId
-            ]);
-        setCurrentPage(1); // Reset to the first page when filters change
-    };
-    const handlePriceRangeChange = (e)=>{
-        setPriceRange(e.target.value);
-        setCurrentPage(1); // Reset to the first page when filters change
-    };
-    const handleSortChange = (e)=>{
-        setSort(e.target.value);
-        setCurrentPage(1); // Reset to the first page when filters change
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleChange, handleLogin, handleRegister, handleOtpSubmit, otp, setOtp, passwordVisibility, togglePasswordVisibility, loading }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "container mx-auto px-4 py-6",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 68,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "mt-6 px-6",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: "hidden md:flex justify-center gap-4",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 71,
-                        columnNumber: 21
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/category/productsByCategory.js",
-                    lineNumber: 70,
-                    columnNumber: 17
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 69,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "w-full px-4 py-6",
+            authStep === 'login' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white p-6 rounded shadow-md max-w-md mx-auto",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold mb-6",
-                        children: [
-                            "Sản phẩm theo danh mục ",
-                            categoryName
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 76,
-                        columnNumber: 17
-                    }, this),
-                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "text-red-500 text-center",
-                        children: error
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold mb-4 text-center",
+                        children: "Login"
                     }, void 0, false, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 78,
-                        columnNumber: 27
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 23,
+                        columnNumber: 21
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "mb-6 flex items-center gap-2",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
+                        onSubmit: handleLogin,
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                htmlFor: "sortFilter",
-                                className: "text-gray-700 font-semibold",
-                                children: "Sắp xếp theo:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 82,
-                                columnNumber: 21
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
-                                id: "sortFilter",
-                                value: sort,
-                                onChange: handleSortChange,
-                                className: "border rounded p-2",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "featured",
-                                        children: "Sản phẩm nổi bật"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Email:"
                                     }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 91,
-                                        columnNumber: 25
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 26,
+                                        columnNumber: 29
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "price_asc",
-                                        children: "Giá: Tăng dần"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "email",
+                                        name: "email",
+                                        value: formData.email,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true
                                     }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 92,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "price_desc",
-                                        children: "Giá: Giảm dần"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 93,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "name_asc",
-                                        children: "Tên: A-Z"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 94,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "name_desc",
-                                        children: "Tên: Z-A"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 95,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "oldest",
-                                        children: "Cũ nhất"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 96,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "newest",
-                                        children: "Mới nhất"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 97,
-                                        columnNumber: 25
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 27,
+                                        columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 85,
-                                columnNumber: 21
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 81,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "mb-6 flex items-center gap-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                htmlFor: "priceRangeFilter",
-                                className: "text-gray-700 font-semibold",
-                                children: "Khoảng giá:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 103,
-                                columnNumber: 21
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
-                                id: "priceRangeFilter",
-                                value: priceRange,
-                                onChange: handlePriceRangeChange,
-                                className: "border rounded p-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "",
-                                        children: "Tất cả"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 112,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "0-100000",
-                                        children: "Dưới 100.000 VND"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 113,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "100000-500000",
-                                        children: "100.000 - 500.000 VND"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 114,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "500000-1000000",
-                                        children: "500.000 - 1.000.000 VND"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 115,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
-                                        value: "1000000-",
-                                        children: "Trên 1.000.000 VND"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 116,
-                                        columnNumber: 25
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 106,
-                                columnNumber: 21
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 102,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "mb-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                className: "text-lg font-bold mb-2",
-                                children: "Màu sắc"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 122,
-                                columnNumber: 21
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 25,
+                                columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                className: "flex flex-wrap gap-4",
-                                children: colors.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2",
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Password:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 37,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: "relative",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                                                type: "checkbox",
-                                                id: `color-${color.id}`,
-                                                value: color.id,
-                                                onChange: ()=>handleColorChange(color.id),
-                                                className: "cursor-pointer"
+                                                type: passwordVisibility.password ? 'text' : 'password',
+                                                name: "password",
+                                                value: formData.password,
+                                                onChange: handleChange,
+                                                className: "w-full border p-2 rounded",
+                                                required: true
                                             }, void 0, false, {
-                                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                lineNumber: 126,
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 39,
                                                 columnNumber: 33
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
-                                                htmlFor: `color-${color.id}`,
-                                                className: "flex items-center gap-2 cursor-pointer",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                                        className: "block w-6 h-6 rounded border border-black",
-                                                        style: {
-                                                            backgroundColor: color.hex_code
-                                                        }
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                        lineNumber: 134,
-                                                        columnNumber: 37
-                                                    }, this),
-                                                    color.color
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                lineNumber: 133,
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                type: "button",
+                                                className: "absolute right-2 top-2 text-gray-600",
+                                                onClick: ()=>togglePasswordVisibility('password'),
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$react$2d$fontawesome__$5b$external$5d$__$2840$fortawesome$2f$react$2d$fontawesome$2c$__cjs$29$__["FontAwesomeIcon"], {
+                                                    icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                    lineNumber: 52,
+                                                    columnNumber: 37
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 47,
                                                 columnNumber: 33
                                             }, this)
                                         ]
-                                    }, color.id, true, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 125,
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 38,
                                         columnNumber: 29
-                                    }, this))
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 36,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                type: "submit",
+                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                disabled: loading,
+                                children: loading ? 'Logging in...' : 'Login'
                             }, void 0, false, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 123,
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 56,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 24,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                        className: "mt-4 text-center",
+                        children: [
+                            "Don't have an account?",
+                            ' ',
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setAuthStep('register'),
+                                className: "text-blue-600 hover:underline",
+                                children: "Register"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 66,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 64,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                lineNumber: 22,
+                columnNumber: 17
+            }, this),
+            authStep === 'register' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white p-6 rounded shadow-md max-w-md mx-auto",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold mb-4 text-center",
+                        children: "Register"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 77,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
+                        onSubmit: handleRegister,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "First Name:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 80,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        name: "firstname",
+                                        value: formData.firstname,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 81,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 79,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Last Name:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 91,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        name: "lastname",
+                                        value: formData.lastname,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 92,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 90,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Email:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 102,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "email",
+                                        name: "email",
+                                        value: formData.email,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 103,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 101,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Password:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 113,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: "relative",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                                type: passwordVisibility.password ? 'text' : 'password',
+                                                name: "password",
+                                                value: formData.password,
+                                                onChange: handleChange,
+                                                className: "w-full border p-2 rounded",
+                                                required: true
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 115,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                type: "button",
+                                                className: "absolute right-2 top-2 text-gray-600",
+                                                onClick: ()=>togglePasswordVisibility('password'),
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$react$2d$fontawesome__$5b$external$5d$__$2840$fortawesome$2f$react$2d$fontawesome$2c$__cjs$29$__["FontAwesomeIcon"], {
+                                                    icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                    lineNumber: 128,
+                                                    columnNumber: 37
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 123,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 114,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 112,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Confirm Password:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 135,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: "relative",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                                type: passwordVisibility.confirmPassword ? 'text' : 'password',
+                                                name: "confirmPassword",
+                                                value: formData.confirmPassword,
+                                                onChange: handleChange,
+                                                className: "w-full border p-2 rounded",
+                                                required: true
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 137,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                type: "button",
+                                                className: "absolute right-2 top-2 text-gray-600",
+                                                onClick: ()=>togglePasswordVisibility('confirmPassword'),
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$react$2d$fontawesome__$5b$external$5d$__$2840$fortawesome$2f$react$2d$fontawesome$2c$__cjs$29$__["FontAwesomeIcon"], {
+                                                    icon: passwordVisibility.confirmPassword ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                    lineNumber: 150,
+                                                    columnNumber: 37
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 145,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 136,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 134,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Phone:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 157,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        name: "phone",
+                                        value: formData.phone,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 158,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 156,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Gender:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 168,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
+                                        name: "gender",
+                                        value: formData.gender,
+                                        onChange: handleChange,
+                                        className: "w-full border p-2 rounded",
+                                        required: true,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                                value: "",
+                                                children: "Select"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 176,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                                value: "male",
+                                                children: "Male"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 177,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                                value: "female",
+                                                children: "Female"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 178,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                                value: "other",
+                                                children: "Other"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                                lineNumber: 179,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 169,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 167,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                type: "submit",
+                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                disabled: loading,
+                                children: loading ? 'Registering...' : 'Register'
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 182,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 78,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                lineNumber: 76,
+                columnNumber: 17
+            }, this),
+            authStep === 'otp' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white p-6 rounded shadow-md max-w-md mx-auto",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold mb-4 text-center",
+                        children: "Verify OTP"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 194,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
+                        onSubmit: handleOtpSubmit,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                        children: "Enter OTP:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 197,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        value: otp,
+                                        onChange: (e)=>setOtp(e.target.value),
+                                        className: "w-full border p-2 rounded",
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                        lineNumber: 198,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 196,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                type: "submit",
+                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                disabled: loading,
+                                children: loading ? 'Verifying...' : 'Verify OTP'
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                                lineNumber: 206,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 195,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/profiles/AuthInterface.js",
+                lineNumber: 193,
+                columnNumber: 17
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/profiles/AuthInterface.js",
+        lineNumber: 20,
+        columnNumber: 9
+    }, this);
+}
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, false);}),
+"[project]/src/components/profiles/ProfileInterface.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>ProfileInterface)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+;
+function ProfileInterface({ user, handleLogout, selectedTab, setSelectedTab }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "container mx-auto px-4 py-6",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-bold mb-4",
+                children: "Profile"
+            }, void 0, false, {
+                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                lineNumber: 4,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex flex-col md:flex-row gap-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "md:w-1/4 bg-100 p-4 rounded shadow-md",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: `w-full text-left px-4 py-2 mb-2 rounded ${selectedTab === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`,
+                                onClick: ()=>setSelectedTab('info'),
+                                children: "Personal Info"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 7,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: `w-full text-left px-4 py-2 mb-2 rounded ${selectedTab === 'orders' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`,
+                                onClick: ()=>setSelectedTab('orders'),
+                                children: "Orders"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 14,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: `w-full text-left px-4 py-2 mb-2 rounded ${selectedTab === 'address' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`,
+                                onClick: ()=>setSelectedTab('address'),
+                                children: "Address Book"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 21,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition mt-6",
+                                onClick: handleLogout,
+                                children: "Logout"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 28,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 121,
+                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                        lineNumber: 6,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
-                        children: products.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                onClick: ()=>router.push(`/productdetail/${product.slug}`),
+                        className: "md:w-3/4 bg-white p-6 rounded shadow-md",
+                        children: [
+                            selectedTab === 'info' && user && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                                        src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                        alt: product.product_name,
-                                        className: "w-full h-80 object-cover rounded"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 153,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold mt-2",
-                                        children: product.product_name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 161,
-                                        columnNumber: 29
-                                    }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-600",
-                                        children: product.description
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 162,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-red-500 font-bold",
+                                        className: "mb-4",
                                         children: [
-                                            product.discount_price.toLocaleString('vi-VN'),
-                                            " VND"
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "First Name:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 39,
+                                                columnNumber: 33
+                                            }, this),
+                                            " ",
+                                            user.firstname || 'N/A'
                                         ]
                                     }, void 0, true, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 163,
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 38,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-500 line-through",
+                                        className: "mb-4",
                                         children: [
-                                            product.price.toLocaleString('vi-VN'),
-                                            " VND"
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "Last Name:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 42,
+                                                columnNumber: 33
+                                            }, this),
+                                            " ",
+                                            user.lastname || 'N/A'
                                         ]
                                     }, void 0, true, {
-                                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 166,
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 41,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "Email:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 45,
+                                                columnNumber: 33
+                                            }, this),
+                                            " ",
+                                            user.email || 'N/A'
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 44,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "Phone:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 48,
+                                                columnNumber: 33
+                                            }, this),
+                                            " ",
+                                            user.phone || 'N/A'
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 47,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "Gender:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 51,
+                                                columnNumber: 33
+                                            }, this),
+                                            " ",
+                                            user.gender || 'N/A'
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 50,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("strong", {
+                                                children: "Joined:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 54,
+                                                columnNumber: 33
+                                            }, this),
+                                            ' ',
+                                            user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 53,
                                         columnNumber: 29
                                     }, this)
                                 ]
-                            }, product.id, true, {
-                                fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 148,
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 37,
                                 columnNumber: 25
-                            }, this))
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 146,
+                            }, this),
+                            selectedTab === 'orders' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                children: "No orders available."
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 61,
+                                columnNumber: 50
+                            }, this),
+                            selectedTab === 'address' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                children: "No addresses available."
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                lineNumber: 62,
+                                columnNumber: 51
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                        lineNumber: 35,
                         columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "flex justify-center mt-6",
-                        children: currentPage < totalPages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                            onClick: ()=>setCurrentPage((prevPage)=>prevPage + 1),
-                            className: "px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700",
-                            children: "Xem thêm"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/category/productsByCategory.js",
-                            lineNumber: 175,
-                            columnNumber: 25
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 173,
-                        columnNumber: 17
-                    }, this),
-                    loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "text-center mt-4",
-                        children: "Đang tải..."
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 184,
-                        columnNumber: 29
                     }, this)
                 ]
             }, void 0, true, {
-                fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 75,
+                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                lineNumber: 5,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/pages/category/productsByCategory.js",
-        lineNumber: 67,
+        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+        lineNumber: 3,
+        columnNumber: 9
+    }, this);
+}
+}}),
+"[project]/src/pages/account/profile.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+__turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+__turbopack_esm__({
+    "default": (()=>Profile)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/userSlice.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$AuthInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/profiles/AuthInterface.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$ProfileInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/profiles/ProfileInterface.js [ssr] (ecmascript)");
+var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
+    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$AuthInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+]);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$AuthInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
+;
+;
+;
+;
+;
+;
+;
+;
+function Profile() {
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const { user, loading } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.auth);
+    const [isAuthenticated, setIsAuthenticated] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
+    const [authStep, setAuthStep] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('login');
+    const [selectedTab, setSelectedTab] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('info');
+    const [otp, setOtp] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const [passwordVisibility, setPasswordVisibility] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
+        password: false,
+        confirmPassword: false
+    });
+    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
+        email: '',
+        password: '',
+        confirmPassword: '',
+        firstname: '',
+        lastname: '',
+        phone: '',
+        gender: ''
+    });
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const controller = new AbortController();
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])(); // Lấy token từ storage
+        if (token) {
+            setIsAuthenticated(true);
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])()).then(()=>{
+                setError(null); // Đặt lại lỗi nếu thành công
+            }).catch((err)=>{
+                console.error('Failed to get user info:', err);
+                setError(err.message || 'Failed to authenticate'); // Lưu lỗi
+                setIsAuthenticated(false); // Đặt lại trạng thái
+            });
+        }
+        return ()=>controller.abort();
+    }, [
+        dispatch
+    ]);
+    const handleLogout = async ()=>{
+        try {
+            await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["logoutUser"])()).unwrap();
+            setIsAuthenticated(false);
+        } catch (err) {
+            console.error('Failed to logout:', err);
+        }
+    };
+    const handleChange = (e)=>{
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+    const handleLogin = async (e)=>{
+        e.preventDefault();
+        const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["loginUser"])({
+            email: formData.email,
+            password: formData.password
+        }));
+        if (result.meta.requestStatus === 'fulfilled') {
+            setIsAuthenticated(true);
+        }
+    };
+    const handleRegister = async (e)=>{
+        e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match. Please try again.');
+            return;
+        }
+        const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["registerUser"])(formData));
+        if (result.meta.requestStatus === 'fulfilled') {
+            setAuthStep('otp');
+        }
+    };
+    const handleOtpSubmit = async (e)=>{
+        e.preventDefault();
+        const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["verifyOtp"])({
+            email: formData.email,
+            otp
+        }));
+        if (result.meta.requestStatus === 'fulfilled') {
+            alert('Verification successful! You can now log in.');
+            setAuthStep('login');
+        } else {
+            alert('Invalid OTP. Please try again.');
+        }
+    };
+    const togglePasswordVisibility = (field)=>{
+        setPasswordVisibility({
+            ...passwordVisibility,
+            [field]: !passwordVisibility[field]
+        });
+    };
+    if (!isAuthenticated) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$AuthInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                authStep: authStep,
+                setAuthStep: setAuthStep,
+                formData: formData,
+                setFormData: setFormData,
+                handleChange: handleChange,
+                handleLogin: handleLogin,
+                handleRegister: handleRegister,
+                handleOtpSubmit: handleOtpSubmit,
+                otp: otp,
+                setOtp: setOtp,
+                passwordVisibility: passwordVisibility,
+                togglePasswordVisibility: togglePasswordVisibility,
+                loading: loading
+            }, void 0, false, {
+                fileName: "[project]/src/pages/account/profile.js",
+                lineNumber: 108,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/pages/account/profile.js",
+            lineNumber: 107,
+            columnNumber: 13
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$ProfileInterface$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+            user: user,
+            selectedTab: selectedTab,
+            setSelectedTab: setSelectedTab,
+            handleLogout: handleLogout
+        }, void 0, false, {
+            fileName: "[project]/src/pages/account/profile.js",
+            lineNumber: 129,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/pages/account/profile.js",
+        lineNumber: 128,
         columnNumber: 9
     }, this);
 }
@@ -2580,4 +2960,4 @@ __turbopack_async_result__();
 
 };
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__19faa0._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__5f7f99._.js.map

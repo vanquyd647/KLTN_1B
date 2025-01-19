@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { getToken } from '../../utils/storage';
 import Layout from '../../components/Layout';
-import  AuthInterface  from '../../components/profiles/AuthInterface';
-import  ProfileInterface  from '../../components/profiles/ProfileInterface';
+import AuthInterface from '../../components/profiles/AuthInterface';
+import ProfileInterface from '../../components/profiles/ProfileInterface';
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -29,16 +29,24 @@ export default function Profile() {
         phone: '',
         gender: '',
     });
+    const [error, setError] = useState(null);
+    const controller = new AbortController();
 
     useEffect(() => {
-        const token = getToken();
+        const token = getToken(); // Lấy token từ storage
         if (token) {
             setIsAuthenticated(true);
-            dispatch(getUserInfo()).catch(() => setIsAuthenticated(false));
-        } else {
-            setIsAuthenticated(false);
-            setAuthStep('login');
+            dispatch(getUserInfo())
+                .then(() => {
+                    setError(null); // Đặt lại lỗi nếu thành công
+                })
+                .catch((err) => {
+                    console.error('Failed to get user info:', err);
+                    setError(err.message || 'Failed to authenticate'); // Lưu lỗi
+                    setIsAuthenticated(false); // Đặt lại trạng thái
+                });
         }
+        return () => controller.abort();
     }, [dispatch]);
 
     const handleLogout = async () => {

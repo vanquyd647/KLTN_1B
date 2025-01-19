@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__935f2a._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__7a581a._.js", {
 
 "[turbopack]/browser/dev/hmr-client/websocket.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -639,7 +639,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -2438,6 +2438,83 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
+"[project]/src/components/profiles/LoginModal.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
+;
+;
+const LoginModal = ({ onConfirm, onCancel })=>{
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "modal-overlay",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "modal-content",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                    children: "Session Expired"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/profiles/LoginModal.js",
+                    lineNumber: 7,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                    children: "Your session has expired. Please log in again to continue."
+                }, void 0, false, {
+                    fileName: "[project]/src/components/profiles/LoginModal.js",
+                    lineNumber: 8,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "modal-actions",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: onCancel,
+                            children: "Cancel"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/profiles/LoginModal.js",
+                            lineNumber: 10,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: onConfirm,
+                            children: "Log In"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/profiles/LoginModal.js",
+                            lineNumber: 11,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/profiles/LoginModal.js",
+                    lineNumber: 9,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/components/profiles/LoginModal.js",
+            lineNumber: 6,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/components/profiles/LoginModal.js",
+        lineNumber: 5,
+        columnNumber: 9
+    }, this);
+};
+_c = LoginModal;
+const __TURBOPACK__default__export__ = LoginModal;
+var _c;
+__turbopack_refresh__.register(_c, "LoginModal");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
 "[project]/src/pages/account/profile.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -2454,9 +2531,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$j
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$AuthInterface$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/profiles/AuthInterface.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$ProfileInterface$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/profiles/ProfileInterface.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$profiles$2f$LoginModal$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/profiles/LoginModal.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
+;
 ;
 ;
 ;
@@ -2489,22 +2568,29 @@ function Profile() {
         phone: '',
         gender: ''
     });
-    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const controller = new AbortController();
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null); // Lưu lỗi (nếu có)
+    const [showModal, setShowModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Profile.useEffect": ()=>{
             const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])(); // Lấy token từ storage
             if (token) {
                 setIsAuthenticated(true);
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserInfo"])()).then({
+                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserInfo"])()).unwrap().then({
                     "Profile.useEffect": ()=>{
-                        setError(null); // Đặt lại lỗi nếu thành công
+                        setError(null); // Thành công, không có lỗi
                     }
                 }["Profile.useEffect"]).catch({
                     "Profile.useEffect": (err)=>{
                         console.error('Failed to get user info:', err);
-                        setError(err.message || 'Failed to authenticate'); // Lưu lỗi
-                        setIsAuthenticated(false); // Đặt lại trạng thái
+                        // Nếu lỗi liên quan đến refresh token
+                        if (err.message === 'Refresh Token không tồn tại' || err.message === 'Unauthorized') {
+                            setIsAuthenticated(false);
+                            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeToken"])(); // Xóa token (nếu cần)
+                            setShowModal(true); // Hiển thị modal yêu cầu đăng nhập lại
+                        } else {
+                            setError(err.message || 'Something went wrong');
+                            setIsAuthenticated(false);
+                        }
                     }
                 }["Profile.useEffect"]);
             }
@@ -2513,8 +2599,13 @@ function Profile() {
             })["Profile.useEffect"];
         }
     }["Profile.useEffect"], [
-        dispatch
+        dispatch,
+        router
     ]);
+    const handleModalConfirm = ()=>{
+        setShowModal(false);
+        router.push('/account/profile'); // Điều hướng tới trang đăng nhập
+    };
     const handleLogout = async ()=>{
         try {
             await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["logoutUser"])()).unwrap();
@@ -2587,12 +2678,12 @@ function Profile() {
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 108,
+                lineNumber: 127,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 107,
+            lineNumber: 126,
             columnNumber: 13
         }, this);
     }
@@ -2604,16 +2695,16 @@ function Profile() {
             handleLogout: handleLogout
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 129,
+            lineNumber: 148,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 128,
+        lineNumber: 147,
         columnNumber: 9
     }, this);
 }
-_s(Profile, "VGkwtgOYPH2vj7pP82kyG36jnR4=", false, function() {
+_s(Profile, "+84qnHqiX0dU02oTM0NDNc0q+ss=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
@@ -2657,4 +2748,4 @@ __turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pag
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__935f2a._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__7a581a._.js.map

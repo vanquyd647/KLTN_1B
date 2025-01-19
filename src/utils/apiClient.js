@@ -49,57 +49,77 @@ apiClient.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+const MAX_RETRY_COUNT = 5; // Giới hạn số lần retry
+
+// Hàm delay với backoff logic
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Interceptor xử lý response
 apiClient.interceptors.response.use(
     (response) => {
-        // Log toàn bộ response để kiểm tra
         console.log('Response received:', response);
-        console.log('Response headers:', response.headers['x-session-id']);
 
-        // Lưu session ID nếu có trong headers của response
-        const sessionId = response.headers['x-session-id'];
+        // Lưu session ID nếu có trong response headers
+        const sessionId = response.headers?.['x-session-id'];
         if (sessionId) {
             setSessionId(sessionId); // Lưu vào cookie hoặc storage
-            console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
+            console.log('Session ID saved from response:', sessionId);
         }
 
         return response;
     },
     async (error) => {
-        // Log toàn bộ error response
-        console.error('Error response:', error.response);
-
         const originalRequest = error.config;
+
+        console.log('Error response:', error.response || 'No response available');
 
         // Thêm thuộc tính _retryCount nếu chưa có
         if (!originalRequest._retryCount) {
             originalRequest._retryCount = 0;
         }
 
-        // Nếu lỗi 403 và chưa đạt giới hạn retry
-        if (error.response?.status === 403 && originalRequest._retryCount < 5) {
-            originalRequest._retryCount += 1; // Tăng số lần retry
+        // Kiểm tra lỗi từ Refresh Token
+        if (
+            error.response?.status === 403 &&
+            error.response?.data?.message === "Refresh Token không tồn tại"
+        ) {
+            console.log('Refresh token does not exist. Logging out...');
+            removeRefreshToken(); // Xóa refresh token
+            removeToken(); // Xóa access token
+            removeSessionId(); // Xóa session ID
+            store.dispatch(resetAuthState()); // Reset trạng thái auth
+            return new Promise(() => {}); // Trả về Promise không lỗi
+        }
 
-            if (originalRequest.url.includes('/users/refresh-token')) {
-                console.error('Token refresh failed. Redirecting to login...');
-                removeSessionId(); // Xóa session ID
-                store.dispatch(resetAuthState());
-                return Promise.reject(new Error('Please log in again.'));
-            }
+        // Dừng retry nếu là request tới /users/refresh-token
+        if (originalRequest.url.includes('/users/refresh-token')) {
+            console.log('Refresh token request failed. Stopping retries.');
+            removeSessionId(); // Xóa session ID
+            store.dispatch(resetAuthState()); // Reset trạng thái auth
+            return new Promise(() => {}); // Trả về Promise không lỗi
+        }
+
+        // Nếu lỗi 403 và chưa đạt giới hạn retry
+        if (error.response?.status === 403 && originalRequest._retryCount < MAX_RETRY_COUNT) {
+            originalRequest._retryCount += 1; // Tăng số lần retry
+            console.log(`Retrying request (${originalRequest._retryCount}/${MAX_RETRY_COUNT})...`);
 
             try {
+                // Lấy token mới
                 const newAccessToken = await userApi.refreshToken();
+                // Gắn token mới vào header
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                return apiClient(originalRequest); // Retry request với token mới
+                return apiClient(originalRequest); // Retry request
             } catch (refreshError) {
-                console.error('Error during token refresh:', refreshError);
-                return Promise.reject(refreshError);
+                console.log('Error during token refresh:', refreshError);
+                return new Promise(() => {}); // Trả về Promise không lỗi
             }
         }
 
-        // Nếu vượt quá số lần retry, trả về lỗi
-        if (originalRequest._retryCount >= 5) {
-            console.error('Maximum retry attempts reached.');
-            return Promise.reject(new Error('Request failed after maximum retries.'));
+        // Nếu vượt quá số lần retry
+        if (originalRequest._retryCount >= MAX_RETRY_COUNT) {
+            console.log('Maximum retry attempts reached.');
+            return new Promise(() => {}); // Trả về Promise không lỗi
         }
 
         return Promise.reject(error);

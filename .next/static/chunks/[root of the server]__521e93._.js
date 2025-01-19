@@ -669,10 +669,12 @@ const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modu
 });
 const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/getUserInfo', async (_, { rejectWithValue })=>{
     try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile(); // Use getUserProfile instead of getUser
-        return response;
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile();
+        return response; // Trả về dữ liệu người dùng
     } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
+        // Xử lý lỗi từ apiClient
+        console.error('Error fetching user info:', error);
+        return rejectWithValue(error.message || 'Failed to fetch user info');
     }
 });
 // Slice
@@ -757,7 +759,7 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         });
         builder.addCase(getUserInfo.rejected, (state, action)=>{
             state.loading = false;
-            state.error = action.payload;
+            state.error = action.payload || 'Failed to fetch user info';
         });
     }
 });
@@ -789,7 +791,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -810,47 +812,61 @@ apiClient.interceptors.request.use(async (config)=>{
     }
     return config;
 }, (error)=>Promise.reject(error));
+const MAX_RETRY_COUNT = 5; // Giới hạn số lần retry
+// Hàm delay với backoff logic
+const delay = (ms)=>new Promise((resolve)=>setTimeout(resolve, ms));
+// Interceptor xử lý response
 apiClient.interceptors.response.use((response)=>{
-    // Log toàn bộ response để kiểm tra
     console.log('Response received:', response);
-    console.log('Response headers:', response.headers['x-session-id']);
-    // Lưu session ID nếu có trong headers của response
-    const sessionId = response.headers['x-session-id'];
+    // Lưu session ID nếu có trong response headers
+    const sessionId = response.headers?.['x-session-id'];
     if (sessionId) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu vào cookie hoặc storage
-        console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
+        console.log('Session ID saved from response:', sessionId);
     }
     return response;
 }, async (error)=>{
-    // Log toàn bộ error response
-    console.error('Error response:', error.response);
     const originalRequest = error.config;
+    console.log('Error response:', error.response || 'No response available');
     // Thêm thuộc tính _retryCount nếu chưa có
     if (!originalRequest._retryCount) {
         originalRequest._retryCount = 0;
     }
+    // Kiểm tra lỗi từ Refresh Token
+    if (error.response?.status === 403 && error.response?.data?.message === "Refresh Token không tồn tại") {
+        console.log('Refresh token does not exist. Logging out...');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeRefreshToken"])(); // Xóa refresh token
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeToken"])(); // Xóa access token
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
+        store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])()); // Reset trạng thái auth
+        return new Promise(()=>{}); // Trả về Promise không lỗi
+    }
+    // Dừng retry nếu là request tới /users/refresh-token
+    if (originalRequest.url.includes('/users/refresh-token')) {
+        console.log('Refresh token request failed. Stopping retries.');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
+        store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])()); // Reset trạng thái auth
+        return new Promise(()=>{}); // Trả về Promise không lỗi
+    }
     // Nếu lỗi 403 và chưa đạt giới hạn retry
-    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
+    if (error.response?.status === 403 && originalRequest._retryCount < MAX_RETRY_COUNT) {
         originalRequest._retryCount += 1; // Tăng số lần retry
-        if (originalRequest.url.includes('/users/refresh-token')) {
-            console.error('Token refresh failed. Redirecting to login...');
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
-            store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])());
-            return Promise.reject(new Error('Please log in again.'));
-        }
+        console.log(`Retrying request (${originalRequest._retryCount}/${MAX_RETRY_COUNT})...`);
         try {
+            // Lấy token mới
             const newAccessToken = await userApi.refreshToken();
+            // Gắn token mới vào header
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-            return apiClient(originalRequest); // Retry request với token mới
+            return apiClient(originalRequest); // Retry request
         } catch (refreshError) {
-            console.error('Error during token refresh:', refreshError);
-            return Promise.reject(refreshError);
+            console.log('Error during token refresh:', refreshError);
+            return new Promise(()=>{}); // Trả về Promise không lỗi
         }
     }
-    // Nếu vượt quá số lần retry, trả về lỗi
-    if (originalRequest._retryCount >= 5) {
-        console.error('Maximum retry attempts reached.');
-        return Promise.reject(new Error('Request failed after maximum retries.'));
+    // Nếu vượt quá số lần retry
+    if (originalRequest._retryCount >= MAX_RETRY_COUNT) {
+        console.log('Maximum retry attempts reached.');
+        return new Promise(()=>{}); // Trả về Promise không lỗi
     }
     return Promise.reject(error);
 });

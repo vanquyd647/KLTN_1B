@@ -54,13 +54,16 @@ export const getUserInfo = createAsyncThunk(
     'auth/getUserInfo',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await userApi.getUserProfile(); // Use getUserProfile instead of getUser
-            return response;
+            const response = await userApi.getUserProfile();
+            return response; // Trả về dữ liệu người dùng
         } catch (error) {
-            return rejectWithValue(error.response?.data || error.message);
+            // Xử lý lỗi từ apiClient
+            console.error('Error fetching user info:', error);
+            return rejectWithValue(error.message || 'Failed to fetch user info');
         }
     }
 );
+
 
 
 // Slice
@@ -148,7 +151,7 @@ const userSlice = createSlice({
         });
         builder.addCase(getUserInfo.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload;
+            state.error = action.payload || 'Failed to fetch user info';
         });
     },
 });
