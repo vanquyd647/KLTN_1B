@@ -395,5 +395,17 @@ const productsByCategoryApi = {
     },
 };
 
+const colorsApi = {
+    // Fetch all colors
+    getColors: async () => {
+        try {
+            const response = await apiClient.get('colors');
+            return response.data.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch colors.';
+        }
+    },
+}
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi };
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi };

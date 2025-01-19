@@ -1,11 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/cart": "pages/cart.js",
-  "/account/profile": "pages/account/profile.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/new-products": "pages/new-products.js",
-  "/featured-products": "pages/featured-products.js"
+  "/category/productsByCategory": "pages/category/productsByCategory.js"
 }

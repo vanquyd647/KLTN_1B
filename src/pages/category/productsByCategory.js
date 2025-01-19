@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByCategory } from '../../store/slices/productsByCategorySlice';
+import { fetchColors } from '../../store/slices/colorsSlice';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar2';
 import Banner from '../../components/Banner';
-import axios from 'axios';
 
 export default function ProductsByCategory() {
     const dispatch = useDispatch();
@@ -14,11 +14,13 @@ export default function ProductsByCategory() {
         (state) => state.productsByCategory
     );
 
+    const { data: colors, loading: colorsLoading, error: colorsError } = useSelector((state) => state.colors);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState('newest');
     const [selectedColors, setSelectedColors] = useState([]);
     const [priceRange, setPriceRange] = useState('');
-    const [colors, setColors] = useState([]); // Store colors fetched from API
+
     const pageSize = 10;
 
     const { categoryId, categoryName } = router.query;
@@ -39,18 +41,10 @@ export default function ProductsByCategory() {
         }
     }, [dispatch, categoryId, currentPage, sort, selectedColors, priceRange]);
 
-    // Fetch colors from API
+    // Fetch colors on component mount
     useEffect(() => {
-        const fetchColors = async () => {
-            try {
-                const response = await axios.get('http://localhost:5551/api/colors');
-                setColors(response.data.data); // Set colors from API response
-            } catch (error) {
-                console.error('Error fetching colors:', error);
-            }
-        };
-        fetchColors();
-    }, []);
+        dispatch(fetchColors());
+    }, [dispatch]);
 
     const handleColorChange = (colorId) => {
         setSelectedColors((prevColors) =>
