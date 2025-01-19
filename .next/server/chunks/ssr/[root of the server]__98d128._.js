@@ -1908,323 +1908,576 @@ function Layout({ children }) {
     }, this);
 }
 }}),
-"[project]/src/components/Sidebar2.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/slugs/ProductImages.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>Sidebar)
+    "default": (()=>ProductImages)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
 ;
-;
-function Sidebar() {
-    // Danh sách danh mục với id và name
-    const categories = [
-        {
-            id: 1,
-            name: 'Áo Thun'
-        },
-        {
-            id: 2,
-            name: 'Quần Jeans'
-        },
-        {
-            id: 3,
-            name: 'Váy'
-        },
-        {
-            id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
-        }
-    ];
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { categoryId } = router.query;
+function ProductImages({ productColors, selectedColor, setSelectedColor }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "flex flex-wrap justify-center gap-6 p-6 bg-white rounded-lg shadow-lg",
-        children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                onClick: ()=>router.push(`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`),
-                className: `px-6 py-3 text-lg font-semibold rounded-lg border-2 transition-all ${parseInt(categoryId, 10) === category.id ? 'bg-blue-500 text-white border-blue-500 shadow-md' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
-                children: category.name
-            }, category.id, false, {
-                fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 19,
-                columnNumber: 17
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 17,
-        columnNumber: 9
-    }, this);
-}
-}}),
-"[project]/src/components/Banner.js [ssr] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>Banner)
-});
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
-;
-;
-const images = [
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.46.23%20-%20A%20horizontal%20banner%20for%20the%20brand%20\'Fashion%20Store%2C\'%20designed%20to%20appeal%20to%20a%20diverse%20audience.%20The%20logo%20is%20prominently%20placed%20in%20the%20center%20of%20the%20banne.webp?alt=media&token=b2c95f9e-35c9-4da0-a5ba-1d293ec3f1ee',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.35.06%20-%20A%20set%20of%20three%20horizontal%20banners%20for%20a%20clothing%20shop%2C%20each%20designed%20for%20a%20modern%2C%20stylish%20theme.%20The%20first%20banner%20features%20casual%20summer%20outfits%20in%20v.webp?alt=media&token=2aa6f64f-7efd-4bed-9373-1c388eaad463',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.39.08%20-%20A%20horizontal%20banner%20for%20a%20clothing%20shop%20featuring%20a%20minimalistic%20streetwear%20theme%20for%20youth.%20The%20design%20showcases%20stylish%20hoodies%2C%20oversized%20t-shirts%2C.webp?alt=media&token=bda0c9ce-0cdd-4cfb-ab36-13a0a7455aea'
-];
-function Banner() {
-    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
-    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        const interval = setInterval(()=>{
-            setCurrentIndex((prevIndex)=>(prevIndex + 1) % images.length);
-        }, 3000); // Change image every 3 seconds
-        return ()=>clearInterval(interval); // Cleanup on unmount
-    }, []);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "relative w-full h-[30rem] md:h-[50rem] overflow-hidden",
+        className: "md:w-1/2 flex flex-col items-center",
         children: [
-            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                        src: image,
-                        alt: `Banner ${index + 1}`,
-                        className: "w-full h-full object-cover"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 32,
-                        columnNumber: 21
-                    }, this)
-                }, index, false, {
-                    fileName: "[project]/src/components/Banner.js",
-                    lineNumber: 22,
-                    columnNumber: 17
-                }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
-                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setCurrentIndex(index),
-                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
-                    }, index, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 43,
+                className: "w-full max-h-96 overflow-hidden",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                    src: selectedColor?.ProductColor?.image || 'https://via.placeholder.com/500',
+                    alt: "Product Image",
+                    className: "w-full h-full object-contain rounded"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ProductImages.js",
+                    lineNumber: 5,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductImages.js",
+                lineNumber: 4,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex gap-2 mt-4 overflow-x-auto",
+                children: productColors.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: `w-16 h-16 rounded overflow-hidden border-2 cursor-pointer ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500 border-blue-500' : 'border-gray-300'}`,
+                        onClick: ()=>setSelectedColor(color),
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                            src: color.ProductColor?.image || 'https://via.placeholder.com/100',
+                            alt: color.color,
+                            className: "w-full h-full object-cover"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ProductImages.js",
+                            lineNumber: 19,
+                            columnNumber: 25
+                        }, this)
+                    }, color.id, false, {
+                        fileName: "[project]/src/components/slugs/ProductImages.js",
+                        lineNumber: 13,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
-                fileName: "[project]/src/components/Banner.js",
-                lineNumber: 41,
+                fileName: "[project]/src/components/slugs/ProductImages.js",
+                lineNumber: 11,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/components/Banner.js",
-        lineNumber: 20,
+        fileName: "[project]/src/components/slugs/ProductImages.js",
+        lineNumber: 3,
         columnNumber: 9
     }, this);
 }
 }}),
-"[project]/src/pages/featured-products.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/slugs/ProductDetails.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>ProductDetails)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+;
+function ProductDetails({ product, selectedColor, selectedSize, setSelectedSize, quantity, setQuantity, handleAddToCart }) {
+    const increaseQuantity = ()=>setQuantity((prev)=>prev + 1);
+    const decreaseQuantity = ()=>setQuantity((prev)=>prev > 1 ? prev - 1 : 1);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "md:w-1/2",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-bold mb-4",
+                children: product.product_name
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 15,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                        className: "text-lg font-semibold",
+                        children: "Status: "
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 17,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                        className: `font-bold ${product.status === 'available' ? 'text-green-500' : product.status === 'out_of_stock' ? 'text-red-500' : 'text-gray-500'}`,
+                        children: product.status === 'available' ? 'In Stock' : product.status === 'out_of_stock' ? 'Out of Stock' : 'Discontinued'
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 18,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 16,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex items-center space-x-4 mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                        className: "text-lg font-semibold",
+                        children: "Price:"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 30,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                        className: "text-red-500 font-bold text-xl",
+                        children: [
+                            product.discount_price.toLocaleString('vi-VN'),
+                            " VND"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 31,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                        className: "text-gray-500 line-through",
+                        children: [
+                            product.price.toLocaleString('vi-VN'),
+                            " VND"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 32,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 29,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-lg font-semibold mb-2",
+                        children: "Size:"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 35,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex gap-2",
+                        children: product.productSizes.map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: `px-8 py-2 border rounded hover:bg-gray-100 transition ${selectedSize?.id === size.id ? 'bg-blue-100' : ''}`,
+                                onClick: ()=>setSelectedSize(size),
+                                children: size.size
+                            }, size.id, false, {
+                                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                                lineNumber: 38,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 36,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 34,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex flex-wrap gap-4 mt-4",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                    className: "bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700",
+                    onClick: handleAddToCart,
+                    children: "Add to Cart"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ProductDetails.js",
+                    lineNumber: 50,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 49,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/slugs/ProductDetails.js",
+        lineNumber: 14,
+        columnNumber: 9
+    }, this);
+}
+}}),
+"[project]/src/components/slugs/ReviewsSection.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_esm__({
-    "default": (()=>FeaturedProducts)
+    "default": (()=>ReviewsSection)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productSlice.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
-    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
 ;
-;
-;
-;
-;
-;
-function FeaturedProducts() {
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
-    const { featuredProducts, loading, error } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.products);
-    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1); // Theo dõi trang hiện tại
-    const pageSize = 10; // Mặc định tải 10 sản phẩm mỗi lần
-    // Fetch dữ liệu sản phẩm nổi bật khi trang hoặc Redux thay đổi
-    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["fetchFeaturedProductsByPagination"])({
-            page: currentPage,
-            limit: pageSize
-        }));
-    }, [
-        dispatch,
-        currentPage
-    ]);
-    const handleLoadMore = ()=>{
-        setCurrentPage((prevPage)=>prevPage + 1); // Tăng số trang để tải thêm dữ liệu
+function ReviewsSection({ reviews, averageRating, pagination, handlePageChange, handleSubmitReview }) {
+    const [reviewText, setReviewText] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const [reviewRating, setReviewRating] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(5);
+    const submitReview = ()=>{
+        handleSubmitReview({
+            reviewText,
+            reviewRating
+        });
+        setReviewText('');
+        setReviewRating(5);
     };
-    const handleProductClick = (slug)=>{
-        router.push(`/productdetail/${slug}`);
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                fileName: "[project]/src/pages/featured-products.js",
-                lineNumber: 32,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "mt-6 px-6",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: "hidden md:flex justify-center gap-4",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 36,
-                        columnNumber: 21
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/featured-products.js",
-                    lineNumber: 35,
-                    columnNumber: 17
-                }, this)
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                className: "text-2xl font-bold mb-4",
+                children: "Reviews"
             }, void 0, false, {
-                fileName: "[project]/src/pages/featured-products.js",
-                lineNumber: 34,
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 22,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "w-full px-4 py-6",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold mb-6",
-                        children: "Tất cả sản phẩm nổi bật"
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 42,
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-2",
+                        children: [
+                            averageRating,
+                            "/5 based on ",
+                            pagination.totalReviews,
+                            " reviews"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                        lineNumber: 24,
                         columnNumber: 17
                     }, this),
-                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "text-red-500 text-center",
-                        children: error
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 45,
-                        columnNumber: 27
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
-                        children: featuredProducts.items.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                onClick: ()=>handleProductClick(product.slug),
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                                        src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                        alt: product.product_name,
-                                        className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/featured-products.js",
-                                        lineNumber: 55,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold mt-2",
-                                        children: product.product_name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/featured-products.js",
-                                        lineNumber: 63,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-600",
-                                        children: product.description
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/featured-products.js",
-                                        lineNumber: 64,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-red-500 font-bold",
-                                        children: [
-                                            product.discount_price.toLocaleString('vi-VN'),
-                                            " VND"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/featured-products.js",
-                                        lineNumber: 65,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-500 line-through",
-                                        children: [
-                                            product.price.toLocaleString('vi-VN'),
-                                            " VND"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/featured-products.js",
-                                        lineNumber: 68,
-                                        columnNumber: 29
-                                    }, this)
-                                ]
-                            }, product.id, true, {
-                                fileName: "[project]/src/pages/featured-products.js",
-                                lineNumber: 50,
+                    reviews.map((review)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "border p-4 rounded bg-white",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                children: review.review_text
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                                lineNumber: 29,
                                 columnNumber: 25
-                            }, this))
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 48,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "flex justify-center mt-6",
-                        children: featuredProducts.pagination && currentPage < featuredProducts.pagination.totalPages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                            onClick: handleLoadMore,
-                            className: "px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700",
-                            children: "Xem thêm"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/featured-products.js",
-                            lineNumber: 79,
-                            columnNumber: 29
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 76,
-                        columnNumber: 17
-                    }, this),
-                    loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "text-center mt-4",
-                        children: "Đang tải..."
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/featured-products.js",
-                        lineNumber: 89,
-                        columnNumber: 29
-                    }, this)
+                            }, this)
+                        }, review.id, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 28,
+                            columnNumber: 21
+                        }, this))
                 ]
             }, void 0, true, {
-                fileName: "[project]/src/pages/featured-products.js",
-                lineNumber: 41,
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 23,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mt-6",
+                children: !(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])() ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                    className: "bg-blue-600 text-white px-4 py-2 rounded",
+                    onClick: ()=>alert('Please log in to review'),
+                    children: "Log in to review"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                    lineNumber: 35,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            children: [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ].map((rating)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>setReviewRating(rating),
+                                    className: reviewRating >= rating ? 'text-yellow-500' : 'text-gray-300',
+                                    children: "★"
+                                }, rating, false, {
+                                    fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                                    lineNumber: 45,
+                                    columnNumber: 33
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 43,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("textarea", {
+                            value: reviewText,
+                            onChange: (e)=>setReviewText(e.target.value),
+                            className: "w-full border p-2 rounded",
+                            rows: "4"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 54,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                            className: "bg-blue-600 text-white px-4 py-2 rounded",
+                            onClick: submitReview,
+                            children: "Submit"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 60,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 33,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/pages/featured-products.js",
-        lineNumber: 31,
+        fileName: "[project]/src/components/slugs/ReviewsSection.js",
+        lineNumber: 21,
+        columnNumber: 9
+    }, this);
+}
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, false);}),
+"[project]/src/pages/productdetail/[slug].js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+__turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+__turbopack_esm__({
+    "default": (()=>Slug)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module '../../store/slices'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductImages$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ProductImages.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductDetails$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ProductDetails.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ReviewsSection.js [ssr] (ecmascript)");
+var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
+    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+]);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+function Slug() {
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const { slug } = router.query;
+    const { currentProduct, loading: productLoading, error: productError } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.products);
+    const { reviews, averageRating, pagination } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.reviews);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (slug) {
+            dispatch(fetchProductDetail(slug));
+        }
+    }, [
+        dispatch,
+        slug
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (currentProduct?.id) {
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: 1,
+                limit: 5
+            }));
+            dispatch(fetchAverageRating(currentProduct.id));
+        }
+    }, [
+        dispatch,
+        currentProduct
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (currentProduct?.productColors?.length > 0) {
+            setSelectedColor(currentProduct.productColors[0]);
+        }
+        if (currentProduct?.productSizes?.length > 0) {
+            setSelectedSize(currentProduct.productSizes[0]);
+        }
+    }, [
+        currentProduct
+    ]);
+    const handleAddToCart = async ()=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Please select a color and size.');
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch(createCartForUser()).unwrap() : await dispatch(createCartForGuest()).unwrap();
+                activeCartId = cartResponse.id;
+            }
+            const cartItemData = {
+                cart_id: activeCartId,
+                product_id: currentProduct?.id,
+                color_id: selectedColor?.id,
+                size_id: selectedSize?.id,
+                quantity
+            };
+            await dispatch(addItemToCart({
+                cartId: activeCartId,
+                itemData: cartItemData
+            })).unwrap();
+            alert('Item added to cart successfully!');
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
+            alert('Failed to add item to cart.');
+        }
+    };
+    const handleSubmitReview = async (reviewData)=>{
+        try {
+            await dispatch(createReview(reviewData)).unwrap();
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: pagination.currentPage,
+                limit: 5
+            }));
+            dispatch(fetchAverageRating(currentProduct.id));
+        } catch (error) {
+            console.error('Failed to submit review:', error);
+        }
+    };
+    const handlePageChange = (newPage)=>{
+        if (currentProduct?.id && newPage !== pagination.currentPage) {
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: newPage,
+                limit: 5
+            }));
+        }
+    };
+    if (productLoading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "text-center py-10 text-xl",
+        children: "Loading product details..."
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 101,
+        columnNumber: 32
+    }, this);
+    if (productError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "text-center text-red-500 py-10",
+        children: productError
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 102,
+        columnNumber: 30
+    }, this);
+    if (!currentProduct) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "text-center py-10 text-xl",
+        children: "Product not found"
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 103,
+        columnNumber: 33
+    }, this);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "container mx-auto px-4 py-6",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col md:flex-row gap-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductImages$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                            productColors: currentProduct.productColors,
+                            selectedColor: selectedColor,
+                            setSelectedColor: setSelectedColor
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 109,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "hidden md:block border-l border-gray-300"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 114,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductDetails$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                            product: currentProduct,
+                            selectedColor: selectedColor,
+                            selectedSize: selectedSize,
+                            setSelectedSize: setSelectedSize,
+                            quantity: quantity,
+                            setQuantity: setQuantity,
+                            handleAddToCart: handleAddToCart
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 115,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 108,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "mt-8",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        reviews: reviews,
+                        averageRating: averageRating,
+                        pagination: pagination,
+                        handlePageChange: handlePageChange,
+                        handleSubmitReview: handleSubmitReview
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/productdetail/[slug].js",
+                        lineNumber: 126,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 125,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/pages/productdetail/[slug].js",
+            lineNumber: 107,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 106,
         columnNumber: 9
     }, this);
 }
@@ -2233,4 +2486,4 @@ __turbopack_async_result__();
 
 };
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__ae25d8._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__98d128._.js.map

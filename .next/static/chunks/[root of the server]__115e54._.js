@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__e15a36._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__115e54._.js", {
 
 "[turbopack]/browser/dev/hmr-client/websocket.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -617,652 +617,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/store/slices/userSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>__TURBOPACK__default__export__),
-    "getUserInfo": (()=>getUserInfo),
-    "loginUser": (()=>loginUser),
-    "logoutUser": (()=>logoutUser),
-    "registerUser": (()=>registerUser),
-    "resetAuthState": (()=>resetAuthState),
-    "verifyOtp": (()=>verifyOtp)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
-;
-;
-const registerUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/registerUser', async (userData, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].register(userData);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const verifyOtp = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/verifyOtp', async (otpData, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].verifyOtp(otpData);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const loginUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/loginUser', async (credentials, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].login(credentials);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/logoutUser', async (_, { rejectWithValue })=>{
-    try {
-        await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].logout();
-        return true;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/getUserInfo', async (_, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile(); // Use getUserProfile instead of getUser
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-// Slice
-const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'auth',
-    initialState: {
-        user: null,
-        token: null,
-        loading: false,
-        error: null
-    },
-    reducers: {
-        resetAuthState: (state)=>{
-            state.user = null;
-            state.token = null;
-            state.loading = false;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder)=>{
-        // Register
-        builder.addCase(registerUser.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(registerUser.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-        });
-        builder.addCase(registerUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Verify OTP
-        builder.addCase(verifyOtp.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(verifyOtp.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-        });
-        builder.addCase(verifyOtp.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Login
-        builder.addCase(loginUser.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(loginUser.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
-        });
-        builder.addCase(loginUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Logout
-        builder.addCase(logoutUser.pending, (state)=>{
-            state.loading = true;
-        });
-        builder.addCase(logoutUser.fulfilled, (state)=>{
-            state.user = null;
-            state.token = null;
-            state.loading = false;
-        });
-        builder.addCase(logoutUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Get User Info
-        builder.addCase(getUserInfo.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(getUserInfo.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload;
-        });
-        builder.addCase(getUserInfo.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-    }
-});
-const { resetAuthState } = userSlice.actions;
-const __TURBOPACK__default__export__ = userSlice.reducer;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/utils/apiClient.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "apiClient": (()=>apiClient),
-    "cartApi": (()=>cartApi),
-    "productApi": (()=>productApi),
-    "productsByCategoryApi": (()=>productsByCategoryApi),
-    "reviewApi": (()=>reviewApi),
-    "userApi": (()=>userApi)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/userSlice.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [client] (ecmascript)");
-;
-;
-;
-// https://kltn-1a.onrender.com hihi
-const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
-});
-// **Request Interceptor**
-apiClient.interceptors.request.use(async (config)=>{
-    try {
-        // Retrieve access token and session ID from cookies
-        const accessToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])();
-        const sessionId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getSessionId"])();
-        // Add Authorization header if token exists
-        if (accessToken) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
-        }
-        // Add session ID header if session ID exists
-        if (sessionId) {
-            config.headers['x-session-id'] = sessionId; // Add session ID to headers
-        }
-    } catch (error) {
-        console.error('Error adding headers:', error);
-    }
-    return config;
-}, (error)=>Promise.reject(error));
-apiClient.interceptors.response.use((response)=>{
-    // Log toàn bộ response để kiểm tra
-    console.log('Response received:', response);
-    console.log('Response headers:', response.headers['x-session-id']);
-    // Lưu session ID nếu có trong headers của response
-    const sessionId = response.headers['x-session-id'];
-    if (sessionId) {
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu vào cookie hoặc storage
-        console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
-    }
-    return response;
-}, async (error)=>{
-    // Log toàn bộ error response
-    console.error('Error response:', error.response);
-    const originalRequest = error.config;
-    // Thêm thuộc tính _retryCount nếu chưa có
-    if (!originalRequest._retryCount) {
-        originalRequest._retryCount = 0;
-    }
-    // Nếu lỗi 403 và chưa đạt giới hạn retry
-    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
-        originalRequest._retryCount += 1; // Tăng số lần retry
-        if (originalRequest.url.includes('/users/refresh-token')) {
-            console.error('Token refresh failed. Redirecting to login...');
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
-            store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])());
-            return Promise.reject(new Error('Please log in again.'));
-        }
-        try {
-            const newAccessToken = await userApi.refreshToken();
-            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-            return apiClient(originalRequest); // Retry request với token mới
-        } catch (refreshError) {
-            console.error('Error during token refresh:', refreshError);
-            return Promise.reject(refreshError);
-        }
-    }
-    // Nếu vượt quá số lần retry, trả về lỗi
-    if (originalRequest._retryCount >= 5) {
-        console.error('Maximum retry attempts reached.');
-        return Promise.reject(new Error('Request failed after maximum retries.'));
-    }
-    return Promise.reject(error);
-});
-// **User API**
-const userApi = {
-    // Register user
-    register: async (userData)=>{
-        try {
-            const response = await apiClient.post('users/register', userData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Verify OTP for registration
-    verifyOtp: async (otpData)=>{
-        try {
-            const response = await apiClient.post('users/verify-otp', otpData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Login user
-    login: async (credentials)=>{
-        try {
-            const response = await apiClient.post('users/login', credentials);
-            const { accessToken, refreshToken } = response.data.data;
-            if (accessToken && refreshToken) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setToken"])(accessToken); // Lưu access token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken); // Lưu refresh token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartId"])(); // Xóa cart ID khi đăng nhập
-            }
-            // Kiểm tra và lưu session ID từ headers của response
-            const sessionId = response.headers['x-session-id'];
-            if (sessionId) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu session ID vào cookie hoặc storage
-                console.log('Session ID received and saved during login:', sessionId); // Log kiểm tra
-            }
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Logout user
-    logout: async ()=>{
-        try {
-            const refreshToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getRefreshToken"])();
-            const userId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserId"])();
-            await apiClient.post('users/logout', {
-                refreshToken,
-                userId
-            });
-            // Clear all stored tokens and session ID
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeRefreshToken"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeUserId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeToken"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartId"])();
-            return {
-                message: 'Logout successful'
-            };
-        } catch (error) {
-            throw error.response?.data || 'Logout failed';
-        }
-    },
-    // Get user profile
-    getUserProfile: async ()=>{
-        try {
-            const response = await apiClient.get('users/profile');
-            return response.data.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch user profile';
-        }
-    },
-    // Refresh token
-    refreshToken: async ()=>{
-        try {
-            const get_refreshToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getRefreshToken"])();
-            const get_userId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserId"])();
-            const response = await apiClient.post('users/refresh-token', {
-                get_refreshToken
-            });
-            const { accessToken, refreshToken: newRefreshToken } = response.data.data;
-            if (accessToken && newRefreshToken) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setToken"])(accessToken); // Update access token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setRefreshToken"])(newRefreshToken); // Update refresh token
-            }
-            return accessToken; // Return the new access token
-        } catch (error) {
-            throw new Error('Token refresh failed. Please log in again.');
-        }
-    }
-};
-// **Product API**
-const productApi = {
-    // Create a new product
-    createProduct: async (productData)=>{
-        const response = await apiClient.post('products/', productData);
-        return response.data;
-    },
-    // Get all products
-    getProducts: async ()=>{
-        const response = await apiClient.get('products/');
-        return response.data.data;
-    },
-    // Get product details by slug
-    getProductDetail: async (slug)=>{
-        const response = await apiClient.get(`products/${slug}`);
-        return response.data.data;
-    },
-    // Update product by slug
-    updateProduct: async (slug, productData)=>{
-        const response = await apiClient.put(`products/${slug}`, productData);
-        return response.data;
-    },
-    // Delete product by slug
-    deleteProduct: async (slug)=>{
-        const response = await apiClient.delete(`products/${slug}`);
-        return response.data;
-    },
-    // Get products with pagination
-    getProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        return response.data;
-    },
-    // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
-    },
-    // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
-    }
-};
-const cartApi = {
-    // Tạo giỏ hàng cho khách
-    createCartForGuest: async (cartData)=>{
-        try {
-            const response = await apiClient.post('carts/guest', cartData);
-            const { id } = response.data.data;
-            if (id) {
-                console.log('Cart ID:', id);
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCartId"])(id); // Lưu cart ID vào cookie hoặc storage
-            }
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create cart for guest.';
-        }
-    },
-    // Tạo hoặc lấy giỏ hàng cho người dùng đã đăng nhập
-    createCartForUser: async ()=>{
-        try {
-            const response = await apiClient.post('carts/user');
-            const { id } = response.data.data;
-            if (id) {
-                console.log('Cart ID:', id);
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCartId"])(id); // Lưu cart ID vào cookie hoặc storage
-            }
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create or retrieve cart for user.';
-        }
-    },
-    // Lấy chi tiết giỏ hàng theo ID
-    getCartById: async (cartId)=>{
-        try {
-            const response = await apiClient.get(`carts/${cartId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch cart details.';
-        }
-    },
-    // Thêm sản phẩm vào giỏ hàng
-    addItemToCart: async (cartId, itemData)=>{
-        try {
-            const response = await apiClient.post(`carts/${cartId}/items`, itemData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to add item to cart.';
-        }
-    },
-    // Xóa sản phẩm khỏi giỏ hàng
-    removeCartItem: async (itemId)=>{
-        try {
-            const response = await apiClient.delete(`carts/items/${itemId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to remove item from cart.';
-        }
-    },
-    // Lấy tất cả sản phẩm trong giỏ hàng
-    getCartItems: async (cartId)=>{
-        try {
-            const response = await apiClient.get(`carts/${cartId}/items`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch cart items.';
-        }
-    }
-};
-const reviewApi = {
-    // Tạo mới một review
-    createReview: async (reviewData)=>{
-        try {
-            const response = await apiClient.post('reviews/', reviewData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create review.';
-        }
-    },
-    // Lấy danh sách review của một sản phẩm
-    getReviewsByProduct: async (productId, page, limit)=>{
-        try {
-            const response = await apiClient.get(`reviews/product/${productId}?page=${page}&limit=${limit}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch reviews.';
-        }
-    },
-    // Lấy điểm trung bình của một sản phẩm
-    getAverageRating: async (productId)=>{
-        try {
-            const response = await apiClient.get(`reviews/product/${productId}/average-rating`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch average rating.';
-        }
-    },
-    // Xóa một review
-    deleteReview: async (reviewId)=>{
-        try {
-            const response = await apiClient.delete(`reviews/${reviewId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to delete review.';
-        }
-    }
-};
-const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
-        try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch products by category.';
-        }
-    }
-};
-;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/store/slices/cartSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "addItemToCart": (()=>addItemToCart),
-    "createCartForGuest": (()=>createCartForGuest),
-    "createCartForUser": (()=>createCartForUser),
-    "default": (()=>__TURBOPACK__default__export__),
-    "getCartById": (()=>getCartById),
-    "getCartItems": (()=>getCartItems),
-    "removeCartItem": (()=>removeCartItem),
-    "resetCartState": (()=>resetCartState)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
-;
-;
-;
-const createCartForGuest = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/createCartForGuest', async (cartData, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].createCartForGuest(cartData);
-        return response.data;
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-const createCartForUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/createCartForUser', async (_, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].createCartForUser();
-        return response.data;
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-const getCartById = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/getCartById', async (cartId, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].getCartById(cartId);
-        return response.data;
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-const addItemToCart = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/addItemToCart', async ({ cartId, itemData }, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].addItemToCart(cartId, itemData);
-        return response.data;
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-const removeCartItem = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/removeCartItem', async (itemId, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].removeCartItem(itemId);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-const getCartItems = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/getCartItems', async (cartId, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].getCartItems(cartId);
-        return response.data; // Lấy phần `data` từ kết quả API
-    } catch (error) {
-        return rejectWithValue(error);
-    }
-});
-// **Slice**
-const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'cart',
-    initialState: {
-        cart: null,
-        items: [],
-        loading: false,
-        error: null
-    },
-    reducers: {
-        resetCartState: (state)=>{
-            state.cart = null;
-            state.items = [];
-            state.loading = false;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder)=>{
-        builder// Create cart for guest
-        .addCase(createCartForGuest.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(createCartForGuest.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.cart = action.payload;
-        }).addCase(createCartForGuest.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        })// Create or retrieve cart for user
-        .addCase(createCartForUser.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(createCartForUser.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.cart = action.payload;
-        }).addCase(createCartForUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        })// Get cart by ID
-        .addCase(getCartById.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(getCartById.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.cart = action.payload;
-        }).addCase(getCartById.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        })// Add item to cart
-        .addCase(addItemToCart.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(addItemToCart.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.items.push(action.payload);
-        }).addCase(addItemToCart.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        })// Remove item from cart
-        .addCase(removeCartItem.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(removeCartItem.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.items = state.items.filter((item)=>item.id !== action.meta.arg);
-        }).addCase(removeCartItem.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        })// Get cart items
-        .addCase(getCartItems.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(getCartItems.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.items = action.payload;
-        }).addCase(getCartItems.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-    }
-});
-const { resetCartState } = cartSlice.actions;
-const __TURBOPACK__default__export__ = cartSlice.reducer;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
 "[project]/src/components/Sidebar.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -1782,20 +1136,39 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/pages/cart.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>__TURBOPACK__default__export__)
+    "default": (()=>Slug)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/cartSlice.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module '../../store/slices'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module './components/ProductImages'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+(()=>{
+    const e = new Error("Cannot find module './components/ProductDetails'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+(()=>{
+    const e = new Error("Cannot find module './components/ReviewsSection'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -1805,251 +1178,230 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
-const CartPage = ()=>{
+;
+;
+;
+function Slug() {
     _s();
     const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { items, loading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
-        "CartPage.useSelector": (state)=>state.cart
-    }["CartPage.useSelector"]);
+    const { slug } = router.query;
+    const { currentProduct, loading: productLoading, error: productError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "Slug.useSelector": (state)=>state.products
+    }["Slug.useSelector"]);
+    const { reviews, averageRating, pagination } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "Slug.useSelector": (state)=>state.reviews
+    }["Slug.useSelector"]);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "CartPage.useEffect": ()=>{
-            const initializeCart = {
-                "CartPage.useEffect.initializeCart": async ()=>{
-                    try {
-                        let cartResponse;
-                        if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])()) {
-                            if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])()) {
-                                // Tạo giỏ hàng cho khách
-                                cartResponse = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForGuest"])()).unwrap();
-                            } else {
-                                // Tạo giỏ hàng cho người dùng đã đăng nhập
-                                cartResponse = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForUser"])()).unwrap();
-                            }
-                            // Lấy danh sách sản phẩm trong giỏ hàng
-                            if (cartResponse?.id) {
-                                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])(cartResponse.id));
-                            }
-                        } else {
-                            // Lấy danh sách sản phẩm trong giỏ hàng hiện tại
-                            await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])()));
-                        }
-                    } catch (err) {
-                        console.error('Failed to initialize cart:', err);
-                    }
-                }
-            }["CartPage.useEffect.initializeCart"];
-            initializeCart();
-            return ({
-                "CartPage.useEffect": ()=>{
-                    dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetCartState"])());
-                }
-            })["CartPage.useEffect"];
+        "Slug.useEffect": ()=>{
+            if (slug) {
+                dispatch(fetchProductDetail(slug));
+            }
         }
-    }["CartPage.useEffect"], [
-        dispatch
+    }["Slug.useEffect"], [
+        dispatch,
+        slug
     ]);
-    const handleCheckout = ()=>{
-        if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])()) {
-            alert('Please log in to proceed to checkout.');
-            router.push('/login');
-        } else {
-            router.push('/checkout');
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Slug.useEffect": ()=>{
+            if (currentProduct?.id) {
+                dispatch(fetchReviewsByProduct({
+                    productId: currentProduct.id,
+                    page: 1,
+                    limit: 5
+                }));
+                dispatch(fetchAverageRating(currentProduct.id));
+            }
+        }
+    }["Slug.useEffect"], [
+        dispatch,
+        currentProduct
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Slug.useEffect": ()=>{
+            if (currentProduct?.productColors?.length > 0) {
+                setSelectedColor(currentProduct.productColors[0]);
+            }
+            if (currentProduct?.productSizes?.length > 0) {
+                setSelectedSize(currentProduct.productSizes[0]);
+            }
+        }
+    }["Slug.useEffect"], [
+        currentProduct
+    ]);
+    const handleAddToCart = async ()=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Please select a color and size.');
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch(createCartForUser()).unwrap() : await dispatch(createCartForGuest()).unwrap();
+                activeCartId = cartResponse.id;
+            }
+            const cartItemData = {
+                cart_id: activeCartId,
+                product_id: currentProduct?.id,
+                color_id: selectedColor?.id,
+                size_id: selectedSize?.id,
+                quantity
+            };
+            await dispatch(addItemToCart({
+                cartId: activeCartId,
+                itemData: cartItemData
+            })).unwrap();
+            alert('Item added to cart successfully!');
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
+            alert('Failed to add item to cart.');
         }
     };
-    const handleProductClick = (slug)=>{
-        router.push(`/productdetail/${slug}`);
+    const handleSubmitReview = async (reviewData)=>{
+        try {
+            await dispatch(createReview(reviewData)).unwrap();
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: pagination.currentPage,
+                limit: 5
+            }));
+            dispatch(fetchAverageRating(currentProduct.id));
+        } catch (error) {
+            console.error('Failed to submit review:', error);
+        }
     };
-    if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    const handlePageChange = (newPage)=>{
+        if (currentProduct?.id && newPage !== pagination.currentPage) {
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: newPage,
+                limit: 5
+            }));
+        }
+    };
+    if (productLoading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "text-center py-10 text-xl",
-        children: "Loading cart..."
+        children: "Loading product details..."
     }, void 0, false, {
-        fileName: "[project]/src/pages/cart.js",
-        lineNumber: 67,
-        columnNumber: 25
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 101,
+        columnNumber: 32
     }, this);
-    if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    if (productError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "text-center text-red-500 py-10",
-        children: error
+        children: productError
     }, void 0, false, {
-        fileName: "[project]/src/pages/cart.js",
-        lineNumber: 69,
-        columnNumber: 23
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 102,
+        columnNumber: 30
+    }, this);
+    if (!currentProduct) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "text-center py-10 text-xl",
+        children: "Product not found"
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 103,
+        columnNumber: 33
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "container mx-auto px-4 py-6",
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-bold mb-6",
-                    children: "Your Cart"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 74,
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col md:flex-row gap-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductImages, {
+                            productColors: currentProduct.productColors,
+                            selectedColor: selectedColor,
+                            setSelectedColor: setSelectedColor
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 109,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "hidden md:block border-l border-gray-300"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 114,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductDetails, {
+                            product: currentProduct,
+                            selectedColor: selectedColor,
+                            selectedSize: selectedSize,
+                            setSelectedSize: setSelectedSize,
+                            quantity: quantity,
+                            setQuantity: setQuantity,
+                            handleAddToCart: handleAddToCart
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 115,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 108,
                     columnNumber: 17
                 }, this),
-                !items || items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-center text-lg",
-                    children: "Your cart is empty."
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mt-8",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ReviewsSection, {
+                        reviews: reviews,
+                        averageRating: averageRating,
+                        pagination: pagination,
+                        handlePageChange: handlePageChange,
+                        handleSubmitReview: handleSubmitReview
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/productdetail/[slug].js",
+                        lineNumber: 126,
+                        columnNumber: 21
+                    }, this)
                 }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 76,
-                    columnNumber: 21
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                    className: "space-y-4",
-                    children: items.map((item)=>{
-                        const product = item.product || {};
-                        const productColors = product.productColors || [];
-                        const selectedColor = productColors.find((color)=>color.id === item.color?.id);
-                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                            className: "flex gap-4 p-4 border rounded shadow-md",
-                            onClick: ()=>handleProductClick(product.slug),
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: selectedColor?.ProductColor?.image || 'https://via.placeholder.com/100',
-                                    alt: product.product_name || 'Product',
-                                    className: "w-24 h-24 object-cover rounded"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 92,
-                                    columnNumber: 37
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold",
-                                            children: product.product_name || 'Unknown Product'
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 101,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-700",
-                                            children: product.description || 'No description available.'
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 104,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "font-bold text-red-500",
-                                            children: [
-                                                "Price: ",
-                                                product.discount_price || product.price || 'N/A',
-                                                ' ',
-                                                "VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 107,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Quantity: ",
-                                                item.quantity
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 111,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Size: ",
-                                                item.size?.size || 'N/A'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 112,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Color: ",
-                                                item.color?.color || 'N/A'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 113,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Stock: ",
-                                                item.stock?.quantity || 'Out of stock'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 114,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 100,
-                                    columnNumber: 37
-                                }, this)
-                            ]
-                        }, item.id, true, {
-                            fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 87,
-                            columnNumber: 33
-                        }, this);
-                    })
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 78,
-                    columnNumber: 21
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                    onClick: handleCheckout,
-                    disabled: !items || items.length === 0,
-                    className: "mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-400",
-                    children: "Proceed to Checkout"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 123,
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 125,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
-            fileName: "[project]/src/pages/cart.js",
-            lineNumber: 73,
+            fileName: "[project]/src/pages/productdetail/[slug].js",
+            lineNumber: 107,
             columnNumber: 13
         }, this)
     }, void 0, false, {
-        fileName: "[project]/src/pages/cart.js",
-        lineNumber: 72,
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 106,
         columnNumber: 9
     }, this);
-};
-_s(CartPage, "mTK17S7fTr8KOx9Ox45ahkq3JOI=", false, function() {
+}
+_s(Slug, "x+WrPBoQnVDSuAjfUe51DFHUiG4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
     ];
 });
-_c = CartPage;
-const __TURBOPACK__default__export__ = CartPage;
+_c = Slug;
 var _c;
-__turbopack_refresh__.register(_c, "CartPage");
+__turbopack_refresh__.register(_c, "Slug");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/cart.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
+"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/cart";
+const PAGE_PATH = "/productdetail/[slug]";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{
-        return __turbopack_require__("[project]/src/pages/cart.js [client] (ecmascript)");
+        return __turbopack_require__("[project]/src/pages/productdetail/[slug].js [client] (ecmascript)");
     }
 ]);
 // @ts-expect-error module.hot exists
@@ -2062,13 +1414,13 @@ if (module.hot) {
     });
 }
 }}),
-"[project]/src/pages/cart (hmr-entry)": ((__turbopack_context__) => {
+"[project]/src/pages/productdetail/[slug].js (hmr-entry)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/cart.js [client] (ecmascript)\" } [client] (ecmascript)");
+__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)\" } [client] (ecmascript)");
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__e15a36._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__115e54._.js.map

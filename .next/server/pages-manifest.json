@@ -2,8 +2,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/account/profile": "pages/account/profile.js",
-  "/_error": "pages/_error.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/featured-products": "pages/featured-products.js"
+  "/cart": "pages/cart.js",
+  "/account/profile": "pages/account/profile.js"
 }

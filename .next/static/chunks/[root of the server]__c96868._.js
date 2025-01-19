@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__c13306._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__c96868._.js", {
 
 "[turbopack]/browser/dev/hmr-client/websocket.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -617,782 +617,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/store/slices/userSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>__TURBOPACK__default__export__),
-    "getUserInfo": (()=>getUserInfo),
-    "loginUser": (()=>loginUser),
-    "logoutUser": (()=>logoutUser),
-    "registerUser": (()=>registerUser),
-    "resetAuthState": (()=>resetAuthState),
-    "verifyOtp": (()=>verifyOtp)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
-;
-;
-const registerUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/registerUser', async (userData, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].register(userData);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const verifyOtp = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/verifyOtp', async (otpData, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].verifyOtp(otpData);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const loginUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/loginUser', async (credentials, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].login(credentials);
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/logoutUser', async (_, { rejectWithValue })=>{
-    try {
-        await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].logout();
-        return true;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/getUserInfo', async (_, { rejectWithValue })=>{
-    try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile(); // Use getUserProfile instead of getUser
-        return response;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
-    }
-});
-// Slice
-const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'auth',
-    initialState: {
-        user: null,
-        token: null,
-        loading: false,
-        error: null
-    },
-    reducers: {
-        resetAuthState: (state)=>{
-            state.user = null;
-            state.token = null;
-            state.loading = false;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder)=>{
-        // Register
-        builder.addCase(registerUser.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(registerUser.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-        });
-        builder.addCase(registerUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Verify OTP
-        builder.addCase(verifyOtp.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(verifyOtp.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-        });
-        builder.addCase(verifyOtp.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Login
-        builder.addCase(loginUser.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(loginUser.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
-        });
-        builder.addCase(loginUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Logout
-        builder.addCase(logoutUser.pending, (state)=>{
-            state.loading = true;
-        });
-        builder.addCase(logoutUser.fulfilled, (state)=>{
-            state.user = null;
-            state.token = null;
-            state.loading = false;
-        });
-        builder.addCase(logoutUser.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-        // Get User Info
-        builder.addCase(getUserInfo.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        });
-        builder.addCase(getUserInfo.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.user = action.payload;
-        });
-        builder.addCase(getUserInfo.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
-        });
-    }
-});
-const { resetAuthState } = userSlice.actions;
-const __TURBOPACK__default__export__ = userSlice.reducer;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/utils/apiClient.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "apiClient": (()=>apiClient),
-    "cartApi": (()=>cartApi),
-    "productApi": (()=>productApi),
-    "productsByCategoryApi": (()=>productsByCategoryApi),
-    "reviewApi": (()=>reviewApi),
-    "userApi": (()=>userApi)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/userSlice.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [client] (ecmascript)");
-;
-;
-;
-// https://kltn-1a.onrender.com hihi
-const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
-});
-// **Request Interceptor**
-apiClient.interceptors.request.use(async (config)=>{
-    try {
-        // Retrieve access token and session ID from cookies
-        const accessToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])();
-        const sessionId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getSessionId"])();
-        // Add Authorization header if token exists
-        if (accessToken) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
-        }
-        // Add session ID header if session ID exists
-        if (sessionId) {
-            config.headers['x-session-id'] = sessionId; // Add session ID to headers
-        }
-    } catch (error) {
-        console.error('Error adding headers:', error);
-    }
-    return config;
-}, (error)=>Promise.reject(error));
-apiClient.interceptors.response.use((response)=>{
-    // Log toàn bộ response để kiểm tra
-    console.log('Response received:', response);
-    console.log('Response headers:', response.headers['x-session-id']);
-    // Lưu session ID nếu có trong headers của response
-    const sessionId = response.headers['x-session-id'];
-    if (sessionId) {
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu vào cookie hoặc storage
-        console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
-    }
-    return response;
-}, async (error)=>{
-    // Log toàn bộ error response
-    console.error('Error response:', error.response);
-    const originalRequest = error.config;
-    // Thêm thuộc tính _retryCount nếu chưa có
-    if (!originalRequest._retryCount) {
-        originalRequest._retryCount = 0;
-    }
-    // Nếu lỗi 403 và chưa đạt giới hạn retry
-    if (error.response?.status === 403 && originalRequest._retryCount < 5) {
-        originalRequest._retryCount += 1; // Tăng số lần retry
-        if (originalRequest.url.includes('/users/refresh-token')) {
-            console.error('Token refresh failed. Redirecting to login...');
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
-            store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])());
-            return Promise.reject(new Error('Please log in again.'));
-        }
-        try {
-            const newAccessToken = await userApi.refreshToken();
-            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-            return apiClient(originalRequest); // Retry request với token mới
-        } catch (refreshError) {
-            console.error('Error during token refresh:', refreshError);
-            return Promise.reject(refreshError);
-        }
-    }
-    // Nếu vượt quá số lần retry, trả về lỗi
-    if (originalRequest._retryCount >= 5) {
-        console.error('Maximum retry attempts reached.');
-        return Promise.reject(new Error('Request failed after maximum retries.'));
-    }
-    return Promise.reject(error);
-});
-// **User API**
-const userApi = {
-    // Register user
-    register: async (userData)=>{
-        try {
-            const response = await apiClient.post('users/register', userData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Verify OTP for registration
-    verifyOtp: async (otpData)=>{
-        try {
-            const response = await apiClient.post('users/verify-otp', otpData);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Login user
-    login: async (credentials)=>{
-        try {
-            const response = await apiClient.post('users/login', credentials);
-            const { accessToken, refreshToken } = response.data.data;
-            if (accessToken && refreshToken) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setToken"])(accessToken); // Lưu access token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken); // Lưu refresh token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartId"])(); // Xóa cart ID khi đăng nhập
-            }
-            // Kiểm tra và lưu session ID từ headers của response
-            const sessionId = response.headers['x-session-id'];
-            if (sessionId) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu session ID vào cookie hoặc storage
-                console.log('Session ID received and saved during login:', sessionId); // Log kiểm tra
-            }
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-    // Logout user
-    logout: async ()=>{
-        try {
-            const refreshToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getRefreshToken"])();
-            const userId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserId"])();
-            await apiClient.post('users/logout', {
-                refreshToken,
-                userId
-            });
-            // Clear all stored tokens and session ID
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeRefreshToken"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeUserId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeToken"])();
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartId"])();
-            return {
-                message: 'Logout successful'
-            };
-        } catch (error) {
-            throw error.response?.data || 'Logout failed';
-        }
-    },
-    // Get user profile
-    getUserProfile: async ()=>{
-        try {
-            const response = await apiClient.get('users/profile');
-            return response.data.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch user profile';
-        }
-    },
-    // Refresh token
-    refreshToken: async ()=>{
-        try {
-            const get_refreshToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getRefreshToken"])();
-            const get_userId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getUserId"])();
-            const response = await apiClient.post('users/refresh-token', {
-                get_refreshToken
-            });
-            const { accessToken, refreshToken: newRefreshToken } = response.data.data;
-            if (accessToken && newRefreshToken) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setToken"])(accessToken); // Update access token
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setRefreshToken"])(newRefreshToken); // Update refresh token
-            }
-            return accessToken; // Return the new access token
-        } catch (error) {
-            throw new Error('Token refresh failed. Please log in again.');
-        }
-    }
-};
-// **Product API**
-const productApi = {
-    // Create a new product
-    createProduct: async (productData)=>{
-        const response = await apiClient.post('products/', productData);
-        return response.data;
-    },
-    // Get all products
-    getProducts: async ()=>{
-        const response = await apiClient.get('products/');
-        return response.data.data;
-    },
-    // Get product details by slug
-    getProductDetail: async (slug)=>{
-        const response = await apiClient.get(`products/${slug}`);
-        return response.data.data;
-    },
-    // Update product by slug
-    updateProduct: async (slug, productData)=>{
-        const response = await apiClient.put(`products/${slug}`, productData);
-        return response.data;
-    },
-    // Delete product by slug
-    deleteProduct: async (slug)=>{
-        const response = await apiClient.delete(`products/${slug}`);
-        return response.data;
-    },
-    // Get products with pagination
-    getProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        return response.data;
-    },
-    // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
-    },
-    // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
-    }
-};
-const cartApi = {
-    // Tạo giỏ hàng cho khách
-    createCartForGuest: async (cartData)=>{
-        try {
-            const response = await apiClient.post('carts/guest', cartData);
-            const { id } = response.data.data;
-            if (id) {
-                console.log('Cart ID:', id);
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCartId"])(id); // Lưu cart ID vào cookie hoặc storage
-            }
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create cart for guest.';
-        }
-    },
-    // Tạo hoặc lấy giỏ hàng cho người dùng đã đăng nhập
-    createCartForUser: async ()=>{
-        try {
-            const response = await apiClient.post('carts/user');
-            const { id } = response.data.data;
-            if (id) {
-                console.log('Cart ID:', id);
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCartId"])(id); // Lưu cart ID vào cookie hoặc storage
-            }
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create or retrieve cart for user.';
-        }
-    },
-    // Lấy chi tiết giỏ hàng theo ID
-    getCartById: async (cartId)=>{
-        try {
-            const response = await apiClient.get(`carts/${cartId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch cart details.';
-        }
-    },
-    // Thêm sản phẩm vào giỏ hàng
-    addItemToCart: async (cartId, itemData)=>{
-        try {
-            const response = await apiClient.post(`carts/${cartId}/items`, itemData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to add item to cart.';
-        }
-    },
-    // Xóa sản phẩm khỏi giỏ hàng
-    removeCartItem: async (itemId)=>{
-        try {
-            const response = await apiClient.delete(`carts/items/${itemId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to remove item from cart.';
-        }
-    },
-    // Lấy tất cả sản phẩm trong giỏ hàng
-    getCartItems: async (cartId)=>{
-        try {
-            const response = await apiClient.get(`carts/${cartId}/items`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch cart items.';
-        }
-    }
-};
-const reviewApi = {
-    // Tạo mới một review
-    createReview: async (reviewData)=>{
-        try {
-            const response = await apiClient.post('reviews/', reviewData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to create review.';
-        }
-    },
-    // Lấy danh sách review của một sản phẩm
-    getReviewsByProduct: async (productId, page, limit)=>{
-        try {
-            const response = await apiClient.get(`reviews/product/${productId}?page=${page}&limit=${limit}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch reviews.';
-        }
-    },
-    // Lấy điểm trung bình của một sản phẩm
-    getAverageRating: async (productId)=>{
-        try {
-            const response = await apiClient.get(`reviews/product/${productId}/average-rating`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch average rating.';
-        }
-    },
-    // Xóa một review
-    deleteReview: async (reviewId)=>{
-        try {
-            const response = await apiClient.delete(`reviews/${reviewId}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to delete review.';
-        }
-    }
-};
-const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
-        try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}`);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || 'Failed to fetch products by category.';
-        }
-    }
-};
-;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/store/slices/productSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "clearProductState": (()=>clearProductState),
-    "createProduct": (()=>createProduct),
-    "default": (()=>__TURBOPACK__default__export__),
-    "deleteProduct": (()=>deleteProduct),
-    "fetchFeaturedProductsByPagination": (()=>fetchFeaturedProductsByPagination),
-    "fetchNewProductsByPagination": (()=>fetchNewProductsByPagination),
-    "fetchProductDetail": (()=>fetchProductDetail),
-    "fetchProducts": (()=>fetchProducts),
-    "fetchProductsByPagination": (()=>fetchProductsByPagination),
-    "setVisibleFeaturedProducts": (()=>setVisibleFeaturedProducts),
-    "setVisibleNewProducts": (()=>setVisibleNewProducts),
-    "updateProduct": (()=>updateProduct)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)"); // Import API client
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
-;
-;
-const fetchProducts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProducts', async (_, { rejectWithValue })=>{
-    try {
-        const products = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProducts();
-        return products;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch products');
-    }
-});
-const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
-        return paginatedProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
-    }
-});
-const fetchNewProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchNewProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const newProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getNewProductsByPagination(page, limit);
-        return newProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch new products');
-    }
-});
-const fetchFeaturedProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchFeaturedProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const featuredProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getFeaturedProductsByPagination(page, limit);
-        return featuredProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch featured products');
-    }
-});
-const fetchProductDetail = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductDetail', async (slug, { rejectWithValue })=>{
-    try {
-        const product = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductDetail(slug);
-        return product;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch product details');
-    }
-});
-const createProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/createProduct', async (productData, { rejectWithValue })=>{
-    try {
-        const newProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].createProduct(productData);
-        return newProduct;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to create product');
-    }
-});
-const updateProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/updateProduct', async ({ slug, productData }, { rejectWithValue })=>{
-    try {
-        const updatedProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].updateProduct(slug, productData);
-        return updatedProduct;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to update product');
-    }
-});
-const deleteProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/deleteProduct', async (slug, { rejectWithValue })=>{
-    try {
-        const result = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].deleteProduct(slug);
-        return result;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to delete product');
-    }
-});
-// **Slice**
-const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'products',
-    initialState: {
-        newProducts: {
-            items: [],
-            pagination: {
-                totalItems: 0,
-                totalPages: 0,
-                currentPage: 1,
-                pageSize: 10
-            }
-        },
-        visibleNewProducts: [],
-        featuredProducts: {
-            items: [],
-            pagination: {
-                totalItems: 0,
-                totalPages: 0,
-                currentPage: 1,
-                pageSize: 10
-            }
-        },
-        visibleFeaturedProducts: [],
-        loading: false,
-        error: null
-    },
-    reducers: {
-        // Set visible products for index page
-        setVisibleNewProducts: (state, action)=>{
-            state.visibleNewProducts = action.payload;
-        },
-        setVisibleFeaturedProducts: (state, action)=>{
-            state.visibleFeaturedProducts = action.payload;
-        },
-        // Clear product state
-        clearProductState: (state)=>{
-            state.newProducts = {
-                items: [],
-                pagination: {
-                    totalItems: 0,
-                    totalPages: 0,
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            };
-            state.visibleNewProducts = [];
-            state.featuredProducts = {
-                items: [],
-                pagination: {
-                    totalItems: 0,
-                    totalPages: 0,
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            };
-            state.visibleFeaturedProducts = [];
-            state.loading = false;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder)=>{
-        // Fetch all products
-        builder.addCase(fetchProducts.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchProducts.fulfilled, (state, action)=>{
-            state.items = action.payload;
-            state.loading = false;
-        }).addCase(fetchProducts.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch products with pagination
-        builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            state.pagination = {
-                items: products || [],
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            state.loading = false;
-        }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch new products with pagination
-        builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchNewProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.newProducts.items = [
-                ...state.newProducts.items,
-                ...uniqueProducts
-            ];
-            state.newProducts.pagination = {
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            // Update visible products
-            state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
-            state.loading = false;
-        }).addCase(fetchNewProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch featured products with pagination
-        builder.addCase(fetchFeaturedProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.featuredProducts.items = [
-                ...state.featuredProducts.items,
-                ...uniqueProducts
-            ];
-            state.featuredProducts.pagination = {
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            // Update visible products
-            state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
-            state.loading = false;
-        }).addCase(fetchFeaturedProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch product details
-        builder.addCase(fetchProductDetail.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchProductDetail.fulfilled, (state, action)=>{
-            state.currentProduct = action.payload;
-            state.loading = false;
-        }).addCase(fetchProductDetail.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Create product
-        builder.addCase(createProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(createProduct.fulfilled, (state, action)=>{
-            state.items.push(action.payload);
-            state.loading = false;
-        }).addCase(createProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Update product
-        builder.addCase(updateProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(updateProduct.fulfilled, (state, action)=>{
-            const index = state.items.findIndex((item)=>item.slug === action.payload.slug);
-            if (index !== -1) {
-                state.items[index] = action.payload;
-            }
-            state.loading = false;
-        }).addCase(updateProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Delete product
-        builder.addCase(deleteProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(deleteProduct.fulfilled, (state, action)=>{
-            state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
-            state.loading = false;
-        }).addCase(deleteProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-    }
-});
-const { setVisibleNewProducts, setVisibleFeaturedProducts, clearProductState } = productSlice.actions;
-const __TURBOPACK__default__export__ = productSlice.reducer;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
 "[project]/src/components/Sidebar.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -1912,175 +1136,392 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/components/Sidebar2.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/slugs/ProductImages.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>Sidebar)
+    "default": (()=>ProductImages)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
 ;
-var _s = __turbopack_refresh__.signature();
-;
-function Sidebar() {
-    _s();
-    // Danh sách danh mục với id và name
-    const categories = [
-        {
-            id: 1,
-            name: 'Áo Thun'
-        },
-        {
-            id: 2,
-            name: 'Quần Jeans'
-        },
-        {
-            id: 3,
-            name: 'Váy'
-        },
-        {
-            id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
-        }
-    ];
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { categoryId } = router.query;
+function ProductImages({ productColors, selectedColor, setSelectedColor }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "flex flex-wrap justify-center gap-6 p-6 bg-white rounded-lg shadow-lg",
-        children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                onClick: ()=>router.push(`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`),
-                className: `px-6 py-3 text-lg font-semibold rounded-lg border-2 transition-all ${parseInt(categoryId, 10) === category.id ? 'bg-blue-500 text-white border-blue-500 shadow-md' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
-                children: category.name
-            }, category.id, false, {
-                fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 19,
-                columnNumber: 17
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 17,
-        columnNumber: 9
-    }, this);
-}
-_s(Sidebar, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
-    ];
-});
-_c = Sidebar;
-var _c;
-__turbopack_refresh__.register(_c, "Sidebar");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/components/Banner.js [client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
-__turbopack_esm__({
-    "default": (()=>Banner)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
-;
-var _s = __turbopack_refresh__.signature();
-;
-const images = [
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.46.23%20-%20A%20horizontal%20banner%20for%20the%20brand%20\'Fashion%20Store%2C\'%20designed%20to%20appeal%20to%20a%20diverse%20audience.%20The%20logo%20is%20prominently%20placed%20in%20the%20center%20of%20the%20banne.webp?alt=media&token=b2c95f9e-35c9-4da0-a5ba-1d293ec3f1ee',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.35.06%20-%20A%20set%20of%20three%20horizontal%20banners%20for%20a%20clothing%20shop%2C%20each%20designed%20for%20a%20modern%2C%20stylish%20theme.%20The%20first%20banner%20features%20casual%20summer%20outfits%20in%20v.webp?alt=media&token=2aa6f64f-7efd-4bed-9373-1c388eaad463',
-    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.39.08%20-%20A%20horizontal%20banner%20for%20a%20clothing%20shop%20featuring%20a%20minimalistic%20streetwear%20theme%20for%20youth.%20The%20design%20showcases%20stylish%20hoodies%2C%20oversized%20t-shirts%2C.webp?alt=media&token=bda0c9ce-0cdd-4cfb-ab36-13a0a7455aea'
-];
-function Banner() {
-    _s();
-    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "Banner.useEffect": ()=>{
-            const interval = setInterval({
-                "Banner.useEffect.interval": ()=>{
-                    setCurrentIndex({
-                        "Banner.useEffect.interval": (prevIndex)=>(prevIndex + 1) % images.length
-                    }["Banner.useEffect.interval"]);
-                }
-            }["Banner.useEffect.interval"], 3000); // Change image every 3 seconds
-            return ({
-                "Banner.useEffect": ()=>clearInterval(interval)
-            })["Banner.useEffect"]; // Cleanup on unmount
-        }
-    }["Banner.useEffect"], []);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "relative w-full h-[30rem] md:h-[50rem] overflow-hidden",
+        className: "md:w-1/2 flex flex-col items-center",
         children: [
-            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                        src: image,
-                        alt: `Banner ${index + 1}`,
-                        className: "w-full h-full object-cover"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 32,
-                        columnNumber: 21
-                    }, this)
-                }, index, false, {
-                    fileName: "[project]/src/components/Banner.js",
-                    lineNumber: 22,
-                    columnNumber: 17
-                }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
-                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setCurrentIndex(index),
-                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
-                    }, index, false, {
-                        fileName: "[project]/src/components/Banner.js",
-                        lineNumber: 43,
+                className: "w-full max-h-96 overflow-hidden",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                    src: selectedColor?.ProductColor?.image || 'https://via.placeholder.com/500',
+                    alt: "Product Image",
+                    className: "w-full h-full object-contain rounded"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ProductImages.js",
+                    lineNumber: 5,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductImages.js",
+                lineNumber: 4,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex gap-2 mt-4 overflow-x-auto",
+                children: productColors.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: `w-16 h-16 rounded overflow-hidden border-2 cursor-pointer ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500 border-blue-500' : 'border-gray-300'}`,
+                        onClick: ()=>setSelectedColor(color),
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: color.ProductColor?.image || 'https://via.placeholder.com/100',
+                            alt: color.color,
+                            className: "w-full h-full object-cover"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ProductImages.js",
+                            lineNumber: 19,
+                            columnNumber: 25
+                        }, this)
+                    }, color.id, false, {
+                        fileName: "[project]/src/components/slugs/ProductImages.js",
+                        lineNumber: 13,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
-                fileName: "[project]/src/components/Banner.js",
-                lineNumber: 41,
+                fileName: "[project]/src/components/slugs/ProductImages.js",
+                lineNumber: 11,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/components/Banner.js",
-        lineNumber: 20,
+        fileName: "[project]/src/components/slugs/ProductImages.js",
+        lineNumber: 3,
         columnNumber: 9
     }, this);
 }
-_s(Banner, "tPjzCc9H5UuFdWNuAHYoD0K4UOk=");
-_c = Banner;
+_c = ProductImages;
 var _c;
-__turbopack_refresh__.register(_c, "Banner");
+__turbopack_refresh__.register(_c, "ProductImages");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/pages/index.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/slugs/ProductDetails.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>Index)
+    "default": (()=>ProductDetails)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+;
+function ProductDetails({ product, selectedColor, selectedSize, setSelectedSize, quantity, setQuantity, handleAddToCart }) {
+    const increaseQuantity = ()=>setQuantity((prev)=>prev + 1);
+    const decreaseQuantity = ()=>setQuantity((prev)=>prev > 1 ? prev - 1 : 1);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "md:w-1/2",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-bold mb-4",
+                children: product.product_name
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 15,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "text-lg font-semibold",
+                        children: "Status: "
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 17,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: `font-bold ${product.status === 'available' ? 'text-green-500' : product.status === 'out_of_stock' ? 'text-red-500' : 'text-gray-500'}`,
+                        children: product.status === 'available' ? 'In Stock' : product.status === 'out_of_stock' ? 'Out of Stock' : 'Discontinued'
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 18,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 16,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center space-x-4 mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "text-lg font-semibold",
+                        children: "Price:"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 30,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-red-500 font-bold text-xl",
+                        children: [
+                            product.discount_price.toLocaleString('vi-VN'),
+                            " VND"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 31,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-gray-500 line-through",
+                        children: [
+                            product.price.toLocaleString('vi-VN'),
+                            " VND"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 32,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 29,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "text-lg font-semibold mb-2",
+                        children: "Size:"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 35,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex gap-2",
+                        children: product.productSizes.map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: `px-8 py-2 border rounded hover:bg-gray-100 transition ${selectedSize?.id === size.id ? 'bg-blue-100' : ''}`,
+                                onClick: ()=>setSelectedSize(size),
+                                children: size.size
+                            }, size.id, false, {
+                                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                                lineNumber: 38,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDetails.js",
+                        lineNumber: 36,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 34,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex flex-wrap gap-4 mt-4",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    className: "bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700",
+                    onClick: handleAddToCart,
+                    children: "Add to Cart"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ProductDetails.js",
+                    lineNumber: 50,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ProductDetails.js",
+                lineNumber: 49,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/slugs/ProductDetails.js",
+        lineNumber: 14,
+        columnNumber: 9
+    }, this);
+}
+_c = ProductDetails;
+var _c;
+__turbopack_refresh__.register(_c, "ProductDetails");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/components/slugs/ReviewsSection.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>ReviewsSection)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
+;
+var _s = __turbopack_refresh__.signature();
+;
+;
+function ReviewsSection({ reviews, averageRating, pagination, handlePageChange, handleSubmitReview }) {
+    _s();
+    const [reviewText, setReviewText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [reviewRating, setReviewRating] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(5);
+    const submitReview = ()=>{
+        handleSubmitReview({
+            reviewText,
+            reviewRating
+        });
+        setReviewText('');
+        setReviewRating(5);
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                className: "text-2xl font-bold mb-4",
+                children: "Reviews"
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 22,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-2",
+                        children: [
+                            averageRating,
+                            "/5 based on ",
+                            pagination.totalReviews,
+                            " reviews"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                        lineNumber: 24,
+                        columnNumber: 17
+                    }, this),
+                    reviews.map((review)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "border p-4 rounded bg-white",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                children: review.review_text
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                                lineNumber: 29,
+                                columnNumber: 25
+                            }, this)
+                        }, review.id, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 28,
+                            columnNumber: 21
+                        }, this))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 23,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mt-6",
+                children: !(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])() ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    className: "bg-blue-600 text-white px-4 py-2 rounded",
+                    onClick: ()=>alert('Please log in to review'),
+                    children: "Log in to review"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                    lineNumber: 35,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            children: [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ].map((rating)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>setReviewRating(rating),
+                                    className: reviewRating >= rating ? 'text-yellow-500' : 'text-gray-300',
+                                    children: "★"
+                                }, rating, false, {
+                                    fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                                    lineNumber: 45,
+                                    columnNumber: 33
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 43,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                            value: reviewText,
+                            onChange: (e)=>setReviewText(e.target.value),
+                            className: "w-full border p-2 rounded",
+                            rows: "4"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 54,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            className: "bg-blue-600 text-white px-4 py-2 rounded",
+                            onClick: submitReview,
+                            children: "Submit"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                            lineNumber: 60,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true)
+            }, void 0, false, {
+                fileName: "[project]/src/components/slugs/ReviewsSection.js",
+                lineNumber: 33,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/slugs/ReviewsSection.js",
+        lineNumber: 21,
+        columnNumber: 9
+    }, this);
+}
+_s(ReviewsSection, "zIMTulP/FdgLHRwZn2tv5vzlMSA=");
+_c = ReviewsSection;
+var _c;
+__turbopack_refresh__.register(_c, "ReviewsSection");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>Slug)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productSlice.js [client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module '../../store/slices'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/link.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductImages$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ProductImages.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductDetails$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ProductDetails.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/slugs/ReviewsSection.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -2092,314 +1533,228 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
-function Index() {
+;
+function Slug() {
     _s();
     const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { visibleNewProducts, visibleFeaturedProducts, newProducts, featuredProducts, loading: productsLoading, error: productsError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
-        "Index.useSelector": (state)=>state.products
-    }["Index.useSelector"]);
-    const pageSize = 10; // Default fetch size
-    // Fetch new products data
+    const { slug } = router.query;
+    const { currentProduct, loading: productLoading, error: productError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "Slug.useSelector": (state)=>state.products
+    }["Slug.useSelector"]);
+    const { reviews, averageRating, pagination } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "Slug.useSelector": (state)=>state.reviews
+    }["Slug.useSelector"]);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "Index.useEffect": ()=>{
-            if (newProducts.items.length === 0) {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchNewProductsByPagination"])({
-                    page: 1,
-                    limit: pageSize
-                }));
-            } else {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setVisibleNewProducts"])(newProducts.items.slice(0, pageSize)));
+        "Slug.useEffect": ()=>{
+            if (slug) {
+                dispatch(fetchProductDetail(slug));
             }
         }
-    }["Index.useEffect"], [
+    }["Slug.useEffect"], [
         dispatch,
-        newProducts.items
+        slug
     ]);
-    // Fetch featured products data
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "Index.useEffect": ()=>{
-            if (featuredProducts.items.length === 0) {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchFeaturedProductsByPagination"])({
+        "Slug.useEffect": ()=>{
+            if (currentProduct?.id) {
+                dispatch(fetchReviewsByProduct({
+                    productId: currentProduct.id,
                     page: 1,
-                    limit: pageSize
+                    limit: 5
                 }));
-            } else {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setVisibleFeaturedProducts"])(featuredProducts.items.slice(0, pageSize)));
+                dispatch(fetchAverageRating(currentProduct.id));
             }
         }
-    }["Index.useEffect"], [
+    }["Slug.useEffect"], [
         dispatch,
-        featuredProducts.items
+        currentProduct
     ]);
-    const handleProductClick = (slug)=>{
-        router.push(`/productdetail/${slug}`);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Slug.useEffect": ()=>{
+            if (currentProduct?.productColors?.length > 0) {
+                setSelectedColor(currentProduct.productColors[0]);
+            }
+            if (currentProduct?.productSizes?.length > 0) {
+                setSelectedSize(currentProduct.productSizes[0]);
+            }
+        }
+    }["Slug.useEffect"], [
+        currentProduct
+    ]);
+    const handleAddToCart = async ()=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Please select a color and size.');
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch(createCartForUser()).unwrap() : await dispatch(createCartForGuest()).unwrap();
+                activeCartId = cartResponse.id;
+            }
+            const cartItemData = {
+                cart_id: activeCartId,
+                product_id: currentProduct?.id,
+                color_id: selectedColor?.id,
+                size_id: selectedSize?.id,
+                quantity
+            };
+            await dispatch(addItemToCart({
+                cartId: activeCartId,
+                itemData: cartItemData
+            })).unwrap();
+            alert('Item added to cart successfully!');
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
+            alert('Failed to add item to cart.');
+        }
     };
-    const hasNoProducts = !visibleNewProducts.length && !visibleFeaturedProducts.length || !!productsError && visibleNewProducts.length === 0 && visibleFeaturedProducts.length === 0;
+    const handleSubmitReview = async (reviewData)=>{
+        try {
+            await dispatch(createReview(reviewData)).unwrap();
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: pagination.currentPage,
+                limit: 5
+            }));
+            dispatch(fetchAverageRating(currentProduct.id));
+        } catch (error) {
+            console.error('Failed to submit review:', error);
+        }
+    };
+    const handlePageChange = (newPage)=>{
+        if (currentProduct?.id && newPage !== pagination.currentPage) {
+            dispatch(fetchReviewsByProduct({
+                productId: currentProduct.id,
+                page: newPage,
+                limit: 5
+            }));
+        }
+    };
+    if (productLoading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "text-center py-10 text-xl",
+        children: "Loading product details..."
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 101,
+        columnNumber: 32
+    }, this);
+    if (productError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "text-center text-red-500 py-10",
+        children: productError
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 102,
+        columnNumber: 30
+    }, this);
+    if (!currentProduct) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "text-center py-10 text-xl",
+        children: "Product not found"
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 103,
+        columnNumber: 33
+    }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 58,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-6 px-6",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "hidden md:flex justify-center gap-4",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                        fileName: "[project]/src/pages/index.js",
-                        lineNumber: 63,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "container mx-auto px-4 py-6",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col md:flex-row gap-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductImages$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                            productColors: currentProduct.productColors,
+                            selectedColor: selectedColor,
+                            setSelectedColor: setSelectedColor
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 109,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "hidden md:block border-l border-gray-300"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 114,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductDetails$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                            product: currentProduct,
+                            selectedColor: selectedColor,
+                            selectedSize: selectedSize,
+                            setSelectedSize: setSelectedSize,
+                            quantity: quantity,
+                            setQuantity: setQuantity,
+                            handleAddToCart: handleAddToCart
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/productdetail/[slug].js",
+                            lineNumber: 115,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 108,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mt-8",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ReviewsSection$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                        reviews: reviews,
+                        averageRating: averageRating,
+                        pagination: pagination,
+                        handlePageChange: handlePageChange,
+                        handleSubmitReview: handleSubmitReview
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/productdetail/[slug].js",
+                        lineNumber: 126,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
-                    fileName: "[project]/src/pages/index.js",
-                    lineNumber: 62,
+                    fileName: "[project]/src/pages/productdetail/[slug].js",
+                    lineNumber: 125,
                     columnNumber: 17
                 }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 61,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "w-full px-4 py-6",
-                children: hasNoProducts ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-center text-gray-500 text-lg",
-                    children: "Không có sản phẩm"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/index.js",
-                    lineNumber: 70,
-                    columnNumber: 21
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-bold mb-4",
-                            children: "Sản phẩm mới"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 76,
-                            columnNumber: 25
-                        }, this),
-                        visibleNewProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
-                            children: visibleNewProducts.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                    onClick: ()=>handleProductClick(product.slug),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                            alt: product.product_name,
-                                            className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 85,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold mt-2",
-                                            children: product.product_name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 93,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-600",
-                                            children: product.description
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 94,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-red-500 font-bold",
-                                            children: [
-                                                product.discount_price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 95,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 line-through",
-                                            children: [
-                                                product.price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 98,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, product.id, true, {
-                                    fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 80,
-                                    columnNumber: 37
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 78,
-                            columnNumber: 29
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-center text-gray-500",
-                            children: "Không có sản phẩm mới."
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 105,
-                            columnNumber: 29
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-center mt-6",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/new-products",
-                                className: "px-4 py-2 rounded bg-blue-600 text-white",
-                                children: "Xem tất cả"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/index.js",
-                                lineNumber: 108,
-                                columnNumber: 29
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 107,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-bold mt-10 mb-4",
-                            children: "Sản phẩm nổi bật"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 114,
-                            columnNumber: 25
-                        }, this),
-                        visibleFeaturedProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6",
-                            children: visibleFeaturedProducts.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                    onClick: ()=>handleProductClick(product.slug),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                            alt: product.product_name,
-                                            className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 123,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold mt-2",
-                                            children: product.product_name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 131,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-600",
-                                            children: product.description
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 132,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-red-500 font-bold",
-                                            children: [
-                                                product.discount_price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 133,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 line-through",
-                                            children: [
-                                                product.price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 136,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, product.id, true, {
-                                    fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 118,
-                                    columnNumber: 37
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 116,
-                            columnNumber: 29
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-center text-gray-500",
-                            children: "Không có sản phẩm nổi bật."
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 143,
-                            columnNumber: 29
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-center mt-6",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/featured-products",
-                                className: "px-4 py-2 rounded bg-blue-600 text-white",
-                                children: "Xem tất cả"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/index.js",
-                                lineNumber: 146,
-                                columnNumber: 29
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 145,
-                            columnNumber: 25
-                        }, this)
-                    ]
-                }, void 0, true)
-            }, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 68,
-                columnNumber: 13
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/pages/index.js",
-        lineNumber: 57,
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/pages/productdetail/[slug].js",
+            lineNumber: 107,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/pages/productdetail/[slug].js",
+        lineNumber: 106,
         columnNumber: 9
     }, this);
 }
-_s(Index, "+xNRds0ETPSwP3M5EWaSl7Zding=", false, function() {
+_s(Slug, "x+WrPBoQnVDSuAjfUe51DFHUiG4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
     ];
 });
-_c = Index;
+_c = Slug;
 var _c;
-__turbopack_refresh__.register(_c, "Index");
+__turbopack_refresh__.register(_c, "Slug");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/index.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
+"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/";
+const PAGE_PATH = "/productdetail/[slug]";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{
-        return __turbopack_require__("[project]/src/pages/index.js [client] (ecmascript)");
+        return __turbopack_require__("[project]/src/pages/productdetail/[slug].js [client] (ecmascript)");
     }
 ]);
 // @ts-expect-error module.hot exists
@@ -2412,13 +1767,13 @@ if (module.hot) {
     });
 }
 }}),
-"[project]/src/pages/index (hmr-entry)": ((__turbopack_context__) => {
+"[project]/src/pages/productdetail/[slug].js (hmr-entry)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/index.js [client] (ecmascript)\" } [client] (ecmascript)");
+__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/productdetail/[slug].js [client] (ecmascript)\" } [client] (ecmascript)");
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__c13306._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__c96868._.js.map

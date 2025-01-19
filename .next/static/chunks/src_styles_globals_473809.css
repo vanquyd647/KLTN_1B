@@ -476,12 +476,12 @@ img, video {
   height: .75rem;
 }
 
-.h-40 {
-  height: 10rem;
-}
-
 .h-6 {
   height: 1.5rem;
+}
+
+.h-60 {
+  height: 15rem;
 }
 
 .h-8 {
@@ -492,20 +492,12 @@ img, video {
   height: 20rem;
 }
 
-.h-\[50rem\] {
-  height: 50rem;
-}
-
-.h-full {
-  height: 100%;
-}
-
 .h-\[30rem\] {
   height: 30rem;
 }
 
-.h-60 {
-  height: 15rem;
+.h-full {
+  height: 100%;
 }
 
 .max-h-96 {
@@ -666,6 +658,12 @@ img, video {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(.5rem * var(--tw-space-y-reverse));
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -684,6 +682,10 @@ img, video {
 
 .rounded-lg {
   border-radius: .5rem;
+}
+
+.rounded-md {
+  border-radius: .375rem;
 }
 
 .border {
@@ -706,6 +708,11 @@ img, video {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
+.border-blue-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
 }
 
 .bg-blue-100 {
@@ -858,6 +865,11 @@ img, video {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold {
@@ -1084,6 +1096,10 @@ img, video {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
   .sm\:flex-nowrap {
     flex-wrap: nowrap;
   }
@@ -1094,6 +1110,23 @@ img, video {
 
   .sm\:gap-4 {
     gap: 1rem;
+  }
+
+  .sm\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .sm\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
@@ -1114,12 +1147,12 @@ img, video {
     display: none;
   }
 
-  .md\:h-\[50rem\] {
-    height: 50rem;
-  }
-
   .md\:h-80 {
     height: 20rem;
+  }
+
+  .md\:h-\[50rem\] {
+    height: 50rem;
   }
 
   .md\:w-1\/2 {
