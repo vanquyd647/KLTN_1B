@@ -1949,7 +1949,7 @@ function ProductsByCategory() {
     const [priceRange, setPriceRange] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
     const pageSize = 10;
     const { categoryId, categoryName } = router.query;
-    // Fetch products when filters change
+    // Fetch products when filters or pagination change
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ProductsByCategory.useEffect": ()=>{
             if (categoryId) {
@@ -1984,13 +1984,21 @@ function ProductsByCategory() {
                 ...prevColors,
                 colorId
             ]);
-        setCurrentPage(1);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
+    const handlePriceRangeChange = (e)=>{
+        setPriceRange(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
+    const handleSortChange = (e)=>{
+        setSort(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 60,
+                lineNumber: 68,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1999,17 +2007,17 @@ function ProductsByCategory() {
                     className: "hidden md:flex justify-center gap-4",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 63,
+                        lineNumber: 71,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/pages/category/productsByCategory.js",
-                    lineNumber: 62,
+                    lineNumber: 70,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 61,
+                lineNumber: 69,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2023,7 +2031,7 @@ function ProductsByCategory() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 68,
+                        lineNumber: 76,
                         columnNumber: 17
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2031,7 +2039,7 @@ function ProductsByCategory() {
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 70,
+                        lineNumber: 78,
                         columnNumber: 27
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2043,13 +2051,13 @@ function ProductsByCategory() {
                                 children: "Sắp xếp theo:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 74,
+                                lineNumber: 82,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                 id: "sortFilter",
                                 value: sort,
-                                onChange: (e)=>setSort(e.target.value),
+                                onChange: handleSortChange,
                                 className: "border rounded p-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2057,7 +2065,7 @@ function ProductsByCategory() {
                                         children: "Sản phẩm nổi bật"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 83,
+                                        lineNumber: 91,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2065,7 +2073,7 @@ function ProductsByCategory() {
                                         children: "Giá: Tăng dần"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 84,
+                                        lineNumber: 92,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2073,7 +2081,7 @@ function ProductsByCategory() {
                                         children: "Giá: Giảm dần"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 85,
+                                        lineNumber: 93,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2081,7 +2089,7 @@ function ProductsByCategory() {
                                         children: "Tên: A-Z"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 86,
+                                        lineNumber: 94,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2089,7 +2097,7 @@ function ProductsByCategory() {
                                         children: "Tên: Z-A"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 87,
+                                        lineNumber: 95,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2097,7 +2105,7 @@ function ProductsByCategory() {
                                         children: "Cũ nhất"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 88,
+                                        lineNumber: 96,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2105,19 +2113,19 @@ function ProductsByCategory() {
                                         children: "Mới nhất"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 89,
+                                        lineNumber: 97,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 77,
+                                lineNumber: 85,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 73,
+                        lineNumber: 81,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2129,16 +2137,13 @@ function ProductsByCategory() {
                                 children: "Khoảng giá:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 95,
+                                lineNumber: 103,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                 id: "priceRangeFilter",
                                 value: priceRange,
-                                onChange: (e)=>{
-                                    setPriceRange(e.target.value);
-                                    setCurrentPage(1);
-                                },
+                                onChange: handlePriceRangeChange,
                                 className: "border rounded p-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2146,7 +2151,7 @@ function ProductsByCategory() {
                                         children: "Tất cả"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 107,
+                                        lineNumber: 112,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2154,7 +2159,7 @@ function ProductsByCategory() {
                                         children: "Dưới 100.000 VND"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 108,
+                                        lineNumber: 113,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2162,7 +2167,7 @@ function ProductsByCategory() {
                                         children: "100.000 - 500.000 VND"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 109,
+                                        lineNumber: 114,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2170,7 +2175,7 @@ function ProductsByCategory() {
                                         children: "500.000 - 1.000.000 VND"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 110,
+                                        lineNumber: 115,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2178,19 +2183,19 @@ function ProductsByCategory() {
                                         children: "Trên 1.000.000 VND"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 111,
+                                        lineNumber: 116,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 98,
+                                lineNumber: 106,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 94,
+                        lineNumber: 102,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2201,7 +2206,7 @@ function ProductsByCategory() {
                                 children: "Màu sắc"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 117,
+                                lineNumber: 122,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2217,7 +2222,7 @@ function ProductsByCategory() {
                                                 className: "cursor-pointer"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                lineNumber: 121,
+                                                lineNumber: 126,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2231,31 +2236,31 @@ function ProductsByCategory() {
                                                         }
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                        lineNumber: 129,
+                                                        lineNumber: 134,
                                                         columnNumber: 37
                                                     }, this),
                                                     color.color
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                                lineNumber: 128,
+                                                lineNumber: 133,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, color.id, true, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 120,
+                                        lineNumber: 125,
                                         columnNumber: 29
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 118,
+                                lineNumber: 123,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 116,
+                        lineNumber: 121,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2270,7 +2275,7 @@ function ProductsByCategory() {
                                         className: "w-full h-80 object-cover rounded"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 148,
+                                        lineNumber: 153,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2278,7 +2283,7 @@ function ProductsByCategory() {
                                         children: product.product_name
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 156,
+                                        lineNumber: 161,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2286,7 +2291,7 @@ function ProductsByCategory() {
                                         children: product.description
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 157,
+                                        lineNumber: 162,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2297,7 +2302,7 @@ function ProductsByCategory() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 158,
+                                        lineNumber: 163,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2308,18 +2313,18 @@ function ProductsByCategory() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                                        lineNumber: 161,
+                                        lineNumber: 166,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, product.id, true, {
                                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                                lineNumber: 143,
+                                lineNumber: 148,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 141,
+                        lineNumber: 146,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2330,12 +2335,12 @@ function ProductsByCategory() {
                             children: "Xem thêm"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/category/productsByCategory.js",
-                            lineNumber: 170,
+                            lineNumber: 175,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 168,
+                        lineNumber: 173,
                         columnNumber: 17
                     }, this),
                     loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2343,19 +2348,19 @@ function ProductsByCategory() {
                         children: "Đang tải..."
                     }, void 0, false, {
                         fileName: "[project]/src/pages/category/productsByCategory.js",
-                        lineNumber: 179,
+                        lineNumber: 184,
                         columnNumber: 29
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/category/productsByCategory.js",
-                lineNumber: 67,
+                lineNumber: 75,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/category/productsByCategory.js",
-        lineNumber: 59,
+        lineNumber: 67,
         columnNumber: 9
     }, this);
 }

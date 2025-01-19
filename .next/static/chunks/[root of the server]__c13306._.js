@@ -775,6 +775,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
+    "colorsApi": (()=>colorsApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -1093,13 +1094,31 @@ const reviewApi = {
     }
 };
 const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
+    // Fetch all products by category
     getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds)=>{
         try {
-            const response = await apiClient.get(`products-by-category/${categoryId}?page=${page}&limit=${limit}&sort=${sort}&priceRange=${priceRange}&colorIds=${colorIds}`);
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products-by-category/${categoryId}?${query}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    }
+};
+const colorsApi = {
+    // Fetch all colors
+    getColors: async ()=>{
+        try {
+            const response = await apiClient.get('colors');
+            return response.data.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch colors.';
         }
     }
 };

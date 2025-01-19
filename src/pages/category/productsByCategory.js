@@ -10,10 +10,8 @@ import Banner from '../../components/Banner';
 export default function ProductsByCategory() {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { products, totalPages, loading, error } = useSelector(
-        (state) => state.productsByCategory
-    );
 
+    const { products, totalPages, loading, error } = useSelector((state) => state.productsByCategory);
     const { data: colors, loading: colorsLoading, error: colorsError } = useSelector((state) => state.colors);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +23,7 @@ export default function ProductsByCategory() {
 
     const { categoryId, categoryName } = router.query;
 
-    // Fetch products when filters change
+    // Fetch products when filters or pagination change
     useEffect(() => {
         if (categoryId) {
             dispatch(
@@ -34,8 +32,8 @@ export default function ProductsByCategory() {
                     page: currentPage,
                     limit: pageSize,
                     sort,
-                    colorIds: selectedColors.join(','),
-                    priceRange,
+                    colorIds: selectedColors.join(','), // Pass selected colors
+                    priceRange, // Pass price range
                 })
             );
         }
@@ -52,7 +50,17 @@ export default function ProductsByCategory() {
                 ? prevColors.filter((id) => id !== colorId)
                 : [...prevColors, colorId]
         );
-        setCurrentPage(1);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
+
+    const handlePriceRangeChange = (e) => {
+        setPriceRange(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
+
+    const handleSortChange = (e) => {
+        setSort(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
     };
 
     return (
@@ -77,7 +85,7 @@ export default function ProductsByCategory() {
                     <select
                         id="sortFilter"
                         value={sort}
-                        onChange={(e) => setSort(e.target.value)}
+                        onChange={handleSortChange}
                         className="border rounded p-2"
                     >
                         <option value="featured">Sản phẩm nổi bật</option>
@@ -98,10 +106,7 @@ export default function ProductsByCategory() {
                     <select
                         id="priceRangeFilter"
                         value={priceRange}
-                        onChange={(e) => {
-                            setPriceRange(e.target.value);
-                            setCurrentPage(1);
-                        }}
+                        onChange={handlePriceRangeChange}
                         className="border rounded p-2"
                     >
                         <option value="">Tất cả</option>
