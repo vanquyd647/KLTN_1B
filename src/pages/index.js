@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { indexApi } from '../utils/apiClient'; // Import API client
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
@@ -16,13 +17,11 @@ export default function Index() {
 
     const pageSize = 10; // Default fetch size
 
-    // Fetch new products
+
     const fetchNewProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:5551/api/products/new', {
-                params: { page: 1, limit: pageSize },
-            });
-            setNewProducts(response.data.data.products || []);
+            const data = await indexApi.getNewProducts(1, pageSize);
+            setNewProducts(data.data.products || []);
         } catch (err) {
             console.error('Error fetching new products:', err);
             setError('Không thể tải sản phẩm mới');
@@ -32,10 +31,8 @@ export default function Index() {
     // Fetch featured products
     const fetchFeaturedProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:5551/api/products/featured', {
-                params: { page: 1, limit: pageSize },
-            });
-            setFeaturedProducts(response.data.data.products || []);
+            const data = await indexApi.getFeaturedProducts(1, pageSize);
+            setFeaturedProducts(data.data.products || []);
         } catch (err) {
             console.error('Error fetching featured products:', err);
             setError('Không thể tải sản phẩm nổi bật');

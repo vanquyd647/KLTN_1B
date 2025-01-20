@@ -453,5 +453,19 @@ const colorsApi = {
     },
 }
 
+const indexApi = {
+    getNewProducts: async (page, limit) => {
+        const response = await apiClient.get('/products/new', {
+            params: { page, limit },
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit) => {
+        const response = await apiClient.get('/products/featured', {
+            params: { page, limit },
+        });
+        return response.data;
+    },
+};
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi };
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi };
