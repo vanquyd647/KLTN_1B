@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentCategoryId, setSelectedCategoryId } from '../store/slices/categorySlice';
 import { useRouter } from 'next/router';
 
 export default function Sidebar() {
@@ -41,23 +42,23 @@ export default function Sidebar() {
         },
     ];
 
-    const [currentCategoryId, setCurrentCategoryId] = useState(null); // ID danh mục cha đang mở
-    const [selectedCategoryId, setSelectedCategoryId] = useState(null); // ID danh mục cha hoặc con được chọn
+    const dispatch = useDispatch();
     const router = useRouter();
 
+    const { currentCategoryId, selectedCategoryId } = useSelector((state) => state.categories);
+
     const handleCategoryClick = (categoryId) => {
-        setCurrentCategoryId(currentCategoryId === categoryId ? null : categoryId);
+        dispatch(setCurrentCategoryId(currentCategoryId === categoryId ? null : categoryId));
     };
 
     const navigateToCategory = (categoryId, categoryName) => {
         router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
-        setSelectedCategoryId(categoryId); // Lưu danh mục cha hoặc con được chọn
-        setCurrentCategoryId(null); // Đóng danh mục con
+        dispatch(setSelectedCategoryId(categoryId));
+        dispatch(setCurrentCategoryId(null));
     };
 
     return (
         <div className="w-full p-4 bg-white border border-gray-300">
-            {/* Hiển thị danh mục cha theo chiều ngang */}
             <div className="flex gap-6 overflow-x-auto pb-4">
                 {categories.map((category) => (
                     <button
@@ -76,7 +77,6 @@ export default function Sidebar() {
                 ))}
             </div>
 
-            {/* Hiển thị danh mục con (khi danh mục cha được chọn) */}
             {currentCategoryId && (
                 <div className="mt-4">
                     <button

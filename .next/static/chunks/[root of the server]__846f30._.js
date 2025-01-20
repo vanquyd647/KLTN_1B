@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__c13306._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__846f30._.js", {
 
 "[turbopack]/browser/dev/hmr-client/websocket.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -1143,287 +1143,109 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/store/slices/productSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/store/slices/productsByCategorySlice.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "clearProductState": (()=>clearProductState),
-    "createProduct": (()=>createProduct),
     "default": (()=>__TURBOPACK__default__export__),
-    "deleteProduct": (()=>deleteProduct),
-    "fetchFeaturedProductsByPagination": (()=>fetchFeaturedProductsByPagination),
-    "fetchNewProductsByPagination": (()=>fetchNewProductsByPagination),
-    "fetchProductDetail": (()=>fetchProductDetail),
-    "fetchProducts": (()=>fetchProducts),
-    "fetchProductsByPagination": (()=>fetchProductsByPagination),
-    "setVisibleFeaturedProducts": (()=>setVisibleFeaturedProducts),
-    "setVisibleNewProducts": (()=>setVisibleNewProducts),
-    "updateProduct": (()=>updateProduct)
+    "fetchProductsByCategory": (()=>fetchProductsByCategory)
 });
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)"); // Import API client
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
 ;
 ;
-const fetchProducts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProducts', async (_, { rejectWithValue })=>{
+const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('productsByCategory/fetchProductsByCategory', async ({ categoryId, page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
     try {
-        const products = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProducts();
-        return products;
+        const data = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productsByCategoryApi"].getProductsByCategory(categoryId, page, limit, sort, priceRange, colorIds);
+        return data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch products');
+        return rejectWithValue(error);
     }
 });
-const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
-        return paginatedProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
-    }
-});
-const fetchNewProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchNewProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const newProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getNewProductsByPagination(page, limit);
-        return newProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch new products');
-    }
-});
-const fetchFeaturedProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchFeaturedProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
-    try {
-        const featuredProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getFeaturedProductsByPagination(page, limit);
-        return featuredProducts;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch featured products');
-    }
-});
-const fetchProductDetail = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductDetail', async (slug, { rejectWithValue })=>{
-    try {
-        const product = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductDetail(slug);
-        return product;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to fetch product details');
-    }
-});
-const createProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/createProduct', async (productData, { rejectWithValue })=>{
-    try {
-        const newProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].createProduct(productData);
-        return newProduct;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to create product');
-    }
-});
-const updateProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/updateProduct', async ({ slug, productData }, { rejectWithValue })=>{
-    try {
-        const updatedProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].updateProduct(slug, productData);
-        return updatedProduct;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to update product');
-    }
-});
-const deleteProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/deleteProduct', async (slug, { rejectWithValue })=>{
-    try {
-        const result = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].deleteProduct(slug);
-        return result;
-    } catch (error) {
-        return rejectWithValue(error.response?.data || 'Failed to delete product');
-    }
-});
-// **Slice**
-const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'products',
+const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
+    name: 'productsByCategory',
     initialState: {
-        newProducts: {
-            items: [],
-            pagination: {
-                totalItems: 0,
-                totalPages: 0,
-                currentPage: 1,
-                pageSize: 10
-            }
-        },
-        visibleNewProducts: [],
-        featuredProducts: {
-            items: [],
-            pagination: {
-                totalItems: 0,
-                totalPages: 0,
-                currentPage: 1,
-                pageSize: 10
-            }
-        },
-        visibleFeaturedProducts: [],
+        products: [],
+        totalPages: 0,
         loading: false,
         error: null
     },
-    reducers: {
-        // Set visible products for index page
-        setVisibleNewProducts: (state, action)=>{
-            state.visibleNewProducts = action.payload;
-        },
-        setVisibleFeaturedProducts: (state, action)=>{
-            state.visibleFeaturedProducts = action.payload;
-        },
-        // Clear product state
-        clearProductState: (state)=>{
-            state.newProducts = {
-                items: [],
-                pagination: {
-                    totalItems: 0,
-                    totalPages: 0,
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            };
-            state.visibleNewProducts = [];
-            state.featuredProducts = {
-                items: [],
-                pagination: {
-                    totalItems: 0,
-                    totalPages: 0,
-                    currentPage: 1,
-                    pageSize: 10
-                }
-            };
-            state.visibleFeaturedProducts = [];
-            state.loading = false;
-            state.error = null;
-        }
-    },
+    reducers: {},
     extraReducers: (builder)=>{
-        // Fetch all products
-        builder.addCase(fetchProducts.pending, (state)=>{
+        builder.addCase(fetchProductsByCategory.pending, (state)=>{
             state.loading = true;
             state.error = null;
-        }).addCase(fetchProducts.fulfilled, (state, action)=>{
-            state.items = action.payload;
+        }).addCase(fetchProductsByCategory.fulfilled, (state, action)=>{
             state.loading = false;
-        }).addCase(fetchProducts.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch products with pagination
-        builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            state.pagination = {
-                items: products || [],
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            state.loading = false;
-        }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch new products with pagination
-        builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchNewProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.newProducts.items = [
-                ...state.newProducts.items,
-                ...uniqueProducts
-            ];
-            state.newProducts.pagination = {
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            // Update visible products
-            state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
-            state.loading = false;
-        }).addCase(fetchNewProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch featured products with pagination
-        builder.addCase(fetchFeaturedProductsByPagination.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.featuredProducts.items = [
-                ...state.featuredProducts.items,
-                ...uniqueProducts
-            ];
-            state.featuredProducts.pagination = {
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
-            };
-            // Update visible products
-            state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
-            state.loading = false;
-        }).addCase(fetchFeaturedProductsByPagination.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Fetch product details
-        builder.addCase(fetchProductDetail.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(fetchProductDetail.fulfilled, (state, action)=>{
-            state.currentProduct = action.payload;
-            state.loading = false;
-        }).addCase(fetchProductDetail.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Create product
-        builder.addCase(createProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(createProduct.fulfilled, (state, action)=>{
-            state.items.push(action.payload);
-            state.loading = false;
-        }).addCase(createProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Update product
-        builder.addCase(updateProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(updateProduct.fulfilled, (state, action)=>{
-            const index = state.items.findIndex((item)=>item.slug === action.payload.slug);
-            if (index !== -1) {
-                state.items[index] = action.payload;
+            const { products, totalPages } = action.payload.data;
+            if (action.meta.arg.page > 1) {
+                // Nối sản phẩm nếu không phải trang đầu tiên
+                state.products = [
+                    ...state.products,
+                    ...products
+                ];
+            } else {
+                // Ghi đè sản phẩm nếu là trang đầu tiên
+                state.products = products;
             }
+            state.totalPages = totalPages;
+        }).addCase(fetchProductsByCategory.rejected, (state, action)=>{
             state.loading = false;
-        }).addCase(updateProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
-        });
-        // Delete product
-        builder.addCase(deleteProduct.pending, (state)=>{
-            state.loading = true;
-            state.error = null;
-        }).addCase(deleteProduct.fulfilled, (state, action)=>{
-            state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
-            state.loading = false;
-        }).addCase(deleteProduct.rejected, (state, action)=>{
-            state.error = action.payload;
-            state.loading = false;
+            state.error = action.payload || 'Failed to fetch products by category';
         });
     }
 });
-const { setVisibleNewProducts, setVisibleFeaturedProducts, clearProductState } = productSlice.actions;
-const __TURBOPACK__default__export__ = productSlice.reducer;
+const __TURBOPACK__default__export__ = productsByCategorySlice.reducer;
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/store/slices/colorsSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__),
+    "fetchColors": (()=>fetchColors)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)"); // Adjust the path based on your project structure
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
+;
+;
+const fetchColors = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('colors/fetchColors', async (_, { rejectWithValue })=>{
+    try {
+        const colors = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["colorsApi"].getColors();
+        return colors;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+});
+// Colors slice
+const colorsSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
+    name: 'colors',
+    initialState: {
+        data: [],
+        loading: false,
+        error: null
+    },
+    reducers: {},
+    extraReducers: (builder)=>{
+        builder.addCase(fetchColors.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(fetchColors.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.data = action.payload;
+        }).addCase(fetchColors.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload || 'Failed to fetch colors.';
+        });
+    }
+});
+const __TURBOPACK__default__export__ = colorsSlice.reducer;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -2023,6 +1845,39 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
+"[project]/src/store/slices/categorySlice.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__),
+    "setCurrentCategoryId": (()=>setCurrentCategoryId),
+    "setSelectedCategoryId": (()=>setSelectedCategoryId)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
+;
+const categorySlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
+    name: 'categories',
+    initialState: {
+        currentCategoryId: null,
+        selectedCategoryId: null
+    },
+    reducers: {
+        setCurrentCategoryId (state, action) {
+            state.currentCategoryId = action.payload;
+        },
+        setSelectedCategoryId (state, action) {
+            state.selectedCategoryId = action.payload;
+        }
+    }
+});
+const { setCurrentCategoryId, setSelectedCategoryId } = categorySlice.actions;
+const __TURBOPACK__default__export__ = categorySlice.reducer;
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
 "[project]/src/components/Sidebar2.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -2032,10 +1887,12 @@ __turbopack_esm__({
     "default": (()=>Sidebar)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/categorySlice.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
+;
 ;
 ;
 function Sidebar() {
@@ -2114,16 +1971,18 @@ function Sidebar() {
             ]
         }
     ];
-    const [currentCategoryId, setCurrentCategoryId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null); // ID danh mục cha đang mở
-    const [selectedCategoryId, setSelectedCategoryId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null); // ID danh mục cha hoặc con được chọn
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const { currentCategoryId, selectedCategoryId } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "Sidebar.useSelector": (state)=>state.categories
+    }["Sidebar.useSelector"]);
     const handleCategoryClick = (categoryId)=>{
-        setCurrentCategoryId(currentCategoryId === categoryId ? null : categoryId);
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCurrentCategoryId"])(currentCategoryId === categoryId ? null : categoryId));
     };
     const navigateToCategory = (categoryId, categoryName)=>{
         router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
-        setSelectedCategoryId(categoryId); // Lưu danh mục cha hoặc con được chọn
-        setCurrentCategoryId(null); // Đóng danh mục con
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSelectedCategoryId"])(categoryId));
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setCurrentCategoryId"])(null));
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "w-full p-4 bg-white border border-gray-300",
@@ -2136,12 +1995,12 @@ function Sidebar() {
                         children: category.name
                     }, category.id, false, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 63,
+                        lineNumber: 64,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 61,
+                lineNumber: 62,
                 columnNumber: 13
             }, this),
             currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2185,13 +2044,15 @@ function Sidebar() {
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 59,
+        lineNumber: 61,
         columnNumber: 9
     }, this);
 }
-_s(Sidebar, "GZTd3i1dgvy/OBC3+B2TBalYLtA=", false, function() {
+_s(Sidebar, "Diu5nf2uTyFVBqr3srPv4X6esEE=", false, function() {
     return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
     ];
 });
 _c = Sidebar;
@@ -2285,22 +2146,22 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/pages/index.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/pages/category/productsByCategory.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "default": (()=>Index)
+    "default": (()=>ProductsByCategory)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productsByCategorySlice.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/colorsSlice.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productSlice.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/link.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -2312,55 +2173,72 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
-function Index() {
+function ProductsByCategory() {
     _s();
     const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { visibleNewProducts, visibleFeaturedProducts, newProducts, featuredProducts, loading: productsLoading, error: productsError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
-        "Index.useSelector": (state)=>state.products
-    }["Index.useSelector"]);
-    const pageSize = 10; // Default fetch size
-    // Fetch new products data
+    const { products, totalPages, loading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "ProductsByCategory.useSelector": (state)=>state.productsByCategory
+    }["ProductsByCategory.useSelector"]);
+    const { data: colors, loading: colorsLoading, error: colorsError } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "ProductsByCategory.useSelector": (state)=>state.colors
+    }["ProductsByCategory.useSelector"]);
+    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
+    const [sort, setSort] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('newest');
+    const [selectedColors, setSelectedColors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [priceRange, setPriceRange] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const pageSize = 10;
+    const { categoryId, categoryName } = router.query;
+    // Fetch products when filters or pagination change
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "Index.useEffect": ()=>{
-            if (newProducts.items.length === 0) {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchNewProductsByPagination"])({
-                    page: 1,
-                    limit: pageSize
+        "ProductsByCategory.useEffect": ()=>{
+            if (categoryId) {
+                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productsByCategorySlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchProductsByCategory"])({
+                    categoryId,
+                    page: currentPage,
+                    limit: pageSize,
+                    sort,
+                    colorIds: selectedColors.join(','),
+                    priceRange
                 }));
-            } else {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setVisibleNewProducts"])(newProducts.items.slice(0, pageSize)));
             }
         }
-    }["Index.useEffect"], [
+    }["ProductsByCategory.useEffect"], [
         dispatch,
-        newProducts.items
+        categoryId,
+        currentPage,
+        sort,
+        selectedColors,
+        priceRange
     ]);
-    // Fetch featured products data
+    // Fetch colors on component mount
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "Index.useEffect": ()=>{
-            if (featuredProducts.items.length === 0) {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchFeaturedProductsByPagination"])({
-                    page: 1,
-                    limit: pageSize
-                }));
-            } else {
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setVisibleFeaturedProducts"])(featuredProducts.items.slice(0, pageSize)));
-            }
+        "ProductsByCategory.useEffect": ()=>{
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["fetchColors"])());
         }
-    }["Index.useEffect"], [
-        dispatch,
-        featuredProducts.items
+    }["ProductsByCategory.useEffect"], [
+        dispatch
     ]);
-    const handleProductClick = (slug)=>{
-        router.push(`/productdetail/${slug}`);
+    const handleColorChange = (colorId)=>{
+        setSelectedColors((prevColors)=>prevColors.includes(colorId) ? prevColors.filter((id)=>id !== colorId) : [
+                ...prevColors,
+                colorId
+            ]);
+        setCurrentPage(1); // Reset to the first page when filters change
     };
-    const hasNoProducts = !visibleNewProducts.length && !visibleFeaturedProducts.length || !!productsError && visibleNewProducts.length === 0 && visibleFeaturedProducts.length === 0;
+    const handlePriceRangeChange = (e)=>{
+        setPriceRange(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
+    const handleSortChange = (e)=>{
+        setSort(e.target.value);
+        setCurrentPage(1); // Reset to the first page when filters change
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 58,
+                fileName: "[project]/src/pages/category/productsByCategory.js",
+                lineNumber: 68,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2368,258 +2246,385 @@ function Index() {
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "hidden md:flex justify-center gap-4",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                        fileName: "[project]/src/pages/index.js",
-                        lineNumber: 63,
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 71,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
-                    fileName: "[project]/src/pages/index.js",
-                    lineNumber: 62,
+                    fileName: "[project]/src/pages/category/productsByCategory.js",
+                    lineNumber: 70,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 61,
+                fileName: "[project]/src/pages/category/productsByCategory.js",
+                lineNumber: 69,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full px-4 py-6",
-                children: hasNoProducts ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-center text-gray-500 text-lg",
-                    children: "Không có sản phẩm"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/index.js",
-                    lineNumber: 70,
-                    columnNumber: 21
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-bold mb-4",
-                            children: "Sản phẩm mới"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 76,
-                            columnNumber: 25
-                        }, this),
-                        visibleNewProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
-                            children: visibleNewProducts.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                    onClick: ()=>handleProductClick(product.slug),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                            alt: product.product_name,
-                                            className: "w-full h-40 object-cover rounded sm:h-60 md:h-72"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 85,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold mt-2",
-                                            children: product.product_name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 93,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-600",
-                                            children: product.description
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 94,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-red-500 font-bold",
-                                            children: [
-                                                product.discount_price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 95,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 line-through",
-                                            children: [
-                                                product.price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 98,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, product.id, true, {
-                                    fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 80,
-                                    columnNumber: 37
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 78,
-                            columnNumber: 29
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-center text-gray-500",
-                            children: "Không có sản phẩm mới."
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 105,
-                            columnNumber: 29
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-center mt-6",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/new-products",
-                                className: "px-4 py-2 rounded bg-blue-600 text-white",
-                                children: "Xem tất cả"
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                        className: "text-2xl font-bold mb-6",
+                        children: categoryName
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 76,
+                        columnNumber: 17
+                    }, this),
+                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-red-500 text-center",
+                        children: error
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 78,
+                        columnNumber: 27
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-6 flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                htmlFor: "sortFilter",
+                                className: "text-gray-700 font-semibold",
+                                children: "Sắp xếp theo:"
                             }, void 0, false, {
-                                fileName: "[project]/src/pages/index.js",
-                                lineNumber: 108,
-                                columnNumber: 29
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 82,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                id: "sortFilter",
+                                value: sort,
+                                onChange: handleSortChange,
+                                className: "border rounded p-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "featured",
+                                        children: "Sản phẩm nổi bật"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 91,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "price_asc",
+                                        children: "Giá: Tăng dần"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 92,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "price_desc",
+                                        children: "Giá: Giảm dần"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 93,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "name_asc",
+                                        children: "Tên: A-Z"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 94,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "name_desc",
+                                        children: "Tên: Z-A"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 95,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "oldest",
+                                        children: "Cũ nhất"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 96,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "newest",
+                                        children: "Mới nhất"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 97,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 85,
+                                columnNumber: 21
                             }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 107,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-bold mt-10 mb-4",
-                            children: "Sản phẩm nổi bật"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 114,
-                            columnNumber: 25
-                        }, this),
-                        visibleFeaturedProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6",
-                            children: visibleFeaturedProducts.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
-                                    onClick: ()=>handleProductClick(product.slug),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
-                                            alt: product.product_name,
-                                            className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 123,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold mt-2",
-                                            children: product.product_name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 131,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-600",
-                                            children: product.description
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 132,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-red-500 font-bold",
-                                            children: [
-                                                product.discount_price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 133,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 line-through",
-                                            children: [
-                                                product.price.toLocaleString('vi-VN'),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 136,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, product.id, true, {
-                                    fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 118,
-                                    columnNumber: 37
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 116,
-                            columnNumber: 29
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-center text-gray-500",
-                            children: "Không có sản phẩm nổi bật."
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 143,
-                            columnNumber: 29
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-center mt-6",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/featured-products",
-                                className: "px-4 py-2 rounded bg-blue-600 text-white",
-                                children: "Xem tất cả"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 81,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-6 flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                htmlFor: "priceRangeFilter",
+                                className: "text-gray-700 font-semibold",
+                                children: "Khoảng giá:"
                             }, void 0, false, {
-                                fileName: "[project]/src/pages/index.js",
-                                lineNumber: 146,
-                                columnNumber: 29
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 103,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                id: "priceRangeFilter",
+                                value: priceRange,
+                                onChange: handlePriceRangeChange,
+                                className: "border rounded p-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "Tất cả"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 112,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "0-100000",
+                                        children: "Dưới 100.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 113,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "100000-500000",
+                                        children: "100.000 - 500.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 114,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "500000-1000000",
+                                        children: "500.000 - 1.000.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 115,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: "1000000-",
+                                        children: "Trên 1.000.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 116,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 106,
+                                columnNumber: 21
                             }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 102,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-6",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-bold mb-2",
+                                children: "Màu sắc"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 122,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-4",
+                                children: colors.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center gap-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                type: "checkbox",
+                                                id: `color-${color.id}`,
+                                                value: color.id,
+                                                onChange: ()=>handleColorChange(color.id),
+                                                className: "cursor-pointer"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                                lineNumber: 126,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                htmlFor: `color-${color.id}`,
+                                                className: "flex items-center gap-2 cursor-pointer",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "block w-6 h-6 rounded border border-black",
+                                                        style: {
+                                                            backgroundColor: color.hex_code
+                                                        }
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                                        lineNumber: 134,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    color.color
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                                lineNumber: 133,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, color.id, true, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 125,
+                                        columnNumber: 29
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 123,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 121,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
+                        children: products.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
+                                onClick: ()=>router.push(`/productdetail/${product.slug}`),
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                        src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
+                                        alt: product.product_name,
+                                        className: "w-full h-80 object-cover rounded"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 153,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        className: "text-lg font-semibold mt-2",
+                                        children: product.product_name
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 161,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-600",
+                                        children: product.description
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 162,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-red-500 font-bold",
+                                        children: [
+                                            product.discount_price.toLocaleString('vi-VN'),
+                                            " VND"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 163,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-500 line-through",
+                                        children: [
+                                            product.price.toLocaleString('vi-VN'),
+                                            " VND"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                                        lineNumber: 166,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, product.id, true, {
+                                fileName: "[project]/src/pages/category/productsByCategory.js",
+                                lineNumber: 148,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 146,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-center mt-6",
+                        children: currentPage < totalPages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>setCurrentPage((prevPage)=>prevPage + 1),
+                            className: "px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700",
+                            children: "Xem thêm"
                         }, void 0, false, {
-                            fileName: "[project]/src/pages/index.js",
-                            lineNumber: 145,
+                            fileName: "[project]/src/pages/category/productsByCategory.js",
+                            lineNumber: 175,
                             columnNumber: 25
                         }, this)
-                    ]
-                }, void 0, true)
-            }, void 0, false, {
-                fileName: "[project]/src/pages/index.js",
-                lineNumber: 68,
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 173,
+                        columnNumber: 17
+                    }, this),
+                    loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-center mt-4",
+                        children: "Đang tải..."
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/category/productsByCategory.js",
+                        lineNumber: 184,
+                        columnNumber: 29
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/category/productsByCategory.js",
+                lineNumber: 75,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/pages/index.js",
-        lineNumber: 57,
+        fileName: "[project]/src/pages/category/productsByCategory.js",
+        lineNumber: 67,
         columnNumber: 9
     }, this);
 }
-_s(Index, "+xNRds0ETPSwP3M5EWaSl7Zding=", false, function() {
+_s(ProductsByCategory, "gbwMYhyAw+WatzD0nZaONouduw8=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
     ];
 });
-_c = Index;
+_c = ProductsByCategory;
 var _c;
-__turbopack_refresh__.register(_c, "Index");
+__turbopack_refresh__.register(_c, "ProductsByCategory");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/index.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
+"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/category/productsByCategory.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/";
+const PAGE_PATH = "/category/productsByCategory";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{
-        return __turbopack_require__("[project]/src/pages/index.js [client] (ecmascript)");
+        return __turbopack_require__("[project]/src/pages/category/productsByCategory.js [client] (ecmascript)");
     }
 ]);
 // @ts-expect-error module.hot exists
@@ -2632,13 +2637,13 @@ if (module.hot) {
     });
 }
 }}),
-"[project]/src/pages/index (hmr-entry)": ((__turbopack_context__) => {
+"[project]/src/pages/category/productsByCategory.js (hmr-entry)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/index.js [client] (ecmascript)\" } [client] (ecmascript)");
+__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/category/productsByCategory.js [client] (ecmascript)\" } [client] (ecmascript)");
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__c13306._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__846f30._.js.map
