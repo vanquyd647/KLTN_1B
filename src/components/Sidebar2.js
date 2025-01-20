@@ -42,6 +42,7 @@ export default function Sidebar() {
     ];
 
     const [currentCategoryId, setCurrentCategoryId] = useState(null); // ID danh mục cha đang mở
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null); // ID danh mục cha hoặc con được chọn
     const router = useRouter();
 
     const handleCategoryClick = (categoryId) => {
@@ -50,6 +51,8 @@ export default function Sidebar() {
 
     const navigateToCategory = (categoryId, categoryName) => {
         router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
+        setSelectedCategoryId(categoryId); // Lưu danh mục cha hoặc con được chọn
+        setCurrentCategoryId(null); // Đóng danh mục con
     };
 
     return (
@@ -61,7 +64,9 @@ export default function Sidebar() {
                         key={category.id}
                         onClick={() => handleCategoryClick(category.id)}
                         className={`px-6 py-3 text-lg font-semibold border transition-all ${
-                            currentCategoryId === category.id
+                            currentCategoryId === category.id ||
+                            selectedCategoryId === category.id ||
+                            category.subCategories.some((sub) => sub.id === selectedCategoryId)
                                 ? 'bg-blue-500 text-white border-blue-500'
                                 : 'text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'
                         }`}
@@ -93,7 +98,11 @@ export default function Sidebar() {
                                 <button
                                     key={subCategory.id}
                                     onClick={() => navigateToCategory(subCategory.id, subCategory.name)}
-                                    className="block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition"
+                                    className={`block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition ${
+                                        selectedCategoryId === subCategory.id
+                                            ? 'bg-blue-100 text-blue-500'
+                                            : ''
+                                    }`}
                                 >
                                     {subCategory.name}
                                 </button>

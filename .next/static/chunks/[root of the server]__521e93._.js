@@ -791,7 +791,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'https://kltn-1a.onrender.com/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1937,12 +1937,15 @@ function Sidebar() {
         }
     ];
     const [currentCategoryId, setCurrentCategoryId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null); // ID danh mục cha đang mở
+    const [selectedCategoryId, setSelectedCategoryId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null); // ID danh mục cha hoặc con được chọn
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const handleCategoryClick = (categoryId)=>{
         setCurrentCategoryId(currentCategoryId === categoryId ? null : categoryId);
     };
     const navigateToCategory = (categoryId, categoryName)=>{
         router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
+        setSelectedCategoryId(categoryId); // Lưu danh mục cha hoặc con được chọn
+        setCurrentCategoryId(null); // Đóng danh mục con
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "w-full p-4 bg-white border border-gray-300",
@@ -1951,16 +1954,16 @@ function Sidebar() {
                 className: "flex gap-6 overflow-x-auto pb-4",
                 children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>handleCategoryClick(category.id),
-                        className: `px-6 py-3 text-lg font-semibold border transition-all ${currentCategoryId === category.id ? 'bg-blue-500 text-white border-blue-500' : 'text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
+                        className: `px-6 py-3 text-lg font-semibold border transition-all ${currentCategoryId === category.id || selectedCategoryId === category.id || category.subCategories.some((sub)=>sub.id === selectedCategoryId) ? 'bg-blue-500 text-white border-blue-500' : 'text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
                         children: category.name
                     }, category.id, false, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 60,
+                        lineNumber: 63,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 58,
+                lineNumber: 61,
                 columnNumber: 13
             }, this),
             currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1976,39 +1979,39 @@ function Sidebar() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 77,
+                        lineNumber: 82,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-2 gap-4",
                         children: categories.find((cat)=>cat.id === currentCategoryId)?.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>navigateToCategory(subCategory.id, subCategory.name),
-                                className: "block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition",
+                                className: `block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition ${selectedCategoryId === subCategory.id ? 'bg-blue-100 text-blue-500' : ''}`,
                                 children: subCategory.name
                             }, subCategory.id, false, {
                                 fileName: "[project]/src/components/Sidebar2.js",
-                                lineNumber: 93,
+                                lineNumber: 98,
                                 columnNumber: 33
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 89,
+                        lineNumber: 94,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 76,
+                lineNumber: 81,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 56,
+        lineNumber: 59,
         columnNumber: 9
     }, this);
 }
-_s(Sidebar, "uLT4KNp2aEIQsss/ZMqE0oFO82I=", false, function() {
+_s(Sidebar, "GZTd3i1dgvy/OBC3+B2TBalYLtA=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
