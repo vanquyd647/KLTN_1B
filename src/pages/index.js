@@ -1,57 +1,61 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import {
-    fetchNewProductsByPagination,
-    fetchFeaturedProductsByPagination,
-    setVisibleNewProducts,
-    setVisibleFeaturedProducts,
-} from '../store/slices/productSlice';
+import axios from 'axios';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
 import Link from 'next/link';
 
 export default function Index() {
-    const dispatch = useDispatch();
     const router = useRouter();
 
-    const {
-        visibleNewProducts,
-        visibleFeaturedProducts,
-        newProducts,
-        featuredProducts,
-        loading: productsLoading,
-        error: productsError,
-    } = useSelector((state) => state.products);
+    const [newProducts, setNewProducts] = useState([]);
+    const [featuredProducts, setFeaturedProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const pageSize = 10; // Default fetch size
 
-    // Fetch new products data
-    useEffect(() => {
-        if (newProducts.items.length === 0) {
-            dispatch(fetchNewProductsByPagination({ page: 1, limit: pageSize }));
-        } else {
-            dispatch(setVisibleNewProducts(newProducts.items.slice(0, pageSize)));
+    // Fetch new products
+    const fetchNewProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:5551/api/products/new', {
+                params: { page: 1, limit: pageSize },
+            });
+            setNewProducts(response.data.data.products || []);
+        } catch (err) {
+            console.error('Error fetching new products:', err);
+            setError('Không thể tải sản phẩm mới');
         }
-    }, [dispatch, newProducts.items]);
+    };
 
-    // Fetch featured products data
-    useEffect(() => {
-        if (featuredProducts.items.length === 0) {
-            dispatch(fetchFeaturedProductsByPagination({ page: 1, limit: pageSize }));
-        } else {
-            dispatch(setVisibleFeaturedProducts(featuredProducts.items.slice(0, pageSize)));
+    // Fetch featured products
+    const fetchFeaturedProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:5551/api/products/featured', {
+                params: { page: 1, limit: pageSize },
+            });
+            setFeaturedProducts(response.data.data.products || []);
+        } catch (err) {
+            console.error('Error fetching featured products:', err);
+            setError('Không thể tải sản phẩm nổi bật');
         }
-    }, [dispatch, featuredProducts.items]);
+    };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
+            await Promise.all([fetchNewProducts(), fetchFeaturedProducts()]);
+            setLoading(false);
+        };
+        fetchProducts();
+    }, []);
 
     const handleProductClick = (slug) => {
         router.push(`/productdetail/${slug}`);
     };
 
-    const hasNoProducts =
-        (!visibleNewProducts.length && !visibleFeaturedProducts.length) ||
-        (!!productsError && visibleNewProducts.length === 0 && visibleFeaturedProducts.length === 0);
+    const hasNoProducts = !newProducts.length && !featuredProducts.length;
 
     return (
         <Layout>
@@ -66,17 +70,17 @@ export default function Index() {
 
             {/* Main Content */}
             <div className="w-full px-4 py-6">
-                {hasNoProducts ? (
-                    <div className="text-center text-gray-500 text-lg">
-                        Không có sản phẩm
-                    </div>
+                {loading ? (
+                    <div className="text-center text-gray-500">Đang tải...</div>
+                ) : hasNoProducts ? (
+                    <div className="text-center text-gray-500 text-lg">Không có sản phẩm</div>
                 ) : (
                     <>
                         {/* Section for New Products */}
                         <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
-                        {visibleNewProducts.length > 0 ? (
+                        {newProducts.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                                {visibleNewProducts.map((product) => (
+                                {newProducts.map((product) => (
                                     <div
                                         key={product.id}
                                         className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
@@ -112,9 +116,9 @@ export default function Index() {
 
                         {/* Section for Featured Products */}
                         <h3 className="text-lg font-bold mt-10 mb-4">Sản phẩm nổi bật</h3>
-                        {visibleFeaturedProducts.length > 0 ? (
+                        {featuredProducts.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                {visibleFeaturedProducts.map((product) => (
+                                {featuredProducts.map((product) => (
                                     <div
                                         key={product.id}
                                         className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"

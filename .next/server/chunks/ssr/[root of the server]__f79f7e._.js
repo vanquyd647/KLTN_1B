@@ -146,7 +146,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'https://kltn-1a.onrender.com/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -350,14 +350,38 @@ const productApi = {
         return response.data;
     },
     // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
+    getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/new?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching new products:', error);
+            throw error.response?.data || 'Failed to fetch new products.';
+        }
     },
     // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
+    getFeaturedProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/featured?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching featured products:', error);
+            throw error.response?.data || 'Failed to fetch featured products.';
+        }
     }
 };
 const cartApi = {
@@ -695,17 +719,17 @@ const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externa
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
     }
 });
-const fetchNewProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchNewProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
+const fetchNewProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchNewProductsByPagination', async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
     try {
-        const newProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getNewProductsByPagination(page, limit);
+        const newProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getNewProductsByPagination(page, limit, sort, priceRange, colorIds);
         return newProducts;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch new products');
     }
 });
-const fetchFeaturedProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchFeaturedProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
+const fetchFeaturedProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchFeaturedProductsByPagination', async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
     try {
-        const featuredProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getFeaturedProductsByPagination(page, limit);
+        const featuredProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getFeaturedProductsByPagination(page, limit, sort, priceRange, colorIds);
         return featuredProducts;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch featured products');
@@ -840,20 +864,24 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.error = null;
         }).addCase(fetchNewProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.newProducts.items = [
-                ...state.newProducts.items,
-                ...uniqueProducts
-            ];
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.newProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
+                state.newProducts.items = [
+                    ...state.newProducts.items,
+                    ...uniqueProducts
+                ];
+            }
             state.newProducts.pagination = {
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            // Update visible products
+            // Cập nhật sản phẩm hiển thị (có thể không cần thiết nếu không dùng `visibleNewProducts`)
             state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
             state.loading = false;
         }).addCase(fetchNewProductsByPagination.rejected, (state, action)=>{
@@ -866,20 +894,24 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.error = null;
         }).addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.featuredProducts.items = [
-                ...state.featuredProducts.items,
-                ...uniqueProducts
-            ];
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.featuredProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
+                state.featuredProducts.items = [
+                    ...state.featuredProducts.items,
+                    ...uniqueProducts
+                ];
+            }
             state.featuredProducts.pagination = {
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            // Update visible products
+            // Cập nhật sản phẩm hiển thị (nếu cần)
             state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
             state.loading = false;
         }).addCase(fetchFeaturedProductsByPagination.rejected, (state, action)=>{

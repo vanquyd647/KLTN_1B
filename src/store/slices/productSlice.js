@@ -32,9 +32,9 @@ export const fetchProductsByPagination = createAsyncThunk(
 // Fetch new products with pagination
 export const fetchNewProductsByPagination = createAsyncThunk(
     'products/fetchNewProductsByPagination',
-    async ({ page, limit }, { rejectWithValue }) => {
+    async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue }) => {
         try {
-            const newProducts = await productApi.getNewProductsByPagination(page, limit);
+            const newProducts = await productApi.getNewProductsByPagination(page, limit, sort, priceRange, colorIds);
             return newProducts;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch new products');
@@ -42,18 +42,19 @@ export const fetchNewProductsByPagination = createAsyncThunk(
     }
 );
 
-// Fetch featured products with pagination
 export const fetchFeaturedProductsByPagination = createAsyncThunk(
     'products/fetchFeaturedProductsByPagination',
-    async ({ page, limit }, { rejectWithValue }) => {
+    async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue }) => {
         try {
-            const featuredProducts = await productApi.getFeaturedProductsByPagination(page, limit);
+            const featuredProducts = await productApi.getFeaturedProductsByPagination(page, limit, sort, priceRange, colorIds);
             return featuredProducts;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch featured products');
         }
     }
 );
+
+
 
 // Fetch product details
 export const fetchProductDetail = createAsyncThunk(
@@ -215,13 +216,17 @@ const productSlice = createSlice({
             .addCase(fetchNewProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
 
-                // Filter out duplicate products
-                const uniqueProducts = products.filter(
-                    (product) => !state.newProducts.items.some((existing) => existing.id === product.id)
-                );
+                if (pagination.currentPage === 1) {
+                    // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                    state.newProducts.items = products;
+                } else {
+                    // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                    const uniqueProducts = products.filter(
+                        (product) => !state.newProducts.items.some((existing) => existing.id === product.id)
+                    );
+                    state.newProducts.items = [...state.newProducts.items, ...uniqueProducts];
+                }
 
-                // Append only unique products
-                state.newProducts.items = [...state.newProducts.items, ...uniqueProducts];
                 state.newProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
@@ -229,8 +234,11 @@ const productSlice = createSlice({
                     pageSize: pagination.pageSize || 10,
                 };
 
-                // Update visible products
-                state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
+                // Cập nhật sản phẩm hiển thị (có thể không cần thiết nếu không dùng `visibleNewProducts`)
+                state.visibleNewProducts = state.newProducts.items.slice(
+                    0,
+                    state.newProducts.pagination.pageSize
+                );
 
                 state.loading = false;
             })
@@ -248,13 +256,17 @@ const productSlice = createSlice({
             .addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
 
-                // Filter out duplicate products
-                const uniqueProducts = products.filter(
-                    (product) => !state.featuredProducts.items.some((existing) => existing.id === product.id)
-                );
+                if (pagination.currentPage === 1) {
+                    // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                    state.featuredProducts.items = products;
+                } else {
+                    // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                    const uniqueProducts = products.filter(
+                        (product) => !state.featuredProducts.items.some((existing) => existing.id === product.id)
+                    );
+                    state.featuredProducts.items = [...state.featuredProducts.items, ...uniqueProducts];
+                }
 
-                // Append only unique products
-                state.featuredProducts.items = [...state.featuredProducts.items, ...uniqueProducts];
                 state.featuredProducts.pagination = {
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
@@ -262,8 +274,11 @@ const productSlice = createSlice({
                     pageSize: pagination.pageSize || 10,
                 };
 
-                // Update visible products
-                state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
+                // Cập nhật sản phẩm hiển thị (nếu cần)
+                state.visibleFeaturedProducts = state.featuredProducts.items.slice(
+                    0,
+                    state.featuredProducts.pagination.pageSize
+                );
 
                 state.loading = false;
             })
