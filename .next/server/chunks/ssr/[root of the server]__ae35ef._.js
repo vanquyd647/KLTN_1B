@@ -186,7 +186,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1526,23 +1526,75 @@ function Sidebar() {
     const categories = [
         {
             id: 1,
-            name: 'Áo Thun'
+            name: 'Áo',
+            subCategories: [
+                {
+                    id: 101,
+                    name: 'Áo Thun'
+                },
+                {
+                    id: 102,
+                    name: 'Áo Sơ Mi'
+                },
+                {
+                    id: 103,
+                    name: 'Áo Polo'
+                }
+            ]
         },
         {
             id: 2,
-            name: 'Quần Jeans'
+            name: 'Quần',
+            subCategories: [
+                {
+                    id: 201,
+                    name: 'Quần Jeans'
+                },
+                {
+                    id: 202,
+                    name: 'Quần Shorts'
+                },
+                {
+                    id: 203,
+                    name: 'Quần Tây'
+                }
+            ]
         },
         {
             id: 3,
-            name: 'Váy'
+            name: 'Giày Dép',
+            subCategories: [
+                {
+                    id: 301,
+                    name: 'Giày Thể Thao'
+                },
+                {
+                    id: 302,
+                    name: 'Giày Lười'
+                },
+                {
+                    id: 303,
+                    name: 'Dép Sandals'
+                }
+            ]
         },
         {
             id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
+            name: 'Phụ Kiện',
+            subCategories: [
+                {
+                    id: 401,
+                    name: 'Mũ'
+                },
+                {
+                    id: 402,
+                    name: 'Thắt Lưng'
+                },
+                {
+                    id: 403,
+                    name: 'Balo'
+                }
+            ]
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("aside", {
@@ -1553,35 +1605,59 @@ function Sidebar() {
                 children: "Danh mục"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 12,
+                lineNumber: 43,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
                 className: "space-y-4",
                 children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
-                            href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                            className: "hover:underline block",
-                            children: category.name
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Sidebar.js",
-                            lineNumber: 16,
-                            columnNumber: 25
-                        }, this)
-                    }, category.id, false, {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
+                                href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
+                                className: "hover:underline block font-bold",
+                                children: category.name
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 48,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
+                                className: "pl-4 mt-2 space-y-2",
+                                children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
+                                            href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
+                                            className: "hover:underline text-gray-600 block",
+                                            children: subCategory.name
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Sidebar.js",
+                                            lineNumber: 58,
+                                            columnNumber: 37
+                                        }, this)
+                                    }, subCategory.id, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 57,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 55,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, category.id, true, {
                         fileName: "[project]/src/components/Sidebar.js",
-                        lineNumber: 15,
+                        lineNumber: 46,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 13,
+                lineNumber: 44,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar.js",
-        lineNumber: 11,
+        lineNumber: 42,
         columnNumber: 9
     }, this);
 }
@@ -2007,49 +2083,155 @@ __turbopack_esm__({
     "default": (()=>Sidebar)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
 ;
 ;
+;
 function Sidebar() {
-    // Danh sách danh mục với id và name
     const categories = [
         {
             id: 1,
-            name: 'Áo Thun'
+            name: 'Áo',
+            subCategories: [
+                {
+                    id: 101,
+                    name: 'Áo Thun'
+                },
+                {
+                    id: 102,
+                    name: 'Áo Sơ Mi'
+                },
+                {
+                    id: 103,
+                    name: 'Áo Polo'
+                }
+            ]
         },
         {
             id: 2,
-            name: 'Quần Jeans'
+            name: 'Quần',
+            subCategories: [
+                {
+                    id: 201,
+                    name: 'Quần Jeans'
+                },
+                {
+                    id: 202,
+                    name: 'Quần Shorts'
+                },
+                {
+                    id: 203,
+                    name: 'Quần Tây'
+                }
+            ]
         },
         {
             id: 3,
-            name: 'Váy'
+            name: 'Giày Dép',
+            subCategories: [
+                {
+                    id: 301,
+                    name: 'Giày Thể Thao'
+                },
+                {
+                    id: 302,
+                    name: 'Giày Lười'
+                },
+                {
+                    id: 303,
+                    name: 'Dép Sandals'
+                }
+            ]
         },
         {
             id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
+            name: 'Phụ Kiện',
+            subCategories: [
+                {
+                    id: 401,
+                    name: 'Mũ'
+                },
+                {
+                    id: 402,
+                    name: 'Thắt Lưng'
+                },
+                {
+                    id: 403,
+                    name: 'Balo'
+                }
+            ]
         }
     ];
+    const [currentCategoryId, setCurrentCategoryId] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null); // ID danh mục cha đang mở
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const { categoryId } = router.query;
+    const handleCategoryClick = (categoryId)=>{
+        setCurrentCategoryId(currentCategoryId === categoryId ? null : categoryId);
+    };
+    const navigateToCategory = (categoryId, categoryName)=>{
+        router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "flex flex-wrap justify-center gap-6 p-6 bg-white rounded-lg shadow-lg",
-        children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                onClick: ()=>router.push(`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`),
-                className: `px-6 py-3 text-lg font-semibold rounded-lg border-2 transition-all ${parseInt(categoryId, 10) === category.id ? 'bg-blue-500 text-white border-blue-500 shadow-md' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
-                children: category.name
-            }, category.id, false, {
+        className: "w-full p-4 bg-white border border-gray-300",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex gap-6 overflow-x-auto pb-4",
+                children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>handleCategoryClick(category.id),
+                        className: `px-6 py-3 text-lg font-semibold border transition-all ${currentCategoryId === category.id ? 'bg-blue-500 text-white border-blue-500' : 'text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
+                        children: category.name
+                    }, category.id, false, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 60,
+                        columnNumber: 21
+                    }, this))
+            }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 19,
+                lineNumber: 58,
+                columnNumber: 13
+            }, this),
+            currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mt-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>navigateToCategory(categories.find((cat)=>cat.id === currentCategoryId).id, categories.find((cat)=>cat.id === currentCategoryId).name),
+                        className: "block w-full px-4 py-2 mb-2 text-left text-blue-600 font-semibold hover:underline",
+                        children: [
+                            "Xem tất cả",
+                            ' ',
+                            categories.find((cat)=>cat.id === currentCategoryId)?.name
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 77,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-2 gap-4",
+                        children: categories.find((cat)=>cat.id === currentCategoryId)?.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>navigateToCategory(subCategory.id, subCategory.name),
+                                className: "block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition",
+                                children: subCategory.name
+                            }, subCategory.id, false, {
+                                fileName: "[project]/src/components/Sidebar2.js",
+                                lineNumber: 93,
+                                columnNumber: 33
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 89,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Sidebar2.js",
+                lineNumber: 76,
                 columnNumber: 17
-            }, this))
-    }, void 0, false, {
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 17,
+        lineNumber: 56,
         columnNumber: 9
     }, this);
 }
@@ -2243,7 +2425,7 @@ function Index() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
                                             src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
                                             alt: product.product_name,
-                                            className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
+                                            className: "w-full h-40 object-cover rounded sm:h-60 md:h-72"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
                                             lineNumber: 85,

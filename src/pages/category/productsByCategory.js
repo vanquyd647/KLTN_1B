@@ -73,7 +73,7 @@ export default function ProductsByCategory() {
             </div>
 
             <div className="w-full px-4 py-6">
-                <h1 className="text-2xl font-bold mb-6">Sản phẩm theo danh mục {categoryName}</h1>
+                <h1 className="text-2xl font-bold mb-6">{categoryName}</h1>
 
                 {error && <div className="text-red-500 text-center">{error}</div>}
 

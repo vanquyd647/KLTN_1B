@@ -639,7 +639,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1157,23 +1157,75 @@ function Sidebar() {
     const categories = [
         {
             id: 1,
-            name: 'Áo Thun'
+            name: 'Áo',
+            subCategories: [
+                {
+                    id: 101,
+                    name: 'Áo Thun'
+                },
+                {
+                    id: 102,
+                    name: 'Áo Sơ Mi'
+                },
+                {
+                    id: 103,
+                    name: 'Áo Polo'
+                }
+            ]
         },
         {
             id: 2,
-            name: 'Quần Jeans'
+            name: 'Quần',
+            subCategories: [
+                {
+                    id: 201,
+                    name: 'Quần Jeans'
+                },
+                {
+                    id: 202,
+                    name: 'Quần Shorts'
+                },
+                {
+                    id: 203,
+                    name: 'Quần Tây'
+                }
+            ]
         },
         {
             id: 3,
-            name: 'Váy'
+            name: 'Giày Dép',
+            subCategories: [
+                {
+                    id: 301,
+                    name: 'Giày Thể Thao'
+                },
+                {
+                    id: 302,
+                    name: 'Giày Lười'
+                },
+                {
+                    id: 303,
+                    name: 'Dép Sandals'
+                }
+            ]
         },
         {
             id: 4,
-            name: 'Áo Khoác'
-        },
-        {
-            id: 5,
-            name: 'Phụ Kiện'
+            name: 'Phụ Kiện',
+            subCategories: [
+                {
+                    id: 401,
+                    name: 'Mũ'
+                },
+                {
+                    id: 402,
+                    name: 'Thắt Lưng'
+                },
+                {
+                    id: 403,
+                    name: 'Balo'
+                }
+            ]
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
@@ -1184,35 +1236,59 @@ function Sidebar() {
                 children: "Danh mục"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 12,
+                lineNumber: 43,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
                 className: "space-y-4",
                 children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                            href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                            className: "hover:underline block",
-                            children: category.name
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Sidebar.js",
-                            lineNumber: 16,
-                            columnNumber: 25
-                        }, this)
-                    }, category.id, false, {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
+                                className: "hover:underline block font-bold",
+                                children: category.name
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 48,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                className: "pl-4 mt-2 space-y-2",
+                                children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                            href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
+                                            className: "hover:underline text-gray-600 block",
+                                            children: subCategory.name
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Sidebar.js",
+                                            lineNumber: 58,
+                                            columnNumber: 37
+                                        }, this)
+                                    }, subCategory.id, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 57,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 55,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, category.id, true, {
                         fileName: "[project]/src/components/Sidebar.js",
-                        lineNumber: 15,
+                        lineNumber: 46,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 13,
+                lineNumber: 44,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar.js",
-        lineNumber: 11,
+        lineNumber: 42,
         columnNumber: 9
     }, this);
 }
