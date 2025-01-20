@@ -1,11 +1,18 @@
 import { Provider } from 'react-redux';
-import store from '../store'; 
+import store from '../store';
 import '../styles/globals.css';
-
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }) {
     return (
         <Provider store={store}>
+            <Head>
+                <title>Fashion Store</title>
+                <link
+                    rel="icon"
+                    href="https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FDALL%C2%B7E%202025-01-20%2014.48.34%20-%20A%20minimalistic%20logo%20for%20a%20Fashion%20Store%2C%20designed%20for%20use%20as%20a%20website%20favicon.%20The%20logo%20features%20a%20sleek%20and%20modern%20design%20with%20an%20abstract%20represent.webp?alt=media&token=da1ff9d9-3a6e-44ca-ba4c-6de1a45b80fc"
+                />
+            </Head>
             <Component {...pageProps} />
         </Provider>
     );
