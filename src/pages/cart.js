@@ -105,14 +105,10 @@ const CartPage = () => {
                                                 {product.product_name || 'Unknown Product'}
                                             </h3>
                                             <p className="text-gray-700">
-                                                Color: <span className="font-medium">{color}</span>
+                                                <span className="font-medium">{color} / {size}</span>
                                             </p>
-                                            <p className="text-gray-700">
-                                                Size: <span className="font-medium">{size}</span>
-                                            </p>
-                                            <p className="font-bold text-red-500">
-                                                Price:{' '}
-                                                {product.discount_price || product.price || 'N/A'} VND
+                                            <p className="font-bold text-gray-500">
+                                                {product.discount_price.toLocaleString('vi-VN') || product.price.toLocaleString('vi-VN') || 'N/A'} VND
                                             </p>
                                             <div className="flex items-center gap-2 mt-2">
                                                 <button
@@ -149,15 +145,15 @@ const CartPage = () => {
                         THÔNG TIN ĐƠN HÀNG
                     </h2>
                     <p className="text-lg text-center lg:text-left">
-                        Total:{' '}
-                        <span className="font-semibold">
+                        Tổng tiền:{' '}
+                        <span className="font-bold text-red-500">
                             {calculateTotal().toLocaleString()} VND
                         </span>
                     </p>
                     <button
                         onClick={() => router.push('/checkout')}
                         disabled={!items || items.length === 0}
-                        className="mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400"
+                        className="mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400 font-bold"
                     >
                         THANH TOÁN
                     </button>
