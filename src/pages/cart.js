@@ -88,14 +88,18 @@ const CartPage = () => {
                                 const color = item.color?.color || 'N/A';
                                 const size = item.size?.size || 'N/A';
 
+                                // Lấy ảnh theo màu được chọn
+                                const selectedColorImage =
+                                    product.productColors?.find(
+                                        (colorItem) => colorItem.id === item.color?.id
+                                    )?.ProductColor?.image ||
+                                    'https://via.placeholder.com/100';
+
                                 return (
                                     <li key={item.id} className="flex gap-4">
                                         {/* Product Image */}
                                         <img
-                                            src={
-                                                product.productColors?.[0]?.ProductColor?.image ||
-                                                'https://via.placeholder.com/100'
-                                            }
+                                            src={selectedColorImage}
                                             alt={product.product_name || 'Product'}
                                             className="w-24 h-24 object-cover rounded border"
                                         />
@@ -108,7 +112,12 @@ const CartPage = () => {
                                                 <span className="font-medium">{color} / {size}</span>
                                             </p>
                                             <p className="font-bold text-gray-500">
-                                                {product.discount_price.toLocaleString('vi-VN') || product.price.toLocaleString('vi-VN') || 'N/A'} VND
+                                                {(
+                                                    product.discount_price ||
+                                                    product.price ||
+                                                    0
+                                                ).toLocaleString('vi-VN')}{' '}
+                                                VND
                                             </p>
                                             <div className="flex items-center gap-2 mt-2">
                                                 <button
