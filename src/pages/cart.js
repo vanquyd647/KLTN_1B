@@ -144,7 +144,7 @@ const CartPage = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="w-full lg:w-1/3 bg-white p-4 rounded shadow-md self-start">
+                <div className="w-full lg:w-1/3 bg-white p-4 rounded border self-start">
                     <h2 className="text-xl font-bold mb-4 border-b pb-4 text-center lg:text-left">
                         THÔNG TIN ĐƠN HÀNG
                     </h2>
