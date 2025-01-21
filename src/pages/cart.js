@@ -81,6 +81,10 @@ const CartPage = () => {
         );
     };
 
+    const handleProductClick = (slug) => {
+        router.push(`/productdetail/${slug}`);
+    };
+
     if (loading) return <div className="text-center py-10 text-xl">Loading cart...</div>;
 
     if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
@@ -108,7 +112,7 @@ const CartPage = () => {
                                     'https://via.placeholder.com/100';
 
                                 return (
-                                    <li key={item.id} className="flex gap-4 items-center">
+                                    <li key={item.id} className="flex gap-4 items-center" onClick={() => handleProductClick(product.slug)}>
                                         {/* Product Image */}
                                         <img
                                             src={selectedColorImage}
