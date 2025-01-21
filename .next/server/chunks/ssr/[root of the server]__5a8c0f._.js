@@ -187,7 +187,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -560,7 +560,7 @@ const colorsApi = {
 };
 const indexApi = {
     getNewProducts: async (page, limit)=>{
-        const response = await apiClient.get('/products/new', {
+        const response = await apiClient.get('/products/news', {
             params: {
                 page,
                 limit
@@ -569,7 +569,7 @@ const indexApi = {
         return response.data;
     },
     getFeaturedProducts: async (page, limit)=>{
-        const response = await apiClient.get('/products/featured', {
+        const response = await apiClient.get('/products/featureds', {
             params: {
                 page,
                 limit

@@ -778,6 +778,7 @@ __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "indexApi": (()=>indexApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -1160,6 +1161,26 @@ const colorsApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to fetch colors.';
         }
+    }
+};
+const indexApi = {
+    getNewProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/news', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/featureds', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
     }
 };
 ;

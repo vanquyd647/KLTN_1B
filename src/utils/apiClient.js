@@ -301,6 +301,7 @@ const productApi = {
             throw error.response?.data || 'Failed to fetch featured products.';
         }
     },
+
 };
 
 
@@ -375,6 +376,16 @@ const cartApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch cart items.';
+        }
+    },
+
+    // Cập nhật số lượng sản phẩm trong giỏ hàng
+    updateCartItemQuantity: async (itemId, quantity) => {
+        try {
+            const response = await apiClient.put(`carts/item/${itemId}`, { quantity });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update cart item quantity.';
         }
     },
 };
@@ -455,13 +466,13 @@ const colorsApi = {
 
 const indexApi = {
     getNewProducts: async (page, limit) => {
-        const response = await apiClient.get('/products/new', {
+        const response = await apiClient.get('/products/news', {
             params: { page, limit },
         });
         return response.data;
     },
     getFeaturedProducts: async (page, limit) => {
-        const response = await apiClient.get('/products/featured', {
+        const response = await apiClient.get('/products/featureds', {
             params: { page, limit },
         });
         return response.data;

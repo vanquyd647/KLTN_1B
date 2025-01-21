@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { cartApi } from '../../utils/apiClient';;
+import { cartApi } from '../../utils/apiClient';
 
 // **Async thunks**
 
@@ -11,7 +11,7 @@ export const createCartForGuest = createAsyncThunk(
             const response = await cartApi.createCartForGuest(cartData);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to create cart for guest.');
         }
     }
 );
@@ -24,7 +24,7 @@ export const createCartForUser = createAsyncThunk(
             const response = await cartApi.createCartForUser();
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to create or retrieve cart for user.');
         }
     }
 );
@@ -37,7 +37,7 @@ export const getCartById = createAsyncThunk(
             const response = await cartApi.getCartById(cartId);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to fetch cart details.');
         }
     }
 );
@@ -50,12 +50,10 @@ export const addItemToCart = createAsyncThunk(
             const response = await cartApi.addItemToCart(cartId, itemData);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to add item to cart.');
         }
     }
 );
-
-    
 
 // Xóa sản phẩm khỏi giỏ hàng
 export const removeCartItem = createAsyncThunk(
@@ -65,7 +63,7 @@ export const removeCartItem = createAsyncThunk(
             const response = await cartApi.removeCartItem(itemId);
             return response;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to remove item from cart.');
         }
     }
 );
@@ -78,10 +76,24 @@ export const getCartItems = createAsyncThunk(
             const response = await cartApi.getCartItems(cartId);
             return response.data; // Lấy phần `data` từ kết quả API
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || 'Failed to fetch cart items.');
         }
     }
 );
+
+// Cập nhật số lượng sản phẩm trong giỏ hàng
+export const updateCartItemQuantity = createAsyncThunk(
+    'cart/updateCartItemQuantity',
+    async ({ itemId, quantity }, { rejectWithValue }) => {
+        try {
+            const response = await cartApi.updateCartItemQuantity(itemId, quantity);
+            return response.data; // Đảm bảo trả về đầy đủ dữ liệu sản phẩm
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to update cart item quantity.');
+        }
+    }
+);
+
 
 // **Slice**
 const cartSlice = createSlice({
@@ -90,6 +102,7 @@ const cartSlice = createSlice({
         cart: null,
         items: [],
         loading: false,
+        updating: {}, // Theo dõi trạng thái cập nhật cho từng sản phẩm
         error: null,
     },
     reducers: {
@@ -97,6 +110,7 @@ const cartSlice = createSlice({
             state.cart = null;
             state.items = [];
             state.loading = false;
+            state.updating = {};
             state.error = null;
         },
     },
@@ -183,6 +197,28 @@ const cartSlice = createSlice({
             })
             .addCase(getCartItems.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload;
+            })
+            // Update cart item quantity
+            .addCase(updateCartItemQuantity.pending, (state, action) => {
+                const { itemId } = action.meta.arg;
+                state.updating[itemId] = true; // Đánh dấu sản phẩm đang cập nhật
+                state.error = null;
+            })
+            .addCase(updateCartItemQuantity.fulfilled, (state, action) => {
+                const updatedItem = action.payload;
+                const itemIndex = state.items.findIndex((item) => item.id === updatedItem.id);
+                if (itemIndex !== -1) {
+                    state.items[itemIndex] = {
+                        ...state.items[itemIndex],
+                        ...updatedItem, // Cập nhật dữ liệu sản phẩm
+                    };
+                }
+                delete state.updating[updatedItem.id]; // Xóa trạng thái cập nhật
+            })
+            .addCase(updateCartItemQuantity.rejected, (state, action) => {
+                const { itemId } = action.meta.arg;
+                state.updating[itemId] = false; // Đánh dấu cập nhật thất bại
                 state.error = action.payload;
             });
     },

@@ -167,6 +167,7 @@ __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "indexApi": (()=>indexApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -557,6 +558,26 @@ const colorsApi = {
         }
     }
 };
+const indexApi = {
+    getNewProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/news', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/featureds', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    }
+};
 ;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
@@ -904,20 +925,24 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.error = null;
         }).addCase(fetchNewProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.newProducts.items = [
-                ...state.newProducts.items,
-                ...uniqueProducts
-            ];
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.newProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
+                state.newProducts.items = [
+                    ...state.newProducts.items,
+                    ...uniqueProducts
+                ];
+            }
             state.newProducts.pagination = {
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            // Update visible products
+            // Cập nhật sản phẩm hiển thị (có thể không cần thiết nếu không dùng `visibleNewProducts`)
             state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
             state.loading = false;
         }).addCase(fetchNewProductsByPagination.rejected, (state, action)=>{
@@ -930,20 +955,24 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.error = null;
         }).addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
-            // Filter out duplicate products
-            const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
-            // Append only unique products
-            state.featuredProducts.items = [
-                ...state.featuredProducts.items,
-                ...uniqueProducts
-            ];
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.featuredProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
+                state.featuredProducts.items = [
+                    ...state.featuredProducts.items,
+                    ...uniqueProducts
+                ];
+            }
             state.featuredProducts.pagination = {
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            // Update visible products
+            // Cập nhật sản phẩm hiển thị (nếu cần)
             state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
             state.loading = false;
         }).addCase(fetchFeaturedProductsByPagination.rejected, (state, action)=>{

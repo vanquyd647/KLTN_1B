@@ -778,6 +778,7 @@ __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "indexApi": (()=>indexApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -995,14 +996,38 @@ const productApi = {
         return response.data;
     },
     // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
+    getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/new?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching new products:', error);
+            throw error.response?.data || 'Failed to fetch new products.';
+        }
     },
     // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
+    getFeaturedProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/featured?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching featured products:', error);
+            throw error.response?.data || 'Failed to fetch featured products.';
+        }
     }
 };
 const cartApi = {
@@ -1068,6 +1093,17 @@ const cartApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch cart items.';
+        }
+    },
+    // Cập nhật số lượng sản phẩm trong giỏ hàng
+    updateCartItemQuantity: async (itemId, quantity)=>{
+        try {
+            const response = await apiClient.put(`carts/item/${itemId}`, {
+                quantity
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update cart item quantity.';
         }
     }
 };
@@ -1138,6 +1174,26 @@ const colorsApi = {
         }
     }
 };
+const indexApi = {
+    getNewProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/news', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/featureds', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    }
+};
 ;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -1156,11 +1212,11 @@ __turbopack_esm__({
     "getCartById": (()=>getCartById),
     "getCartItems": (()=>getCartItems),
     "removeCartItem": (()=>removeCartItem),
-    "resetCartState": (()=>resetCartState)
+    "resetCartState": (()=>resetCartState),
+    "updateCartItemQuantity": (()=>updateCartItemQuantity)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
-;
 ;
 ;
 const createCartForGuest = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/createCartForGuest', async (cartData, { rejectWithValue })=>{
@@ -1168,7 +1224,7 @@ const createCartForGuest = (0, __TURBOPACK__imported__module__$5b$project$5d2f$n
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].createCartForGuest(cartData);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to create cart for guest.');
     }
 });
 const createCartForUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/createCartForUser', async (_, { rejectWithValue })=>{
@@ -1176,7 +1232,7 @@ const createCartForUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$no
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].createCartForUser();
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to create or retrieve cart for user.');
     }
 });
 const getCartById = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/getCartById', async (cartId, { rejectWithValue })=>{
@@ -1184,7 +1240,7 @@ const getCartById = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].getCartById(cartId);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to fetch cart details.');
     }
 });
 const addItemToCart = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/addItemToCart', async ({ cartId, itemData }, { rejectWithValue })=>{
@@ -1192,7 +1248,7 @@ const addItemToCart = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_m
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].addItemToCart(cartId, itemData);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to add item to cart.');
     }
 });
 const removeCartItem = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/removeCartItem', async (itemId, { rejectWithValue })=>{
@@ -1200,7 +1256,7 @@ const removeCartItem = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].removeCartItem(itemId);
         return response;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to remove item from cart.');
     }
 });
 const getCartItems = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/getCartItems', async (cartId, { rejectWithValue })=>{
@@ -1208,7 +1264,15 @@ const getCartItems = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].getCartItems(cartId);
         return response.data; // Lấy phần `data` từ kết quả API
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to fetch cart items.');
+    }
+});
+const updateCartItemQuantity = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('cart/updateCartItemQuantity', async ({ itemId, quantity }, { rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["cartApi"].updateCartItemQuantity(itemId, quantity);
+        return response.data; // Đảm bảo trả về đầy đủ dữ liệu sản phẩm
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to update cart item quantity.');
     }
 });
 // **Slice**
@@ -1218,6 +1282,7 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         cart: null,
         items: [],
         loading: false,
+        updating: {},
         error: null
     },
     reducers: {
@@ -1225,6 +1290,7 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.cart = null;
             state.items = [];
             state.loading = false;
+            state.updating = {};
             state.error = null;
         }
     },
@@ -1288,6 +1354,25 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.items = action.payload;
         }).addCase(getCartItems.rejected, (state, action)=>{
             state.loading = false;
+            state.error = action.payload;
+        })// Update cart item quantity
+        .addCase(updateCartItemQuantity.pending, (state, action)=>{
+            const { itemId } = action.meta.arg;
+            state.updating[itemId] = true; // Đánh dấu sản phẩm đang cập nhật
+            state.error = null;
+        }).addCase(updateCartItemQuantity.fulfilled, (state, action)=>{
+            const updatedItem = action.payload;
+            const itemIndex = state.items.findIndex((item)=>item.id === updatedItem.id);
+            if (itemIndex !== -1) {
+                state.items[itemIndex] = {
+                    ...state.items[itemIndex],
+                    ...updatedItem
+                };
+            }
+            delete state.updating[updatedItem.id]; // Xóa trạng thái cập nhật
+        }).addCase(updateCartItemQuantity.rejected, (state, action)=>{
+            const { itemId } = action.meta.arg;
+            state.updating[itemId] = false; // Đánh dấu cập nhật thất bại
             state.error = action.payload;
         });
     }
@@ -1931,18 +2016,14 @@ const CartPage = ()=>{
                         let cartResponse;
                         if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])()) {
                             if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])()) {
-                                // Tạo giỏ hàng cho khách
                                 cartResponse = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForGuest"])()).unwrap();
                             } else {
-                                // Tạo giỏ hàng cho người dùng đã đăng nhập
                                 cartResponse = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForUser"])()).unwrap();
                             }
-                            // Lấy danh sách sản phẩm trong giỏ hàng
                             if (cartResponse?.id) {
                                 await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])(cartResponse.id));
                             }
                         } else {
-                            // Lấy danh sách sản phẩm trong giỏ hàng hiện tại
                             await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])()));
                         }
                     } catch (err) {
@@ -1960,23 +2041,27 @@ const CartPage = ()=>{
     }["CartPage.useEffect"], [
         dispatch
     ]);
-    const handleCheckout = ()=>{
-        if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])()) {
-            alert('Please log in to proceed to checkout.');
-            router.push('/login');
-        } else {
-            router.push('/checkout');
+    const handleQuantityChange = (itemId, newQuantity)=>{
+        if (newQuantity > 0) {
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["updateCartItemQuantity"])({
+                itemId,
+                quantity: newQuantity
+            })).unwrap().then(()=>{
+                console.log('Quantity updated successfully');
+            }).catch((err)=>{
+                console.error('Failed to update quantity:', err);
+            });
         }
     };
-    const handleProductClick = (slug)=>{
-        router.push(`/productdetail/${slug}`);
+    const calculateTotal = ()=>{
+        return items.reduce((total, item)=>total + (item.product?.discount_price || item.product?.price || 0) * item.quantity, 0);
     };
     if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "text-center py-10 text-xl",
         children: "Loading cart..."
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 67,
+        lineNumber: 72,
         columnNumber: 25
     }, this);
     if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1984,156 +2069,226 @@ const CartPage = ()=>{
         children: error
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 69,
+        lineNumber: 74,
         columnNumber: 23
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "container mx-auto px-4 py-6",
+            className: "container mx-auto px-4 py-6 flex flex-col lg:flex-row lg:gap-8",
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-bold mb-6",
-                    children: "Your Cart"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 74,
-                    columnNumber: 17
-                }, this),
-                !items || items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-center text-lg",
-                    children: "Your cart is empty."
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 76,
-                    columnNumber: 21
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                    className: "space-y-4",
-                    children: items.map((item)=>{
-                        const product = item.product || {};
-                        const productColors = product.productColors || [];
-                        const selectedColor = productColors.find((color)=>color.id === item.color?.id);
-                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                            className: "flex gap-4 p-4 border rounded shadow-md",
-                            onClick: ()=>handleProductClick(product.slug),
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: selectedColor?.ProductColor?.image || 'https://via.placeholder.com/100',
-                                    alt: product.product_name || 'Product',
-                                    className: "w-24 h-24 object-cover rounded"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 92,
-                                    columnNumber: 37
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1",
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "lg:w-2/3",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                            className: "text-2xl font-bold mb-6 border-b pb-4",
+                            children: "GIỎ HÀNG CỦA BẠN"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/cart.js",
+                            lineNumber: 81,
+                            columnNumber: 21
+                        }, this),
+                        !items || items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-center text-lg",
+                            children: "Your cart is empty."
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/cart.js",
+                            lineNumber: 83,
+                            columnNumber: 25
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                            className: "space-y-4",
+                            children: items.map((item)=>{
+                                const product = item.product || {};
+                                const color = item.color?.color || 'N/A';
+                                const size = item.size?.size || 'N/A';
+                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                    className: "flex gap-4",
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-lg font-semibold",
-                                            children: product.product_name || 'Unknown Product'
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                            src: product.productColors?.[0]?.ProductColor?.image || 'https://via.placeholder.com/100',
+                                            alt: product.product_name || 'Product',
+                                            className: "w-24 h-24 object-cover rounded border"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 101,
+                                            lineNumber: 94,
                                             columnNumber: 41
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-700",
-                                            children: product.description || 'No description available.'
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 104,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "font-bold text-red-500",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex-1",
                                             children: [
-                                                "Price: ",
-                                                product.discount_price || product.price || 'N/A',
-                                                ' ',
-                                                "VND"
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                    className: "text-lg font-semibold",
+                                                    children: product.product_name || 'Unknown Product'
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 104,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-gray-700",
+                                                    children: [
+                                                        "Color: ",
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "font-medium",
+                                                            children: color
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/cart.js",
+                                                            lineNumber: 108,
+                                                            columnNumber: 56
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 107,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-gray-700",
+                                                    children: [
+                                                        "Size: ",
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "font-medium",
+                                                            children: size
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/cart.js",
+                                                            lineNumber: 111,
+                                                            columnNumber: 55
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 110,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "font-bold text-red-500",
+                                                    children: [
+                                                        "Price:",
+                                                        ' ',
+                                                        product.discount_price || product.price || 'N/A',
+                                                        " VND"
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 113,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center gap-2 mt-2",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>handleQuantityChange(item.id, item.quantity - 1),
+                                                            className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
+                                                            children: "-"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/cart.js",
+                                                            lineNumber: 118,
+                                                            columnNumber: 49
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-lg font-medium",
+                                                            children: item.quantity
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/cart.js",
+                                                            lineNumber: 126,
+                                                            columnNumber: 49
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>handleQuantityChange(item.id, item.quantity + 1),
+                                                            className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
+                                                            children: "+"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/pages/cart.js",
+                                                            lineNumber: 129,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 117,
+                                                    columnNumber: 45
+                                                }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 107,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Quantity: ",
-                                                item.quantity
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 111,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Size: ",
-                                                item.size?.size || 'N/A'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 112,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Color: ",
-                                                item.color?.color || 'N/A'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 113,
-                                            columnNumber: 41
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            children: [
-                                                "Stock: ",
-                                                item.stock?.quantity || 'Out of stock'
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 114,
+                                            lineNumber: 103,
                                             columnNumber: 41
                                         }, this)
                                     ]
+                                }, item.id, true, {
+                                    fileName: "[project]/src/pages/cart.js",
+                                    lineNumber: 92,
+                                    columnNumber: 37
+                                }, this);
+                            })
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/cart.js",
+                            lineNumber: 85,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/cart.js",
+                    lineNumber: 80,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "w-full lg:w-1/3 bg-white p-4 rounded shadow-md self-start",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                            className: "text-xl font-bold mb-4 border-b pb-4 text-center lg:text-left",
+                            children: "THÔNG TIN ĐƠN HÀNG"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/cart.js",
+                            lineNumber: 148,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-lg text-center lg:text-left",
+                            children: [
+                                "Total:",
+                                ' ',
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-semibold",
+                                    children: [
+                                        calculateTotal().toLocaleString(),
+                                        " VND"
+                                    ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 100,
-                                    columnNumber: 37
+                                    lineNumber: 153,
+                                    columnNumber: 25
                                 }, this)
                             ]
-                        }, item.id, true, {
+                        }, void 0, true, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 87,
-                            columnNumber: 33
-                        }, this);
-                    })
-                }, void 0, false, {
+                            lineNumber: 151,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>router.push('/checkout'),
+                            disabled: !items || items.length === 0,
+                            className: "mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400",
+                            children: "THANH TOÁN"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/cart.js",
+                            lineNumber: 157,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 78,
-                    columnNumber: 21
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                    onClick: handleCheckout,
-                    disabled: !items || items.length === 0,
-                    className: "mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-400",
-                    children: "Proceed to Checkout"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 123,
+                    lineNumber: 147,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/cart.js",
-            lineNumber: 73,
+            lineNumber: 78,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 72,
+        lineNumber: 77,
         columnNumber: 9
     }, this);
 };

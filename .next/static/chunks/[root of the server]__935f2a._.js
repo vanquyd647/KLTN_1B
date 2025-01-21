@@ -626,6 +626,7 @@ __turbopack_esm__({
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "indexApi": (()=>indexApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -843,14 +844,38 @@ const productApi = {
         return response.data;
     },
     // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
+    getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/new?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching new products:', error);
+            throw error.response?.data || 'Failed to fetch new products.';
+        }
     },
     // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
+    getFeaturedProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/featured?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching featured products:', error);
+            throw error.response?.data || 'Failed to fetch featured products.';
+        }
     }
 };
 const cartApi = {
@@ -984,6 +1009,26 @@ const colorsApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to fetch colors.';
         }
+    }
+};
+const indexApi = {
+    getNewProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/news', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/featureds', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
     }
 };
 ;
