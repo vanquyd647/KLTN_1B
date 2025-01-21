@@ -112,7 +112,7 @@ const CartPage = () => {
                                     'https://via.placeholder.com/100';
 
                                 return (
-                                    <li key={item.id} className="flex gap-4 items-center" onClick={() => handleProductClick(product.slug)}>
+                                    <li key={item.id} className="flex gap-4 items-center">
                                         {/* Product Image */}
                                         <img
                                             src={selectedColorImage}
@@ -120,7 +120,7 @@ const CartPage = () => {
                                             className="w-24 h-24 object-cover rounded border"
                                         />
                                         {/* Product Details */}
-                                        <div className="flex-1">
+                                        <div className="flex-1" onClick={() => handleProductClick(product.slug)}>
                                             <h3 className="text-lg font-semibold">
                                                 {product.product_name || 'Unknown Product'}
                                             </h3>
