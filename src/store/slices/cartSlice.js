@@ -173,17 +173,21 @@ const cartSlice = createSlice({
             })
 
             // Remove item from cart
-            .addCase(removeCartItem.pending, (state) => {
-                state.loading = true;
+            // Remove item from cart
+            .addCase(removeCartItem.pending, (state, action) => {
+                const itemId = action.meta.arg; // Capture the item ID being removed
+                state.updating[itemId] = true; // Mark the specific item as updating
                 state.error = null;
             })
             .addCase(removeCartItem.fulfilled, (state, action) => {
-                state.loading = false;
-                state.items = state.items.filter((item) => item.id !== action.meta.arg);
+                const itemId = action.meta.arg; // Retrieve the ID of the removed item
+                state.items = state.items.filter((item) => item.id !== itemId); // Remove the item from the state
+                delete state.updating[itemId]; // Remove the "updating" flag for the item
             })
             .addCase(removeCartItem.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
+                const itemId = action.meta.arg; // Retrieve the ID of the item that failed to be removed
+                state.updating[itemId] = false; // Reset the "updating" flag
+                state.error = action.payload; // Store the error message
             })
 
             // Get cart items

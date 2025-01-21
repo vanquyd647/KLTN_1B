@@ -1336,15 +1336,19 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.loading = false;
             state.error = action.payload;
         })// Remove item from cart
-        .addCase(removeCartItem.pending, (state)=>{
-            state.loading = true;
+        // Remove item from cart
+        .addCase(removeCartItem.pending, (state, action)=>{
+            const itemId = action.meta.arg; // Capture the item ID being removed
+            state.updating[itemId] = true; // Mark the specific item as updating
             state.error = null;
         }).addCase(removeCartItem.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.items = state.items.filter((item)=>item.id !== action.meta.arg);
+            const itemId = action.meta.arg; // Retrieve the ID of the removed item
+            state.items = state.items.filter((item)=>item.id !== itemId); // Remove the item from the state
+            delete state.updating[itemId]; // Remove the "updating" flag for the item
         }).addCase(removeCartItem.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
+            const itemId = action.meta.arg; // Retrieve the ID of the item that failed to be removed
+            state.updating[itemId] = false; // Reset the "updating" flag
+            state.error = action.payload; // Store the error message
         })// Get cart items
         .addCase(getCartItems.pending, (state)=>{
             state.loading = true;
@@ -2053,6 +2057,13 @@ const CartPage = ()=>{
             });
         }
     };
+    const handleRemoveItem = (itemId)=>{
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartItem"])(itemId)).unwrap().then(()=>{
+            console.log('Item removed successfully');
+        }).catch((err)=>{
+            console.error('Failed to remove item:', err);
+        });
+    };
     const calculateTotal = ()=>{
         return items.reduce((total, item)=>total + (item.product?.discount_price || item.product?.price || 0) * item.quantity, 0);
     };
@@ -2061,7 +2072,7 @@ const CartPage = ()=>{
         children: "Loading cart..."
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 72,
+        lineNumber: 84,
         columnNumber: 25
     }, this);
     if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2069,7 +2080,7 @@ const CartPage = ()=>{
         children: error
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 74,
+        lineNumber: 86,
         columnNumber: 23
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2084,7 +2095,7 @@ const CartPage = ()=>{
                             children: "GIỎ HÀNG CỦA BẠN"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 81,
+                            lineNumber: 93,
                             columnNumber: 21
                         }, this),
                         !items || items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2092,7 +2103,7 @@ const CartPage = ()=>{
                             children: "Your cart is empty."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 83,
+                            lineNumber: 95,
                             columnNumber: 25
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
                             className: "space-y-4",
@@ -2100,10 +2111,10 @@ const CartPage = ()=>{
                                 const product = item.product || {};
                                 const color = item.color?.color || 'N/A';
                                 const size = item.size?.size || 'N/A';
-                                // Lấy ảnh theo màu được chọn
+                                // Get image by selected color
                                 const selectedColorImage = product.productColors?.find((colorItem)=>colorItem.id === item.color?.id)?.ProductColor?.image || 'https://via.placeholder.com/100';
                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                    className: "flex gap-4",
+                                    className: "flex gap-4 items-center",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                             src: selectedColorImage,
@@ -2111,7 +2122,7 @@ const CartPage = ()=>{
                                             className: "w-24 h-24 object-cover rounded border"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 101,
+                                            lineNumber: 113,
                                             columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2122,7 +2133,7 @@ const CartPage = ()=>{
                                                     children: product.product_name || 'Unknown Product'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/cart.js",
-                                                    lineNumber: 108,
+                                                    lineNumber: 120,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2136,12 +2147,12 @@ const CartPage = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/cart.js",
-                                                        lineNumber: 112,
+                                                        lineNumber: 124,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/cart.js",
-                                                    lineNumber: 111,
+                                                    lineNumber: 123,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2153,66 +2164,75 @@ const CartPage = ()=>{
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/cart.js",
-                                                    lineNumber: 114,
-                                                    columnNumber: 45
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center gap-2 mt-2",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>handleQuantityChange(item.id, item.quantity - 1),
-                                                            className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
-                                                            children: "-"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/pages/cart.js",
-                                                            lineNumber: 123,
-                                                            columnNumber: 49
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-lg font-medium",
-                                                            children: item.quantity
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/pages/cart.js",
-                                                            lineNumber: 131,
-                                                            columnNumber: 49
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>handleQuantityChange(item.id, item.quantity + 1),
-                                                            className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
-                                                            children: "+"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/pages/cart.js",
-                                                            lineNumber: 134,
-                                                            columnNumber: 49
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/pages/cart.js",
-                                                    lineNumber: 122,
+                                                    lineNumber: 126,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/cart.js",
-                                            lineNumber: 107,
+                                            lineNumber: 119,
+                                            columnNumber: 41
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center gap-2",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    onClick: ()=>handleQuantityChange(item.id, item.quantity - 1),
+                                                    className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
+                                                    children: "-"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 137,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-lg font-medium",
+                                                    children: item.quantity
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 145,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    onClick: ()=>handleQuantityChange(item.id, item.quantity + 1),
+                                                    className: "bg-gray-200 px-3 py-1 rounded hover:bg-gray-300",
+                                                    children: "+"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/cart.js",
+                                                    lineNumber: 146,
+                                                    columnNumber: 45
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/pages/cart.js",
+                                            lineNumber: 136,
+                                            columnNumber: 41
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: ()=>handleRemoveItem(item.id),
+                                            className: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700",
+                                            children: "×"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/cart.js",
+                                            lineNumber: 156,
                                             columnNumber: 41
                                         }, this)
                                     ]
                                 }, item.id, true, {
                                     fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 99,
+                                    lineNumber: 111,
                                     columnNumber: 37
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 85,
+                            lineNumber: 97,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 80,
+                    lineNumber: 92,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2223,7 +2243,7 @@ const CartPage = ()=>{
                             children: "THÔNG TIN ĐƠN HÀNG"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 153,
+                            lineNumber: 171,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2239,13 +2259,13 @@ const CartPage = ()=>{
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/cart.js",
-                                    lineNumber: 158,
+                                    lineNumber: 176,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 156,
+                            lineNumber: 174,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2255,24 +2275,24 @@ const CartPage = ()=>{
                             children: "THANH TOÁN"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
-                            lineNumber: 162,
+                            lineNumber: 180,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/cart.js",
-                    lineNumber: 152,
+                    lineNumber: 170,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/cart.js",
-            lineNumber: 78,
+            lineNumber: 90,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/cart.js",
-        lineNumber: 77,
+        lineNumber: 89,
         columnNumber: 9
     }, this);
 };

@@ -6,6 +6,7 @@ import {
     getCartItems,
     resetCartState,
     updateCartItemQuantity,
+    removeCartItem,
 } from '../store/slices/cartSlice';
 import { getToken, getCartId } from '../utils/storage';
 import { useRouter } from 'next/router';
@@ -60,6 +61,17 @@ const CartPage = () => {
         }
     };
 
+    const handleRemoveItem = (itemId) => {
+        dispatch(removeCartItem(itemId))
+            .unwrap()
+            .then(() => {
+                console.log('Item removed successfully');
+            })
+            .catch((err) => {
+                console.error('Failed to remove item:', err);
+            });
+    };
+
     const calculateTotal = () => {
         return items.reduce(
             (total, item) =>
@@ -88,7 +100,7 @@ const CartPage = () => {
                                 const color = item.color?.color || 'N/A';
                                 const size = item.size?.size || 'N/A';
 
-                                // Lấy ảnh theo màu được chọn
+                                // Get image by selected color
                                 const selectedColorImage =
                                     product.productColors?.find(
                                         (colorItem) => colorItem.id === item.color?.id
@@ -96,7 +108,7 @@ const CartPage = () => {
                                     'https://via.placeholder.com/100';
 
                                 return (
-                                    <li key={item.id} className="flex gap-4">
+                                    <li key={item.id} className="flex gap-4 items-center">
                                         {/* Product Image */}
                                         <img
                                             src={selectedColorImage}
@@ -119,28 +131,34 @@ const CartPage = () => {
                                                 ).toLocaleString('vi-VN')}{' '}
                                                 VND
                                             </p>
-                                            <div className="flex items-center gap-2 mt-2">
-                                                <button
-                                                    onClick={() =>
-                                                        handleQuantityChange(item.id, item.quantity - 1)
-                                                    }
-                                                    className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                                                >
-                                                    -
-                                                </button>
-                                                <span className="text-lg font-medium">
-                                                    {item.quantity}
-                                                </span>
-                                                <button
-                                                    onClick={() =>
-                                                        handleQuantityChange(item.id, item.quantity + 1)
-                                                    }
-                                                    className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
                                         </div>
+                                        {/* Quantity Controls */}
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() =>
+                                                    handleQuantityChange(item.id, item.quantity - 1)
+                                                }
+                                                className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-lg font-medium">{item.quantity}</span>
+                                            <button
+                                                onClick={() =>
+                                                    handleQuantityChange(item.id, item.quantity + 1)
+                                                }
+                                                className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                        {/* Remove Button */}
+                                        <button
+                                            onClick={() => handleRemoveItem(item.id)}
+                                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+                                        >
+                                            ×
+                                        </button>
                                     </li>
                                 );
                             })}
