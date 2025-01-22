@@ -124,6 +124,7 @@ __turbopack_async_result__();
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_esm__({
+    "adminApi": (()=>adminApi),
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
@@ -147,7 +148,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/api/'
+    baseURL: 'http://localhost:5551/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -315,6 +316,32 @@ const userApi = {
             return accessToken; // Return the new access token
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
+        }
+    }
+};
+const adminApi = {
+    /**
+     * Đăng nhập admin
+     * @param {Object} credentials - Dữ liệu đăng nhập (email và password)
+     * @returns {Promise<Object>} - Phản hồi từ API
+     */ loginForAdmin: async (credentials)=>{
+        try {
+            const response = await apiClient.post('/login-admin', credentials);
+            // Lấy token từ phản hồi
+            const { accessToken, refreshToken } = response.data.data;
+            // Lưu token vào localStorage hoặc cookie
+            if (accessToken && refreshToken) {
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setToken"])(accessToken);
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken);
+            }
+            // Lưu session ID nếu có trong header
+            const sessionId = response.headers['x-session-id'];
+            if (sessionId) {
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId);
+            }
+            return response.data; // Trả về dữ liệu phản hồi
+        } catch (error) {
+            throw error.response?.data || error.message;
         }
     }
 };

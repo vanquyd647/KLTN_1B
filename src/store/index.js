@@ -6,6 +6,7 @@ import reviewsReducer from '../store/slices/reviewsSlice';
 import productsByCategoryReducer from '../store/slices/productsByCategorySlice';
 import colorsReducer from '../store/slices/colorsSlice';
 import categoryReducer from '../store/slices/categorySlice';
+import adminUserReducer from '../store/slices/adminUserSlice';
 
 const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
         productsByCategory: productsByCategoryReducer,
         colors: colorsReducer,
         categories: categoryReducer,
+        adminUser: adminUserReducer,
     },
 });
 

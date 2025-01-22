@@ -5,6 +5,7 @@ const REFRESH_TOKEN_KEY = 'refreshToken';
 const USER_ID_KEY = 'userId';
 const SESSION_ID_KEY = 'sessionId';
 const CART_ID_KEY = 'cartId';
+const ROLE = 'role';
 
 // Set token in cookies
 export const setToken = (token) => Cookies.set(TOKEN_KEY, token, { expires: 7, secure: true, sameSite: 'Strict' });
@@ -51,3 +52,22 @@ export const getCartId = () => Cookies.get(CART_ID_KEY);
 
 // Remove cart ID from cookies
 export const removeCartId = () => Cookies.remove(CART_ID_KEY);
+
+// Set role in cookies
+export const setRole = (role) => Cookies.set(ROLE, role, { expires: 7, secure: false, sameSite: 'Strict' });
+
+// Get role from cookies
+export const getRole = () => Cookies.get(ROLE);
+
+// Remove role from cookies
+export const removeRole = () => Cookies.remove(ROLE);
+
+// Clear all cookies
+export const clearAllCookies = () => {
+    Cookies.remove(TOKEN_KEY);
+    Cookies.remove(REFRESH_TOKEN_KEY);
+    Cookies.remove(USER_ID_KEY);
+    Cookies.remove(SESSION_ID_KEY);
+    Cookies.remove(CART_ID_KEY);
+    Cookies.remove(ROLE);
+};

@@ -489,6 +489,17 @@ const cartApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to fetch cart items.';
         }
+    },
+    // Cập nhật số lượng sản phẩm trong giỏ hàng
+    updateCartItemQuantity: async (itemId, quantity)=>{
+        try {
+            const response = await apiClient.put(`carts/item/${itemId}`, {
+                quantity
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update cart item quantity.';
+        }
     }
 };
 const reviewApi = {
@@ -1045,7 +1056,8 @@ __turbopack_esm__({
     "getCartById": (()=>getCartById),
     "getCartItems": (()=>getCartItems),
     "removeCartItem": (()=>removeCartItem),
-    "resetCartState": (()=>resetCartState)
+    "resetCartState": (()=>resetCartState),
+    "updateCartItemQuantity": (()=>updateCartItemQuantity)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__ = __turbopack_import__("[externals]/@reduxjs/toolkit [external] (@reduxjs/toolkit, esm_import)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [ssr] (ecmascript)");
@@ -1056,13 +1068,12 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ([__TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
-;
 const createCartForGuest = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/createCartForGuest', async (cartData, { rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].createCartForGuest(cartData);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to create cart for guest.');
     }
 });
 const createCartForUser = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/createCartForUser', async (_, { rejectWithValue })=>{
@@ -1070,7 +1081,7 @@ const createCartForUser = (0, __TURBOPACK__imported__module__$5b$externals$5d2f4
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].createCartForUser();
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to create or retrieve cart for user.');
     }
 });
 const getCartById = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/getCartById', async (cartId, { rejectWithValue })=>{
@@ -1078,7 +1089,7 @@ const getCartById = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$redu
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].getCartById(cartId);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to fetch cart details.');
     }
 });
 const addItemToCart = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/addItemToCart', async ({ cartId, itemData }, { rejectWithValue })=>{
@@ -1086,7 +1097,7 @@ const addItemToCart = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].addItemToCart(cartId, itemData);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to add item to cart.');
     }
 });
 const removeCartItem = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/removeCartItem', async (itemId, { rejectWithValue })=>{
@@ -1094,7 +1105,7 @@ const removeCartItem = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$r
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].removeCartItem(itemId);
         return response;
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to remove item from cart.');
     }
 });
 const getCartItems = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/getCartItems', async (cartId, { rejectWithValue })=>{
@@ -1102,7 +1113,15 @@ const getCartItems = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].getCartItems(cartId);
         return response.data; // Lấy phần `data` từ kết quả API
     } catch (error) {
-        return rejectWithValue(error);
+        return rejectWithValue(error.response?.data || 'Failed to fetch cart items.');
+    }
+});
+const updateCartItemQuantity = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('cart/updateCartItemQuantity', async ({ itemId, quantity }, { rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["cartApi"].updateCartItemQuantity(itemId, quantity);
+        return response.data; // Đảm bảo trả về đầy đủ dữ liệu sản phẩm
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to update cart item quantity.');
     }
 });
 // **Slice**
@@ -1112,6 +1131,7 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
         cart: null,
         items: [],
         loading: false,
+        updating: {},
         error: null
     },
     reducers: {
@@ -1119,6 +1139,7 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
             state.cart = null;
             state.items = [];
             state.loading = false;
+            state.updating = {};
             state.error = null;
         }
     },
@@ -1164,15 +1185,19 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
             state.loading = false;
             state.error = action.payload;
         })// Remove item from cart
-        .addCase(removeCartItem.pending, (state)=>{
-            state.loading = true;
+        // Remove item from cart
+        .addCase(removeCartItem.pending, (state, action)=>{
+            const itemId = action.meta.arg; // Capture the item ID being removed
+            state.updating[itemId] = true; // Mark the specific item as updating
             state.error = null;
         }).addCase(removeCartItem.fulfilled, (state, action)=>{
-            state.loading = false;
-            state.items = state.items.filter((item)=>item.id !== action.meta.arg);
+            const itemId = action.meta.arg; // Retrieve the ID of the removed item
+            state.items = state.items.filter((item)=>item.id !== itemId); // Remove the item from the state
+            delete state.updating[itemId]; // Remove the "updating" flag for the item
         }).addCase(removeCartItem.rejected, (state, action)=>{
-            state.loading = false;
-            state.error = action.payload;
+            const itemId = action.meta.arg; // Retrieve the ID of the item that failed to be removed
+            state.updating[itemId] = false; // Reset the "updating" flag
+            state.error = action.payload; // Store the error message
         })// Get cart items
         .addCase(getCartItems.pending, (state)=>{
             state.loading = true;
@@ -1182,6 +1207,25 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
             state.items = action.payload;
         }).addCase(getCartItems.rejected, (state, action)=>{
             state.loading = false;
+            state.error = action.payload;
+        })// Update cart item quantity
+        .addCase(updateCartItemQuantity.pending, (state, action)=>{
+            const { itemId } = action.meta.arg;
+            state.updating[itemId] = true; // Đánh dấu sản phẩm đang cập nhật
+            state.error = null;
+        }).addCase(updateCartItemQuantity.fulfilled, (state, action)=>{
+            const updatedItem = action.payload;
+            const itemIndex = state.items.findIndex((item)=>item.id === updatedItem.id);
+            if (itemIndex !== -1) {
+                state.items[itemIndex] = {
+                    ...state.items[itemIndex],
+                    ...updatedItem
+                };
+            }
+            delete state.updating[updatedItem.id]; // Xóa trạng thái cập nhật
+        }).addCase(updateCartItemQuantity.rejected, (state, action)=>{
+            const { itemId } = action.meta.arg;
+            state.updating[itemId] = false; // Đánh dấu cập nhật thất bại
             state.error = action.payload;
         });
     }

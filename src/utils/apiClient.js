@@ -5,7 +5,6 @@ import {
     getRefreshToken,
     setRefreshToken,
     getUserId,
-    setUserId,
     setSessionId,
     getSessionId,
     removeSessionId,
@@ -15,13 +14,16 @@ import {
     setCartId,
     getCartId,
     removeCartId,
+    clearAllCookies,
+    removeRole,
+    setRole,
 } from './storage';
 import { resetAuthState } from '../store/slices/userSlice';
 
 // https://kltn-1a.onrender.com hihi
 
 const apiClient = axios.create({
-    baseURL: 'https://kltn-1a.onrender.com/api/',
+    baseURL: 'http://localhost:5551/api/',
 });
 
 // **Request Interceptor**
@@ -84,9 +86,7 @@ apiClient.interceptors.response.use(
             error.response?.data?.message === "Refresh Token không tồn tại"
         ) {
             console.log('Refresh token does not exist. Logging out...');
-            removeRefreshToken(); // Xóa refresh token
-            removeToken(); // Xóa access token
-            removeSessionId(); // Xóa session ID
+            clearAllCookies(); // Xóa tất cả cookies
             store.dispatch(resetAuthState()); // Reset trạng thái auth
             return new Promise(() => { }); // Trả về Promise không lỗi
         }
@@ -156,6 +156,7 @@ const userApi = {
             const { accessToken, refreshToken } = response.data.data;
 
             if (accessToken && refreshToken) {
+                setRole('');
                 setToken(accessToken); // Lưu access token
                 setRefreshToken(refreshToken); // Lưu refresh token
                 removeCartId(); // Xóa cart ID khi đăng nhập
@@ -189,6 +190,7 @@ const userApi = {
             removeSessionId();
             removeToken();
             removeCartId();
+            removeRole();
             return { message: 'Logout successful' };
         } catch (error) {
             throw error.response?.data || 'Logout failed';
@@ -222,6 +224,40 @@ const userApi = {
             return accessToken; // Return the new access token
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
+        }
+    },
+};
+
+const adminApi = {
+    /**
+     * Đăng nhập admin
+     * @param {Object} credentials - Dữ liệu đăng nhập (email và password)
+     * @returns {Promise<Object>} - Phản hồi từ API
+     */
+    loginForAdmin: async (credentials) => {
+        try {
+            const response = await apiClient.post('users/login-admin', credentials);
+
+            // Lấy token và vai trò từ phản hồi
+            const { accessToken, refreshToken, role } = response.data.data;
+
+            // Lưu token và role
+            if (accessToken && refreshToken) {
+                setToken(accessToken);
+                setRefreshToken(refreshToken);
+                setRole(role);
+                
+            }
+
+            // Lưu session ID nếu có trong header
+            const sessionId = response.headers['x-session-id'];
+            if (sessionId) {
+                setSessionId(sessionId);
+            }
+
+            return { user: response.data.user, role }; // Trả về thông tin người dùng và vai trò
+        } catch (error) {
+            throw error.response?.data || error.message;
         }
     },
 };
@@ -479,4 +515,4 @@ const indexApi = {
     },
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi };
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi };

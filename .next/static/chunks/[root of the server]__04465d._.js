@@ -555,18 +555,22 @@ function triggerUpdate(msg) {
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
+    "clearAllCookies": (()=>clearAllCookies),
     "getCartId": (()=>getCartId),
     "getRefreshToken": (()=>getRefreshToken),
+    "getRole": (()=>getRole),
     "getSessionId": (()=>getSessionId),
     "getToken": (()=>getToken),
     "getUserId": (()=>getUserId),
     "removeCartId": (()=>removeCartId),
     "removeRefreshToken": (()=>removeRefreshToken),
+    "removeRole": (()=>removeRole),
     "removeSessionId": (()=>removeSessionId),
     "removeToken": (()=>removeToken),
     "removeUserId": (()=>removeUserId),
     "setCartId": (()=>setCartId),
     "setRefreshToken": (()=>setRefreshToken),
+    "setRole": (()=>setRole),
     "setSessionId": (()=>setSessionId),
     "setToken": (()=>setToken),
     "setUserId": (()=>setUserId)
@@ -578,6 +582,7 @@ const REFRESH_TOKEN_KEY = 'refreshToken';
 const USER_ID_KEY = 'userId';
 const SESSION_ID_KEY = 'sessionId';
 const CART_ID_KEY = 'cartId';
+const ROLE = 'role';
 const setToken = (token)=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].set(TOKEN_KEY, token, {
         expires: 7,
         secure: true,
@@ -613,6 +618,21 @@ const setCartId = (cartId)=>__TURBOPACK__imported__module__$5b$project$5d2f$node
     });
 const getCartId = ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].get(CART_ID_KEY);
 const removeCartId = ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(CART_ID_KEY);
+const setRole = (role)=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].set(ROLE, role, {
+        expires: 7,
+        secure: false,
+        sameSite: 'Strict'
+    });
+const getRole = ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].get(ROLE);
+const removeRole = ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(ROLE);
+const clearAllCookies = ()=>{
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(TOKEN_KEY);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(REFRESH_TOKEN_KEY);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(USER_ID_KEY);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(SESSION_ID_KEY);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(CART_ID_KEY);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["default"].remove(ROLE);
+};
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -623,8 +643,11 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
+    "adminApi": (()=>adminApi),
     "apiClient": (()=>apiClient),
     "cartApi": (()=>cartApi),
+    "colorsApi": (()=>colorsApi),
+    "indexApi": (()=>indexApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -659,38 +682,59 @@ apiClient.interceptors.request.use(async (config)=>{
     }
     return config;
 }, (error)=>Promise.reject(error));
+const MAX_RETRY_COUNT = 5; // Giới hạn số lần retry
+// Hàm delay với backoff logic
+const delay = (ms)=>new Promise((resolve)=>setTimeout(resolve, ms));
+// Interceptor xử lý response
 apiClient.interceptors.response.use((response)=>{
-    // Log toàn bộ response để kiểm tra
     console.log('Response received:', response);
-    console.log('Response headers:', response.headers['x-session-id']);
-    // Lưu session ID nếu có trong headers của response
-    const sessionId = response.headers['x-session-id'];
+    // Lưu session ID nếu có trong response headers
+    const sessionId = response.headers?.['x-session-id'];
     if (sessionId) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId); // Lưu vào cookie hoặc storage
-        console.log('Session ID saved from response:', sessionId); // Log session ID để kiểm tra
+        console.log('Session ID saved from response:', sessionId);
     }
     return response;
 }, async (error)=>{
-    // Log toàn bộ error response
-    console.error('Error response:', error.response);
-    // Xử lý lỗi (giữ nguyên logic cũ)
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        if (originalRequest.url.includes('/users/refresh-token')) {
-            console.error('Token refresh failed. Redirecting to login...');
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
-            store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])());
-            return Promise.reject(new Error('Please log in again.'));
-        }
+    console.log('Error response:', error.response || 'No response available');
+    // Thêm thuộc tính _retryCount nếu chưa có
+    if (!originalRequest._retryCount) {
+        originalRequest._retryCount = 0;
+    }
+    // Kiểm tra lỗi từ Refresh Token
+    if (error.response?.status === 403 && error.response?.data?.message === "Refresh Token không tồn tại") {
+        console.log('Refresh token does not exist. Logging out...');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["clearAllCookies"])(); // Xóa tất cả cookies
+        store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])()); // Reset trạng thái auth
+        return new Promise(()=>{}); // Trả về Promise không lỗi
+    }
+    // Dừng retry nếu là request tới /users/refresh-token
+    if (originalRequest.url.includes('/users/refresh-token')) {
+        console.log('Refresh token request failed. Stopping retries.');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])(); // Xóa session ID
+        store.dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["resetAuthState"])()); // Reset trạng thái auth
+        return new Promise(()=>{}); // Trả về Promise không lỗi
+    }
+    // Nếu lỗi 403 và chưa đạt giới hạn retry
+    if (error.response?.status === 403 && originalRequest._retryCount < MAX_RETRY_COUNT) {
+        originalRequest._retryCount += 1; // Tăng số lần retry
+        console.log(`Retrying request (${originalRequest._retryCount}/${MAX_RETRY_COUNT})...`);
         try {
+            // Lấy token mới
             const newAccessToken = await userApi.refreshToken();
+            // Gắn token mới vào header
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-            return apiClient(originalRequest); // Retry request với token mới
+            return apiClient(originalRequest); // Retry request
         } catch (refreshError) {
-            console.error('Error during token refresh:', refreshError);
-            return Promise.reject(refreshError);
+            console.log('Error during token refresh:', refreshError);
+            return new Promise(()=>{}); // Trả về Promise không lỗi
         }
+    }
+    // Nếu vượt quá số lần retry
+    if (originalRequest._retryCount >= MAX_RETRY_COUNT) {
+        console.log('Maximum retry attempts reached.');
+        return new Promise(()=>{}); // Trả về Promise không lỗi
     }
     return Promise.reject(error);
 });
@@ -751,6 +795,7 @@ const userApi = {
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeSessionId"])();
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeToken"])();
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeCartId"])();
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeRole"])();
             return {
                 message: 'Logout successful'
             };
@@ -783,6 +828,35 @@ const userApi = {
             return accessToken; // Return the new access token
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
+        }
+    }
+};
+const adminApi = {
+    /**
+     * Đăng nhập admin
+     * @param {Object} credentials - Dữ liệu đăng nhập (email và password)
+     * @returns {Promise<Object>} - Phản hồi từ API
+     */ loginForAdmin: async (credentials)=>{
+        try {
+            const response = await apiClient.post('users/login-admin', credentials);
+            // Lấy token và vai trò từ phản hồi
+            const { accessToken, refreshToken, role } = response.data.data;
+            // Lưu token và role
+            if (accessToken && refreshToken) {
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setToken"])(accessToken);
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken);
+            }
+            // Lưu session ID nếu có trong header
+            const sessionId = response.headers['x-session-id'];
+            if (sessionId) {
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["setSessionId"])(sessionId);
+            }
+            return {
+                user: response.data.user,
+                role
+            }; // Trả về thông tin người dùng và vai trò
+        } catch (error) {
+            throw error.response?.data || error.message;
         }
     }
 };
@@ -819,14 +893,38 @@ const productApi = {
         return response.data;
     },
     // Get new products with pagination
-    getNewProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/new?page=${page}&limit=${limit}`);
-        return response.data;
+    getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/new?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching new products:', error);
+            throw error.response?.data || 'Failed to fetch new products.';
+        }
     },
     // Get featured products with pagination
-    getFeaturedProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/featured?page=${page}&limit=${limit}`);
-        return response.data;
+    getFeaturedProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
+        try {
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products/featured?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching featured products:', error);
+            throw error.response?.data || 'Failed to fetch featured products.';
+        }
     }
 };
 const cartApi = {
@@ -893,6 +991,17 @@ const cartApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to fetch cart items.';
         }
+    },
+    // Cập nhật số lượng sản phẩm trong giỏ hàng
+    updateCartItemQuantity: async (itemId, quantity)=>{
+        try {
+            const response = await apiClient.put(`carts/item/${itemId}`, {
+                quantity
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update cart item quantity.';
+        }
     }
 };
 const reviewApi = {
@@ -934,14 +1043,52 @@ const reviewApi = {
     }
 };
 const productsByCategoryApi = {
-    // Lấy tất cả sản phẩm theo danh mục
-    getProductsByCategory: async (categoryId, page, limit)=>{
+    // Fetch all products by category
+    getProductsByCategory: async (categoryId, page, limit, sort, priceRange, colorIds)=>{
         try {
-            const response = await apiClient.get(`products/category/${categoryId}?page=${page}&limit=${limit}`);
+            const query = new URLSearchParams({
+                page,
+                limit,
+                sort,
+                priceRange: priceRange || '',
+                colorIds: colorIds || ''
+            }).toString();
+            const response = await apiClient.get(`products-by-category/${categoryId}?${query}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
         }
+    }
+};
+const colorsApi = {
+    // Fetch all colors
+    getColors: async ()=>{
+        try {
+            const response = await apiClient.get('colors');
+            return response.data.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch colors.';
+        }
+    }
+};
+const indexApi = {
+    getNewProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/news', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    },
+    getFeaturedProducts: async (page, limit)=>{
+        const response = await apiClient.get('/products/featureds', {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
     }
 };
 ;
@@ -1001,10 +1148,12 @@ const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modu
 });
 const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/getUserInfo', async (_, { rejectWithValue })=>{
     try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile(); // Use getUserProfile instead of getUser
-        return response;
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].getUserProfile();
+        return response; // Trả về dữ liệu người dùng
     } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
+        // Xử lý lỗi từ apiClient
+        console.error('Error fetching user info:', error);
+        return rejectWithValue(error.message || 'Failed to fetch user info');
     }
 });
 // Slice
@@ -1089,7 +1238,7 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         });
         builder.addCase(getUserInfo.rejected, (state, action)=>{
             state.loading = false;
-            state.error = action.payload;
+            state.error = action.payload || 'Failed to fetch user info';
         });
     }
 });
