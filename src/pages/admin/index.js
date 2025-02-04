@@ -18,14 +18,14 @@ const AdminDashboard = () => {
             const clientRole = getRole(); // Lấy role từ localStorage
             if (clientRole === 'admin' || clientRole === 'superadmin') {
                 setRole(clientRole); // Chỉ lưu role hợp lệ
-                dispatch(getUserInfo());
+                dispatch(getUserInfo()); // Gọi getUserInfo mỗi khi role thay đổi
             } else {
                 setShowLoginModal(true); // Hiển thị modal nếu role không hợp lệ
             }
         } else {
             setShowLoginModal(true); // Hiển thị modal nếu không có token
         }
-    }, [dispatch]);
+    }, [dispatch, role]); // Thêm `role` vào dependencies để gọi lại khi role thay đổi
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -38,6 +38,7 @@ const AdminDashboard = () => {
             if (clientRole === 'admin' || clientRole === 'superadmin') {
                 setRole(clientRole);
                 setShowLoginModal(false);
+                dispatch(getUserInfo()); // Gọi lại getUserInfo sau khi đăng nhập
             } else {
                 throw new Error('Unauthorized role');
             }

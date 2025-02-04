@@ -10,6 +10,15 @@
       "static/chunks/src_pages__app_5771e1._.js",
       "static/chunks/src_pages__app_699ad9._.js"
     ],
+    "/": [
+      "static/chunks/[root of the server]__2164f9._.js",
+      "static/chunks/node_modules_next_b6a9d6._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+      "static/chunks/node_modules_18cf8c._.js",
+      "static/chunks/src_pages_index_5771e1._.js",
+      "static/chunks/src_pages_index_ee246a._.js"
+    ],
     "/account/profile": [
       "static/chunks/[root of the server]__935f2a._.js",
       "static/chunks/node_modules_next_4a8fe3._.js",
@@ -20,15 +29,6 @@
       "static/chunks/src_pages_account_profile_5771e1.js",
       "static/chunks/src_pages_account_profile_cd9c75.js"
     ],
-    "/": [
-      "static/chunks/[root of the server]__2164f9._.js",
-      "static/chunks/node_modules_next_b6a9d6._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_18cf8c._.js",
-      "static/chunks/src_pages_index_5771e1._.js",
-      "static/chunks/src_pages_index_ee246a._.js"
-    ],
     "/admin": [
       "static/chunks/node_modules_next_dist_434803._.js",
       "static/chunks/node_modules_react-dom_82bb97._.js",
@@ -38,22 +38,23 @@
       "static/chunks/src_pages_admin_index_5771e1.js",
       "static/chunks/src_pages_admin_index_9ac5bd.js"
     ],
-    "/account/register": [
-      "static/chunks/node_modules_next_3fff62._.js",
+    "/category/productsByCategory": [
+      "static/chunks/[root of the server]__846f30._.js",
+      "static/chunks/node_modules_next_9be927._.js",
       "static/chunks/node_modules_react-dom_82bb97._.js",
       "static/chunks/node_modules_axios_lib_9a6fdf._.js",
       "static/chunks/node_modules_18cf8c._.js",
-      "static/chunks/[root of the server]__04465d._.js",
-      "static/chunks/src_pages_account_register_5771e1.js",
-      "static/chunks/src_pages_account_register_f73eec.js"
+      "static/chunks/src_pages_category_productsByCategory_5771e1.js",
+      "static/chunks/src_pages_category_productsByCategory_181952.js"
     ],
-    "/_error": [
-      "static/chunks/[root of the server]__31723f._.js",
+    "/new-products": [
+      "static/chunks/[root of the server]__057e88._.js",
+      "static/chunks/node_modules_next_9be927._.js",
       "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_beb007._.js",
-      "static/chunks/[root of the server]__e5d775._.js",
-      "static/chunks/src_pages__error_5771e1._.js",
-      "static/chunks/src_pages__error_ba917a._.js"
+      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+      "static/chunks/node_modules_18cf8c._.js",
+      "static/chunks/src_pages_new-products_5771e1._.js",
+      "static/chunks/src_pages_new-products_2cb32a._.js"
     ],
     "/productdetail/[slug]": [
       "static/chunks/[root of the server]__089e02._.js",

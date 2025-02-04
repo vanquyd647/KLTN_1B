@@ -23,7 +23,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi
 
 const apiClient = axios.create({
-    baseURL: 'https://kltn-1a.onrender.com/api/',
+    baseURL: 'https://kltn-1a.onrender.com/v1/api/',
 });
 
 // **Request Interceptor**

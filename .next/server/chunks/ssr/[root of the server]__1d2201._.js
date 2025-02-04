@@ -208,7 +208,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'http://localhost:5551/v1/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -3278,6 +3278,7 @@ function Profile() {
         }));
         if (result.meta.requestStatus === 'fulfilled') {
             setIsAuthenticated(true);
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])());
         }
     };
     const handleRegister = async (e)=>{
@@ -3328,12 +3329,12 @@ function Profile() {
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 108,
+                lineNumber: 109,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 107,
+            lineNumber: 108,
             columnNumber: 13
         }, this);
     }
@@ -3345,12 +3346,12 @@ function Profile() {
             handleLogout: handleLogout
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 129,
+            lineNumber: 130,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 128,
+        lineNumber: 129,
         columnNumber: 9
     }, this);
 }

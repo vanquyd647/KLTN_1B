@@ -208,7 +208,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/api/'
+    baseURL: 'http://localhost:5551/v1/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -1879,7 +1879,7 @@ const AdminDashboard = ()=>{
             const clientRole = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getRole"])(); // Lấy role từ localStorage
             if (clientRole === 'admin' || clientRole === 'superadmin') {
                 setRole(clientRole); // Chỉ lưu role hợp lệ
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])());
+                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])()); // Gọi getUserInfo mỗi khi role thay đổi
             } else {
                 setShowLoginModal(true); // Hiển thị modal nếu role không hợp lệ
             }
@@ -1887,8 +1887,9 @@ const AdminDashboard = ()=>{
             setShowLoginModal(true); // Hiển thị modal nếu không có token
         }
     }, [
-        dispatch
-    ]);
+        dispatch,
+        role
+    ]); // Thêm `role` vào dependencies để gọi lại khi role thay đổi
     const handleLogin = async (e)=>{
         e.preventDefault();
         const email = e.target.email.value;
@@ -1902,6 +1903,7 @@ const AdminDashboard = ()=>{
             if (clientRole === 'admin' || clientRole === 'superadmin') {
                 setRole(clientRole);
                 setShowLoginModal(false);
+                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])()); // Gọi lại getUserInfo sau khi đăng nhập
             } else {
                 throw new Error('Unauthorized role');
             }
@@ -1930,7 +1932,7 @@ const AdminDashboard = ()=>{
                         children: "Admin Login"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/admin/index.js",
-                        lineNumber: 64,
+                        lineNumber: 65,
                         columnNumber: 21
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -1938,7 +1940,7 @@ const AdminDashboard = ()=>{
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/src/pages/admin/index.js",
-                        lineNumber: 65,
+                        lineNumber: 66,
                         columnNumber: 31
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -1952,7 +1954,7 @@ const AdminDashboard = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/admin/index.js",
-                                lineNumber: 67,
+                                lineNumber: 68,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -1963,7 +1965,7 @@ const AdminDashboard = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/admin/index.js",
-                                lineNumber: 74,
+                                lineNumber: 75,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -1972,24 +1974,24 @@ const AdminDashboard = ()=>{
                                 children: "Login"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/admin/index.js",
-                                lineNumber: 81,
+                                lineNumber: 82,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/admin/index.js",
-                        lineNumber: 66,
+                        lineNumber: 67,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/admin/index.js",
-                lineNumber: 63,
+                lineNumber: 64,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/admin/index.js",
-            lineNumber: 62,
+            lineNumber: 63,
             columnNumber: 13
         }, this);
     }
@@ -2008,7 +2010,7 @@ const AdminDashboard = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/admin/index.js",
-                        lineNumber: 97,
+                        lineNumber: 98,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -2017,13 +2019,13 @@ const AdminDashboard = ()=>{
                         children: "Logout"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/admin/index.js",
-                        lineNumber: 100,
+                        lineNumber: 101,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/admin/index.js",
-                lineNumber: 96,
+                lineNumber: 97,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("main", {
@@ -2040,7 +2042,7 @@ const AdminDashboard = ()=>{
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/admin/index.js",
-                            lineNumber: 110,
+                            lineNumber: 111,
                             columnNumber: 21
                         }, this),
                         loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2048,7 +2050,7 @@ const AdminDashboard = ()=>{
                             children: "Loading user information..."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/admin/index.js",
-                            lineNumber: 114,
+                            lineNumber: 115,
                             columnNumber: 25
                         }, this) : user ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                             children: [
@@ -2059,7 +2061,7 @@ const AdminDashboard = ()=>{
                                             children: "Email:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/admin/index.js",
-                                            lineNumber: 118,
+                                            lineNumber: 119,
                                             columnNumber: 33
                                         }, this),
                                         " ",
@@ -2067,7 +2069,7 @@ const AdminDashboard = ()=>{
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/admin/index.js",
-                                    lineNumber: 117,
+                                    lineNumber: 118,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2077,7 +2079,7 @@ const AdminDashboard = ()=>{
                                             children: "Phone:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/admin/index.js",
-                                            lineNumber: 121,
+                                            lineNumber: 122,
                                             columnNumber: 33
                                         }, this),
                                         " ",
@@ -2085,42 +2087,42 @@ const AdminDashboard = ()=>{
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/admin/index.js",
-                                    lineNumber: 120,
+                                    lineNumber: 121,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/admin/index.js",
-                            lineNumber: 116,
+                            lineNumber: 117,
                             columnNumber: 25
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                             className: "text-gray-600",
                             children: "User information not available."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/admin/index.js",
-                            lineNumber: 125,
+                            lineNumber: 126,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/admin/index.js",
-                    lineNumber: 109,
+                    lineNumber: 110,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/admin/index.js",
-                lineNumber: 108,
+                lineNumber: 109,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/pages/admin/index.js",
-                lineNumber: 130,
+                lineNumber: 131,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/admin/index.js",
-        lineNumber: 95,
+        lineNumber: 96,
         columnNumber: 9
     }, this);
 };

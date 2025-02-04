@@ -1,11 +1,11 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/account/profile": "pages/account/profile.js",
   "/": "pages/index.js",
+  "/account/profile": "pages/account/profile.js",
   "/admin": "pages/admin.js",
-  "/account/register": "pages/account/register.js",
-  "/_error": "pages/_error.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/new-products": "pages/new-products.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/cart": "pages/cart.js"
 }

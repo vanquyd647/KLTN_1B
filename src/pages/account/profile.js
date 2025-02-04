@@ -67,6 +67,7 @@ export default function Profile() {
         const result = await dispatch(loginUser({ email: formData.email, password: formData.password }));
         if (result.meta.requestStatus === 'fulfilled') {
             setIsAuthenticated(true);
+            dispatch(getUserInfo());
         }
     };
 
