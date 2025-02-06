@@ -2291,7 +2291,7 @@ const CartPage = ()=>{
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "w-full lg:w-1/3 bg-white p-4 rounded border self-start",
+                    className: "w-full lg:w-1/3 bg-white p-4 rounded border self-start mt-10 lg:mt-0",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: "text-xl font-bold mb-4 border-b pb-4 text-center lg:text-left",
@@ -2327,7 +2327,7 @@ const CartPage = ()=>{
                             onClick: ()=>router.push('/checkout'),
                             disabled: !items || items.length === 0,
                             className: "mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400 font-bold",
-                            children: "THANH TOÁN"
+                            children: "ĐẶT HÀNG"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/cart.js",
                             lineNumber: 184,

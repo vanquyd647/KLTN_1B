@@ -171,7 +171,7 @@ const CartPage = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="w-full lg:w-1/3 bg-white p-4 rounded border self-start">
+                <div className="w-full lg:w-1/3 bg-white p-4 rounded border self-start mt-10 lg:mt-0">
                     <h2 className="text-xl font-bold mb-4 border-b pb-4 text-center lg:text-left">
                         THÔNG TIN ĐƠN HÀNG
                     </h2>
@@ -186,7 +186,7 @@ const CartPage = () => {
                         disabled={!items || items.length === 0}
                         className="mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400 font-bold"
                     >
-                        THANH TOÁN
+                        ĐẶT HÀNG
                     </button>
                 </div>
             </div>

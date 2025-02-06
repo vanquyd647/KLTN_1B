@@ -1,0 +1,8 @@
+__turbopack_load_page_chunks__("/checkout", [
+  "static/chunks/node_modules_next_dist_f1b02b._.js",
+  "static/chunks/node_modules_react-dom_82bb97._.js",
+  "static/chunks/node_modules_beb007._.js",
+  "static/chunks/[root of the server]__5f404c._.js",
+  "static/chunks/src_pages_checkout_5771e1._.js",
+  "static/chunks/src_pages_checkout_517e17._.js"
+])
