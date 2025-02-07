@@ -1,8 +1,10 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
+  "/payment": "pages/payment.js",
+  "/checkout": "pages/checkout.js",
   "/cart": "pages/cart.js",
-  "/account/profile": "pages/account/profile.js",
   "/": "pages/index.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js"
+  "/productdetail/[slug]": "pages/productdetail/[slug].js",
+  "/account/profile": "pages/account/profile.js"
 }

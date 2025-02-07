@@ -1,0 +1,8 @@
+__turbopack_load_page_chunks__("/payment", [
+  "static/chunks/node_modules_next_0f88d9._.js",
+  "static/chunks/node_modules_react-dom_82bb97._.js",
+  "static/chunks/node_modules_1b7400._.js",
+  "static/chunks/[root of the server]__a6c9d3._.js",
+  "static/chunks/src_pages_payment_5771e1._.js",
+  "static/chunks/src_pages_payment_209878._.js"
+])

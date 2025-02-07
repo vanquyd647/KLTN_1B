@@ -10,6 +10,22 @@
       "static/chunks/src_pages__app_5771e1._.js",
       "static/chunks/src_pages__app_699ad9._.js"
     ],
+    "/payment": [
+      "static/chunks/node_modules_next_0f88d9._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_1b7400._.js",
+      "static/chunks/[root of the server]__a6c9d3._.js",
+      "static/chunks/src_pages_payment_5771e1._.js",
+      "static/chunks/src_pages_payment_209878._.js"
+    ],
+    "/checkout": [
+      "static/chunks/node_modules_next_0f88d9._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_92534f._.js",
+      "static/chunks/[root of the server]__145c5b._.js",
+      "static/chunks/src_pages_checkout_5771e1._.js",
+      "static/chunks/src_pages_checkout_32d7d7._.js"
+    ],
     "/cart": [
       "static/chunks/[root of the server]__e15a36._.js",
       "static/chunks/node_modules_next_9be927._.js",
@@ -18,16 +34,6 @@
       "static/chunks/node_modules_18cf8c._.js",
       "static/chunks/src_pages_cart_5771e1._.js",
       "static/chunks/src_pages_cart_591599._.js"
-    ],
-    "/account/profile": [
-      "static/chunks/[root of the server]__935f2a._.js",
-      "static/chunks/node_modules_next_4a8fe3._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_@fortawesome_free-solid-svg-icons_index_mjs_69a125._.js",
-      "static/chunks/node_modules_0ebdc1._.js",
-      "static/chunks/src_pages_account_profile_5771e1.js",
-      "static/chunks/src_pages_account_profile_cd9c75.js"
     ],
     "/": [
       "static/chunks/[root of the server]__2164f9._.js",
@@ -46,6 +52,16 @@
       "static/chunks/node_modules_18cf8c._.js",
       "static/chunks/src_pages_productdetail_[slug]_5771e1.js",
       "static/chunks/src_pages_productdetail_[slug]_84e007.js"
+    ],
+    "/account/profile": [
+      "static/chunks/[root of the server]__935f2a._.js",
+      "static/chunks/node_modules_next_4a8fe3._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+      "static/chunks/node_modules_@fortawesome_free-solid-svg-icons_index_mjs_69a125._.js",
+      "static/chunks/node_modules_0ebdc1._.js",
+      "static/chunks/src_pages_account_profile_5771e1.js",
+      "static/chunks/src_pages_account_profile_cd9c75.js"
     ]
   },
   "devFiles": [],
