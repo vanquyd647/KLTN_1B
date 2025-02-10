@@ -120,7 +120,7 @@ const CartPage = () => {
                             </div>
 
                             <ul className="space-y-4">
-                                {items.map((item) => {
+                                {items.map((item, index) => {
                                     const product = item.product || {};
                                     const color = item.color?.color || 'N/A';
                                     const size = item.size?.size || 'N/A';
@@ -133,7 +133,7 @@ const CartPage = () => {
                                         'https://via.placeholder.com/100';
 
                                     return (
-                                        <li key={item.id} className="flex gap-4 items-center">
+                                        <li key={`${item.id}-${index}`} className="flex gap-4 items-center">
                                             {/* Checkbox */}
                                             <input
                                                 type="checkbox"
@@ -216,10 +216,12 @@ const CartPage = () => {
                     </p>
                     <button
                         onClick={() => {
-                            localStorage.setItem(
-                                'checkoutItems',
-                                JSON.stringify(items.filter((item) => selectedItems.includes(item.id)))
-                            );
+                            const uniqueCheckoutItems = [...new Map(
+                                items.filter(item => selectedItems.includes(item.id))
+                                    .map(item => [`${item.id}-${Math.random()}`, item]) // Ensure uniqueness
+                            ).values()];
+
+                            localStorage.setItem('checkoutItems', JSON.stringify(uniqueCheckoutItems));
                             router.push('/checkout');
                         }}
                         disabled={selectedItems.length === 0}

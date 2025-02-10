@@ -2397,317 +2397,718 @@ function Layout({ children }) {
     }, this);
 }
 }}),
-"[project]/src/pages/checkout.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/Sidebar2.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_esm__({
-    "default": (()=>__TURBOPACK__default__export__)
+    "default": (()=>Sidebar)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/categorySlice.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
+var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
+    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+]);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
+;
+;
+;
+function Sidebar() {
+    const categories = [
+        {
+            id: 1,
+            name: 'Áo',
+            subCategories: [
+                {
+                    id: 101,
+                    name: 'Áo Thun'
+                },
+                {
+                    id: 102,
+                    name: 'Áo Sơ Mi'
+                },
+                {
+                    id: 103,
+                    name: 'Áo Polo'
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: 'Quần',
+            subCategories: [
+                {
+                    id: 201,
+                    name: 'Quần Jeans'
+                },
+                {
+                    id: 202,
+                    name: 'Quần Shorts'
+                },
+                {
+                    id: 203,
+                    name: 'Quần Tây'
+                }
+            ]
+        },
+        {
+            id: 3,
+            name: 'Giày Dép',
+            subCategories: [
+                {
+                    id: 301,
+                    name: 'Giày Thể Thao'
+                },
+                {
+                    id: 302,
+                    name: 'Giày Lười'
+                },
+                {
+                    id: 303,
+                    name: 'Dép Sandals'
+                }
+            ]
+        },
+        {
+            id: 4,
+            name: 'Phụ Kiện',
+            subCategories: [
+                {
+                    id: 401,
+                    name: 'Mũ'
+                },
+                {
+                    id: 402,
+                    name: 'Thắt Lưng'
+                },
+                {
+                    id: 403,
+                    name: 'Balo'
+                }
+            ]
+        }
+    ];
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const { currentCategoryId, selectedCategoryId } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.categories);
+    const handleCategoryClick = (categoryId)=>{
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setCurrentCategoryId"])(currentCategoryId === categoryId ? null : categoryId));
+    };
+    const navigateToCategory = (categoryId, categoryName)=>{
+        router.push(`/category/productsByCategory?categoryId=${categoryId}&categoryName=${categoryName}`);
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setSelectedCategoryId"])(categoryId));
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$categorySlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setCurrentCategoryId"])(null));
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "w-full p-4 bg-white border border-gray-300",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "flex gap-6 overflow-x-auto pb-4",
+                children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>handleCategoryClick(category.id),
+                        className: `px-6 py-3 text-lg font-semibold border transition-all ${currentCategoryId === category.id || selectedCategoryId === category.id || category.subCategories.some((sub)=>sub.id === selectedCategoryId) ? 'bg-blue-500 text-white border-blue-500' : 'text-gray-700 border-gray-300 hover:bg-blue-100 hover:border-blue-400'}`,
+                        children: category.name
+                    }, category.id, false, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 64,
+                        columnNumber: 21
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/src/components/Sidebar2.js",
+                lineNumber: 62,
+                columnNumber: 13
+            }, this),
+            currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mt-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>navigateToCategory(categories.find((cat)=>cat.id === currentCategoryId).id, categories.find((cat)=>cat.id === currentCategoryId).name),
+                        className: "block w-full px-4 py-2 mb-2 text-left text-blue-600 font-semibold hover:underline",
+                        children: [
+                            "Xem tất cả",
+                            ' ',
+                            categories.find((cat)=>cat.id === currentCategoryId)?.name
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 82,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-2 gap-4",
+                        children: categories.find((cat)=>cat.id === currentCategoryId)?.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>navigateToCategory(subCategory.id, subCategory.name),
+                                className: `block px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded hover:bg-blue-100 hover:text-blue-500 transition ${selectedCategoryId === subCategory.id ? 'bg-blue-100 text-blue-500' : ''}`,
+                                children: subCategory.name
+                            }, subCategory.id, false, {
+                                fileName: "[project]/src/components/Sidebar2.js",
+                                lineNumber: 98,
+                                columnNumber: 33
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Sidebar2.js",
+                        lineNumber: 94,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Sidebar2.js",
+                lineNumber: 81,
+                columnNumber: 17
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/Sidebar2.js",
+        lineNumber: 61,
+        columnNumber: 9
+    }, this);
+}
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, false);}),
+"[project]/src/components/Banner.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>Banner)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
+;
+;
+const images = [
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.46.23%20-%20A%20horizontal%20banner%20for%20the%20brand%20\'Fashion%20Store%2C\'%20designed%20to%20appeal%20to%20a%20diverse%20audience.%20The%20logo%20is%20prominently%20placed%20in%20the%20center%20of%20the%20banne.webp?alt=media&token=b2c95f9e-35c9-4da0-a5ba-1d293ec3f1ee',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.35.06%20-%20A%20set%20of%20three%20horizontal%20banners%20for%20a%20clothing%20shop%2C%20each%20designed%20for%20a%20modern%2C%20stylish%20theme.%20The%20first%20banner%20features%20casual%20summer%20outfits%20in%20v.webp?alt=media&token=2aa6f64f-7efd-4bed-9373-1c388eaad463',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2FDALL%C2%B7E%202025-01-16%2017.39.08%20-%20A%20horizontal%20banner%20for%20a%20clothing%20shop%20featuring%20a%20minimalistic%20streetwear%20theme%20for%20youth.%20The%20design%20showcases%20stylish%20hoodies%2C%20oversized%20t-shirts%2C.webp?alt=media&token=bda0c9ce-0cdd-4cfb-ab36-13a0a7455aea'
+];
+function Banner() {
+    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const interval = setInterval(()=>{
+            setCurrentIndex((prevIndex)=>(prevIndex + 1) % images.length);
+        }, 3000); // Change image every 3 seconds
+        return ()=>clearInterval(interval); // Cleanup on unmount
+    }, []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "relative w-full h-[30rem] md:h-[50rem] overflow-hidden",
+        children: [
+            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                        src: image,
+                        alt: `Banner ${index + 1}`,
+                        className: "w-full h-full object-cover"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 32,
+                        columnNumber: 21
+                    }, this)
+                }, index, false, {
+                    fileName: "[project]/src/components/Banner.js",
+                    lineNumber: 22,
+                    columnNumber: 17
+                }, this)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
+                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setCurrentIndex(index),
+                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
+                    }, index, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 43,
+                        columnNumber: 21
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/src/components/Banner.js",
+                lineNumber: 41,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/Banner.js",
+        lineNumber: 20,
+        columnNumber: 9
+    }, this);
+}
+}}),
+"[project]/src/pages/new-products.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+__turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+__turbopack_esm__({
+    "default": (()=>NewProducts)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/productSlice.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/colorsSlice.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [ssr] (ecmascript)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
     __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
 ;
 ;
 ;
 ;
-const CheckoutPage = ()=>{
+;
+;
+;
+function NewProducts() {
     const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    const [items, setItems] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
-    const [errorMessage, setErrorMessage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const { newProducts, loading, error } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.products);
+    const { data: colors, loading: colorsLoading, error: colorsError } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.colors);
+    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    const [sort, setSort] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('newest');
+    const [priceRange, setPriceRange] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const [selectedColors, setSelectedColors] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
+    const pageSize = 10;
+    // Fetch dữ liệu khi thay đổi trang, sắp xếp, khoảng giá hoặc màu sắc
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        const storedItems = localStorage.getItem('checkoutItems');
-        if (storedItems) {
-            setItems(JSON.parse(storedItems));
-        }
-    }, []);
-    console.log('items:', items);
-    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
-        name: '',
-        email: '',
-        phone: '',
-        street: '',
-        ward: '',
-        district: '',
-        city: '',
-        country: '',
-        payment_method: 'credit_card'
-    });
-    const calculateTotal = ()=>{
-        return items.reduce((total, item)=>total + (item.product?.discount_price || item.product?.price || 0) * item.quantity, 0);
-    };
-    const handleChange = (e)=>{
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
+        console.log('Dispatching fetchNewProductsByPagination with:', {
+            page: currentPage,
+            limit: pageSize,
+            sort,
+            priceRange,
+            colorIds: selectedColors
         });
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["fetchNewProductsByPagination"])({
+            page: currentPage,
+            limit: pageSize,
+            sort,
+            priceRange,
+            colorIds: selectedColors
+        }));
+    }, [
+        dispatch,
+        currentPage,
+        sort,
+        priceRange,
+        selectedColors
+    ]);
+    // Fetch dữ liệu màu sắc khi component mount
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$colorsSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["fetchColors"])());
+    }, [
+        dispatch
+    ]);
+    // Reset về trang đầu tiên khi thay đổi bộ lọc
+    const resetFilters = ()=>{
+        setCurrentPage(1);
     };
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
-        const orderData = {
-            cart_id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])(),
-            carrier_id: 1,
-            discount_code: "DISCOUNT10",
-            discount_amount: 10.00,
-            original_price: calculateTotal(),
-            discounted_price: calculateTotal() - 10.00,
-            final_price: calculateTotal() - 10.00,
-            payment_method: formData.payment_method,
-            items: items.map((item)=>({
-                    product_id: item.product.id,
-                    size_id: item.size.id,
-                    color_id: item.color.id,
-                    quantity: item.quantity,
-                    price: item.product.discount_price || item.product.price
-                })),
-            ...formData,
-            address_id: null
-        };
-        console.log('Submitting order:', orderData);
-        try {
-            const response = await fetch('http://localhost:5551/v1/api/orders', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(orderData)
-            });
-            const result = await response.json();
-            if (!response.ok) {
-                if (result.status === 'error' && result.message.includes('Không đủ hàng trong kho')) {
-                    setErrorMessage(result.message);
-                    return;
-                }
-                throw new Error('Failed to submit order');
-            }
-            console.log('Order submitted successfully:', result);
-            localStorage.setItem('orderDetails', JSON.stringify(result));
-            router.push('/payment');
-        } catch (error) {
-            console.error('Error submitting order:', error);
-        }
+    const handleSortChange = (e)=>{
+        setSort(e.target.value);
+        resetFilters();
+    };
+    const handlePriceRangeChange = (e)=>{
+        setPriceRange(e.target.value);
+        resetFilters();
+    };
+    const handleColorChange = (colorId)=>{
+        setSelectedColors((prevColors)=>prevColors.includes(colorId) ? prevColors.filter((id)=>id !== colorId) : [
+                ...prevColors,
+                colorId
+            ]);
+        resetFilters();
+    };
+    const handleProductClick = (slug)=>{
+        router.push(`/productdetail/${slug}`);
+    };
+    const handleLoadMore = ()=>{
+        setCurrentPage((prevPage)=>prevPage + 1);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-            className: "container mx-auto px-4 py-6",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-bold mb-6",
-                    children: "Checkout"
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                fileName: "[project]/src/pages/new-products.js",
+                lineNumber: 84,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mt-6 px-6",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "hidden md:flex justify-center gap-4",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 87,
+                        columnNumber: 21
+                    }, this)
                 }, void 0, false, {
-                    fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 97,
-                    columnNumber: 17
-                }, this),
-                errorMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                    className: "text-red-500 text-lg font-bold",
-                    children: errorMessage
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 98,
-                    columnNumber: 34
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
-                    onSubmit: handleSubmit,
-                    className: "space-y-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "name",
-                            placeholder: "Full Name",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 100,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "email",
-                            name: "email",
-                            placeholder: "Email",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 101,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "phone",
-                            placeholder: "Phone",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 102,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "street",
-                            placeholder: "Street",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 103,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "ward",
-                            placeholder: "Ward",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 104,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "district",
-                            placeholder: "District",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 105,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "city",
-                            placeholder: "City",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 106,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            name: "country",
-                            placeholder: "Country",
-                            className: "border p-2 w-full",
-                            onChange: handleChange,
-                            required: true
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 107,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "bg-gray-100 p-4 rounded",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-                                    className: "text-xl font-bold",
-                                    children: "Order Summary"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 110,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                    children: [
-                                        "Total Price: ",
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                            className: "font-bold text-red-500",
-                                            children: [
-                                                calculateTotal().toLocaleString(),
-                                                " VND"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/checkout.js",
-                                            lineNumber: 111,
-                                            columnNumber: 41
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 111,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
-                                    children: items.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                            className: "text-gray-700",
-                                            children: [
-                                                item.product.product_name,
-                                                " - ",
-                                                item.quantity,
-                                                " x ",
-                                                (item.product.discount_price || item.product.price).toLocaleString(),
-                                                " VND"
-                                            ]
-                                        }, item.product.id, true, {
-                                            fileName: "[project]/src/pages/checkout.js",
-                                            lineNumber: 114,
-                                            columnNumber: 33
-                                        }, this))
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 112,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 109,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                            type: "submit",
-                            className: "bg-blue-600 text-white px-4 py-2 rounded w-full",
-                            children: "Place Order"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 121,
-                            columnNumber: 21
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 99,
+                    fileName: "[project]/src/pages/new-products.js",
+                    lineNumber: 86,
                     columnNumber: 17
                 }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/pages/checkout.js",
-            lineNumber: 96,
-            columnNumber: 13
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/src/pages/checkout.js",
-        lineNumber: 95,
+            }, void 0, false, {
+                fileName: "[project]/src/pages/new-products.js",
+                lineNumber: 85,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "w-full px-4 py-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
+                        className: "text-2xl font-bold mb-6",
+                        children: "Tất cả sản phẩm mới"
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 91,
+                        columnNumber: 17
+                    }, this),
+                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "text-red-500 text-center",
+                        children: error
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 93,
+                        columnNumber: 27
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-6 flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                htmlFor: "sortFilter",
+                                className: "text-gray-700 font-semibold",
+                                children: "Sắp xếp theo:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 97,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
+                                id: "sortFilter",
+                                value: sort,
+                                onChange: handleSortChange,
+                                className: "border rounded p-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "featured",
+                                        children: "Sản phẩm nổi bật"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 106,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "price_asc",
+                                        children: "Giá: Tăng dần"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 107,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "price_desc",
+                                        children: "Giá: Giảm dần"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 108,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "name_asc",
+                                        children: "Tên: A-Z"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 109,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "name_desc",
+                                        children: "Tên: Z-A"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 110,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "oldest",
+                                        children: "Cũ nhất"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 111,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "newest",
+                                        children: "Mới nhất"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 112,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 100,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 96,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-6 flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                htmlFor: "priceRangeFilter",
+                                className: "text-gray-700 font-semibold",
+                                children: "Khoảng giá:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 118,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
+                                id: "priceRangeFilter",
+                                value: priceRange,
+                                onChange: handlePriceRangeChange,
+                                className: "border rounded p-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "Tất cả"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 127,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "0-100000",
+                                        children: "Dưới 100.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 128,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "100000-500000",
+                                        children: "100.000 - 500.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 129,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "500000-1000000",
+                                        children: "500.000 - 1.000.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 130,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "1000000-",
+                                        children: "Trên 1.000.000 VND"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 131,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 121,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 117,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-6",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-bold mb-2",
+                                children: "Màu sắc"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 137,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-4",
+                                children: [
+                                    ...new Set(colors.map((color)=>color.color))
+                                ].map((colorName, index)=>{
+                                    const color = colors.find((c)=>c.color === colorName);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center gap-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                                type: "checkbox",
+                                                id: `color-${color.id}`,
+                                                value: color.id,
+                                                onChange: ()=>handleColorChange(color.id),
+                                                className: "cursor-pointer"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/new-products.js",
+                                                lineNumber: 143,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
+                                                htmlFor: `color-${color.id}`,
+                                                className: "flex items-center gap-2 cursor-pointer",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                                        className: "block w-6 h-6 rounded border border-black",
+                                                        style: {
+                                                            backgroundColor: color.hex_code
+                                                        }
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/new-products.js",
+                                                        lineNumber: 154,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    color.color
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/pages/new-products.js",
+                                                lineNumber: 150,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, index, true, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 142,
+                                        columnNumber: 33
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 138,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 136,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
+                        children: newProducts.items.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
+                                onClick: ()=>handleProductClick(product.slug),
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                                        src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
+                                        alt: product.product_name,
+                                        className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 174,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                                        className: "text-lg font-semibold mt-2",
+                                        children: product.product_name
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 182,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-600",
+                                        children: product.description
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 183,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-red-500 font-bold",
+                                        children: [
+                                            product.discount_price.toLocaleString('vi-VN'),
+                                            " VND"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 184,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-500 line-through",
+                                        children: [
+                                            product.price.toLocaleString('vi-VN'),
+                                            " VND"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/new-products.js",
+                                        lineNumber: 187,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, product.id, true, {
+                                fileName: "[project]/src/pages/new-products.js",
+                                lineNumber: 169,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 167,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex justify-center mt-6",
+                        children: newProducts.pagination && currentPage < newProducts.pagination.totalPages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                            onClick: handleLoadMore,
+                            className: "px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700",
+                            children: "Xem thêm"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/new-products.js",
+                            lineNumber: 198,
+                            columnNumber: 29
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 195,
+                        columnNumber: 17
+                    }, this),
+                    loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "text-center mt-4",
+                        children: "Đang tải..."
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/new-products.js",
+                        lineNumber: 207,
+                        columnNumber: 29
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/new-products.js",
+                lineNumber: 90,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/pages/new-products.js",
+        lineNumber: 83,
         columnNumber: 9
     }, this);
-};
-const __TURBOPACK__default__export__ = CheckoutPage;
+}
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
 
 };
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__60731d._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__ded1d0._.js.map

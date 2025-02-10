@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
+import { getCartId } from '@/utils/storage';
 
 const CheckoutPage = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const CheckoutPage = () => {
             setItems(JSON.parse(storedItems));
         }
     }, []);
+
+    console.log('items:', items);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -40,6 +43,7 @@ const CheckoutPage = () => {
         e.preventDefault();
         
         const orderData = {
+            cart_id : getCartId(),
             carrier_id: 1,
             discount_code: "DISCOUNT10",
             discount_amount: 10.00,

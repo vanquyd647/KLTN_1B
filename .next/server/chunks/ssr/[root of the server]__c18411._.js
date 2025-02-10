@@ -2559,7 +2559,7 @@ const CartPage = ()=>{
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
                                     className: "space-y-4",
-                                    children: items.map((item)=>{
+                                    children: items.map((item, index)=>{
                                         const product = item.product || {};
                                         const color = item.color?.color || 'N/A';
                                         const size = item.size?.size || 'N/A';
@@ -2681,7 +2681,7 @@ const CartPage = ()=>{
                                                     columnNumber: 45
                                                 }, this)
                                             ]
-                                        }, item.id, true, {
+                                        }, `${item.id}-${index}`, true, {
                                             fileName: "[project]/src/pages/cart.js",
                                             lineNumber: 136,
                                             columnNumber: 41
@@ -2735,7 +2735,14 @@ const CartPage = ()=>{
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                             onClick: ()=>{
-                                localStorage.setItem('checkoutItems', JSON.stringify(items.filter((item)=>selectedItems.includes(item.id))));
+                                const uniqueCheckoutItems = [
+                                    ...new Map(items.filter((item)=>selectedItems.includes(item.id)).map((item)=>[
+                                            `${item.id}-${Math.random()}`,
+                                            item
+                                        ]) // Ensure uniqueness
+                                    ).values()
+                                ];
+                                localStorage.setItem('checkoutItems', JSON.stringify(uniqueCheckoutItems));
                                 router.push('/checkout');
                             },
                             disabled: selectedItems.length === 0,
