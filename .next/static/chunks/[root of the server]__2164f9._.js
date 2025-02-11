@@ -800,6 +800,7 @@ __turbopack_esm__({
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
     "indexApi": (()=>indexApi),
+    "orderApi": (()=>orderApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -1243,6 +1244,82 @@ const indexApi = {
             }
         });
         return response.data;
+    }
+};
+const orderApi = {
+    /**
+     * Create a new order
+     * @param {Object} orderData - Order details
+     * @returns {Promise<Object>} - Created order response
+     */ createOrder: async (orderData)=>{
+        try {
+            const response = await apiClient.post('orders', orderData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create order.';
+        }
+    },
+    /**
+     * Get an order by ID
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Order details
+     */ getOrderById: async (orderId)=>{
+        try {
+            const response = await apiClient.get(`orders/${orderId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch order details.';
+        }
+    },
+    /**
+     * Update order status
+     * @param {number} orderId - ID of the order
+     * @param {string} status - New status ('pending', 'completed', 'canceled', etc.)
+     * @returns {Promise<Object>} - Response status
+     */ updateOrderStatus: async (orderId, status)=>{
+        try {
+            const response = await apiClient.patch(`orders/${orderId}/status`, {
+                status
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update order status.';
+        }
+    },
+    /**
+     * Cancel expired orders
+     * @returns {Promise<Object>} - Response status
+     */ cancelExpiredOrders: async ()=>{
+        try {
+            const response = await apiClient.post('orders/cancel-expired');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to cancel expired orders.';
+        }
+    },
+    /**
+     * Complete an order
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Response status
+     */ completeOrder: async (orderId)=>{
+        try {
+            const response = await apiClient.post(`orders/${orderId}/complete`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to complete order.';
+        }
+    },
+    /**
+     * Delete an order by ID
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Response status
+     */ deleteOrder: async (orderId)=>{
+        try {
+            const response = await apiClient.delete(`orders/${orderId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete order.';
+        }
     }
 };
 ;

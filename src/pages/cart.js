@@ -148,7 +148,7 @@ const CartPage = () => {
                                                 alt={product.product_name || 'Product'}
                                                 className="w-24 h-24 object-cover rounded border"
                                             />
-                                            
+
                                             {/* Product Details */}
                                             <div className="flex-1" onClick={() => handleProductClick(product.slug)}>
                                                 <h3 className="text-lg font-semibold">
@@ -216,12 +216,35 @@ const CartPage = () => {
                     </p>
                     <button
                         onClick={() => {
-                            const uniqueCheckoutItems = [...new Map(
-                                items.filter(item => selectedItems.includes(item.id))
-                                    .map(item => [`${item.id}-${Math.random()}`, item]) // Ensure uniqueness
-                            ).values()];
+                            const selectedCheckoutItems = items
+                                .filter(item => selectedItems.includes(item.id))
+                                .map(item => {
+                                    const selectedColorImage = item.color?.image ||
+                                        item.product?.productColors?.find(colorItem => colorItem.id === item.color?.id)?.ProductColor?.image ||
+                                        item.product.image;
 
-                            localStorage.setItem('checkoutItems', JSON.stringify(uniqueCheckoutItems));
+                                    return {
+                                        id: item.id,
+                                        product: {
+                                            id: item.product.id,
+                                            product_name: item.product.product_name,
+                                            price: item.product.price,
+                                            discount_price: item.product.discount_price,
+                                        },
+                                        color: {
+                                            id: item.color.id,
+                                            name: item.color.color,
+                                            image_url: selectedColorImage, // Ảnh theo màu sắc đã chọn
+                                        },
+                                        size: {
+                                            id: item.size.id,
+                                            name: item.size.size,
+                                        },
+                                        quantity: item.quantity
+                                    };
+                                });
+
+                            localStorage.setItem('checkoutItems', JSON.stringify(selectedCheckoutItems));
                             router.push('/checkout');
                         }}
                         disabled={selectedItems.length === 0}
@@ -229,6 +252,7 @@ const CartPage = () => {
                     >
                         ĐẶT HÀNG
                     </button>
+
                 </div>
             </div>
         </Layout>

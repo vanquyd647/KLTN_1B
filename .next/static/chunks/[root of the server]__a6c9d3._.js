@@ -1155,9 +1155,11 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dynamic.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
+;
 ;
 ;
 ;
@@ -1165,139 +1167,218 @@ const PaymentPage = ()=>{
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [order, setOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])("");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "PaymentPage.useEffect": ()=>{
-            const storedOrder = localStorage.getItem('orderDetails');
-            if (storedOrder) {
-                try {
-                    const parsedOrder = JSON.parse(storedOrder);
-                    // Check if parsed data has `orderId` instead of `id`
-                    if (parsedOrder && (parsedOrder.id || parsedOrder.orderId)) {
-                        setOrder({
-                            id: parsedOrder.id || parsedOrder.orderId,
-                            payment_method: parsedOrder.payment_method || "default",
-                            final_price: parsedOrder.final_price || 0
-                        });
-                    } else {
-                        console.error('Invalid order data:', parsedOrder);
+            // Lấy thông tin đơn hàng từ query params hoặc localStorage
+            const initializeOrder = {
+                "PaymentPage.useEffect.initializeOrder": ()=>{
+                    try {
+                        const storedOrder = localStorage.getItem('orderDetails');
+                        if (storedOrder) {
+                            const parsedOrder = JSON.parse(storedOrder);
+                            if (parsedOrder && (parsedOrder.id || parsedOrder.orderId)) {
+                                setOrder({
+                                    id: parsedOrder.id || parsedOrder.orderId,
+                                    payment_method: "payos",
+                                    final_price: parsedOrder.final_price || parsedOrder.amount || 2000,
+                                    email: parsedOrder.email || "customer@example.com"
+                                });
+                            }
+                        } else {
+                            setError("Không tìm thấy thông tin đơn hàng");
+                        }
+                    } catch (error) {
+                        console.error('❌ Error initializing order:', error);
+                        setError("Lỗi khi đọc thông tin đơn hàng");
                     }
-                } catch (error) {
-                    console.error('Error parsing order details:', error);
                 }
-            } else {
-                console.error('No order details found in localStorage.');
+            }["PaymentPage.useEffect.initializeOrder"];
+            if (router.isReady) {
+                initializeOrder();
             }
         }
-    }["PaymentPage.useEffect"], []);
+    }["PaymentPage.useEffect"], [
+        router.isReady
+    ]);
     const handlePayment = async ()=>{
+        if (!order) {
+            setError("Không tìm thấy thông tin đơn hàng.");
+            return;
+        }
+        setLoading(true);
+        setError("");
         try {
-            const response = await fetch('http://localhost:5551/v1/api/payments', {
+            const response = await fetch('http://localhost:5551/v1/api/payments/payos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    order_id: order?.id,
-                    payment_method: order?.payment_method
+                    order_id: order.id,
+                    amount: order.final_price,
+                    email: order.email
                 })
             });
+            const paymentData = await response.json();
+            console.log("PayOS Response:", paymentData);
             if (!response.ok) {
-                throw new Error('Payment failed');
+                throw new Error('Không thể khởi tạo thanh toán với PayOS');
             }
-            const result = await response.json();
-            console.log('Payment successful:', result);
-            router.push('/payment-success');
+            // Lưu thông tin thanh toán vào localStorage
+            localStorage.setItem('paymentInfo', JSON.stringify({
+                orderCode: paymentData.orderCode,
+                paymentLinkId: paymentData.paymentLinkId,
+                amount: paymentData.amount,
+                status: paymentData.status
+            }));
+            // Kiểm tra và chuyển hướng
+            if (!paymentData.checkoutUrl) {
+                throw new Error('URL thanh toán không hợp lệ');
+            }
+            console.log("✅ Chuyển hướng đến:", paymentData.checkoutUrl);
+            // Chuyển hướng đến trang thanh toán PayOS
+            window.location.href = paymentData.checkoutUrl.checkoutUrl;
         } catch (error) {
-            console.error('Error processing payment:', error);
+            console.error('❌ Lỗi thanh toán:', error);
+            setError("Thanh toán thất bại, vui lòng thử lại!");
+        } finally{
+            setLoading(false);
         }
     };
-    if (!order) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "text-center py-10 text-xl",
-        children: "Loading payment details..."
-    }, void 0, false, {
-        fileName: "[project]/src/pages/payment.js",
-        lineNumber: 56,
-        columnNumber: 24
-    }, this);
+    if (!router.isReady) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            children: "Đang tải..."
+        }, void 0, false, {
+            fileName: "[project]/src/pages/payment.js",
+            lineNumber: 99,
+            columnNumber: 16
+        }, this);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "container mx-auto px-4 py-6",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                     className: "text-2xl font-bold mb-6",
-                    children: "Payment"
+                    children: "Thanh toán với PayOS"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/payment.js",
-                    lineNumber: 61,
+                    lineNumber: 105,
                     columnNumber: 17
                 }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-gray-100 p-4 rounded",
+                error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        children: error
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment.js",
+                        lineNumber: 109,
+                        columnNumber: 25
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/payment.js",
+                    lineNumber: 108,
+                    columnNumber: 21
+                }, this),
+                order && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-gray-100 p-4 rounded mb-4",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-bold",
-                            children: "Order Summary"
+                            className: "font-semibold mb-2",
+                            children: "Thông tin đơn hàng:"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment.js",
-                            lineNumber: 63,
-                            columnNumber: 21
+                            lineNumber: 115,
+                            columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: [
-                                "Final Price: ",
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "font-bold text-red-500",
-                                    children: [
-                                        order.final_price.toLocaleString(),
-                                        " VND"
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/payment.js",
-                                    lineNumber: 64,
-                                    columnNumber: 37
-                                }, this)
+                                "Mã đơn hàng: ",
+                                order.id
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/payment.js",
-                            lineNumber: 64,
-                            columnNumber: 21
+                            lineNumber: 116,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: [
+                                "Số tiền: ",
+                                order.final_price.toLocaleString('vi-VN'),
+                                " VNĐ"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/pages/payment.js",
+                            lineNumber: 117,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: [
+                                "Email: ",
+                                order.email
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/pages/payment.js",
+                            lineNumber: 118,
+                            columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/payment.js",
-                    lineNumber: 62,
-                    columnNumber: 17
+                    lineNumber: 114,
+                    columnNumber: 21
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: handlePayment,
-                    className: "mt-6 w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition",
-                    children: "Confirm Payment"
+                    className: `mt-6 w-full px-4 py-2 rounded transition duration-200 ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 text-white'}`,
+                    disabled: loading || !order,
+                    children: loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center justify-center",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            className: "mr-2",
+                            children: "Đang xử lý..."
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/payment.js",
+                            lineNumber: 132,
+                            columnNumber: 29
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment.js",
+                        lineNumber: 131,
+                        columnNumber: 25
+                    }, this) : "Thanh toán với PayOS"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/payment.js",
-                    lineNumber: 66,
+                    lineNumber: 122,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/payment.js",
-            lineNumber: 60,
+            lineNumber: 104,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/payment.js",
-        lineNumber: 59,
+        lineNumber: 103,
         columnNumber: 9
     }, this);
 };
-_s(PaymentPage, "vI4q7/iuT9Y65R4ZDvJ3Igy7wds=", false, function() {
+_s(PaymentPage, "meCChNwiT5PPdBWwMbjNkO0sFDs=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
 });
 _c = PaymentPage;
-const __TURBOPACK__default__export__ = PaymentPage;
-var _c;
+const __TURBOPACK__default__export__ = _c2 = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"])(_c1 = ()=>Promise.resolve(PaymentPage), {
+    ssr: false
+});
+var _c, _c1, _c2;
 __turbopack_refresh__.register(_c, "PaymentPage");
+__turbopack_refresh__.register(_c1, "%default%$dynamic");
+__turbopack_refresh__.register(_c2, "%default%");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }

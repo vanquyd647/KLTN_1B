@@ -800,6 +800,7 @@ __turbopack_esm__({
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
     "indexApi": (()=>indexApi),
+    "orderApi": (()=>orderApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
@@ -1243,6 +1244,82 @@ const indexApi = {
             }
         });
         return response.data;
+    }
+};
+const orderApi = {
+    /**
+     * Create a new order
+     * @param {Object} orderData - Order details
+     * @returns {Promise<Object>} - Created order response
+     */ createOrder: async (orderData)=>{
+        try {
+            const response = await apiClient.post('orders', orderData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create order.';
+        }
+    },
+    /**
+     * Get an order by ID
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Order details
+     */ getOrderById: async (orderId)=>{
+        try {
+            const response = await apiClient.get(`orders/${orderId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch order details.';
+        }
+    },
+    /**
+     * Update order status
+     * @param {number} orderId - ID of the order
+     * @param {string} status - New status ('pending', 'completed', 'canceled', etc.)
+     * @returns {Promise<Object>} - Response status
+     */ updateOrderStatus: async (orderId, status)=>{
+        try {
+            const response = await apiClient.patch(`orders/${orderId}/status`, {
+                status
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update order status.';
+        }
+    },
+    /**
+     * Cancel expired orders
+     * @returns {Promise<Object>} - Response status
+     */ cancelExpiredOrders: async ()=>{
+        try {
+            const response = await apiClient.post('orders/cancel-expired');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to cancel expired orders.';
+        }
+    },
+    /**
+     * Complete an order
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Response status
+     */ completeOrder: async (orderId)=>{
+        try {
+            const response = await apiClient.post(`orders/${orderId}/complete`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to complete order.';
+        }
+    },
+    /**
+     * Delete an order by ID
+     * @param {number} orderId - ID of the order
+     * @returns {Promise<Object>} - Response status
+     */ deleteOrder: async (orderId)=>{
+        try {
+            const response = await apiClient.delete(`orders/${orderId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete order.';
+        }
     }
 };
 ;
@@ -3406,7 +3483,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/productdetail/[slug]";
+const PAGE_PATH = "/payment/success";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{

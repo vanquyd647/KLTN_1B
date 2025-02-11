@@ -5,10 +5,11 @@
 (globalThis.TURBOPACK_CHUNK_LISTS = globalThis.TURBOPACK_CHUNK_LISTS || []).push({
   "path": "static/chunks/src_pages_checkout_5771e1._.js",
   "chunks": [
-    "static/chunks/node_modules_next_0f88d9._.js",
+    "static/chunks/[root of the server]__a71835._.js",
+    "static/chunks/node_modules_next_8daffe._.js",
     "static/chunks/node_modules_react-dom_82bb97._.js",
-    "static/chunks/node_modules_70953a._.js",
-    "static/chunks/[root of the server]__568038._.js"
+    "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+    "static/chunks/node_modules_18cf8c._.js"
   ],
   "source": "entry"
 });
