@@ -13,7 +13,7 @@ const CheckoutPage = () => {
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [discountCode, setDiscountCode] = useState('');
-    const [shippingFee, setShippingFee] = useState(30000); // Assume a shipping fee of 30,000 VND
+    const [shippingFee, setShippingFee] = useState(0); // Assume a shipping fee of 30,000 VND
     const [discountAmount, setDiscountAmount] = useState(0);
 
     useEffect(() => {

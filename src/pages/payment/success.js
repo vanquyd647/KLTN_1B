@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const PaymentSuccess = () => {
     const router = useRouter();
-    const { code, orderCode, status } = router.query;
+    const { code, orderCode, status, method } = router.query;
     const [message, setMessage] = useState('Đang xử lý thanh toán...');
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -13,33 +13,49 @@ const PaymentSuccess = () => {
 
         const updatePaymentStatus = async () => {
             try {
-                // Gọi API webhook để cập nhật trạng thái
-                const response = await fetch('http://localhost:5551/v1/api/payments/payos-webhook', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderCode: Number(orderCode),
-                        status: status === 'CANCELLED' ? 'cancelled' : 'paid',
-                        transactionId: Date.now().toString() // hoặc lấy từ response PayOS nếu có
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Không thể cập nhật trạng thái thanh toán');
-                }
-
-                if (code === '00' && status === 'PAID') {
-                    setIsSuccess(true);
-                    setMessage('Thanh toán thành công!');
-                    setTimeout(() => router.push('/'), 3000);
+                if (method === 'cod') {
+                    // Xử lý thanh toán COD
+                    if (code === '00' && status === 'PAID') {
+                        setIsSuccess(true);
+                        setMessage('Đặt hàng thành công!');
+                        localStorage.removeItem('orderDetails');
+                        localStorage.removeItem('checkoutItems');
+                        setTimeout(() => router.push('/'), 3000);
+                    } else {
+                        setIsSuccess(false);
+                        setMessage('Đặt hàng thất bại!');
+                        setTimeout(() => router.push('/checkout'), 3000);
+                    }
                 } else {
-                    setIsSuccess(false);
-                    setMessage('Thanh toán thất bại!');
-                    setTimeout(() => router.push('/checkout'), 3000);
-                }
+                    // Xử lý thanh toán VietQR
+                    const response = await fetch('http://localhost:5551/v1/api/payments/payos-webhook', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            orderCode: Number(orderCode),
+                            status: status === 'CANCELLED' ? 'cancelled' : 'paid',
+                            transactionId: Date.now().toString()
+                        }),
+                    });
 
+                    if (!response.ok) {
+                        throw new Error('Không thể cập nhật trạng thái thanh toán');
+                    }
+
+                    if (code === '00' && status === 'PAID') {
+                        setIsSuccess(true);
+                        setMessage('Thanh toán thành công!');
+                        localStorage.removeItem('orderDetails');
+                        localStorage.removeItem('checkoutItems');
+                        setTimeout(() => router.push('/'), 3000);
+                    } else {
+                        setIsSuccess(false);
+                        setMessage('Thanh toán thất bại!');
+                        setTimeout(() => router.push('/checkout'), 3000);
+                    }
+                }
             } catch (error) {
                 console.error('Lỗi cập nhật trạng thái:', error);
                 setIsSuccess(false);
@@ -48,7 +64,7 @@ const PaymentSuccess = () => {
         };
 
         updatePaymentStatus();
-    }, [router.isReady, code, orderCode, status]);
+    }, [router.isReady, code, orderCode, status, method]);
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">

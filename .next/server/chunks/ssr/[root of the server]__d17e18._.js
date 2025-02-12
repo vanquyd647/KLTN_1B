@@ -2115,6 +2115,7 @@ const PaymentCancel = ()=>{
                     throw new Error('Không thể cập nhật trạng thái thanh toán');
                 }
                 setMessage('Đã hủy thanh toán');
+                localStorage.removeItem('orderDetails');
                 // Chuyển về trang checkout sau 3 giây
                 setTimeout(()=>{
                     router.push('/checkout');
@@ -2150,17 +2151,17 @@ const PaymentCancel = ()=>{
                                 d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/payment/cancel.js",
-                                lineNumber: 59,
+                                lineNumber: 61,
                                 columnNumber: 29
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/cancel.js",
-                            lineNumber: 53,
+                            lineNumber: 55,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/payment/cancel.js",
-                        lineNumber: 52,
+                        lineNumber: 54,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
@@ -2168,7 +2169,7 @@ const PaymentCancel = ()=>{
                         children: message
                     }, void 0, false, {
                         fileName: "[project]/src/pages/payment/cancel.js",
-                        lineNumber: 67,
+                        lineNumber: 69,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2176,7 +2177,7 @@ const PaymentCancel = ()=>{
                         children: "Bạn đã hủy quá trình thanh toán."
                     }, void 0, false, {
                         fileName: "[project]/src/pages/payment/cancel.js",
-                        lineNumber: 70,
+                        lineNumber: 72,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2184,7 +2185,7 @@ const PaymentCancel = ()=>{
                         children: "Vui lòng thử lại hoặc chọn phương thức thanh toán khác."
                     }, void 0, false, {
                         fileName: "[project]/src/pages/payment/cancel.js",
-                        lineNumber: 73,
+                        lineNumber: 75,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2192,23 +2193,23 @@ const PaymentCancel = ()=>{
                         children: "Tự động chuyển về trang thanh toán sau 3 giây..."
                     }, void 0, false, {
                         fileName: "[project]/src/pages/payment/cancel.js",
-                        lineNumber: 76,
+                        lineNumber: 78,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/payment/cancel.js",
-                lineNumber: 51,
+                lineNumber: 53,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/payment/cancel.js",
-            lineNumber: 50,
+            lineNumber: 52,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/payment/cancel.js",
-        lineNumber: 49,
+        lineNumber: 51,
         columnNumber: 9
     }, this);
 };

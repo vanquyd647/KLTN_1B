@@ -1,14 +1,14 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/payment": "pages/payment.js",
-  "/_error": "pages/_error.js",
-  "/checkout": "pages/checkout.js",
-  "/cart": "pages/cart.js",
   "/": "pages/index.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/new-products": "pages/new-products.js",
-  "/payment-success": "pages/payment-success.js",
+  "/cart": "pages/cart.js",
+  "/checkout": "pages/checkout.js",
+  "/payment": "pages/payment.js",
   "/payment/success": "pages/payment/success.js",
-  "/payment/cancel": "pages/payment/cancel.js"
+  "/payment/cancel": "pages/payment/cancel.js",
+  "/account/profile": "pages/account/profile.js",
+  "/new-products": "pages/new-products.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js"
 }

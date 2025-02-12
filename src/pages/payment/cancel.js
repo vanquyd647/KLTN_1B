@@ -31,6 +31,8 @@ const PaymentCancel = () => {
 
                 setMessage('Đã hủy thanh toán');
 
+                localStorage.removeItem('orderDetails');
+
                 // Chuyển về trang checkout sau 3 giây
                 setTimeout(() => {
                     router.push('/checkout');
