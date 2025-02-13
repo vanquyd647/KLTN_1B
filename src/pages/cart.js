@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     createCartForGuest,
@@ -10,30 +10,35 @@ import {
 } from '../store/slices/cartSlice';
 import { getToken, getCartId } from '../utils/storage';
 import { useRouter } from 'next/router';
-
 import Layout from '../components/Layout';
 
 const CartPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { items, loading, error } = useSelector((state) => state.cart);
+    const { items: cartItems, loading, error } = useSelector((state) => state.cart);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [items, setItems] = useState([]); // Local state để quản lý items
 
+    // Đồng bộ items từ redux store khi có thay đổi
+    useEffect(() => {
+        setItems(cartItems);
+    }, [cartItems]);
+
+    // Khởi tạo cart
     useEffect(() => {
         const initializeCart = async () => {
             try {
-                let cartResponse;
-                if (!getCartId()) {
-                    if (!getToken()) {
-                        cartResponse = await dispatch(createCartForGuest()).unwrap();
-                    } else {
-                        cartResponse = await dispatch(createCartForUser()).unwrap();
-                    }
+                const cartId = getCartId();
+                if (cartId) {
+                    await dispatch(getCartItems(cartId));
+                } else {
+                    const cartResponse = await dispatch(
+                        !getToken() ? createCartForGuest() : createCartForUser()
+                    ).unwrap();
+
                     if (cartResponse?.id) {
                         await dispatch(getCartItems(cartResponse.id));
                     }
-                } else {
-                    await dispatch(getCartItems(getCartId()));
                 }
             } catch (err) {
                 console.error('Failed to initialize cart:', err);
@@ -47,21 +52,50 @@ const CartPage = () => {
         };
     }, [dispatch]);
 
-    const handleQuantityChange = (itemId, newQuantity) => {
+    const handleQuantityChange = useCallback((itemId, newQuantity) => {
         if (newQuantity > 0) {
+            // Cập nhật state local trước
+            setItems(prevItems =>
+                prevItems.map(item =>
+                    item.id === itemId
+                        ? { ...item, quantity: newQuantity }
+                        : item
+                )
+            );
+
+            // Sau đó gọi API
             dispatch(updateCartItemQuantity({ itemId, quantity: newQuantity }))
                 .unwrap()
-                .then(() => console.log('Quantity updated successfully'))
-                .catch((err) => console.error('Failed to update quantity:', err));
+                .then(() => {
+                    console.log('Quantity updated successfully');
+                })
+                .catch((err) => {
+                    console.error('Failed to update quantity:', err);
+                    // Rollback nếu API fail
+                    setItems(cartItems);
+                });
         }
-    };
+    }, [dispatch, cartItems]);
 
-    const handleRemoveItem = (itemId) => {
+    const handleRemoveItem = useCallback((itemId) => {
+        // Cập nhật state local trước
+        setItems(prevItems => prevItems.filter(item => item.id !== itemId));
+        // Xóa khỏi selected items
+        setSelectedItems(prev => prev.filter(id => id !== itemId));
+
+        // Sau đó gọi API
         dispatch(removeCartItem(itemId))
             .unwrap()
-            .then(() => console.log('Item removed successfully'))
-            .catch((err) => console.error('Failed to remove item:', err));
-    };
+            .then(() => {
+                console.log('Item removed successfully');
+            })
+            .catch((err) => {
+                console.error('Failed to remove item:', err);
+                // Rollback nếu API fail
+                setItems(cartItems);
+                setSelectedItems(prev => [...prev, itemId]);
+            });
+    }, [dispatch, cartItems]);
 
     const calculateTotal = () => {
         return selectedItems.reduce(
@@ -125,7 +159,6 @@ const CartPage = () => {
                                     const color = item.color?.color || 'N/A';
                                     const size = item.size?.size || 'N/A';
 
-                                    // Get image by selected color
                                     const selectedColorImage =
                                         product.productColors?.find(
                                             (colorItem) => colorItem.id === item.color?.id
@@ -177,7 +210,9 @@ const CartPage = () => {
                                                 >
                                                     -
                                                 </button>
-                                                <span className="text-lg font-medium">{item.quantity}</span>
+                                                <span className="text-lg font-medium w-8 text-center">
+                                                    {item.quantity}
+                                                </span>
                                                 <button
                                                     onClick={() =>
                                                         handleQuantityChange(item.id, item.quantity + 1)
@@ -187,6 +222,7 @@ const CartPage = () => {
                                                     +
                                                 </button>
                                             </div>
+
 
                                             {/* Remove Button */}
                                             <button
@@ -234,7 +270,7 @@ const CartPage = () => {
                                         color: {
                                             id: item.color.id,
                                             name: item.color.color,
-                                            image_url: selectedColorImage, // Ảnh theo màu sắc đã chọn
+                                            image_url: selectedColorImage,
                                         },
                                         size: {
                                             id: item.size.id,
@@ -252,7 +288,6 @@ const CartPage = () => {
                     >
                         ĐẶT HÀNG
                     </button>
-
                 </div>
             </div>
         </Layout>

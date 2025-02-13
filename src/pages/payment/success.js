@@ -1,6 +1,7 @@
 // pages/payment/success.js
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { paymentApi } from '../../utils/apiClient';
 
 const PaymentSuccess = () => {
     const router = useRouter();
@@ -28,21 +29,11 @@ const PaymentSuccess = () => {
                     }
                 } else {
                     // Xử lý thanh toán VietQR
-                    const response = await fetch('http://localhost:5551/v1/api/payments/payos-webhook', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            orderCode: Number(orderCode),
-                            status: status === 'CANCELLED' ? 'cancelled' : 'paid',
-                            transactionId: Date.now().toString()
-                        }),
+                    await paymentApi.updatePaymentStatus({
+                        orderCode: Number(orderCode),
+                        status: status === 'CANCELLED' ? 'cancelled' : 'paid',
+                        transactionId: Date.now().toString()
                     });
-
-                    if (!response.ok) {
-                        throw new Error('Không thể cập nhật trạng thái thanh toán');
-                    }
 
                     if (code === '00' && status === 'PAID') {
                         setIsSuccess(true);

@@ -150,9 +150,11 @@ __turbopack_esm__({
     "colorsApi": (()=>colorsApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
+    "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
     "reviewApi": (()=>reviewApi),
+    "stockApi": (()=>stockApi),
     "userApi": (()=>userApi)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__ = __turbopack_import__("[externals]/axios [external] (axios, esm_import)");
@@ -674,6 +676,51 @@ const orderApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to delete order.';
+        }
+    }
+};
+const paymentApi = {
+    /**
+     * Tạo thanh toán qua PayOS
+     * @param {Object} paymentData - Dữ liệu thanh toán
+     * @returns {Promise<Object>} - Thông tin thanh toán
+     */ createPayOSPayment: async (paymentData)=>{
+        try {
+            const response = await apiClient.post('payments/payos', paymentData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo thanh toán PayOS.';
+        }
+    },
+    /**
+     * Tạo thanh toán COD (Cash On Delivery)
+     * @param {Object} codData - Dữ liệu thanh toán COD
+     * @returns {Promise<Object>} - Thông tin thanh toán COD
+     */ createCODPayment: async (codData)=>{
+        try {
+            const response = await apiClient.post('payments/cod', codData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo thanh toán COD.';
+        }
+    },
+    updatePaymentStatus: async (statusData)=>{
+        try {
+            const response = await apiClient.post('payments/payos-webhook', statusData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
+        }
+    }
+};
+const stockApi = {
+    // Lấy thông tin tồn kho
+    getProductStocks: async ()=>{
+        try {
+            const response = await apiClient.get('product-stocks');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch product stocks.';
         }
     }
 };

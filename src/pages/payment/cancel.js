@@ -1,6 +1,7 @@
 // pages/payment/cancel.js
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { paymentApi } from '../../utils/apiClient';
 
 const PaymentCancel = () => {
     const router = useRouter();
@@ -12,28 +13,15 @@ const PaymentCancel = () => {
 
         const updatePaymentStatus = async () => {
             try {
-                // Gọi API webhook để cập nhật trạng thái
-                const response = await fetch('http://localhost:5551/v1/api/payments/payos-webhook', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderCode: Number(orderCode),
-                        status: status === 'PAID' ? 'paid' : 'cancelled',
-                        transactionId: Date.now().toString() // hoặc lấy từ response PayOS nếu có
-                    }),
+                await paymentApi.updatePaymentStatus({
+                    orderCode: Number(orderCode),
+                    status: 'cancelled',
+                    transactionId: Date.now().toString()
                 });
 
-                if (!response.ok) {
-                    throw new Error('Không thể cập nhật trạng thái thanh toán');
-                }
-
                 setMessage('Đã hủy thanh toán');
-
                 localStorage.removeItem('orderDetails');
 
-                // Chuyển về trang checkout sau 3 giây
                 setTimeout(() => {
                     router.push('/checkout');
                 }, 3000);

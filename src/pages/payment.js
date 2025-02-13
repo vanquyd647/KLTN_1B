@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Layout from '../components/Layout';
+import { paymentApi } from '../utils/apiClient';
+
 
 const PaymentPage = () => {
     const router = useRouter();
@@ -54,23 +56,11 @@ const PaymentPage = () => {
         if (paymentMethod === "cod") {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:5551/v1/api/payments/cod', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        order_id: order.id,
-                        amount: order.final_price,
-                        email: order.email
-                    }),
+                const result = await paymentApi.createCODPayment({
+                    order_id: order.id,
+                    amount: order.final_price,
+                    email: order.email
                 });
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.message || 'Không thể hoàn tất đơn hàng');
-                }
 
                 // Lưu thông tin thanh toán
                 localStorage.setItem('paymentInfo', JSON.stringify({
@@ -113,6 +103,7 @@ const PaymentPage = () => {
         }
     };
 
+
     const handleVietQRPayment = async () => {
         if (!order) {
             setError("Không tìm thấy thông tin đơn hàng.");
@@ -123,23 +114,11 @@ const PaymentPage = () => {
         setError("");
 
         try {
-            const response = await fetch('http://localhost:5551/v1/api/payments/payos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    order_id: order.id,
-                    amount: order.final_price,
-                    email: order.email
-                }),
+            const paymentData = await paymentApi.createPayOSPayment({
+                order_id: order.id,
+                amount: order.final_price,
+                email: order.email
             });
-
-            const paymentData = await response.json();
-
-            if (!response.ok) {
-                throw new Error('Không thể khởi tạo thanh toán với PayOS');
-            }
 
             localStorage.setItem('paymentInfo', JSON.stringify({
                 orderCode: paymentData.orderCode,

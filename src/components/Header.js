@@ -1,28 +1,34 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Sidebar from './Sidebar';
 
-export default function Header() {
+export default function Header({ isCartPage }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const { items } = useSelector((state) => state.cart);
+
+    // Chỉ tính toán số lượng, không fetch data
+    const totalItems = items?.reduce((sum, item) => {
+        if (item && typeof item.quantity === 'number') {
+            return sum + item.quantity;
+        }
+        return sum;
+    }, 0) || 0;
+
+    // Xử lý drawer sidebar
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768) {
+                setIsDrawerOpen(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
-
-    // Close Drawer Sidebar on resize when moving to desktop size
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 768) {
-                setIsDrawerOpen(false); // Close the Drawer Sidebar
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     return (
         <>
@@ -106,8 +112,8 @@ export default function Header() {
                                 </Link>
                             </li>
 
-                            {/* Cart Icon */}
-                            <li>
+                            {/* Cart Icon with Counter */}
+                            <li className="relative">
                                 <Link href="/cart" className="hover:underline">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +129,11 @@ export default function Header() {
                                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6m12.5-6l1.5 6m-10-1h8"
                                         />
                                     </svg>
+                                    {totalItems > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                                            {totalItems}
+                                        </span>
+                                    )}
                                 </Link>
                             </li>
                         </ul>

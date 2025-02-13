@@ -601,4 +601,55 @@ const orderApi = {
     },
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi };
+const paymentApi = {
+    /**
+     * Tạo thanh toán qua PayOS
+     * @param {Object} paymentData - Dữ liệu thanh toán
+     * @returns {Promise<Object>} - Thông tin thanh toán
+     */
+    createPayOSPayment: async (paymentData) => {
+        try {
+            const response = await apiClient.post('payments/payos', paymentData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo thanh toán PayOS.';
+        }
+    },
+
+    /**
+     * Tạo thanh toán COD (Cash On Delivery)
+     * @param {Object} codData - Dữ liệu thanh toán COD
+     * @returns {Promise<Object>} - Thông tin thanh toán COD
+     */
+    createCODPayment: async (codData) => {
+        try {
+            const response = await apiClient.post('payments/cod', codData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo thanh toán COD.';
+        }
+    },
+
+    updatePaymentStatus: async (statusData) => {
+        try {
+            const response = await apiClient.post('payments/payos-webhook', statusData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
+        }
+    }
+};
+
+const stockApi = {
+    // Lấy thông tin tồn kho
+    getProductStocks: async () => {
+        try {
+            const response = await apiClient.get('product-stocks');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    }
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi };

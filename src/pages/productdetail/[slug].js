@@ -3,8 +3,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getToken, getCartId } from '../../utils/storage';
+import { stockApi } from '../../utils/apiClient';
 import { fetchProductDetail } from '../../store/slices/productSlice';
-import { createCartForGuest, createCartForUser, addItemToCart } from '../../store/slices/cartSlice';
+import {
+    createCartForGuest,
+    createCartForUser,
+    addItemToCart,
+    getCartItems
+} from '../../store/slices/cartSlice';
 import { fetchReviewsByProduct, fetchAverageRating, createReview } from '../../store/slices/reviewsSlice';
 import Layout from '../../components/Layout';
 import ProductReviews from '../../components/slugs/ProductReviews';
@@ -20,6 +26,7 @@ export default function Slug() {
     // Redux selectors
     const { currentProduct, loading: productLoading, error: productError } = useSelector((state) => state.products);
     const { reviews, averageRating, pagination, reviewsError } = useSelector((state) => state.reviews);
+    const { items: cartItems } = useSelector((state) => state.cart);
 
     // Local state
     const [selectedColor, setSelectedColor] = useState(null);
@@ -40,13 +47,19 @@ export default function Slug() {
     }, [dispatch, slug]);
 
     useEffect(() => {
+        if (cartId) {
+            dispatch(getCartItems(cartId));
+        }
+    }, [dispatch, cartId]);
+
+    // Cập nhật useEffect fetch stocks
+    useEffect(() => {
         const fetchStocks = async () => {
             setStocksLoading(true);
             try {
-                const response = await fetch('http://localhost:5551/v1/api/product-stocks');
-                const data = await response.json();
-                if (data.success) {
-                    setStocks(data.data);
+                const response = await stockApi.getProductStocks();
+                if (response.success) {
+                    setStocks(response.data);
                 } else {
                     throw new Error('Failed to fetch stocks');
                 }
@@ -57,8 +70,6 @@ export default function Slug() {
             }
         };
         fetchStocks();
-
-        
     }, []);
 
     // Stock Management Functions
@@ -69,6 +80,15 @@ export default function Slug() {
                 stock.size_id === sizeId
         );
         return stock ? stock.quantity : 0;
+    };
+
+    const getCartItemQuantity = (productId, colorId, sizeId) => {
+        const existingItem = cartItems?.find(item =>
+            item.product_id === productId &&
+            item.color_id === colorId &&
+            item.size_id === sizeId
+        );
+        return existingItem?.quantity || 0;
     };
 
     const isColorAvailable = (colorId) => {
@@ -90,7 +110,15 @@ export default function Slug() {
 
     const getMaxAvailableQuantity = () => {
         if (!selectedColor || !selectedSize) return 0;
-        return getStockQuantity(selectedColor.id, selectedSize.id);
+
+        const stockQuantity = getStockQuantity(selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(
+            currentProduct.id,
+            selectedColor.id,
+            selectedSize.id
+        );
+
+        return Math.max(0, stockQuantity - cartQuantity);
     };
 
     const checkTotalStock = () => {
@@ -140,9 +168,21 @@ export default function Slug() {
             return;
         }
 
-        const availableQuantity = getMaxAvailableQuantity();
-        if (quantity > availableQuantity) {
-            alert(`Chỉ còn ${availableQuantity} sản phẩm trong kho.`);
+        const stockQuantity = getStockQuantity(selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(
+            currentProduct.id,
+            selectedColor.id,
+            selectedSize.id
+        );
+
+        // Kiểm tra tổng số lượng sau khi thêm
+        if (cartQuantity + quantity > stockQuantity) {
+            const remainingQuantity = stockQuantity - cartQuantity;
+            if (remainingQuantity <= 0) {
+                alert('Sản phẩm đã hết hàng hoặc đã có trong giỏ hàng với số lượng tối đa.');
+                return;
+            }
+            alert(`Chỉ còn ${remainingQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
             return;
         }
 
@@ -168,6 +208,8 @@ export default function Slug() {
                 })
             ).unwrap();
 
+            // Refresh cart items sau khi thêm thành công
+            dispatch(getCartItems(activeCartId));
             alert('Sản phẩm đã được thêm vào giỏ hàng!');
         } catch (error) {
             alert('Thêm vào giỏ hàng thất bại!');
@@ -176,8 +218,12 @@ export default function Slug() {
 
     // Quantity Management
     const increaseQuantity = () => {
-        const maxQuantity = getMaxAvailableQuantity();
-        setQuantity(prev => prev < maxQuantity ? prev + 1 : prev);
+        const availableQuantity = getMaxAvailableQuantity();
+        if (quantity >= availableQuantity) {
+            alert(`Chỉ còn ${availableQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        setQuantity(prev => prev + 1);
     };
 
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -311,11 +357,11 @@ export default function Slug() {
                                             disabled={!isAvailable}
                                         >
                                             <span>{size.size}</span>
-                                            {isAvailable && (
+                                            {/* {isAvailable && (
                                                 <span className="absolute -top-2 -right-2 text-xs bg-gray-200 px-1 rounded">
                                                     {stockQuantity}
                                                 </span>
-                                            )}
+                                            )} */}
                                         </button>
                                     );
                                 })}
