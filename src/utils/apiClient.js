@@ -23,7 +23,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi
 
 const apiClient = axios.create({
-    baseURL: 'https://kltn-1a.onrender.com/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
 });
 
 // **Request Interceptor**
@@ -652,4 +652,68 @@ const stockApi = {
     }
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi };
+const carrierApi = {
+    // Tạo nhà vận chuyển mới
+    createCarrier: async (carrierData) => {
+        try {
+            const response = await apiClient.post('carriers', carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create carrier.';
+        }
+    },
+
+    // Lấy danh sách nhà vận chuyển
+    getCarriers: async (query = {}) => {
+        try {
+            const { page = 1, limit = 10, status } = query;
+            const queryString = new URLSearchParams({ page, limit, status }).toString();
+            const response = await apiClient.get(`carriers?${queryString}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carriers.';
+        }
+    },
+
+    // Lấy chi tiết nhà vận chuyển
+    getCarrierById: async (id) => {
+        try {
+            const response = await apiClient.get(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carrier details.';
+        }
+    },
+
+    // Cập nhật thông tin nhà vận chuyển
+    updateCarrier: async (id, carrierData) => {
+        try {
+            const response = await apiClient.put(`carriers/${id}`, carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier.';
+        }
+    },
+
+    // Xóa nhà vận chuyển
+    deleteCarrier: async (id) => {
+        try {
+            const response = await apiClient.delete(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete carrier.';
+        }
+    },
+
+    // Cập nhật trạng thái nhà vận chuyển
+    updateCarrierStatus: async (id, status) => {
+        try {
+            const response = await apiClient.patch(`carriers/${id}/status`, { status });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier status.';
+        }
+    }
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi };

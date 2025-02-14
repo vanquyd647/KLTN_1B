@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { getCartId } from '@/utils/storage';
 import { createOrder } from '../store/slices/orderSlice';
+import { carrierApi } from '@/utils/apiClient';
 
 const CheckoutPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    
-    // Đảm bảo error và message là string
+
     const { loading } = useSelector(state => state.order);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
@@ -17,16 +17,10 @@ const CheckoutPage = () => {
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [discountCode, setDiscountCode] = useState('');
-    const [shippingFee, setShippingFee] = useState(0);
     const [discountAmount, setDiscountAmount] = useState(0);
     const [stockError, setStockError] = useState(null);
-
-    useEffect(() => {
-        const storedItems = localStorage.getItem('checkoutItems');
-        if (storedItems) {
-            setItems(JSON.parse(storedItems));
-        }
-    }, []);
+    const [carriers, setCarriers] = useState([]);
+    const [selectedCarrier, setSelectedCarrier] = useState(null);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -39,12 +33,55 @@ const CheckoutPage = () => {
         country: '',
     });
 
+    useEffect(() => {
+        const storedItems = localStorage.getItem('checkoutItems');
+        if (storedItems) {
+            setItems(JSON.parse(storedItems));
+        }
+    }, []);
+
+    // Cập nhật phần useEffect cho carriers
+    useEffect(() => {
+        const loadCarriers = async () => {
+            try {
+                const response = await carrierApi.getCarriers({ status: 'active' });
+
+                // Kiểm tra response và lấy data từ rows
+                if (response.success && response.data.rows) {
+                    setCarriers(response.data.rows);
+
+                    const subtotal = calculateTotal();
+                    const freeShippingCarrier = response.data.rows.find(carrier => carrier.price === 0);
+                    const standardCarrier = response.data.rows.find(carrier => carrier.price > 0);
+
+                    if (subtotal >= 200000 && freeShippingCarrier) {
+                        setSelectedCarrier(freeShippingCarrier);
+                    } else if (standardCarrier) {
+                        setSelectedCarrier(standardCarrier);
+                    }
+                } else {
+                    throw new Error('Không thể tải thông tin vận chuyển');
+                }
+            } catch (error) {
+                console.error('Error loading carriers:', error);
+                setErrorMessage('Không thể tải danh sách đơn vị vận chuyển');
+            }
+        };
+
+        loadCarriers();
+    }, [items]);
+
     const calculateTotal = () => {
-        return items.reduce((total, item) => total + (item.product?.discount_price || item.product?.price || 0) * item.quantity, 0);
+        return items.reduce((total, item) =>
+            total + (item.product?.discount_price || item.product?.price || 0) * item.quantity, 0
+        );
     };
 
     const calculateFinalPrice = () => {
-        return calculateTotal() + shippingFee - discountAmount;
+        const subtotal = calculateTotal();
+        const shipping = selectedCarrier?.price || 0;
+        const discount = discountAmount || 0;
+        return subtotal + shipping - discount;
     };
 
     const handleChange = (e) => {
@@ -59,9 +96,71 @@ const CheckoutPage = () => {
         }
     };
 
+    // Cập nhật component CarrierSelection
+    const CarrierSelection = () => {
+        const subtotal = calculateTotal();
+
+        return (
+            <div className="mt-4 border-t pt-4">
+                <h3 className="text-lg font-semibold mb-3">Phương thức vận chuyển</h3>
+                {subtotal >= 200000 && (
+                    <p className="text-green-600 mb-2">
+                        Đơn hàng trên 200,000 VND được miễn phí vận chuyển!
+                    </p>
+                )}
+                <div className="space-y-2">
+                    {carriers.map((carrier) => {
+                        // Ẩn carrier miễn phí nếu đơn hàng dưới 200k
+                        if (carrier.price === 0 && subtotal < 200000) return null;
+                        // Ẩn carrier có phí nếu đơn hàng trên 200k
+                        if (subtotal >= 200000 && carrier.price > 0) return null;
+
+                        return (
+                            <div
+                                key={carrier.id}
+                                className={`p-3 border rounded cursor-pointer transition-colors
+                                ${selectedCarrier?.id === carrier.id
+                                        ? 'border-blue-500 bg-blue-50'
+                                        : 'hover:border-gray-400'}`}
+                                onClick={() => setSelectedCarrier(carrier)}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="font-medium">{carrier.name}</p>
+                                        <p className="text-sm text-gray-600">
+                                            {carrier.description}
+                                        </p>
+                                        {carrier.contact_phone && (
+                                            <p className="text-xs text-gray-500">
+                                                Hotline: {carrier.contact_phone}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="font-semibold">
+                                            {carrier.price === 0
+                                                ? 'Miễn phí'
+                                                : `${carrier.price.toLocaleString()} VND`}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Reset all error states
+
+        if (!selectedCarrier) {
+            setErrorMessage('Vui lòng chọn phương thức vận chuyển');
+            return;
+        }
+
         setStockError(null);
         setError('');
         setErrorMessage('');
@@ -69,7 +168,7 @@ const CheckoutPage = () => {
 
         const orderData = {
             cart_id: getCartId(),
-            carrier_id: 1,
+            carrier_id: selectedCarrier.id,
             discount_code: discountCode,
             discount_amount: discountAmount,
             original_price: calculateTotal(),
@@ -89,7 +188,16 @@ const CheckoutPage = () => {
         try {
             const result = await dispatch(createOrder(orderData)).unwrap();
             console.log('Order submitted successfully:', result);
-            localStorage.setItem('orderDetails', JSON.stringify(result));
+            const orderDetails = {
+                ...result,
+                data: {
+                    ...result.data,
+                    shipping_fee: selectedCarrier?.price || 0,    // Lấy giá shipping từ carrier đã chọn
+                    discount_amount: discountAmount || 0          // Lấy giá trị discount đã áp dụng
+                }
+            };
+            
+            localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
             setMessage('Đơn hàng đã được tạo thành công');
             router.push('/payment');
         } catch (err) {
@@ -109,13 +217,11 @@ const CheckoutPage = () => {
                 setErrorMessage('Có lỗi xảy ra khi tạo đơn hàng');
             }
 
-            // Đảm bảo error luôn là string
             const errorMessage = err?.message || 'Có lỗi xảy ra';
             setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
         }
     };
 
-    // Component hiển thị lỗi tồn kho
     const StockErrorAlert = () => {
         if (!stockError) return null;
 
@@ -163,11 +269,10 @@ const CheckoutPage = () => {
     return (
         <Layout>
             <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Stock Error Message */}
                 <div className="md:col-span-2">
                     <StockErrorAlert />
                 </div>
-                {/* Order Information Form */}
+
                 <div className="bg-white p-6 rounded shadow-md">
                     <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
 
@@ -187,7 +292,6 @@ const CheckoutPage = () => {
                     </form>
                 </div>
 
-                {/* Order Summary */}
                 <div className="bg-gray-100 p-6 rounded shadow-md">
                     <h2 className="text-xl font-bold mb-4">Thông tin đơn hàng</h2>
                     <ul className="mb-4">
@@ -213,28 +317,46 @@ const CheckoutPage = () => {
                         ))}
                     </ul>
 
-                    <div className="border-t pt-2">
-                        <p>Phí vận chuyển: <span className="font-bold">{shippingFee.toLocaleString()} VND</span></p>
-                        <p>Giảm giá: <span className="font-bold text-green-500">-{discountAmount.toLocaleString()} VND</span></p>
-                        <p className="text-xl font-bold mt-2">Tổng tiền: <span className="text-red-500">{calculateFinalPrice().toLocaleString()} VND</span></p>
+                    <CarrierSelection />
+
+                    <div className="border-t pt-2 mt-4">
+                        <p>Tạm tính: <span className="font-bold">
+                            {calculateTotal().toLocaleString()} VND
+                        </span></p>
+                        <p>Phí vận chuyển: <span className="font-bold">
+                            {(selectedCarrier?.price || 0).toLocaleString()} VND
+                        </span></p>
+                        <p>Giảm giá: <span className="font-bold text-green-500">
+                            -{discountAmount.toLocaleString()} VND
+                        </span></p>
+                        <p className="text-xl font-bold mt-2">
+                            Tổng tiền: <span className="text-red-500">
+                                {calculateFinalPrice().toLocaleString()} VND
+                            </span>
+                        </p>
                     </div>
 
-                    {/* Apply Discount Code */}
                     <div className="mt-4">
-                        <input
-                            type="text"
-                            placeholder="Nhập mã giảm giá"
-                            className="border p-2 w-full mb-2"
-                            value={discountCode}
-                            onChange={(e) => setDiscountCode(e.target.value)}
-                        />
-                        <button 
-                            onClick={handleApplyDiscount} 
-                            className="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 transition-colors"
-                        >
-                            Áp dụng
-                        </button>
+                        <div className="flex gap-2">
+                            <input
+                                type="text"
+                                value={discountCode}
+                                onChange={(e) => setDiscountCode(e.target.value)}
+                                placeholder="Nhập mã giảm giá"
+                                className="border p-2 flex-grow"
+                            />
+                            <button
+                                onClick={handleApplyDiscount}
+                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                            >
+                                Áp dụng
+                            </button>
+                        </div>
                     </div>
+
+                    {errorMessage && (
+                        <div className="text-red-500 mt-4">{errorMessage}</div>
+                    )}
                 </div>
             </div>
         </Layout>

@@ -23,16 +23,18 @@ const PaymentPage = () => {
                             id: parsedOrder.data.order_id,
                             payment_method: "",
                             final_price: parsedOrder.data.amount,
-                            email: parsedOrder.data.email
+                            email: parsedOrder.data.email,
+                            // Thêm các trường mới
+                            shipping_fee: parsedOrder.data.shipping_fee,
+                            discount_amount: parsedOrder.data.discount_amount,
+                            subtotal: parsedOrder.data.amount // giá trước khi tính ship và giảm giá
                         });
                     } else {
                         setError("Không tìm thấy thông tin đơn hàng");
                     }
-                } else {
-                    setError("Không tìm thấy thông tin đơn hàng");
                 }
             } catch (error) {
-                console.error('❌ Error initializing order:', error);
+                console.error('❌ Error:', error);
                 setError("Lỗi khi đọc thông tin đơn hàng");
             }
         };
@@ -241,24 +243,24 @@ const PaymentPage = () => {
                             <div className="border-t pt-4">
                                 <p className="flex justify-between mb-2">
                                     <span>Tạm tính:</span>
-                                    <span>
-                                        {JSON.parse(localStorage.getItem('checkoutItems'))
-                                            ?.reduce((total, item) =>
-                                                total + (item.product.discount_price || item.product.price) * item.quantity, 0)
-                                            .toLocaleString()} VND
-                                    </span>
+                                    <span>{order.subtotal?.toLocaleString()} VND</span>
                                 </p>
                                 <p className="flex justify-between mb-2">
                                     <span>Phí vận chuyển:</span>
-                                    <span>30,000 VND</span>
+                                    <span>{order.shipping_fee?.toLocaleString()} VND</span>
+                                </p>
+                                <p className="flex justify-between mb-2">
+                                    <span>Giảm giá:</span>
+                                    <span>-{order.discount_amount?.toLocaleString()} VND</span>
                                 </p>
                                 <p className="flex justify-between font-bold text-xl mt-4">
                                     <span>Tổng cộng:</span>
                                     <span className="text-red-500">
-                                        {order.final_price.toLocaleString()} VND
+                                        {order.final_price?.toLocaleString()} VND
                                     </span>
                                 </p>
                             </div>
+
                         </>
                     )}
                 </div>

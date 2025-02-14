@@ -28,16 +28,6 @@
       "static/chunks/src_pages_productdetail_[slug]_5771e1.js",
       "static/chunks/src_pages_productdetail_[slug]_37f271.js"
     ],
-    "/account/profile": [
-      "static/chunks/[root of the server]__1ec7ef._.js",
-      "static/chunks/node_modules_next_4a8fe3._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_@fortawesome_free-solid-svg-icons_index_mjs_69a125._.js",
-      "static/chunks/node_modules_87c835._.js",
-      "static/chunks/src_pages_account_profile_5771e1.js",
-      "static/chunks/src_pages_account_profile_ba38ea.js"
-    ],
     "/cart": [
       "static/chunks/[root of the server]__37df5b._.js",
       "static/chunks/node_modules_next_9be927._.js",
@@ -46,15 +36,6 @@
       "static/chunks/node_modules_18cf8c._.js",
       "static/chunks/src_pages_cart_5771e1._.js",
       "static/chunks/src_pages_cart_e63627._.js"
-    ],
-    "/category/productsByCategory": [
-      "static/chunks/[root of the server]__895f56._.js",
-      "static/chunks/node_modules_next_9be927._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_18cf8c._.js",
-      "static/chunks/src_pages_category_productsByCategory_5771e1.js",
-      "static/chunks/src_pages_category_productsByCategory_164081.js"
     ],
     "/checkout": [
       "static/chunks/[root of the server]__d97221._.js",
@@ -83,14 +64,15 @@
       "static/chunks/src_pages_payment_success_5771e1.js",
       "static/chunks/src_pages_payment_success_b424f9.js"
     ],
-    "/payment/cancel": [
-      "static/chunks/node_modules_next_2791c6._.js",
+    "/account/profile": [
+      "static/chunks/[root of the server]__1ec7ef._.js",
+      "static/chunks/node_modules_next_4a8fe3._.js",
       "static/chunks/node_modules_react-dom_82bb97._.js",
       "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_8b3ed2._.js",
-      "static/chunks/[root of the server]__cd0819._.js",
-      "static/chunks/src_pages_payment_cancel_5771e1.js",
-      "static/chunks/src_pages_payment_cancel_aa9976.js"
+      "static/chunks/node_modules_@fortawesome_free-solid-svg-icons_index_mjs_69a125._.js",
+      "static/chunks/node_modules_87c835._.js",
+      "static/chunks/src_pages_account_profile_5771e1.js",
+      "static/chunks/src_pages_account_profile_ba38ea.js"
     ]
   },
   "devFiles": [],

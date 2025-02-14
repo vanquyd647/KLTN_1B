@@ -645,6 +645,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "adminApi": (()=>adminApi),
     "apiClient": (()=>apiClient),
+    "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
     "indexApi": (()=>indexApi),
@@ -1214,6 +1215,70 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    }
+};
+const carrierApi = {
+    // Tạo nhà vận chuyển mới
+    createCarrier: async (carrierData)=>{
+        try {
+            const response = await apiClient.post('carriers', carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create carrier.';
+        }
+    },
+    // Lấy danh sách nhà vận chuyển
+    getCarriers: async (query = {})=>{
+        try {
+            const { page = 1, limit = 10, status } = query;
+            const queryString = new URLSearchParams({
+                page,
+                limit,
+                status
+            }).toString();
+            const response = await apiClient.get(`carriers?${queryString}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carriers.';
+        }
+    },
+    // Lấy chi tiết nhà vận chuyển
+    getCarrierById: async (id)=>{
+        try {
+            const response = await apiClient.get(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carrier details.';
+        }
+    },
+    // Cập nhật thông tin nhà vận chuyển
+    updateCarrier: async (id, carrierData)=>{
+        try {
+            const response = await apiClient.put(`carriers/${id}`, carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier.';
+        }
+    },
+    // Xóa nhà vận chuyển
+    deleteCarrier: async (id)=>{
+        try {
+            const response = await apiClient.delete(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete carrier.';
+        }
+    },
+    // Cập nhật trạng thái nhà vận chuyển
+    updateCarrierStatus: async (id, status)=>{
+        try {
+            const response = await apiClient.patch(`carriers/${id}/status`, {
+                status
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier status.';
         }
     }
 };
