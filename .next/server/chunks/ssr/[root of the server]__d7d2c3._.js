@@ -3477,7 +3477,7 @@ const PaymentPage = ()=>{
                     const parsedOrder = JSON.parse(storedOrder);
                     if (parsedOrder && parsedOrder.data) {
                         setOrder({
-                            id: parsedOrder.data.orderId,
+                            id: parsedOrder.data.order_id,
                             payment_method: "",
                             final_price: parsedOrder.data.amount,
                             email: parsedOrder.data.email

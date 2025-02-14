@@ -8,13 +8,18 @@ import { createOrder } from '../store/slices/orderSlice';
 const CheckoutPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { loading, error, message } = useSelector(state => state.order);
     
+    // Đảm bảo error và message là string
+    const { loading } = useSelector(state => state.order);
+    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [discountCode, setDiscountCode] = useState('');
-    const [shippingFee, setShippingFee] = useState(0); // Assume a shipping fee of 30,000 VND
+    const [shippingFee, setShippingFee] = useState(0);
     const [discountAmount, setDiscountAmount] = useState(0);
+    const [stockError, setStockError] = useState(null);
 
     useEffect(() => {
         const storedItems = localStorage.getItem('checkoutItems');
@@ -48,7 +53,7 @@ const CheckoutPage = () => {
 
     const handleApplyDiscount = () => {
         if (discountCode === 'DISCOUNT10') {
-            setDiscountAmount(10000); // Discount 10,000 VND if code is "DISCOUNT10"
+            setDiscountAmount(10000);
         } else {
             setDiscountAmount(0);
         }
@@ -56,6 +61,11 @@ const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Reset all error states
+        setStockError(null);
+        setError('');
+        setErrorMessage('');
+        setMessage('');
 
         const orderData = {
             cart_id: getCartId(),
@@ -76,31 +86,91 @@ const CheckoutPage = () => {
             address_id: null,
         };
 
-        console.log('Submitting order:', orderData);
+        try {
+            const result = await dispatch(createOrder(orderData)).unwrap();
+            console.log('Order submitted successfully:', result);
+            localStorage.setItem('orderDetails', JSON.stringify(result));
+            setMessage('Đơn hàng đã được tạo thành công');
+            router.push('/payment');
+        } catch (err) {
+            console.error('Error submitting order:', err);
 
-        dispatch(createOrder(orderData))
-            .unwrap()
-            .then((result) => {
-                console.log('Order submitted successfully:', result);
-                localStorage.setItem('orderDetails', JSON.stringify(result));
-                router.push('/payment');
-            })
-            .catch((err) => {
-                console.error('Error submitting order:', err);
-                setErrorMessage(err.message || 'Failed to submit order.');
-            });
+            if (err?.data) {
+                if (err.data.outOfStockItems?.length > 0 || err.data.notFoundItems?.length > 0) {
+                    setStockError({
+                        message: typeof err.message === 'string' ? err.message : 'Lỗi kiểm tra tồn kho',
+                        outOfStockItems: err.data.outOfStockItems || [],
+                        notFoundItems: err.data.notFoundItems || []
+                    });
+                } else {
+                    setErrorMessage(typeof err.message === 'string' ? err.message : 'Không thể tạo đơn hàng');
+                }
+            } else {
+                setErrorMessage('Có lỗi xảy ra khi tạo đơn hàng');
+            }
+
+            // Đảm bảo error luôn là string
+            const errorMessage = err?.message || 'Có lỗi xảy ra';
+            setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
+        }
+    };
+
+    // Component hiển thị lỗi tồn kho
+    const StockErrorAlert = () => {
+        if (!stockError) return null;
+
+        return (
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <div className="flex-shrink-0">
+                            <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                        <div className="ml-3">
+                            <h3 className="text-red-800 font-medium">{stockError.message}</h3>
+                        </div>
+                    </div>
+
+                    <div className="mt-2 text-sm text-red-700">
+                        {stockError.outOfStockItems.map((item, index) => (
+                            <div key={`out-${index}`} className="mt-1">
+                                Sản phẩm &quot;{item.product_name}&quot; ({item.size}, {item.color}):
+                                Yêu cầu {item.requested}, còn lại {item.available}
+                            </div>
+                        ))}
+                        {stockError.notFoundItems.map((item, index) => (
+                            <div key={`not-${index}`} className="mt-1">
+                                Sản phẩm không tồn tại: &quot;{item.product_name}&quot; ({item.size}, {item.color})
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-4">
+                        <button
+                            onClick={() => router.push('/cart')}
+                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        >
+                            Trở về giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     return (
         <Layout>
             <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Stock Error Message */}
+                <div className="md:col-span-2">
+                    <StockErrorAlert />
+                </div>
                 {/* Order Information Form */}
                 <div className="bg-white p-6 rounded shadow-md">
                     <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
-                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                    {error && <p className="text-red-500">{error}</p>}
-                    {message && <p className="text-green-500">{message}</p>}
-                    
+
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input type="text" name="name" placeholder="Họ và tên" className="border p-2 w-full" onChange={handleChange} required />
                         <input type="email" name="email" placeholder="Email" className="border p-2 w-full" onChange={handleChange} required />
@@ -112,7 +182,7 @@ const CheckoutPage = () => {
                         <input type="text" name="country" placeholder="Quốc gia" className="border p-2 w-full" onChange={handleChange} required />
 
                         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full" disabled={loading}>
-                            {loading ? 'Processing...' : 'Tiếp tục đến phương thức thanh toán'}
+                            {loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'}
                         </button>
                     </form>
                 </div>
@@ -158,7 +228,12 @@ const CheckoutPage = () => {
                             value={discountCode}
                             onChange={(e) => setDiscountCode(e.target.value)}
                         />
-                        <button onClick={handleApplyDiscount} className="bg-green-500 text-white px-4 py-2 rounded w-full">Áp dụng</button>
+                        <button 
+                            onClick={handleApplyDiscount} 
+                            className="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 transition-colors"
+                        >
+                            Áp dụng
+                        </button>
                     </div>
                 </div>
             </div>
