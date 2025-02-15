@@ -186,6 +186,7 @@ __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __tur
 __turbopack_esm__({
     "adminApi": (()=>adminApi),
     "apiClient": (()=>apiClient),
+    "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
     "indexApi": (()=>indexApi),
@@ -211,7 +212,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://kltn-1a.onrender.com/v1/api/'
+    baseURL: 'http://localhost:5551/v1/api/'
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -717,6 +718,25 @@ const orderApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to delete order.';
         }
+    },
+    /**
+     * Get orders by user with pagination
+     * @param {Object} params - Query parameters
+     * @param {number} params.page - Page number
+     * @param {number} params.limit - Items per page
+     * @returns {Promise<Object>} - Paginated user orders
+     */ getOrdersByUser: async ({ page = 1, limit = 10 })=>{
+        try {
+            const response = await apiClient.get(`orders/user`, {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
     }
 };
 const paymentApi = {
@@ -761,6 +781,70 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    }
+};
+const carrierApi = {
+    // Tạo nhà vận chuyển mới
+    createCarrier: async (carrierData)=>{
+        try {
+            const response = await apiClient.post('carriers', carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create carrier.';
+        }
+    },
+    // Lấy danh sách nhà vận chuyển
+    getCarriers: async (query = {})=>{
+        try {
+            const { page = 1, limit = 10, status } = query;
+            const queryString = new URLSearchParams({
+                page,
+                limit,
+                status
+            }).toString();
+            const response = await apiClient.get(`carriers?${queryString}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carriers.';
+        }
+    },
+    // Lấy chi tiết nhà vận chuyển
+    getCarrierById: async (id)=>{
+        try {
+            const response = await apiClient.get(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch carrier details.';
+        }
+    },
+    // Cập nhật thông tin nhà vận chuyển
+    updateCarrier: async (id, carrierData)=>{
+        try {
+            const response = await apiClient.put(`carriers/${id}`, carrierData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier.';
+        }
+    },
+    // Xóa nhà vận chuyển
+    deleteCarrier: async (id)=>{
+        try {
+            const response = await apiClient.delete(`carriers/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete carrier.';
+        }
+    },
+    // Cập nhật trạng thái nhà vận chuyển
+    updateCarrierStatus: async (id, status)=>{
+        try {
+            const response = await apiClient.patch(`carriers/${id}/status`, {
+                status
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update carrier status.';
         }
     }
 };

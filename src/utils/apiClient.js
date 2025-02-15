@@ -599,6 +599,24 @@ const orderApi = {
             throw error.response?.data || 'Failed to delete order.';
         }
     },
+
+    /**
+     * Get orders by user with pagination
+     * @param {Object} params - Query parameters
+     * @param {number} params.page - Page number
+     * @param {number} params.limit - Items per page
+     * @returns {Promise<Object>} - Paginated user orders
+     */
+    getOrdersByUser: async ({ page = 1, limit = 10 }) => {
+        try {
+            const response = await apiClient.get(`orders/user`, {
+                params: { page, limit }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
+    },
 };
 
 const paymentApi = {

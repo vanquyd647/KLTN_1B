@@ -193,7 +193,8 @@ const CheckoutPage = () => {
                 data: {
                     ...result.data,
                     shipping_fee: selectedCarrier?.price || 0,    // Lấy giá shipping từ carrier đã chọn
-                    discount_amount: discountAmount || 0          // Lấy giá trị discount đã áp dụng
+                    discount_amount: discountAmount || 0,          // Lấy giá trị discount đã áp dụng
+                    formData: formData,                             // Lưu thông tin người mua
                 }
             };
             

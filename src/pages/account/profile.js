@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { getToken } from '../../utils/storage';
+import { orderApi } from '../../utils/apiClient';
 import Layout from '../../components/Layout';
 import AuthInterface from '../../components/profiles/AuthInterface';
 import ProfileInterface from '../../components/profiles/ProfileInterface';
@@ -16,6 +17,8 @@ export default function Profile() {
     const [authStep, setAuthStep] = useState('login');
     const [selectedTab, setSelectedTab] = useState('info');
     const [otp, setOtp] = useState('');
+    const [orders, setOrders] = useState([]);
+    const [orderLoading, setOrderLoading] = useState(false);
     const [passwordVisibility, setPasswordVisibility] = useState({
         password: false,
         confirmPassword: false,
@@ -48,6 +51,26 @@ export default function Profile() {
         }
         return () => controller.abort();
     }, [dispatch]);
+
+    // Thêm function để lấy orders
+    const fetchOrders = async () => {
+        try {
+            setOrderLoading(true);
+            const response = await orderApi.getOrdersByUser({ page: 1, limit: 10 });
+            setOrders(response);
+        } catch (error) {
+            console.error('Failed to fetch orders:', error);
+        } finally {
+            setOrderLoading(false);
+        }
+    };
+
+    // Thêm useEffect để gọi API khi tab orders được chọn
+    useEffect(() => {
+        if (selectedTab === 'orders') {
+            fetchOrders();
+        }
+    }, [selectedTab]);
 
     const handleLogout = async () => {
         try {
@@ -132,6 +155,8 @@ export default function Profile() {
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
                 handleLogout={handleLogout}
+                orders={orders}
+                orderLoading={orderLoading}
             />
         </Layout>
     );

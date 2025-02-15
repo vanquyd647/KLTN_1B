@@ -7,5 +7,6 @@
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
   "/payment/success": "pages/payment/success.js",
+  "/payment/cancel": "pages/payment/cancel.js",
   "/account/profile": "pages/account/profile.js"
 }
