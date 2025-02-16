@@ -5,6 +5,10 @@ import Layout from '../components/Layout';
 import { getCartId } from '@/utils/storage';
 import { createOrder } from '../store/slices/orderSlice';
 import { carrierApi } from '@/utils/apiClient';
+import { getUserInfo } from '../store/slices/userSlice';
+import { getToken } from '../utils/storage';
+import { addressApi } from '../utils/apiClient';
+
 
 const CheckoutPage = () => {
     const dispatch = useDispatch();
@@ -21,6 +25,8 @@ const CheckoutPage = () => {
     const [stockError, setStockError] = useState(null);
     const [carriers, setCarriers] = useState([]);
     const [selectedCarrier, setSelectedCarrier] = useState(null);
+    const [addresses, setAddresses] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -32,6 +38,66 @@ const CheckoutPage = () => {
         city: '',
         country: '',
     });
+
+    useEffect(() => {
+        const loadUserData = async () => {
+            const token = getToken();
+            console.log("Token:", token); // Kiểm tra token
+
+            if (token) {
+                try {
+                    console.log("Fetching user info..."); // Log trước khi gọi API
+                    const userInfo = await dispatch(getUserInfo()).unwrap();
+                    console.log("User info received:", userInfo); // Log kết quả
+
+                    if (userInfo) {
+                        const firstname = userInfo.firstname || '';
+                        const lastname = userInfo.lastname || '';
+                        const fullname = [firstname, lastname].filter(Boolean).join(' ');
+
+                        setFormData(prev => ({
+                            ...prev,
+                            name: fullname || '',
+                            email: userInfo.email || '',
+                            phone: userInfo.phone?.toString() || ''
+                        }));
+
+                        try {
+                            console.log("Fetching addresses..."); // Log trước khi gọi API address
+                            const addressResponse = await addressApi.getAddresses();
+                            console.log("Address response:", addressResponse); // Log kết quả
+
+                            if (addressResponse.status === "success" && addressResponse.data) {
+                                setAddresses(addressResponse.data);
+
+                                const defaultAddress = addressResponse.data.find(addr => addr.is_default);
+                                if (defaultAddress) {
+                                    setSelectedAddress(defaultAddress);
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        street: defaultAddress.street || '',
+                                        ward: defaultAddress.ward || '',
+                                        district: defaultAddress.district || '',
+                                        city: defaultAddress.city || '',
+                                        country: defaultAddress.country || ''
+                                    }));
+                                }
+                            }
+                        } catch (addressError) {
+                            console.error('Error fetching addresses:', addressError);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            } else {
+                console.log("No token found"); // Log khi không có token
+            }
+        };
+
+        loadUserData();
+    }, []);  // Xóa dispatch từ dependencies nếu không cần thiết
+
 
     useEffect(() => {
         const storedItems = localStorage.getItem('checkoutItems');
@@ -94,6 +160,59 @@ const CheckoutPage = () => {
         } else {
             setDiscountAmount(0);
         }
+    };
+
+    const AddressSelection = () => {
+        if (!addresses.length) return null;
+
+        return (
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Chọn địa chỉ giao hàng
+                </label>
+                <div className="space-y-2">
+                    {addresses.map((address) => (
+                        <div
+                            key={address.id}
+                            className={`p-3 border rounded cursor-pointer transition-colors
+                            ${selectedAddress?.id === address.id
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'hover:border-gray-400'}`}
+                            onClick={() => {
+                                setSelectedAddress(address);
+                                setFormData(prev => ({
+                                    ...prev,
+                                    street: address.street || '',
+                                    ward: address.ward || '',
+                                    district: address.district || '',
+                                    city: address.city || '',
+                                    country: address.country || ''
+                                }));
+                            }}
+                        >
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <p className="font-medium">
+                                        {address.address_type === 'home' ? 'Nhà riêng' : 'Văn phòng'}
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                        {address.street}, {address.ward}, {address.district}
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                        {address.city}, {address.country}
+                                    </p>
+                                </div>
+                                {address.is_default && (
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Mặc định
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
     };
 
     // Cập nhật component CarrierSelection
@@ -197,7 +316,7 @@ const CheckoutPage = () => {
                     formData: formData,                             // Lưu thông tin người mua
                 }
             };
-            
+
             localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
             setMessage('Đơn hàng đã được tạo thành công');
             router.push('/payment');
@@ -278,19 +397,90 @@ const CheckoutPage = () => {
                     <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <input type="text" name="name" placeholder="Họ và tên" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="email" name="email" placeholder="Email" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="phone" placeholder="Số điện thoại" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="street" placeholder="Địa chỉ" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="ward" placeholder="Phường/Xã" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="district" placeholder="Quận/Huyện" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="city" placeholder="Thành phố" className="border p-2 w-full" onChange={handleChange} required />
-                        <input type="text" name="country" placeholder="Quốc gia" className="border p-2 w-full" onChange={handleChange} required />
+                        <AddressSelection />
 
-                        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full" disabled={loading}>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            placeholder="Họ và tên"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            placeholder="Email"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="phone"
+                            value={formData.phone}
+                            placeholder="Số điện thoại"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="street"
+                            value={formData.street}
+                            placeholder="Địa chỉ"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="ward"
+                            value={formData.ward}
+                            placeholder="Phường/Xã"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="district"
+                            value={formData.district}
+                            placeholder="Quận/Huyện"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            placeholder="Thành phố"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="country"
+                            value={formData.country}
+                            placeholder="Quốc gia"
+                            className="border p-2 w-full"
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+                            disabled={loading}
+                        >
                             {loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'}
                         </button>
                     </form>
+
                 </div>
 
                 <div className="bg-gray-100 p-6 rounded shadow-md">

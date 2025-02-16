@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
-import { getToken } from '../../utils/storage';
+import { getToken, getCartId } from '../../utils/storage';
 import { orderApi } from '../../utils/apiClient';
 import Layout from '../../components/Layout';
 import AuthInterface from '../../components/profiles/AuthInterface';
 import ProfileInterface from '../../components/profiles/ProfileInterface';
+import {
+    createCartForGuest,
+    createCartForUser,
+    getCartItems,
+    resetCartState,
+} from '../../store/slices/cartSlice';
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -75,11 +81,14 @@ export default function Profile() {
     const handleLogout = async () => {
         try {
             await dispatch(logoutUser()).unwrap();
+            // Thêm dispatch resetCartState để xóa state cart cũ
+            dispatch(resetCartState());
             setIsAuthenticated(false);
         } catch (err) {
             console.error('Failed to logout:', err);
         }
     };
+    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -90,9 +99,15 @@ export default function Profile() {
         const result = await dispatch(loginUser({ email: formData.email, password: formData.password }));
         if (result.meta.requestStatus === 'fulfilled') {
             setIsAuthenticated(true);
-            dispatch(getUserInfo());
+            await dispatch(getUserInfo());
+            // Thêm dispatch để lấy cart items mới sau khi login
+            const cartId = getCartId();
+            if (cartId) {
+                await dispatch(getCartItems(cartId));
+            }
         }
     };
+    
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -157,6 +172,7 @@ export default function Profile() {
                 handleLogout={handleLogout}
                 orders={orders}
                 orderLoading={orderLoading}
+                userLoading={loading}
             />
         </Layout>
     );

@@ -19,6 +19,7 @@ import {
     setRole,
 } from './storage';
 import { resetAuthState } from '../store/slices/userSlice';
+import { getCartItems } from '../store/slices/cartSlice';
 
 // https://kltn-1a.onrender.com hihi
 
@@ -153,36 +154,40 @@ const userApi = {
     login: async (credentials) => {
         try {
             const response = await apiClient.post('users/login', credentials);
-            const { accessToken, refreshToken } = response.data.data;
-
+            const { accessToken, refreshToken, user } = response.data.data;
+            
             if (accessToken && refreshToken) {
+                // Lấy cart_id trực tiếp từ user object
+                const cart_id = user.cart_id;
+                
+                // Lưu các thông tin cần thiết
+                
                 setRole('');
-                setToken(accessToken); // Lưu access token
-                setRefreshToken(refreshToken); // Lưu refresh token
-                removeCartId(); // Xóa cart ID khi đăng nhập
+                setToken(accessToken);
+                setRefreshToken(refreshToken);
+                removeCartId(); // Xóa cart ID cũ nếu có
+                setCartId(cart_id); // Lưu cart ID mới
             }
-
-            // Kiểm tra và lưu session ID từ headers của response
+    
+            // Kiểm tra và lưu session ID từ headers
             const sessionId = response.headers['x-session-id'];
             if (sessionId) {
-                setSessionId(sessionId); // Lưu session ID vào cookie hoặc storage
-                console.log('Session ID received and saved during login:', sessionId); // Log kiểm tra
+                setSessionId(sessionId);
+                console.log('Session ID received and saved during login:', sessionId);
             }
-
+    
             return response.data;
         } catch (error) {
             throw error;
         }
     },
-
-
+    
     // Logout user
     logout: async () => {
         try {
             const refreshToken = getRefreshToken();
             const userId = getUserId();
             await apiClient.post('users/logout', { refreshToken, userId });
-
             // Clear all stored tokens and session ID
             removeSessionId();
             removeRefreshToken();
@@ -191,6 +196,7 @@ const userApi = {
             removeToken();
             removeCartId();
             removeRole();
+
             return { message: 'Logout successful' };
         } catch (error) {
             throw error.response?.data || 'Logout failed';
@@ -734,4 +740,56 @@ const carrierApi = {
     }
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi };
+const addressApi = {
+    // Lấy danh sách địa chỉ của người dùng
+    getAddresses: async () => {
+        try {
+            const response = await apiClient.get('addresses');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách địa chỉ.';
+        }
+    },
+
+    // Tạo địa chỉ mới
+    createAddress: async (addressData) => {
+        try {
+            const response = await apiClient.post('addresses', addressData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo địa chỉ mới.';
+        }
+    },
+
+    // Cập nhật địa chỉ
+    updateAddress: async (addressId, addressData) => {
+        try {
+            const response = await apiClient.put(`addresses/${addressId}`, addressData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật địa chỉ.';
+        }
+    },
+
+    // Xóa địa chỉ
+    deleteAddress: async (addressId) => {
+        try {
+            const response = await apiClient.delete(`addresses/${addressId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa địa chỉ.';
+        }
+    },
+
+    // Đặt địa chỉ làm mặc định
+    setDefaultAddress: async (addressId) => {
+        try {
+            const response = await apiClient.put(`addresses/${addressId}/default`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể đặt địa chỉ mặc định.';
+        }
+    }
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi, addressApi };

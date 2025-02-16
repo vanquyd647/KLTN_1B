@@ -29,7 +29,6 @@ const CartPage = () => {
     }, [cartItems]);
 
     // Hàm kiểm tra và cập nhật số lượng theo stock
-    // Cập nhật lại validateAndUpdateCartItems
     const validateAndUpdateCartItems = useCallback(async (cartItems, stockData) => {
         const updates = [];
         const outOfStock = new Set();
@@ -72,7 +71,7 @@ const CartPage = () => {
         const initializeCart = async () => {
             try {
                 const cartId = getCartId();
-                if (cartId) {
+                if (cartId && !getToken()) {
                     // Fetch cart items
                     await dispatch(getCartItems(cartId));
 

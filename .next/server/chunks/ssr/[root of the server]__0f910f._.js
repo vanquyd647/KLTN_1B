@@ -184,6 +184,7 @@ __turbopack_async_result__();
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 __turbopack_esm__({
+    "addressApi": (()=>addressApi),
     "adminApi": (()=>adminApi),
     "apiClient": (()=>apiClient),
     "carrierApi": (()=>carrierApi),
@@ -845,6 +846,53 @@ const carrierApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to update carrier status.';
+        }
+    }
+};
+const addressApi = {
+    // Lấy danh sách địa chỉ của người dùng
+    getAddresses: async ()=>{
+        try {
+            const response = await apiClient.get('addresses');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách địa chỉ.';
+        }
+    },
+    // Tạo địa chỉ mới
+    createAddress: async (addressData)=>{
+        try {
+            const response = await apiClient.post('addresses', addressData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo địa chỉ mới.';
+        }
+    },
+    // Cập nhật địa chỉ
+    updateAddress: async (addressId, addressData)=>{
+        try {
+            const response = await apiClient.put(`addresses/${addressId}`, addressData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật địa chỉ.';
+        }
+    },
+    // Xóa địa chỉ
+    deleteAddress: async (addressId)=>{
+        try {
+            const response = await apiClient.delete(`addresses/${addressId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa địa chỉ.';
+        }
+    },
+    // Đặt địa chỉ làm mặc định
+    setDefaultAddress: async (addressId)=>{
+        try {
+            const response = await apiClient.put(`addresses/${addressId}/default`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể đặt địa chỉ mặc định.';
         }
     }
 };

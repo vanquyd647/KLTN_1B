@@ -1,4 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { addressApi } from '../../utils/apiClient';
+import { FiEdit2 } from "react-icons/fi"; // Icon sửa
+import { RiDeleteBinLine } from "react-icons/ri"; // Icon xóa
+import { MdStars } from "react-icons/md"; // Icon mặc định
+
 
 // Component hiển thị trạng thái đơn hàng
 const StatusBadge = ({ status }) => {
@@ -296,13 +301,96 @@ const OrderDetail = ({ order, onClose }) => {
 // Component chính ProfileInterface
 export default function ProfileInterface({
     user,
+    userLoading,
     handleLogout,
     selectedTab,
     setSelectedTab,
     orders,
     orderLoading
 }) {
+    // Thêm vào component ProfileInterface
+    const [addresses, setAddresses] = useState([]);
+    const [addressLoading, setAddressLoading] = useState(false);
+    const [showAddressForm, setShowAddressForm] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [addressFormData, setAddressFormData] = useState({
+        street: '',
+        ward: '',
+        district: '',
+        city: '',
+        country: 'Vietnam',
+        address_type: 'home',
+        is_default: false
+    });
     const [selectedOrder, setSelectedOrder] = useState(null);
+
+    // Fetch addresses
+    const fetchAddresses = async () => {
+        try {
+            setAddressLoading(true);
+            const response = await addressApi.getAddresses();
+            setAddresses(response.data);
+        } catch (error) {
+            console.error('Failed to fetch addresses:', error);
+        } finally {
+            setAddressLoading(false);
+        }
+    };
+
+    // Handle form submission
+    const handleAddressSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            if (selectedAddress) {
+                await addressApi.updateAddress(selectedAddress.id, addressFormData);
+            } else {
+                await addressApi.createAddress(addressFormData);
+            }
+            fetchAddresses();
+            setShowAddressForm(false);
+            setSelectedAddress(null);
+            setAddressFormData({
+                street: '',
+                ward: '',
+                district: '',
+                city: '',
+                country: 'Vietnam',
+                address_type: 'home',
+                is_default: false
+            });
+        } catch (error) {
+            console.error('Failed to save address:', error);
+        }
+    };
+
+    // Handle address deletion
+    const handleDeleteAddress = async (addressId) => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')) {
+            try {
+                await addressApi.deleteAddress(addressId);
+                fetchAddresses();
+            } catch (error) {
+                console.error('Failed to delete address:', error);
+            }
+        }
+    };
+
+    // Handle setting default address
+    const handleSetDefaultAddress = async (addressId) => {
+        try {
+            await addressApi.setDefaultAddress(addressId);
+            fetchAddresses();
+        } catch (error) {
+            console.error('Failed to set default address:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedTab === 'address') {
+            fetchAddresses();
+        }
+    }, [selectedTab]);
+
 
     return (
         <div className="container mx-auto px-4 py-6">
@@ -352,31 +440,42 @@ export default function ProfileInterface({
                 {/* Main Content */}
                 <div className="md:w-3/4 bg-white p-6 rounded shadow-md">
                     {/* Personal Info Tab */}
-                    {selectedTab === 'info' && user && (
-                        <div className="space-y-4">
+                    {/* Personal Info Tab */}
+                    {selectedTab === 'info' && (
+                        <div>
                             <h2 className="text-xl font-semibold mb-6">Thông tin cá nhân</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Họ</p>
-                                    <p className="font-medium">{user.firstname || 'Chưa cập nhật'}</p>
+                            {userLoading ? (
+                                <div className="flex justify-center items-center h-40">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Tên</p>
-                                    <p className="font-medium">{user.lastname || 'Chưa cập nhật'}</p>
+                            ) : user ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <p className="text-gray-600">Họ</p>
+                                        <p className="font-medium">{user.firstname || 'Chưa cập nhật'}</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-gray-600">Tên</p>
+                                        <p className="font-medium">{user.lastname || 'Chưa cập nhật'}</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-gray-600">Email</p>
+                                        <p className="font-medium">{user.email || 'Chưa cập nhật'}</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-gray-600">Số điện thoại</p>
+                                        <p className="font-medium">{user.phone || 'Chưa cập nhật'}</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-gray-600">Giới tính</p>
+                                        <p className="font-medium">{user.gender || 'Chưa cập nhật'}</p>
+                                    </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Email</p>
-                                    <p className="font-medium">{user.email || 'Chưa cập nhật'}</p>
+                            ) : (
+                                <div className="text-center py-8 text-gray-500">
+                                    <p>Không thể tải thông tin người dùng</p>
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Số điện thoại</p>
-                                    <p className="font-medium">{user.phone || 'Chưa cập nhật'}</p>
-                                </div>
-                                <div className="space-y-2">
-                                    <p className="text-gray-600">Giới tính</p>
-                                    <p className="font-medium">{user.gender || 'Chưa cập nhật'}</p>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     )}
 
@@ -414,12 +513,229 @@ export default function ProfileInterface({
                     )}
 
                     {/* Address Tab */}
+                    {/* Address Tab */}
                     {selectedTab === 'address' && (
                         <div>
-                            <h2 className="text-xl font-semibold mb-6">Sổ địa chỉ</h2>
-                            <div className="text-center py-8 text-gray-500">
-                                <p>Chưa có địa chỉ nào được lưu</p>
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-xl font-semibold">Sổ địa chỉ</h2>
+                                <button
+                                    onClick={() => {
+                                        setShowAddressForm(true);
+                                        setSelectedAddress(null);
+                                    }}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                >
+                                    Thêm địa chỉ mới
+                                </button>
                             </div>
+
+                            {addressLoading ? (
+                                <div className="flex justify-center items-center h-40">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                </div>
+                            ) : addresses.length > 0 ? (
+                                <div className="space-y-4">
+                                    {addresses.map((address) => (
+                                        <div key={address.id} className="border rounded-lg p-4 relative">
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-2">
+                                                        <span className="font-medium">
+                                                            {address.address_type === 'home' ? 'Nhà riêng' :
+                                                                address.address_type === 'office' ? 'Văn phòng' : 'Khác'}
+                                                        </span>
+                                                        {address.is_default && (
+                                                            <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                                                                Mặc định
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="space-y-2 font-roboto">
+                                                        <p className="flex">
+                                                            <span className="text-gray-700 font-semibold w-32">Số nhà, Đường:</span>
+                                                            <span className="text-gray-600 font-normal">{address.street}</span>
+                                                        </p>
+                                                        <p className="flex">
+                                                            <span className="text-gray-700 font-semibold w-32">Phường/Xã:</span>
+                                                            <span className="text-gray-600 font-normal">{address.ward}</span>
+                                                        </p>
+                                                        <p className="flex">
+                                                            <span className="text-gray-700 font-semibold w-32">Quận/Huyện:</span>
+                                                            <span className="text-gray-600 font-normal">{address.district}</span>
+                                                        </p>
+                                                        <p className="flex">
+                                                            <span className="text-gray-700 font-semibold w-32">Tỉnh/Thành phố:</span>
+                                                            <span className="text-gray-600 font-normal">{address.city}</span>
+                                                        </p>
+                                                        <p className="flex">
+                                                            <span className="text-gray-700 font-semibold w-32">Quốc gia:</span>
+                                                            <span className="text-gray-600 font-normal">{address.country}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="space-x-4">
+                                                    <button
+                                                        onClick={() => {
+                                                            setSelectedAddress(address);
+                                                            setAddressFormData(address);
+                                                            setShowAddressForm(true);
+                                                        }}
+                                                        className="text-black-600 hover:text-black-800 p-1 rounded-full hover:bg-black-50 transition-colors"
+                                                        title="Sửa địa chỉ"
+                                                    >
+                                                        <FiEdit2 className="w-5 h-5" />
+                                                    </button>
+
+                                                    <button
+                                                        onClick={() => handleDeleteAddress(address.id)}
+                                                        className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-50 transition-colors"
+                                                        title="Xóa địa chỉ"
+                                                    >
+                                                        <RiDeleteBinLine className="w-5 h-5" />
+                                                    </button>
+
+                                                    {!address.is_default && (
+                                                        <button
+                                                            onClick={() => handleSetDefaultAddress(address.id)}
+                                                            className="text-yellow-600 hover:text-yellow-800 p-1 rounded-full hover:bg-gray-50 transition-colors"
+                                                            title="Đặt làm địa chỉ mặc định"
+                                                        >
+                                                            <MdStars className="w-5 h-5" />
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-8 text-gray-500">
+                                    <p>Chưa có địa chỉ nào được lưu</p>
+                                </div>
+                            )}
+
+                            {/* Address Form Modal */}
+                            {showAddressForm && (
+                                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                                    <div className="bg-white rounded-lg p-6 max-w-md w-full">
+                                        <h3 className="text-lg font-medium mb-4">
+                                            {selectedAddress ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ mới'}
+                                        </h3>
+                                        <form onSubmit={handleAddressSubmit} className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Loại địa chỉ
+                                                </label>
+                                                <select
+                                                    value={addressFormData.address_type}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        address_type: e.target.value
+                                                    })}
+                                                    className="w-full border rounded-md p-2"
+                                                >
+                                                    <option value="home">Nhà riêng</option>
+                                                    <option value="office">Văn phòng</option>
+                                                    <option value="other">Khác</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Số nhà, Đường
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={addressFormData.street}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        street: e.target.value
+                                                    })}
+                                                    className="w-full border rounded-md p-2"
+                                                    required
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Phường/Xã
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={addressFormData.ward}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        ward: e.target.value
+                                                    })}
+                                                    className="w-full border rounded-md p-2"
+                                                    required
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Quận/Huyện
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={addressFormData.district}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        district: e.target.value
+                                                    })}
+                                                    className="w-full border rounded-md p-2"
+                                                    required
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Tỉnh/Thành phố
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={addressFormData.city}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        city: e.target.value
+                                                    })}
+                                                    className="w-full border rounded-md p-2"
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id="is_default"
+                                                    checked={addressFormData.is_default}
+                                                    onChange={(e) => setAddressFormData({
+                                                        ...addressFormData,
+                                                        is_default: e.target.checked
+                                                    })}
+                                                    className="mr-2"
+                                                />
+                                                <label htmlFor="is_default" className="text-sm text-gray-700">
+                                                    Đặt làm địa chỉ mặc định
+                                                </label>
+                                            </div>
+                                            <div className="flex justify-end space-x-2 pt-4">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setShowAddressForm(false);
+                                                        setSelectedAddress(null);
+                                                    }}
+                                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                                >
+                                                    Hủy
+                                                </button>
+                                                <button
+                                                    type="submit"
+                                                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                                                >
+                                                    {selectedAddress ? 'Cập nhật' : 'Thêm mới'}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
