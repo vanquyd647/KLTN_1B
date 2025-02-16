@@ -305,29 +305,26 @@ const CartPage = () => {
                                             </div>
 
                                             {/* Quantity Controls */}
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-1 sm:gap-2">
                                                 <button
-                                                    onClick={() =>
-                                                        handleQuantityChange(item.id, item.quantity - 1)
-                                                    }
-                                                    className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                                                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base"
                                                     disabled={item.quantity <= 1 || isOutOfStock}
                                                 >
                                                     -
                                                 </button>
-                                                <span className="text-lg font-medium w-8 text-center">
+                                                <span className="text-sm sm:text-lg font-medium w-6 sm:w-8 text-center">
                                                     {item.quantity}
                                                 </span>
                                                 <button
-                                                    onClick={() =>
-                                                        handleQuantityChange(item.id, item.quantity + 1)
-                                                    }
-                                                    className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                                                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base"
                                                     disabled={isOutOfStock || (stockItem && item.quantity >= stockItem.quantity)}
                                                 >
                                                     +
                                                 </button>
                                             </div>
+
 
                                             {/* Remove Button */}
                                             <button

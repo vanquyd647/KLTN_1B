@@ -7,5 +7,6 @@
   "/cart": "pages/cart.js",
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
-  "/payment/success": "pages/payment/success.js"
+  "/payment/success": "pages/payment/success.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js"
 }
