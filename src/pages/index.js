@@ -77,31 +77,51 @@ export default function Index() {
                         <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
                         {newProducts.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                                {newProducts.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
-                                        onClick={() => handleProductClick(product.slug)}
-                                    >
-                                        <img
-                                            src={
-                                                product.productColors[0]?.ProductColor?.image ||
-                                                'https://via.placeholder.com/150'
-                                            }
-                                            alt={product.product_name}
-                                            className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
-                                        />
-                                        <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
-                                        <p className="text-gray-600">{product.description}</p>
-                                        <p className="text-red-500 font-bold">
-                                            {product.discount_price.toLocaleString('vi-VN')} VND
-                                        </p>
-                                        <p className="text-gray-500 line-through">
-                                            {product.price.toLocaleString('vi-VN')} VND
-                                        </p>
+                            {newProducts.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                                    onClick={() => handleProductClick(product.slug)}
+                                >
+                                    <img
+                                        src={
+                                            product.productColors[0]?.ProductColor?.image ||
+                                            'https://via.placeholder.com/150'
+                                        }
+                                        alt={product.product_name}
+                                        className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
+                                    />
+                                    <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
+                                    <p className="text-gray-600 line-clamp-2">{product.description}</p>
+                                    <div className="mt-2">
+                                        {product.discount_price ? (
+                                            <>
+                                                <p className="text-red-500 font-bold">
+                                                    {product.discount_price.toLocaleString('vi-VN')} đ
+                                                </p>
+                                                <p className="text-gray-500 line-through">
+                                                    {product.price.toLocaleString('vi-VN')} đ
+                                                </p>
+                                            </>
+                                        ) : (
+                                            <p className="text-gray-700 font-bold">
+                                                {product.price.toLocaleString('vi-VN')} đ
+                                            </p>
+                                        )}
                                     </div>
-                                ))}
-                            </div>
+                                    <div className="flex gap-1 mt-2">
+                                        {product.productColors.map((color) => (
+                                            <div
+                                                key={color.id}
+                                                className="w-4 h-4 rounded-full border border-gray-300"
+                                                style={{ backgroundColor: color.hex_code }}
+                                                title={color.color}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                         ) : (
                             <p className="text-center text-gray-500">Không có sản phẩm mới.</p>
                         )}
@@ -130,13 +150,33 @@ export default function Index() {
                                             className="w-full h-60 sm:h-72 md:h-80 object-cover rounded"
                                         />
                                         <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
-                                        <p className="text-gray-600">{product.description}</p>
-                                        <p className="text-red-500 font-bold">
-                                            {product.discount_price.toLocaleString('vi-VN')} VND
-                                        </p>
-                                        <p className="text-gray-500 line-through">
-                                            {product.price.toLocaleString('vi-VN')} VND
-                                        </p>
+                                        <p className="text-gray-600 line-clamp-2">{product.description}</p>
+                                        <div className="mt-2">
+                                            {product.discount_price ? (
+                                                <>
+                                                    <p className="text-red-500 font-bold">
+                                                        {product.discount_price.toLocaleString('vi-VN')} đ
+                                                    </p>
+                                                    <p className="text-gray-500 line-through">
+                                                        {product.price.toLocaleString('vi-VN')} đ
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <p className="text-gray-700 font-bold">
+                                                    {product.price.toLocaleString('vi-VN')} đ
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="flex gap-1 mt-2">
+                                            {product.productColors.map((color) => (
+                                                <div
+                                                    key={color.id}
+                                                    className="w-4 h-4 rounded-full border border-gray-300"
+                                                    style={{ backgroundColor: color.hex_code }}
+                                                    title={color.color}
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

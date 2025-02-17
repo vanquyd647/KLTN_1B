@@ -155,33 +155,33 @@ const userApi = {
         try {
             const response = await apiClient.post('users/login', credentials);
             const { accessToken, refreshToken, user } = response.data.data;
-            
+
             if (accessToken && refreshToken) {
                 // Lấy cart_id trực tiếp từ user object
                 const cart_id = user.cart_id;
-                
+
                 // Lưu các thông tin cần thiết
-                
+
                 setRole('');
                 setToken(accessToken);
                 setRefreshToken(refreshToken);
                 removeCartId(); // Xóa cart ID cũ nếu có
                 setCartId(cart_id); // Lưu cart ID mới
             }
-    
+
             // Kiểm tra và lưu session ID từ headers
             const sessionId = response.headers['x-session-id'];
             if (sessionId) {
                 setSessionId(sessionId);
                 console.log('Session ID received and saved during login:', sessionId);
             }
-    
+
             return response.data;
         } catch (error) {
             throw error;
         }
     },
-    
+
     // Logout user
     logout: async () => {
         try {
@@ -341,6 +341,29 @@ const productApi = {
         } catch (error) {
             console.error('Error fetching featured products:', error);
             throw error.response?.data || 'Failed to fetch featured products.';
+        }
+    },
+
+    searchProductsByNameAndColor: async (keyword, options = {}) => {
+        try {
+            const {
+                page = 1,
+                limit = 20,
+                sort = 'newest'
+            } = options;
+
+            const query = new URLSearchParams({
+                keyword: keyword || '',
+                page: String(page),
+                limit: String(limit),
+                sort
+            }).toString();
+
+            const response = await apiClient.get(`products/search/name-color?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error searching products:', error);
+            throw error.response?.data || 'Không thể tìm kiếm sản phẩm.';
         }
     },
 

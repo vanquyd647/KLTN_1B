@@ -108,6 +108,22 @@ export const deleteProduct = createAsyncThunk(
     }
 );
 
+export const searchProductsByNameAndColor = createAsyncThunk(
+    'products/searchProductsByNameAndColor',
+    async ({ keyword, page, limit, sort }, { rejectWithValue }) => {
+        try {
+            const searchResults = await productApi.searchProductsByNameAndColor(keyword, {
+                page,
+                limit,
+                sort
+            });
+            return searchResults;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Không thể tìm kiếm sản phẩm');
+        }
+    }
+);
+
 // **Slice**
 const productSlice = createSlice({
     name: 'products',
@@ -124,6 +140,15 @@ const productSlice = createSlice({
         visibleNewProducts: [], // New products visible on the index page
         featuredProducts: {
             items: [], // All featured products
+            pagination: {
+                totalItems: 0,
+                totalPages: 0,
+                currentPage: 1,
+                pageSize: 10,
+            },
+        },
+        searchResults: {
+            items: [],
             pagination: {
                 totalItems: 0,
                 totalPages: 0,
@@ -156,6 +181,15 @@ const productSlice = createSlice({
             };
             state.visibleNewProducts = [];
             state.featuredProducts = {
+                items: [],
+                pagination: {
+                    totalItems: 0,
+                    totalPages: 0,
+                    currentPage: 1,
+                    pageSize: 10,
+                },
+            };
+            state.searchResults = {
                 items: [],
                 pagination: {
                     totalItems: 0,
@@ -348,6 +382,31 @@ const productSlice = createSlice({
                 state.error = action.payload;
                 state.loading = false;
             });
+        // Trong phần extraReducers, thêm các cases xử lý search
+        builder
+            .addCase(searchProductsByNameAndColor.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(searchProductsByNameAndColor.fulfilled, (state, action) => {
+                const { products, pagination } = action.payload.data;
+
+                state.searchResults = {
+                    items: products,
+                    pagination: {
+                        totalItems: pagination.totalItems || 0,
+                        totalPages: pagination.totalPages || 0,
+                        currentPage: pagination.currentPage || 1,
+                        pageSize: pagination.pageSize || 10,
+                    },
+                };
+                state.loading = false;
+            })
+            .addCase(searchProductsByNameAndColor.rejected, (state, action) => {
+                state.error = action.payload;
+                state.loading = false;
+            });
+
     },
 });
 

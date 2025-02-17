@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getCartItems } from '../store/slices/cartSlice';
@@ -12,17 +12,24 @@ export default function Layout({ children }) {
     const dispatch = useDispatch();
     const router = useRouter();
     const isCartPage = router.pathname === '/cart';
+    const hasFetchedCart = useRef(false); // Trạng thái đã gọi API
 
-    // Quản lý cart ở cấp Layout
     useEffect(() => {
         const fetchCartData = async () => {
             const cartId = getCartId();
-            if (cartId && !isCartPage) {
+            if (cartId && !isCartPage && !hasFetchedCart.current) {
+                hasFetchedCart.current = true; // Đánh dấu đã gọi API
                 await dispatch(getCartItems(cartId));
             }
         };
-        fetchCartData();
+
+        if (!isCartPage) {
+            fetchCartData();
+        }
     }, [dispatch, isCartPage]);
+
+    console.log('hehe'); // Log này sẽ chỉ xuất hiện một lần nếu logic được tối ưu
+    
 
     return (
         <div className="min-h-screen flex flex-col">

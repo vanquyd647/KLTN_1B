@@ -793,7 +793,9 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.error = null;
         }).addCase(getCartItems.fulfilled, (state, action)=>{
             state.loading = false;
-            state.items = action.payload;
+            if (JSON.stringify(state.items) !== JSON.stringify(action.payload)) {
+                state.items = action.payload;
+            }
         }).addCase(getCartItems.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload;
@@ -1125,6 +1127,22 @@ const productApi = {
         } catch (error) {
             console.error('Error fetching featured products:', error);
             throw error.response?.data || 'Failed to fetch featured products.';
+        }
+    },
+    searchProductsByNameAndColor: async (keyword, options = {})=>{
+        try {
+            const { page = 1, limit = 20, sort = 'newest' } = options;
+            const query = new URLSearchParams({
+                keyword: keyword || '',
+                page: String(page),
+                limit: String(limit),
+                sort
+            }).toString();
+            const response = await apiClient.get(`products/search/name-color?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error searching products:', error);
+            throw error.response?.data || 'Không thể tìm kiếm sản phẩm.';
         }
     }
 };
@@ -1715,6 +1733,7 @@ __turbopack_esm__({
     "fetchProductDetail": (()=>fetchProductDetail),
     "fetchProducts": (()=>fetchProducts),
     "fetchProductsByPagination": (()=>fetchProductsByPagination),
+    "searchProductsByNameAndColor": (()=>searchProductsByNameAndColor),
     "setVisibleFeaturedProducts": (()=>setVisibleFeaturedProducts),
     "setVisibleNewProducts": (()=>setVisibleNewProducts),
     "updateProduct": (()=>updateProduct)
@@ -1787,6 +1806,18 @@ const deleteProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_m
         return rejectWithValue(error.response?.data || 'Failed to delete product');
     }
 });
+const searchProductsByNameAndColor = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/searchProductsByNameAndColor', async ({ keyword, page, limit, sort }, { rejectWithValue })=>{
+    try {
+        const searchResults = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].searchProductsByNameAndColor(keyword, {
+            page,
+            limit,
+            sort
+        });
+        return searchResults;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Không thể tìm kiếm sản phẩm');
+    }
+});
 // **Slice**
 const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
     name: 'products',
@@ -1802,6 +1833,15 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         },
         visibleNewProducts: [],
         featuredProducts: {
+            items: [],
+            pagination: {
+                totalItems: 0,
+                totalPages: 0,
+                currentPage: 1,
+                pageSize: 10
+            }
+        },
+        searchResults: {
             items: [],
             pagination: {
                 totalItems: 0,
@@ -1835,6 +1875,15 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
             };
             state.visibleNewProducts = [];
             state.featuredProducts = {
+                items: [],
+                pagination: {
+                    totalItems: 0,
+                    totalPages: 0,
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            };
+            state.searchResults = {
                 items: [],
                 pagination: {
                     totalItems: 0,
@@ -1982,6 +2031,26 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
             state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
             state.loading = false;
         }).addCase(deleteProduct.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Trong phần extraReducers, thêm các cases xử lý search
+        builder.addCase(searchProductsByNameAndColor.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(searchProductsByNameAndColor.fulfilled, (state, action)=>{
+            const { products, pagination } = action.payload.data;
+            state.searchResults = {
+                items: products,
+                pagination: {
+                    totalItems: pagination.totalItems || 0,
+                    totalPages: pagination.totalPages || 0,
+                    currentPage: pagination.currentPage || 1,
+                    pageSize: pagination.pageSize || 10
+                }
+            };
+            state.loading = false;
+        }).addCase(searchProductsByNameAndColor.rejected, (state, action)=>{
             state.error = action.payload;
             state.loading = false;
         });

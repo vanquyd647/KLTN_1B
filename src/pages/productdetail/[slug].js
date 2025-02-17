@@ -46,12 +46,6 @@ export default function Slug() {
         }
     }, [dispatch, slug]);
 
-    useEffect(() => {
-        if (cartId) {
-            dispatch(getCartItems(cartId));
-        }
-    }, [dispatch, cartId]);
-
     // Cập nhật useEffect fetch stocks
     useEffect(() => {
         const fetchStocks = async () => {

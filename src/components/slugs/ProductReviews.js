@@ -128,40 +128,45 @@ export default function ProductReviews({
                     </button>
                 ) : (
                     <>
-                        <div className="flex items-center mb-4">
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                                <svg
-                                    key={rating}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill={rating <= reviewRating ? 'currentColor' : 'none'}
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                    className={`w-8 h-8 cursor-pointer ${rating <= reviewRating ? 'text-yellow-500' : 'text-gray-300'
-                                        }`}
-                                    onClick={() => setReviewRating(rating)}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 3.172l2.828 5.734 6.337.919-4.582 4.46 1.081 6.312L12 17.711 6.336 20.597l1.08-6.312-4.582-4.46 6.337-.919L12 3.172z"
-                                    />
-                                </svg>
-                            ))}
-                        </div>
-                        <textarea
-                            value={reviewText}
-                            onChange={(e) => setReviewText(e.target.value)}
-                            className="w-full border p-2 rounded mb-4"
-                            rows="4"
-                            placeholder="Write your review here..."
-                        ></textarea>
-                        <button
-                            onClick={handleSubmitReview}
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                        >
-                            Submit Review
-                        </button>
+                        <form id="product-review-form" onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSubmitReview();
+                        }}>
+                            <div className="flex items-center mb-4">
+                                {[1, 2, 3, 4, 5].map((rating) => (
+                                    <svg
+                                        key={rating}
+                                        id={`rating-star-${rating}`}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill={rating <= reviewRating ? 'currentColor' : 'none'}
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                        className={`w-8 h-8 cursor-pointer ${rating <= reviewRating ? 'text-yellow-500' : 'text-gray-300'
+                                            }`}
+                                        onClick={() => setReviewRating(rating)}
+                                    >
+                                        {/* ... */}
+                                    </svg>
+                                ))}
+                            </div>
+                            <textarea
+                                id="review-text-area"
+                                value={reviewText}
+                                onChange={(e) => setReviewText(e.target.value)}
+                                className="w-full border p-2 rounded mb-4"
+                                rows="4"
+                                placeholder="Write your review here..."
+                            ></textarea>
+                            <button
+                                id="submit-review-button"
+                                type="submit"
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                            >
+                                Submit Review
+                            </button>
+                        </form>
+
                     </>
                 )}
             </div>

@@ -1278,6 +1278,22 @@ const productApi = {
             console.error('Error fetching featured products:', error);
             throw error.response?.data || 'Failed to fetch featured products.';
         }
+    },
+    searchProductsByNameAndColor: async (keyword, options = {})=>{
+        try {
+            const { page = 1, limit = 20, sort = 'newest' } = options;
+            const query = new URLSearchParams({
+                keyword: keyword || '',
+                page: String(page),
+                limit: String(limit),
+                sort
+            }).toString();
+            const response = await apiClient.get(`products/search/name-color?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error searching products:', error);
+            throw error.response?.data || 'Không thể tìm kiếm sản phẩm.';
+        }
     }
 };
 const cartApi = {
