@@ -945,7 +945,9 @@ const cartSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.error = null;
         }).addCase(getCartItems.fulfilled, (state, action)=>{
             state.loading = false;
-            state.items = action.payload;
+            if (JSON.stringify(state.items) !== JSON.stringify(action.payload)) {
+                state.items = action.payload;
+            }
         }).addCase(getCartItems.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload;
@@ -1277,6 +1279,22 @@ const productApi = {
         } catch (error) {
             console.error('Error fetching featured products:', error);
             throw error.response?.data || 'Failed to fetch featured products.';
+        }
+    },
+    searchProductsByNameAndColor: async (keyword, options = {})=>{
+        try {
+            const { page = 1, limit = 20, sort = 'newest' } = options;
+            const query = new URLSearchParams({
+                keyword: keyword || '',
+                page: String(page),
+                limit: String(limit),
+                sort
+            }).toString();
+            const response = await apiClient.get(`products/search/name-color?${query}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error searching products:', error);
+            throw error.response?.data || 'Không thể tìm kiếm sản phẩm.';
         }
     }
 };

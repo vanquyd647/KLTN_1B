@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__a4ca40._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__d27dab._.js", {
 
 "[turbopack]/browser/dev/hmr-client/websocket.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -1718,775 +1718,164 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/pages/payment.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/pages/payment/cancel.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
+// pages/payment/cancel.js
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dynamic.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
-;
-const PaymentPage = ()=>{
+const PaymentCancel = ()=>{
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const [order, setOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [paymentMethod, setPaymentMethod] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(""); // cod hoặc vietqr
-    const [timeLeft, setTimeLeft] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const { code, orderCode, status } = router.query;
+    const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('Đang xử lý hủy thanh toán...');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "PaymentPage.useEffect": ()=>{
-            const initializeOrder = {
-                "PaymentPage.useEffect.initializeOrder": ()=>{
+        "PaymentCancel.useEffect": ()=>{
+            if (!router.isReady) return;
+            const updatePaymentStatus = {
+                "PaymentCancel.useEffect.updatePaymentStatus": async ()=>{
                     try {
-                        const storedOrder = localStorage.getItem('orderDetails');
-                        if (storedOrder) {
-                            const parsedOrder = JSON.parse(storedOrder);
-                            if (parsedOrder && parsedOrder.data) {
-                                setOrder({
-                                    id: parsedOrder.data.order_id,
-                                    payment_method: "",
-                                    final_price: parsedOrder.data.amount,
-                                    email: parsedOrder.data.email,
-                                    // Thêm các trường mới
-                                    shipping_fee: parsedOrder.data.shipping_fee,
-                                    discount_amount: parsedOrder.data.discount_amount,
-                                    subtotal: parsedOrder.data.amount,
-                                    expires_at: parsedOrder.data.expires_at,
-                                    formData: parsedOrder.data.formData
-                                });
-                            } else {
-                                setError("Không tìm thấy thông tin đơn hàng");
-                            }
-                        }
-                    } catch (error) {
-                        console.error('❌ Error:', error);
-                        setError("Lỗi khi đọc thông tin đơn hàng");
-                    }
-                }
-            }["PaymentPage.useEffect.initializeOrder"];
-            if (router.isReady) {
-                initializeOrder();
-            }
-        }
-    }["PaymentPage.useEffect"], [
-        router.isReady
-    ]);
-    const calculateTimeLeft = (expiryTime)=>{
-        const now = new Date().getTime();
-        const expiryDate = new Date(expiryTime).getTime();
-        const difference = expiryDate - now;
-        if (difference <= 0) {
-            return null;
-        }
-        const minutes = Math.floor(difference / 1000 / 60 % 60);
-        const seconds = Math.floor(difference / 1000 % 60);
-        return {
-            minutes: minutes,
-            seconds: seconds
-        };
-    };
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "PaymentPage.useEffect": ()=>{
-            if (!order?.expires_at) return;
-            const timer = setInterval({
-                "PaymentPage.useEffect.timer": ()=>{
-                    const timeLeft = calculateTimeLeft(order.expires_at);
-                    if (!timeLeft) {
-                        clearInterval(timer);
+                        await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["paymentApi"].updatePaymentStatus({
+                            orderCode: Number(orderCode),
+                            status: 'cancelled',
+                            transactionId: Date.now().toString()
+                        });
+                        setMessage('Đã hủy thanh toán');
                         localStorage.removeItem('orderDetails');
-                        localStorage.removeItem('checkoutItems');
-                        router.push('/cart');
-                        return;
+                        setTimeout({
+                            "PaymentCancel.useEffect.updatePaymentStatus": ()=>{
+                                router.push('/checkout');
+                            }
+                        }["PaymentCancel.useEffect.updatePaymentStatus"], 3000);
+                    } catch (error) {
+                        console.error('Lỗi cập nhật trạng thái:', error);
+                        setMessage('Có lỗi xảy ra khi cập nhật trạng thái');
                     }
-                    setTimeLeft(timeLeft);
                 }
-            }["PaymentPage.useEffect.timer"], 1000);
-            return ({
-                "PaymentPage.useEffect": ()=>clearInterval(timer)
-            })["PaymentPage.useEffect"];
+            }["PaymentCancel.useEffect.updatePaymentStatus"];
+            updatePaymentStatus();
         }
-    }["PaymentPage.useEffect"], [
-        order?.expires_at,
-        router
+    }["PaymentCancel.useEffect"], [
+        router.isReady,
+        orderCode
     ]);
-    const handlePaymentMethodSelect = (method)=>{
-        setPaymentMethod(method);
-        setError("");
-    };
-    const handleCompletePayment = async ()=>{
-        if (!paymentMethod) {
-            setError("Vui lòng chọn phương thức thanh toán");
-            return;
-        }
-        if (paymentMethod === "cod") {
-            try {
-                setLoading(true);
-                const result = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["paymentApi"].createCODPayment({
-                    order_id: order.id,
-                    amount: order.final_price,
-                    email: order.email
-                });
-                // Lưu thông tin thanh toán
-                localStorage.setItem('paymentInfo', JSON.stringify({
-                    orderId: order.id,
-                    paymentId: result.payment_id,
-                    amount: result.amount,
-                    method: result.payment_method
-                }));
-                // Xóa thông tin đơn hàng cũ
-                localStorage.removeItem('orderDetails');
-                // Chuyển hướng với query params
-                router.push({
-                    pathname: '/payment/success',
-                    query: {
-                        code: '00',
-                        orderCode: order.id,
-                        status: 'PAID',
-                        method: 'cod'
-                    }
-                });
-            } catch (error) {
-                console.error('❌ Lỗi thanh toán COD:', error);
-                router.push({
-                    pathname: '/payment/success',
-                    query: {
-                        code: '99',
-                        orderCode: order.id,
-                        status: 'CANCELLED',
-                        method: 'cod'
-                    }
-                });
-            } finally{
-                setLoading(false);
-            }
-        } else if (paymentMethod === "vietqr") {
-            handleVietQRPayment();
-        }
-    };
-    const handleVietQRPayment = async ()=>{
-        if (!order) {
-            setError("Không tìm thấy thông tin đơn hàng.");
-            return;
-        }
-        setLoading(true);
-        setError("");
-        try {
-            const paymentData = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["paymentApi"].createPayOSPayment({
-                order_id: order.id,
-                amount: order.final_price,
-                email: order.email
-            });
-            localStorage.setItem('paymentInfo', JSON.stringify({
-                orderCode: paymentData.orderCode,
-                paymentLinkId: paymentData.paymentLinkId,
-                amount: paymentData.amount,
-                status: paymentData.status
-            }));
-            if (!paymentData.checkoutUrl) {
-                throw new Error('URL thanh toán không hợp lệ');
-            }
-            window.location.href = paymentData.checkoutUrl.checkoutUrl;
-        } catch (error) {
-            console.error('❌ Lỗi thanh toán:', error);
-            setError("Thanh toán thất bại, vui lòng thử lại!");
-        } finally{
-            setLoading(false);
-        }
-    };
-    if (!router.isReady) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            children: "Đang tải..."
-        }, void 0, false, {
-            fileName: "[project]/src/pages/payment.js",
-            lineNumber: 189,
-            columnNumber: 16
-        }, this);
-    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "bg-white p-6 rounded shadow-md",
+        className: "min-h-screen bg-gray-100 flex items-center justify-center",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "max-w-md w-full bg-white rounded-lg shadow-md p-8",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "text-center",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold mb-6",
-                        children: "Thanh toán đơn hàng"
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/payment.js",
-                        lineNumber: 196,
-                        columnNumber: 21
-                    }, this),
-                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            children: error
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                            className: "mx-auto h-12 w-12 text-yellow-500",
+                            fill: "none",
+                            stroke: "currentColor",
+                            viewBox: "0 0 24 24",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round",
+                                strokeWidth: 2,
+                                d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/payment/cancel.js",
+                                lineNumber: 49,
+                                columnNumber: 29
+                            }, this)
                         }, void 0, false, {
-                            fileName: "[project]/src/pages/payment.js",
-                            lineNumber: 200,
-                            columnNumber: 29
+                            fileName: "[project]/src/pages/payment/cancel.js",
+                            lineNumber: 43,
+                            columnNumber: 25
                         }, this)
                     }, void 0, false, {
-                        fileName: "[project]/src/pages/payment.js",
-                        lineNumber: 199,
-                        columnNumber: 25
+                        fileName: "[project]/src/pages/payment/cancel.js",
+                        lineNumber: 42,
+                        columnNumber: 21
                     }, this),
-                    order && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: " p-4 rounded mb-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "font-semibold mb-2",
-                                children: "Thông tin đơn hàng:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 206,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Mã đơn hàng: ",
-                                    order.id
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 207,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "border-t border-gray-300 my-3"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 209,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "font-semibold mb-2",
-                                children: "Thông tin người nhận:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 211,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Họ tên: ",
-                                    order.formData.name
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 212,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Email: ",
-                                    order.formData.email
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 213,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Số điện thoại: ",
-                                    order.formData.phone
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 214,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "border-t border-gray-300 my-3"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 216,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "font-semibold mb-2",
-                                children: "Địa chỉ giao hàng:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 218,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Đường: ",
-                                    order.formData.street
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 219,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Phường/Xã: ",
-                                    order.formData.ward
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 220,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Quận/Huyện: ",
-                                    order.formData.district
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 221,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Tỉnh/Thành phố: ",
-                                    order.formData.city
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 222,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mb-1",
-                                children: [
-                                    "Quốc gia: ",
-                                    order.formData.country
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 223,
-                                columnNumber: 29
-                            }, this),
-                            timeLeft && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-3 pt-3 border-t border-gray-300",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-red-600 font-semibold",
-                                    children: [
-                                        "Thời gian còn lại để thanh toán: ",
-                                        timeLeft.minutes,
-                                        ":",
-                                        timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/payment.js",
-                                    lineNumber: 228,
-                                    columnNumber: 37
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 227,
-                                columnNumber: 33
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/pages/payment.js",
-                        lineNumber: 205,
-                        columnNumber: 25
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold text-gray-900 mb-2",
+                        children: message
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment/cancel.js",
+                        lineNumber: 57,
+                        columnNumber: 21
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-4",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-xl font-semibold",
-                                children: "Chọn phương thức thanh toán:"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 238,
-                                columnNumber: 25
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-3",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: `p-4 border rounded cursor-pointer ${paymentMethod === 'cod' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`,
-                                        onClick: ()=>handlePaymentMethodSelect('cod'),
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                className: "font-semibold",
-                                                children: "Thanh toán khi nhận hàng (COD)"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 246,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm text-gray-600",
-                                                children: "Thanh toán bằng tiền mặt khi nhận hàng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 247,
-                                                columnNumber: 33
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 241,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: `p-4 border rounded cursor-pointer ${paymentMethod === 'vietqr' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`,
-                                        onClick: ()=>handlePaymentMethodSelect('vietqr'),
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                className: "font-semibold",
-                                                children: "Chuyển khoản qua VietQR"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 255,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm text-gray-600",
-                                                children: "Thanh toán bằng mã QR qua ứng dụng ngân hàng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 256,
-                                                columnNumber: 33
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 250,
-                                        columnNumber: 29
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 240,
-                                columnNumber: 25
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: handleCompletePayment,
-                                className: `w-full px-4 py-2 rounded transition duration-200 ${loading || !paymentMethod ? 'bg-red-600 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 text-white'}`,
-                                disabled: loading || !paymentMethod,
-                                children: loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center justify-center",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "mr-2",
-                                        children: "Đang xử lý..."
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 270,
-                                        columnNumber: 37
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/payment.js",
-                                    lineNumber: 269,
-                                    columnNumber: 33
-                                }, this) : "Hoàn tất đơn hàng"
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 260,
-                                columnNumber: 25
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/pages/payment.js",
-                        lineNumber: 237,
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-gray-600",
+                        children: "Bạn đã hủy quá trình thanh toán."
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment/cancel.js",
+                        lineNumber: 60,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-gray-600 mt-2",
+                        children: "Vui lòng thử lại hoặc chọn phương thức thanh toán khác."
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment/cancel.js",
+                        lineNumber: 63,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-sm text-gray-500 mt-4",
+                        children: "Tự động chuyển về trang thanh toán sau 3 giây..."
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/payment/cancel.js",
+                        lineNumber: 66,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
-                fileName: "[project]/src/pages/payment.js",
-                lineNumber: 195,
-                columnNumber: 17
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "bg-gray-100 p-6 rounded shadow-md",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "text-xl font-bold mb-4",
-                        children: "Chi tiết đơn hàng"
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/payment.js",
-                        lineNumber: 281,
-                        columnNumber: 21
-                    }, this),
-                    order && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mb-4",
-                                children: JSON.parse(localStorage.getItem('checkoutItems'))?.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-4 border-b pb-4 mb-4",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "relative",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                        src: item.color.image_url,
-                                                        alt: item.product.product_name,
-                                                        className: "w-20 h-20 object-cover rounded"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 290,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2",
-                                                        children: item.quantity
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 295,
-                                                        columnNumber: 45
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 289,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-bold",
-                                                        children: item.product.product_name
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 300,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        children: [
-                                                            "Màu sắc: ",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-gray-700",
-                                                                children: item.color.name
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/payment.js",
-                                                                lineNumber: 301,
-                                                                columnNumber: 57
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 301,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        children: [
-                                                            "Kích thước: ",
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-gray-700",
-                                                                children: item.size.name
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/payment.js",
-                                                                lineNumber: 302,
-                                                                columnNumber: 60
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 302,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        children: [
-                                                            (item.product.discount_price || item.product.price).toLocaleString(),
-                                                            " VND"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/payment.js",
-                                                        lineNumber: 303,
-                                                        columnNumber: 45
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 299,
-                                                columnNumber: 41
-                                            }, this)
-                                        ]
-                                    }, item.id, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 288,
-                                        columnNumber: 37
-                                    }, this))
-                            }, void 0, false, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 285,
-                                columnNumber: 29
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "border-t pt-4",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "flex justify-between mb-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Tạm tính:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 311,
-                                                columnNumber: 37
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: [
-                                                    order.subtotal?.toLocaleString(),
-                                                    " VND"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 312,
-                                                columnNumber: 37
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 310,
-                                        columnNumber: 33
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "flex justify-between mb-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Phí vận chuyển:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 315,
-                                                columnNumber: 37
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: [
-                                                    order.shipping_fee?.toLocaleString(),
-                                                    " VND"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 316,
-                                                columnNumber: 37
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 314,
-                                        columnNumber: 33
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "flex justify-between mb-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Giảm giá:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 319,
-                                                columnNumber: 37
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: [
-                                                    "-",
-                                                    order.discount_amount?.toLocaleString(),
-                                                    " VND"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 320,
-                                                columnNumber: 37
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 318,
-                                        columnNumber: 33
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "flex justify-between font-bold text-xl mt-4",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Tổng cộng:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 323,
-                                                columnNumber: 37
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-red-500",
-                                                children: [
-                                                    order.final_price?.toLocaleString(),
-                                                    " VND"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/payment.js",
-                                                lineNumber: 324,
-                                                columnNumber: 37
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/pages/payment.js",
-                                        lineNumber: 322,
-                                        columnNumber: 33
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/pages/payment.js",
-                                lineNumber: 309,
-                                columnNumber: 29
-                            }, this)
-                        ]
-                    }, void 0, true)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/pages/payment.js",
-                lineNumber: 280,
+                fileName: "[project]/src/pages/payment/cancel.js",
+                lineNumber: 41,
                 columnNumber: 17
             }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/pages/payment.js",
-        lineNumber: 193,
-        columnNumber: 13
+        }, void 0, false, {
+            fileName: "[project]/src/pages/payment/cancel.js",
+            lineNumber: 40,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/pages/payment/cancel.js",
+        lineNumber: 39,
+        columnNumber: 9
     }, this);
 };
-_s(PaymentPage, "3Dyvbdi+6bhmi+hj6LwN40NhIQQ=", false, function() {
+_s(PaymentCancel, "K4eXIqG4PElIKABbK4puckhYVOs=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
 });
-_c = PaymentPage;
-const __TURBOPACK__default__export__ = _c2 = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dynamic$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"])(_c1 = ()=>Promise.resolve(PaymentPage), {
-    ssr: false
-});
-var _c, _c1, _c2;
-__turbopack_refresh__.register(_c, "PaymentPage");
-__turbopack_refresh__.register(_c1, "%default%$dynamic");
-__turbopack_refresh__.register(_c2, "%default%");
+_c = PaymentCancel;
+const __TURBOPACK__default__export__ = PaymentCancel;
+var _c;
+__turbopack_refresh__.register(_c, "PaymentCancel");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/payment.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
+"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/payment/cancel.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/payment";
+const PAGE_PATH = "/payment/cancel";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{
-        return __turbopack_require__("[project]/src/pages/payment.js [client] (ecmascript)");
+        return __turbopack_require__("[project]/src/pages/payment/cancel.js [client] (ecmascript)");
     }
 ]);
 // @ts-expect-error module.hot exists
@@ -2499,13 +1888,13 @@ if (module.hot) {
     });
 }
 }}),
-"[project]/src/pages/payment (hmr-entry)": ((__turbopack_context__) => {
+"[project]/src/pages/payment/cancel.js (hmr-entry)": ((__turbopack_context__) => {
 "use strict";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/payment.js [client] (ecmascript)\" } [client] (ecmascript)");
+__turbopack_require__("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/payment/cancel.js [client] (ecmascript)\" } [client] (ecmascript)");
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__a4ca40._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__d27dab._.js.map

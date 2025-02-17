@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { debounce } from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { searchProductsByNameAndColor } from '../store/slices/productSlice';
+import { productApi } from '../utils/apiClient';
 import Sidebar from './Sidebar';
 
 const Header = memo(function Header({ ...props }) {
@@ -15,7 +15,6 @@ const Header = memo(function Header({ ...props }) {
     const [searchResults, setSearchResults] = useState([]);
     const searchRef = useRef(null);
     const searchInputRef = useRef(null);
-    const dispatch = useDispatch();
     const router = useRouter();
 
     // Tính toán số lượng item trong giỏ hàng
@@ -54,14 +53,14 @@ const Header = memo(function Header({ ...props }) {
     const performSearch = async (term) => {
         if (term.trim().length >= 2) {
             try {
-                const result = await dispatch(searchProductsByNameAndColor({
-                    keyword: term.trim(),
+                const result = await productApi.searchProductsByNameAndColor(term.trim(), {
                     page: 1,
                     limit: 10,
                     sort: 'newest'
-                }));
-                if (result.payload?.data?.products) {
-                    setSearchResults(result.payload.data.products);
+                });
+                
+                if (result.data?.products) {
+                    setSearchResults(result.data.products);
                 }
             } catch (error) {
                 console.error('Search error:', error);
@@ -158,7 +157,6 @@ const Header = memo(function Header({ ...props }) {
                                 autoComplete="off"
                             />
                         </div>
-
 
                         <div className="max-h-[400px] overflow-y-auto mt-2">
                             {searchResults.slice(0, 4).map((product) => (
@@ -372,4 +370,5 @@ const Header = memo(function Header({ ...props }) {
         </>
     );
 });
+
 export default Header;

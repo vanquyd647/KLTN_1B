@@ -202,7 +202,7 @@ const PaymentPage = () => {
                     )}
 
                     {order && (
-                        <div className="bg-gray-100 p-4 rounded mb-6">
+                        <div className=" p-4 rounded mb-6">
                             <h2 className="font-semibold mb-2">Thông tin đơn hàng:</h2>
                             <p className="mb-1">Mã đơn hàng: {order.id}</p>
 
