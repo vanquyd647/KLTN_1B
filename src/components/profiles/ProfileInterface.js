@@ -323,6 +323,9 @@ export default function ProfileInterface({
         address_type: 'home',
         is_default: false
     });
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState({
@@ -447,6 +450,58 @@ export default function ProfileInterface({
             console.error('Failed to set default address:', error);
         }
     };
+
+    useEffect(() => {
+        const fetchProvinces = async () => {
+            try {
+                const response = await fetch('https://provinces.open-api.vn/api/?depth=3');
+                const data = await response.json();
+                setProvinces(data);
+            } catch (error) {
+                console.error('Failed to fetch provinces:', error);
+            }
+        };
+        fetchProvinces();
+    }, []);
+
+    const handleProvinceChange = (e) => {
+        const provinceCode = e.target.value;
+        const selectedProvince = provinces.find(p => p.code === Number(provinceCode));
+
+        setAddressFormData({
+            ...addressFormData,
+            city: selectedProvince?.name || '',
+            district: '',
+            ward: ''
+        });
+
+        setDistricts(selectedProvince?.districts || []);
+        setWards([]);
+    };
+
+    const handleDistrictChange = (e) => {
+        const districtCode = e.target.value;
+        const selectedDistrict = districts.find(d => d.code === Number(districtCode));
+
+        setAddressFormData({
+            ...addressFormData,
+            district: selectedDistrict?.name || '',
+            ward: ''
+        });
+
+        setWards(selectedDistrict?.wards || []);
+    };
+
+    const handleWardChange = (e) => {
+        const wardCode = e.target.value;
+        const selectedWard = wards.find(w => w.code === Number(wardCode));
+
+        setAddressFormData({
+            ...addressFormData,
+            ward: selectedWard?.name || ''
+        });
+    };
+
 
     useEffect(() => {
         if (selectedTab === 'address') {
@@ -730,7 +785,7 @@ export default function ProfileInterface({
                                                         </span>
                                                         {address.is_default && (
                                                             <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full 
-                                                       font-medium flex items-center gap-1">
+                                                                font-medium flex items-center gap-1">
                                                                 <MdStars className="w-4 h-4" />
                                                                 Mặc định
                                                             </span>
@@ -838,6 +893,7 @@ export default function ProfileInterface({
                             {showAddressForm && (
                                 <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
                                     <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+                                        {/* Header */}
                                         <div className="sticky top-0 bg-white px-6 py-4 border-b flex justify-between items-center">
                                             <h3 className="text-lg font-medium text-gray-900">
                                                 {selectedAddress ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ mới'}
@@ -850,8 +906,7 @@ export default function ProfileInterface({
                                                 className="text-gray-400 hover:text-gray-500 transition-colors"
                                             >
                                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                        d="M6 18L18 6M6 6l12 12" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                                 </svg>
                                             </button>
                                         </div>
@@ -869,7 +924,7 @@ export default function ProfileInterface({
                                                         address_type: e.target.value
                                                     })}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                                 >
                                                     <option value="home">Nhà riêng</option>
                                                     <option value="office">Văn phòng</option>
@@ -890,43 +945,7 @@ export default function ProfileInterface({
                                                         street: e.target.value
                                                     })}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                    required
-                                                />
-                                            </div>
-
-                                            {/* Ward */}
-                                            <div className="space-y-1">
-                                                <label className="block text-sm font-medium text-gray-700">
-                                                    Phường/Xã
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={addressFormData.ward}
-                                                    onChange={(e) => setAddressFormData({
-                                                        ...addressFormData,
-                                                        ward: e.target.value
-                                                    })}
-                                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                    required
-                                                />
-                                            </div>
-
-                                            {/* District */}
-                                            <div className="space-y-1">
-                                                <label className="block text-sm font-medium text-gray-700">
-                                                    Quận/Huyện
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={addressFormData.district}
-                                                    onChange={(e) => setAddressFormData({
-                                                        ...addressFormData,
-                                                        district: e.target.value
-                                                    })}
-                                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                                     required
                                                 />
                                             </div>
@@ -936,19 +955,65 @@ export default function ProfileInterface({
                                                 <label className="block text-sm font-medium text-gray-700">
                                                     Tỉnh/Thành phố
                                                 </label>
-                                                <input
-                                                    type="text"
-                                                    value={addressFormData.city}
-                                                    onChange={(e) => setAddressFormData({
-                                                        ...addressFormData,
-                                                        city: e.target.value
-                                                    })}
+                                                <select
+                                                    value={provinces.find(p => p.name === addressFormData.city)?.code || ''}
+                                                    onChange={handleProvinceChange}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                                     required
-                                                />
+                                                >
+                                                    <option value="">Chọn Tỉnh/Thành phố</option>
+                                                    {provinces.map(province => (
+                                                        <option key={province.code} value={province.code}>
+                                                            {province.name}
+                                                        </option>
+                                                    ))}
+                                                </select>
                                             </div>
 
+                                            {/* District */}
+                                            <div className="space-y-1">
+                                                <label className="block text-sm font-medium text-gray-700">
+                                                    Quận/Huyện
+                                                </label>
+                                                <select
+                                                    value={districts.find(d => d.name === addressFormData.district)?.code || ''}
+                                                    onChange={handleDistrictChange}
+                                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
+                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    required
+                                                    disabled={!addressFormData.city}
+                                                >
+                                                    <option value="">Chọn Quận/Huyện</option>
+                                                    {districts.map(district => (
+                                                        <option key={district.code} value={district.code}>
+                                                            {district.name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            {/* Ward */}
+                                            <div className="space-y-1">
+                                                <label className="block text-sm font-medium text-gray-700">
+                                                    Phường/Xã
+                                                </label>
+                                                <select
+                                                    value={wards.find(w => w.name === addressFormData.ward)?.code || ''}
+                                                    onChange={handleWardChange}
+                                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
+                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    required
+                                                    disabled={!addressFormData.district}
+                                                >
+                                                    <option value="">Chọn Phường/Xã</option>
+                                                    {wards.map(ward => (
+                                                        <option key={ward.code} value={ward.code}>
+                                                            {ward.name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                             {/* Default Address Checkbox */}
                                             <div className="flex items-center">
                                                 <input
@@ -965,7 +1030,6 @@ export default function ProfileInterface({
                                                     Đặt làm địa chỉ mặc định
                                                 </label>
                                             </div>
-
                                             {/* Form Actions */}
                                             <div className="flex justify-end gap-3 pt-4 border-t">
                                                 <button
@@ -975,14 +1039,14 @@ export default function ProfileInterface({
                                                         setSelectedAddress(null);
                                                     }}
                                                     className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500 
-                                                    transition-colors"
+                                                                transition-colors"
                                                 >
                                                     Hủy
                                                 </button>
                                                 <button
                                                     type="submit"
                                                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg 
-                                                    hover:bg-blue-700 transition-colors"
+                                                                hover:bg-blue-700 transition-colors"
                                                 >
                                                     {selectedAddress ? 'Cập nhật' : 'Thêm mới'}
                                                 </button>

@@ -11,5 +11,7 @@
   "/payment/cancel": "pages/payment/cancel.js",
   "/payment/success": "pages/payment/success.js",
   "/new-products": "pages/new-products.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js"
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/account/register": "pages/account/register.js",
+  "/featured-products": "pages/featured-products.js"
 }
