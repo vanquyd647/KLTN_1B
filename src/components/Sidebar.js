@@ -48,16 +48,16 @@ export default function Sidebar({ isMobile }) {
                         <a
                             href={`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`}
                             className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 
-                                     transition-colors duration-200 font-medium group-hover:text-blue-600"
+                                        transition-colors duration-200 font-medium group-hover:text-blue-600"
                         >
                             <span>{category.name}</span>
-                            <svg 
+                            <svg
                                 className="ml-auto w-5 h-5 text-gray-400 group-hover:text-blue-600"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </a>
                         {/* Danh mục con */}
@@ -67,7 +67,7 @@ export default function Sidebar({ isMobile }) {
                                     <a
                                         href={`/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`}
                                         className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 
-                                                 hover:text-blue-600 transition-colors duration-200"
+                                                hover:text-blue-600 transition-colors duration-200"
                                     >
                                         {subCategory.name}
                                     </a>
