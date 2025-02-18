@@ -276,7 +276,6 @@ const Header = memo(function Header({ ...props }) {
                         <ul className="flex space-x-4 items-center">
                             {/* Search Icon */}
                             {searchSection}
-
                             {/* User Icon */}
                             <li>
                                 <Link href="/account/profile" className="hover:underline">

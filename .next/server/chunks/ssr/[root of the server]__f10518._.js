@@ -542,6 +542,15 @@ const userApi = {
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
         }
+    },
+    // Cập nhật thông tin profile người dùng
+    updateUserProfile: async (userData)=>{
+        try {
+            const response = await apiClient.put('users/profile', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
+        }
     }
 };
 const adminApi = {
@@ -1087,6 +1096,7 @@ __turbopack_esm__({
     "logoutUser": (()=>logoutUser),
     "registerUser": (()=>registerUser),
     "resetAuthState": (()=>resetAuthState),
+    "updateProfile": (()=>updateProfile),
     "verifyOtp": (()=>verifyOtp)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__ = __turbopack_import__("[externals]/@reduxjs/toolkit [external] (@reduxjs/toolkit, esm_import)");
@@ -1138,6 +1148,17 @@ const getUserInfo = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$redu
         // Xử lý lỗi từ apiClient
         console.error('Error fetching user info:', error);
         return rejectWithValue(error.message || 'Failed to fetch user info');
+    }
+});
+const updateProfile = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('auth/updateProfile', async (userData, { rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["userApi"].updateUserProfile(userData);
+        // Đảm bảo trả về đúng dữ liệu user đã cập nhật
+        return response.data;
+    } catch (error) {
+        return rejectWithValue({
+            message: error.response?.data?.message || 'Không thể cập nhật thông tin.'
+        });
     }
 });
 // Slice
@@ -1223,6 +1244,25 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
         builder.addCase(getUserInfo.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch user info';
+        });
+        // Update Profile
+        builder.addCase(updateProfile.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        });
+        // Sửa lại reducer updateProfile.fulfilled
+        builder.addCase(updateProfile.fulfilled, (state, action)=>{
+            state.loading = false;
+            // Cập nhật state với dữ liệu mới
+            state.user = {
+                ...state.user,
+                ...action.payload
+            };
+            state.error = null;
+        });
+        builder.addCase(updateProfile.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload;
         });
     }
 });

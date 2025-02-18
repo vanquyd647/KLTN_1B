@@ -34,6 +34,12 @@ const CartPage = () => {
         const outOfStock = new Set();
 
         for (const item of cartItems) {
+            // Kiểm tra null/undefined trước khi truy cập
+            if (!item?.product?.id || !item?.size?.id || !item?.color?.id) {
+                console.warn('Invalid item data:', item);
+                continue;
+            }
+
             const stockItem = stockData.find(stock =>
                 stock.product_id === item.product.id &&
                 stock.size_id === item.size.id &&
@@ -50,7 +56,6 @@ const CartPage = () => {
             }
         }
 
-        // Cập nhật danh sách sản phẩm hết hàng
         setOutOfStockItems(outOfStock);
 
         // Xử lý cập nhật số lượng
@@ -67,24 +72,13 @@ const CartPage = () => {
     }, [dispatch]);
 
     // Khởi tạo cart và kiểm tra stock
+    // Tách riêng effect để khởi tạo cart
     useEffect(() => {
         const initializeCart = async () => {
             try {
                 const cartId = getCartId();
                 if (cartId && !getToken()) {
-                    // Fetch cart items
                     await dispatch(getCartItems(cartId));
-
-                    // Fetch stocks
-                    const stockResponse = await stockApi.getProductStocks();
-                    if (stockResponse.success) {
-                        setStocks(stockResponse.data);
-
-                        // Chỉ validate khi có cartItems và chưa được validate
-                        if (cartItems.length > 0 && stockResponse.data.length > 0) {
-                            await validateAndUpdateCartItems(cartItems, stockResponse.data);
-                        }
-                    }
                 } else {
                     const cartResponse = await dispatch(
                         !getToken() ? createCartForGuest() : createCartForUser()
@@ -105,6 +99,44 @@ const CartPage = () => {
             dispatch(resetCartState());
         };
     }, [dispatch]); // Chỉ phụ thuộc vào dispatch
+
+    // Tách riêng effect để lấy stocks
+    useEffect(() => {
+        const fetchStocks = async () => {
+            try {
+                const stockResponse = await stockApi.getProductStocks();
+                if (stockResponse.success && stockResponse.data) {
+                    setStocks(stockResponse.data);
+                }
+            } catch (err) {
+                console.error('Failed to fetch stocks:', err);
+            }
+        };
+
+        fetchStocks();
+    }, []); // Chỉ chạy một lần khi mount
+
+    // Effect để validate cart items khi có stocks hoặc cartItems thay đổi
+    useEffect(() => {
+        if (stocks.length > 0 && cartItems.length > 0) {
+            const validateItems = async () => {
+                try {
+                    await validateAndUpdateCartItems(cartItems, stocks);
+                } catch (err) {
+                    console.error('Failed to validate items:', err);
+                }
+            };
+            validateItems();
+        }
+    }, [stocks, cartItems, validateAndUpdateCartItems]);
+
+    // Effect để đồng bộ items local
+    useEffect(() => {
+        if (cartItems?.length > 0) {
+            setItems(cartItems);
+        }
+    }, [cartItems]);
+    // Chỉ phụ thuộc vào dispatch
 
     // Tách riêng effect để đồng bộ items local
     useEffect(() => {

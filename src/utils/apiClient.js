@@ -232,6 +232,16 @@ const userApi = {
             throw new Error('Token refresh failed. Please log in again.');
         }
     },
+
+    // Cập nhật thông tin profile người dùng
+    updateUserProfile: async (userData) => {
+        try {
+            const response = await apiClient.put('users/profile', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
+        }
+    },
 };
 
 const adminApi = {

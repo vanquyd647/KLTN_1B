@@ -649,6 +649,7 @@ __turbopack_esm__({
     "logoutUser": (()=>logoutUser),
     "registerUser": (()=>registerUser),
     "resetAuthState": (()=>resetAuthState),
+    "updateProfile": (()=>updateProfile),
     "verifyOtp": (()=>verifyOtp)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
@@ -695,6 +696,14 @@ const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
         // Xử lý lỗi từ apiClient
         console.error('Error fetching user info:', error);
         return rejectWithValue(error.message || 'Failed to fetch user info');
+    }
+});
+const updateProfile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/updateProfile', async (userData, { rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].updateUserProfile(userData);
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Không thể cập nhật thông tin.');
     }
 });
 // Slice
@@ -780,6 +789,23 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         builder.addCase(getUserInfo.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch user info';
+        });
+        // Update Profile
+        builder.addCase(updateProfile.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        });
+        builder.addCase(updateProfile.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.user = {
+                ...state.user,
+                ...action.payload
+            };
+            state.error = null;
+        });
+        builder.addCase(updateProfile.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload;
         });
     }
 });
@@ -1182,6 +1208,15 @@ const userApi = {
             return accessToken; // Return the new access token
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
+        }
+    },
+    // Cập nhật thông tin profile người dùng
+    updateUserProfile: async (userData)=>{
+        try {
+            const response = await apiClient.put('users/profile', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
         }
     }
 };

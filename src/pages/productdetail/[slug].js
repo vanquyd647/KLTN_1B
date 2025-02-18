@@ -156,7 +156,7 @@ export default function Slug() {
     }, [selectedColor, currentProduct, stocks]);
 
     // Cart Functions
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (showAlert = true) => {
         if (!selectedColor || !selectedSize) {
             alert('Vui lòng chọn màu và kích thước.');
             return;
@@ -169,7 +169,6 @@ export default function Slug() {
             selectedSize.id
         );
 
-        // Kiểm tra tổng số lượng sau khi thêm
         if (cartQuantity + quantity > stockQuantity) {
             const remainingQuantity = stockQuantity - cartQuantity;
             if (remainingQuantity <= 0) {
@@ -202,11 +201,23 @@ export default function Slug() {
                 })
             ).unwrap();
 
-            // Refresh cart items sau khi thêm thành công
             dispatch(getCartItems(activeCartId));
-            alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            localStorage.setItem('cartId', activeCartId);
+
+            if (showAlert) {
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
         } catch (error) {
-            alert('Thêm vào giỏ hàng thất bại!');
+            throw error; // Ném lỗi để xử lý ở hàm gọi
+        }
+    };
+
+    const handleBuyNow = async () => {
+        try {
+            await handleAddToCart(false); // Thêm tham số để kiểm soát việc hiển thị alert
+            router.push('/cart');
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
         }
     };
 
@@ -432,7 +443,7 @@ export default function Slug() {
                             </button>
                             <button
                                 className="bg-red-600 text-white text-xl px-6 py-3 rounded hover:bg-red-700 transition transform scale-100 hover:scale-105 w-full sm:w-auto"
-                                onClick={() => alert('Mua ngay!')}
+                                onClick={handleBuyNow}
                                 disabled={!selectedSize || !selectedColor || getMaxAvailableQuantity() === 0}
                             >
                                 MUA NGAY

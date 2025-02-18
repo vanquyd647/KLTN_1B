@@ -1031,6 +1031,15 @@ const userApi = {
         } catch (error) {
             throw new Error('Token refresh failed. Please log in again.');
         }
+    },
+    // Cập nhật thông tin profile người dùng
+    updateUserProfile: async (userData)=>{
+        try {
+            const response = await apiClient.put('users/profile', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
+        }
     }
 };
 const adminApi = {
@@ -1578,6 +1587,7 @@ __turbopack_esm__({
     "logoutUser": (()=>logoutUser),
     "registerUser": (()=>registerUser),
     "resetAuthState": (()=>resetAuthState),
+    "updateProfile": (()=>updateProfile),
     "verifyOtp": (()=>verifyOtp)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
@@ -1624,6 +1634,17 @@ const getUserInfo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
         // Xử lý lỗi từ apiClient
         console.error('Error fetching user info:', error);
         return rejectWithValue(error.message || 'Failed to fetch user info');
+    }
+});
+const updateProfile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/updateProfile', async (userData, { rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].updateUserProfile(userData);
+        // Đảm bảo trả về đúng dữ liệu user đã cập nhật
+        return response.data;
+    } catch (error) {
+        return rejectWithValue({
+            message: error.response?.data?.message || 'Không thể cập nhật thông tin.'
+        });
     }
 });
 // Slice
@@ -1709,6 +1730,25 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         builder.addCase(getUserInfo.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch user info';
+        });
+        // Update Profile
+        builder.addCase(updateProfile.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        });
+        // Sửa lại reducer updateProfile.fulfilled
+        builder.addCase(updateProfile.fulfilled, (state, action)=>{
+            state.loading = false;
+            // Cập nhật state với dữ liệu mới
+            state.user = {
+                ...state.user,
+                ...action.payload
+            };
+            state.error = null;
+        });
+        builder.addCase(updateProfile.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload;
         });
     }
 });
@@ -2314,22 +2354,22 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     d: "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 7c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 289,
+                                                    lineNumber: 288,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 283,
+                                                lineNumber: 282,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 282,
+                                            lineNumber: 281,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 281,
+                                        lineNumber: 280,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2351,12 +2391,12 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                         d: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6m12.5-6l1.5 6m-10-1h8"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 307,
+                                                        lineNumber: 306,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 299,
+                                                    lineNumber: 298,
                                                     columnNumber: 37
                                                 }, this),
                                                 totalItems > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2364,18 +2404,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     children: totalItems
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 314,
+                                                    lineNumber: 313,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 298,
+                                            lineNumber: 297,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 297,
+                                        lineNumber: 296,
                                         columnNumber: 29
                                     }, this)
                                 ]
@@ -2405,7 +2445,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                 onClick: toggleDrawer
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 326,
+                lineNumber: 325,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2427,22 +2467,22 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 d: "M6 18L18 6M6 6l12 12"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 348,
+                                lineNumber: 347,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 340,
+                            lineNumber: 339,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 336,
+                        lineNumber: 335,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 357,
+                        lineNumber: 356,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -2454,7 +2494,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Hệ thống cửa hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 359,
+                                lineNumber: 358,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2463,7 +2503,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Hướng dẫn sử dụng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 362,
+                                lineNumber: 361,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2472,19 +2512,19 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Chính sách bảo hành"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 365,
+                                lineNumber: 364,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 358,
+                        lineNumber: 357,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 331,
+                lineNumber: 330,
                 columnNumber: 13
             }, this)
         ]
@@ -3914,11 +3954,17 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$md$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/md/index.mjs [client] (ecmascript)"); // Icon mặc định
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-toastify/dist/index.mjs [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/userSlice.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/fi/index.mjs [client] (ecmascript)"); // Icon sửa
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$md$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/md/index.mjs [client] (ecmascript)"); // Icon mặc định
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$ri$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/ri/index.mjs [client] (ecmascript)"); // Icon xóa
 ;
 var _s = __turbopack_refresh__.signature();
+;
+;
+;
 ;
 ;
 ;
@@ -3963,7 +4009,7 @@ const StatusBadge = ({ status })=>{
         children: getStatusText()
     }, void 0, false, {
         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-        lineNumber: 45,
+        lineNumber: 49,
         columnNumber: 9
     }, this);
 };
@@ -3999,7 +4045,7 @@ const PaymentStatusBadge = ({ status })=>{
         children: getPaymentStatusText()
     }, void 0, false, {
         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-        lineNumber: 80,
+        lineNumber: 84,
         columnNumber: 9
     }, this);
 };
@@ -4038,7 +4084,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 110,
+                                lineNumber: 114,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4046,26 +4092,26 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 children: formatDate(order.dates.created_at)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 111,
+                                lineNumber: 115,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 109,
+                        lineNumber: 113,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusBadge, {
                         status: order.status
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 113,
+                        lineNumber: 117,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                lineNumber: 108,
+                lineNumber: 112,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4079,7 +4125,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 alt: item.product.name
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 120,
+                                lineNumber: 124,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4091,7 +4137,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                         children: item.product.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 126,
+                                        lineNumber: 130,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4104,7 +4150,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 129,
+                                        lineNumber: 133,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4116,24 +4162,24 @@ const OrderCard = ({ order, onViewDetail })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 132,
+                                        lineNumber: 136,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 125,
+                                lineNumber: 129,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, index, true, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 119,
+                        lineNumber: 123,
                         columnNumber: 21
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                lineNumber: 117,
+                lineNumber: 121,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4146,7 +4192,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 children: "Tổng tiền"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 143,
+                                lineNumber: 147,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4154,13 +4200,13 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 children: formatPrice(order.pricing.final_price)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 144,
+                                lineNumber: 148,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 142,
+                        lineNumber: 146,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4169,19 +4215,19 @@ const OrderCard = ({ order, onViewDetail })=>{
                         children: "Xem chi tiết"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 148,
+                        lineNumber: 152,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                lineNumber: 141,
+                lineNumber: 145,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-        lineNumber: 106,
+        lineNumber: 110,
         columnNumber: 9
     }, this);
 };
@@ -4221,20 +4267,20 @@ const OrderDetail = ({ order, onClose })=>{
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 184,
+                                    lineNumber: 188,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusBadge, {
                                     status: order.status
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 185,
+                                    lineNumber: 189,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 183,
+                            lineNumber: 187,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4252,23 +4298,23 @@ const OrderDetail = ({ order, onClose })=>{
                                     d: "M6 18L18 6M6 6l12 12"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 189,
+                                    lineNumber: 193,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 188,
+                                lineNumber: 192,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 187,
+                            lineNumber: 191,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                    lineNumber: 182,
+                    lineNumber: 186,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4282,7 +4328,7 @@ const OrderDetail = ({ order, onClose })=>{
                                     children: "Thông tin người nhận"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 197,
+                                    lineNumber: 201,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4295,36 +4341,12 @@ const OrderDetail = ({ order, onClose })=>{
                                                     children: "Họ tên"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 200,
-                                                    columnNumber: 33
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "font-medium",
-                                                    children: order.shipping.recipient.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 201,
-                                                    columnNumber: 33
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 199,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm text-gray-600",
-                                                    children: "Số điện thoại"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 204,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "font-medium",
-                                                    children: order.shipping.recipient.phone
+                                                    children: order.shipping.recipient.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 205,
@@ -4340,7 +4362,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-sm text-gray-600",
-                                                    children: "Email"
+                                                    children: "Số điện thoại"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 208,
@@ -4348,7 +4370,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "font-medium",
-                                                    children: order.shipping.recipient.email
+                                                    children: order.shipping.recipient.phone
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 209,
@@ -4361,11 +4383,10 @@ const OrderDetail = ({ order, onClose })=>{
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "col-span-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-sm text-gray-600",
-                                                    children: "Địa chỉ"
+                                                    children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 212,
@@ -4373,8 +4394,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "font-medium",
-                                                    children: `${order.shipping.recipient.address.street}, ${order.shipping.recipient.address.ward}, 
-                                    ${order.shipping.recipient.address.district}, ${order.shipping.recipient.address.city}`
+                                                    children: order.shipping.recipient.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 213,
@@ -4385,17 +4405,43 @@ const OrderDetail = ({ order, onClose })=>{
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                             lineNumber: 211,
                                             columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "col-span-2",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-sm text-gray-600",
+                                                    children: "Địa chỉ"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                    lineNumber: 216,
+                                                    columnNumber: 33
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "font-medium",
+                                                    children: `${order.shipping.recipient.address.street}, ${order.shipping.recipient.address.ward}, 
+                                    ${order.shipping.recipient.address.district}, ${order.shipping.recipient.address.city}`
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                    lineNumber: 217,
+                                                    columnNumber: 33
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                            lineNumber: 215,
+                                            columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 198,
+                                    lineNumber: 202,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 196,
+                            lineNumber: 200,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4405,7 +4451,7 @@ const OrderDetail = ({ order, onClose })=>{
                                     children: "Sản phẩm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 223,
+                                    lineNumber: 227,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4419,7 +4465,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                     alt: item.product.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 227,
+                                                    lineNumber: 231,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4430,7 +4476,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                             children: item.product.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 233,
+                                                            lineNumber: 237,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4443,7 +4489,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 234,
+                                                            lineNumber: 238,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4457,7 +4503,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 238,
+                                                                    lineNumber: 242,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4465,36 +4511,36 @@ const OrderDetail = ({ order, onClose })=>{
                                                                     children: formatPrice(item.price)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 239,
+                                                                    lineNumber: 243,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 237,
+                                                            lineNumber: 241,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 232,
+                                                    lineNumber: 236,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 226,
+                                            lineNumber: 230,
                                             columnNumber: 33
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 224,
+                                    lineNumber: 228,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 222,
+                            lineNumber: 226,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4508,7 +4554,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Thông tin vận chuyển"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 250,
+                                            lineNumber: 254,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4516,7 +4562,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Đơn vị vận chuyển"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 251,
+                                            lineNumber: 255,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4524,7 +4570,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: order.shipping.carrier
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 252,
+                                            lineNumber: 256,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4532,7 +4578,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Phí vận chuyển"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 253,
+                                            lineNumber: 257,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4540,13 +4586,13 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: formatPrice(order.shipping.shipping_fee)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 254,
+                                            lineNumber: 258,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 249,
+                                    lineNumber: 253,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4557,7 +4603,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Thông tin thanh toán"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 257,
+                                            lineNumber: 261,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4565,7 +4611,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Phương thức"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 258,
+                                            lineNumber: 262,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4573,7 +4619,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: order.payment.method === 'cash_on_delivery' ? 'Thanh toán khi nhận hàng' : order.payment.method
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 259,
+                                            lineNumber: 263,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4581,26 +4627,26 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: "Trạng thái"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 262,
+                                            lineNumber: 266,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PaymentStatusBadge, {
                                             status: order.payment.status
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 263,
+                                            lineNumber: 267,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                    lineNumber: 256,
+                                    lineNumber: 260,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 248,
+                            lineNumber: 252,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4616,20 +4662,20 @@ const OrderDetail = ({ order, onClose })=>{
                                                 children: "Tổng tiền hàng"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 271,
+                                                lineNumber: 275,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: formatPrice(order.pricing.original_price)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 272,
+                                                lineNumber: 276,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 270,
+                                        lineNumber: 274,
                                         columnNumber: 29
                                     }, this),
                                     parseFloat(order.pricing.discount_amount) > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4640,7 +4686,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                 children: "Giảm giá"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 276,
+                                                lineNumber: 280,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4651,13 +4697,13 @@ const OrderDetail = ({ order, onClose })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 277,
+                                                lineNumber: 281,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 275,
+                                        lineNumber: 279,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4668,35 +4714,11 @@ const OrderDetail = ({ order, onClose })=>{
                                                 children: "Phí vận chuyển"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 283,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: formatPrice(order.shipping.shipping_fee)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 284,
-                                                columnNumber: 33
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 282,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex justify-between font-medium text-lg pt-2 border-t",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Tổng cộng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                 lineNumber: 287,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-blue-600",
-                                                children: formatPrice(order.pricing.final_price)
+                                                children: formatPrice(order.shipping.shipping_fee)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                 lineNumber: 288,
@@ -4707,33 +4729,57 @@ const OrderDetail = ({ order, onClose })=>{
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                         lineNumber: 286,
                                         columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex justify-between font-medium text-lg pt-2 border-t",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: "Tổng cộng"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 291,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-blue-600",
+                                                children: formatPrice(order.pricing.final_price)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 292,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 290,
+                                        columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 269,
+                                lineNumber: 273,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                            lineNumber: 268,
+                            lineNumber: 272,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                    lineNumber: 194,
+                    lineNumber: 198,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-            lineNumber: 180,
+            lineNumber: 184,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-        lineNumber: 179,
+        lineNumber: 183,
         columnNumber: 9
     }, this);
 };
@@ -4755,6 +4801,64 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
         is_default: false
     });
     const [selectedOrder, setSelectedOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isEditing, setIsEditing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [profileData, setProfileData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        firstname: '',
+        lastname: '',
+        phone: '',
+        gender: ''
+    });
+    const [updateLoading, setUpdateLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ProfileInterface.useEffect": ()=>{
+            if (user) {
+                setProfileData({
+                    firstname: user.firstname || '',
+                    lastname: user.lastname || '',
+                    phone: user.phone || '',
+                    gender: user.gender || ''
+                });
+            }
+        }
+    }["ProfileInterface.useEffect"], [
+        user
+    ]);
+    const handleProfileChange = (e)=>{
+        const { name, value } = e.target;
+        setProfileData((prev)=>({
+                ...prev,
+                [name]: value
+            }));
+    };
+    // Thêm handler cho submit
+    const handleUpdateProfile = async (e)=>{
+        e.preventDefault();
+        setUpdateLoading(true);
+        try {
+            // Tạo object data thay vì FormData
+            const updateData = {
+                firstname: profileData.firstname,
+                lastname: profileData.lastname,
+                phone: profileData.phone,
+                gender: profileData.gender
+            };
+            const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["updateProfile"])(updateData)).unwrap();
+            // Cập nhật state với dữ liệu mới
+            setProfileData({
+                firstname: result.firstname || '',
+                lastname: result.lastname || '',
+                phone: result.phone || '',
+                gender: result.gender || ''
+            });
+            setIsEditing(false);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].success('Cập nhật thông tin thành công!');
+        } catch (error) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error(error.message || 'Có lỗi xảy ra khi cập nhật thông tin');
+        } finally{
+            setUpdateLoading(false);
+        }
+    };
     // Fetch addresses
     const fetchAddresses = async ()=>{
         try {
@@ -4829,7 +4933,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                 children: "Hồ sơ của tôi"
             }, void 0, false, {
                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                lineNumber: 394,
+                lineNumber: 460,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4845,7 +4949,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                 children: "Thông tin cá nhân"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 398,
+                                lineNumber: 464,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4855,7 +4959,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                 children: "Đơn hàng của tôi"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 408,
+                                lineNumber: 474,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4865,7 +4969,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                 children: "Sổ địa chỉ"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 418,
+                                lineNumber: 484,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4874,13 +4978,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                 children: "Đăng xuất"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 428,
+                                lineNumber: 494,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 397,
+                        lineNumber: 463,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4888,12 +4992,36 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                         children: [
                             selectedTab === 'info' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: "text-xl font-semibold mb-6",
-                                        children: "Thông tin cá nhân"
-                                    }, void 0, false, {
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex justify-between items-center mb-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                className: "text-xl font-semibold",
+                                                children: "Thông tin cá nhân"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 510,
+                                                columnNumber: 33
+                                            }, this),
+                                            !isEditing && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>setIsEditing(true),
+                                                className: "p-2 hover:bg-gray-100 rounded-full transition-colors",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["FiEdit2"], {
+                                                    className: "w-5 h-5 text-gray-600 "
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                    lineNumber: 516,
+                                                    columnNumber: 41
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 512,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 443,
+                                        lineNumber: 509,
                                         columnNumber: 29
                                     }, this),
                                     userLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4902,164 +5030,407 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 446,
+                                            lineNumber: 523,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 445,
+                                        lineNumber: 522,
                                         columnNumber: 33
-                                    }, this) : user ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    }, this) : user ? isEditing ? // Form cập nhật
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                                        onSubmit: handleUpdateProfile,
+                                        className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-sm font-medium text-gray-700",
+                                                        children: [
+                                                            "Họ ",
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-red-500",
+                                                                children: "*"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 532,
+                                                                columnNumber: 52
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 531,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        name: "firstname",
+                                                        value: profileData.firstname,
+                                                        onChange: handleProfileChange,
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 534,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 530,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-sm font-medium text-gray-700",
+                                                        children: [
+                                                            "Tên ",
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-red-500",
+                                                                children: "*"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 547,
+                                                                columnNumber: 53
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 546,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        name: "lastname",
+                                                        value: profileData.lastname,
+                                                        onChange: handleProfileChange,
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 549,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 545,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-sm font-medium text-gray-700",
+                                                        children: "Email"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 561,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "email",
+                                                        value: user.email,
+                                                        className: "w-full px-4 py-2 border rounded-lg bg-gray-50",
+                                                        disabled: true
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 562,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 560,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-sm font-medium text-gray-700",
+                                                        children: "Số điện thoại"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 572,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "tel",
+                                                        name: "phone",
+                                                        value: profileData.phone,
+                                                        onChange: handleProfileChange,
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 573,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 571,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-sm font-medium text-gray-700",
+                                                        children: "Giới tính"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 584,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                        name: "gender",
+                                                        value: profileData.gender,
+                                                        onChange: handleProfileChange,
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "",
+                                                                children: "Chọn giới tính"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 593,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "male",
+                                                                children: "Nam"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 594,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "female",
+                                                                children: "Nữ"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 595,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: "other",
+                                                                children: "Khác"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                                lineNumber: 596,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 587,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 583,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "md:col-span-2 flex justify-end gap-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "button",
+                                                        onClick: ()=>{
+                                                            setIsEditing(false);
+                                                            setProfileData({
+                                                                firstname: user.firstname || '',
+                                                                lastname: user.lastname || '',
+                                                                phone: user.phone || '',
+                                                                gender: user.gender || ''
+                                                            });
+                                                        },
+                                                        className: "px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50",
+                                                        children: "Hủy"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 602,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "submit",
+                                                        disabled: updateLoading,
+                                                        className: `px-6 py-2 rounded-lg text-white
+                                ${updateLoading ? 'bg-blue-400' : 'bg-green-600 hover:bg-green-700'}`,
+                                                        children: updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                        lineNumber: 617,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                                lineNumber: 601,
+                                                columnNumber: 41
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/profiles/ProfileInterface.js",
+                                        lineNumber: 528,
+                                        columnNumber: 37
+                                    }, this) : // Hiển thị thông tin
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-1 md:grid-cols-2 gap-4",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "space-y-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-gray-600",
+                                                        className: "text-sm font-medium text-gray-700",
                                                         children: "Họ"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 451,
-                                                        columnNumber: 41
+                                                        lineNumber: 631,
+                                                        columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-medium",
+                                                        className: "",
                                                         children: user.firstname || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 452,
-                                                        columnNumber: 41
+                                                        lineNumber: 632,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 450,
-                                                columnNumber: 37
+                                                lineNumber: 630,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "space-y-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-gray-600",
+                                                        className: "text-sm font-medium text-gray-700",
                                                         children: "Tên"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 455,
-                                                        columnNumber: 41
+                                                        lineNumber: 635,
+                                                        columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-medium",
+                                                        className: "",
                                                         children: user.lastname || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 456,
-                                                        columnNumber: 41
+                                                        lineNumber: 636,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 454,
-                                                columnNumber: 37
+                                                lineNumber: 634,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "space-y-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-gray-600",
+                                                        className: "text-sm font-medium text-gray-700",
                                                         children: "Email"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 459,
-                                                        columnNumber: 41
+                                                        lineNumber: 639,
+                                                        columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-medium",
+                                                        className: "",
                                                         children: user.email || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 460,
-                                                        columnNumber: 41
+                                                        lineNumber: 640,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 458,
-                                                columnNumber: 37
+                                                lineNumber: 638,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "space-y-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-gray-600",
+                                                        className: "text-sm font-medium text-gray-700",
                                                         children: "Số điện thoại"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 463,
-                                                        columnNumber: 41
+                                                        lineNumber: 643,
+                                                        columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-medium",
+                                                        className: "",
                                                         children: user.phone || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 464,
-                                                        columnNumber: 41
+                                                        lineNumber: 644,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 462,
-                                                columnNumber: 37
+                                                lineNumber: 642,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "space-y-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-gray-600",
+                                                        className: "text-sm font-medium text-gray-700",
                                                         children: "Giới tính"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 467,
-                                                        columnNumber: 41
+                                                        lineNumber: 647,
+                                                        columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "font-medium",
-                                                        children: user.gender || 'Chưa cập nhật'
+                                                        className: "",
+                                                        children: user.gender === "male" ? "Nam" : user.gender === "female" ? "Nữ" : user.gender === "other" ? "Khác" : "Chưa cập nhật"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 468,
-                                                        columnNumber: 41
+                                                        lineNumber: 648,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 466,
-                                                columnNumber: 37
+                                                lineNumber: 646,
+                                                columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 449,
-                                        columnNumber: 33
+                                        lineNumber: 629,
+                                        columnNumber: 37
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8 text-gray-500",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: "Không thể tải thông tin người dùng"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 473,
+                                            lineNumber: 658,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 472,
+                                        lineNumber: 657,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 442,
+                                lineNumber: 508,
                                 columnNumber: 25
                             }, this),
                             selectedTab === 'orders' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5069,7 +5440,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                         children: "Đơn hàng của tôi"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 482,
+                                        lineNumber: 667,
                                         columnNumber: 29
                                     }, this),
                                     orderLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5078,12 +5449,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 485,
+                                            lineNumber: 670,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 484,
+                                        lineNumber: 669,
                                         columnNumber: 33
                                     }, this) : orders?.data?.orders?.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "space-y-4",
@@ -5092,12 +5463,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 onViewDetail: setSelectedOrder
                                             }, order.id, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 490,
+                                                lineNumber: 675,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 488,
+                                        lineNumber: 673,
                                         columnNumber: 33
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8 text-gray-500",
@@ -5105,12 +5476,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             children: "Bạn chưa có đơn hàng nào"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 499,
+                                            lineNumber: 684,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 498,
+                                        lineNumber: 683,
                                         columnNumber: 33
                                     }, this),
                                     selectedOrder && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderDetail, {
@@ -5118,13 +5489,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                         onClose: ()=>setSelectedOrder(null)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 504,
+                                        lineNumber: 689,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 481,
+                                lineNumber: 666,
                                 columnNumber: 25
                             }, this),
                             selectedTab === 'address' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5137,7 +5508,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Sổ địa chỉ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 516,
+                                                lineNumber: 701,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5149,13 +5520,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Thêm địa chỉ mới"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 517,
+                                                lineNumber: 702,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 515,
+                                        lineNumber: 700,
                                         columnNumber: 29
                                     }, this),
                                     addressLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5164,12 +5535,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 530,
+                                            lineNumber: 715,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 529,
+                                        lineNumber: 714,
                                         columnNumber: 33
                                     }, this) : addresses.length > 0 ? /* Address List */ /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "space-y-4",
@@ -5189,7 +5560,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: address.address_type === 'home' ? 'Nhà riêng' : address.address_type === 'office' ? 'Văn phòng' : 'Khác'
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 542,
+                                                                            lineNumber: 727,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5199,20 +5570,20 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     className: "w-4 h-4"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 549,
+                                                                                    lineNumber: 734,
                                                                                     columnNumber: 65
                                                                                 }, this),
                                                                                 "Mặc định"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 547,
+                                                                            lineNumber: 732,
                                                                             columnNumber: 61
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 541,
+                                                                    lineNumber: 726,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5226,7 +5597,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Số nhà, Đường:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 558,
+                                                                                    lineNumber: 743,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5234,13 +5605,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.street
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 561,
+                                                                                    lineNumber: 746,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 557,
+                                                                            lineNumber: 742,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5251,7 +5622,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Phường/Xã:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 567,
+                                                                                    lineNumber: 752,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5259,13 +5630,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.ward
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 570,
+                                                                                    lineNumber: 755,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 566,
+                                                                            lineNumber: 751,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5276,7 +5647,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Quận/Huyện:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 576,
+                                                                                    lineNumber: 761,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5284,13 +5655,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.district
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 579,
+                                                                                    lineNumber: 764,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 575,
+                                                                            lineNumber: 760,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5301,7 +5672,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Tỉnh/Thành phố:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 585,
+                                                                                    lineNumber: 770,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5309,13 +5680,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.city
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 588,
+                                                                                    lineNumber: 773,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 584,
+                                                                            lineNumber: 769,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5326,7 +5697,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Quốc gia:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 594,
+                                                                                    lineNumber: 779,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5334,25 +5705,25 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.country
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 597,
+                                                                                    lineNumber: 782,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 593,
+                                                                            lineNumber: 778,
                                                                             columnNumber: 57
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 556,
+                                                                    lineNumber: 741,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 540,
+                                                            lineNumber: 725,
                                                             columnNumber: 49
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5370,12 +5741,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-gray-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 615,
+                                                                        lineNumber: 800,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 606,
+                                                                    lineNumber: 791,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5386,12 +5757,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-red-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 623,
+                                                                        lineNumber: 808,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 618,
+                                                                    lineNumber: 803,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 !address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5402,34 +5773,34 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-yellow-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 632,
+                                                                        lineNumber: 817,
                                                                         columnNumber: 61
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 627,
+                                                                    lineNumber: 812,
                                                                     columnNumber: 57
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 605,
+                                                            lineNumber: 790,
                                                             columnNumber: 49
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 538,
+                                                    lineNumber: 723,
                                                     columnNumber: 45
                                                 }, this)
                                             }, address.id, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 536,
+                                                lineNumber: 721,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 534,
+                                        lineNumber: 719,
                                         columnNumber: 33
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8",
@@ -5448,17 +5819,17 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 644,
+                                                        lineNumber: 829,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 643,
+                                                    lineNumber: 828,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 642,
+                                                lineNumber: 827,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5466,13 +5837,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Chưa có địa chỉ nào được lưu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 648,
+                                                lineNumber: 833,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 641,
+                                        lineNumber: 826,
                                         columnNumber: 33
                                     }, this),
                                     showAddressForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5488,7 +5859,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                             children: selectedAddress ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ mới'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 657,
+                                                            lineNumber: 842,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5509,23 +5880,23 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     d: "M6 18L18 6M6 6l12 12"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 668,
+                                                                    lineNumber: 853,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 667,
+                                                                lineNumber: 852,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 660,
+                                                            lineNumber: 845,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 656,
+                                                    lineNumber: 841,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -5540,7 +5911,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Loại địa chỉ"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 677,
+                                                                    lineNumber: 862,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -5556,7 +5927,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Nhà riêng"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 689,
+                                                                            lineNumber: 874,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -5564,7 +5935,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Văn phòng"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 690,
+                                                                            lineNumber: 875,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -5572,19 +5943,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Khác"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 691,
+                                                                            lineNumber: 876,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 680,
+                                                                    lineNumber: 865,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 676,
+                                                            lineNumber: 861,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5595,7 +5966,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Số nhà, Đường"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 697,
+                                                                    lineNumber: 882,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5609,13 +5980,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 700,
+                                                                    lineNumber: 885,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 696,
+                                                            lineNumber: 881,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5626,7 +5997,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Phường/Xã"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 715,
+                                                                    lineNumber: 900,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5640,13 +6011,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 718,
+                                                                    lineNumber: 903,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 714,
+                                                            lineNumber: 899,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5657,7 +6028,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Quận/Huyện"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 733,
+                                                                    lineNumber: 918,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5671,13 +6042,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 736,
+                                                                    lineNumber: 921,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 732,
+                                                            lineNumber: 917,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5688,7 +6059,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Tỉnh/Thành phố"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 751,
+                                                                    lineNumber: 936,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5702,13 +6073,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 754,
+                                                                    lineNumber: 939,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 750,
+                                                            lineNumber: 935,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5725,7 +6096,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     className: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 769,
+                                                                    lineNumber: 954,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -5734,13 +6105,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Đặt làm địa chỉ mặc định"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 779,
+                                                                    lineNumber: 964,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 768,
+                                                            lineNumber: 953,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5756,7 +6127,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Hủy"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 786,
+                                                                    lineNumber: 971,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5765,58 +6136,62 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: selectedAddress ? 'Cập nhật' : 'Thêm mới'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 797,
+                                                                    lineNumber: 982,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 785,
+                                                            lineNumber: 970,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 674,
+                                                    lineNumber: 859,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 655,
+                                            lineNumber: 840,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 654,
+                                        lineNumber: 839,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 514,
+                                lineNumber: 699,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                        lineNumber: 438,
+                        lineNumber: 504,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                lineNumber: 395,
+                lineNumber: 461,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-        lineNumber: 393,
+        lineNumber: 459,
         columnNumber: 9
     }, this);
 }
-_s(ProfileInterface, "N2aeBjYoKB1XaLrR0/VIAZNV3ok=");
+_s(ProfileInterface, "YZ3vW7Dc05LVxqyZi4Vn/NuBexo=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"]
+    ];
+});
 _c4 = ProfileInterface;
 var _c, _c1, _c2, _c3, _c4;
 __turbopack_refresh__.register(_c, "StatusBadge");

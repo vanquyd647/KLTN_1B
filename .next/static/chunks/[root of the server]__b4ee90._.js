@@ -2658,22 +2658,22 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     d: "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 7c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 289,
+                                                    lineNumber: 288,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 283,
+                                                lineNumber: 282,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 282,
+                                            lineNumber: 281,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 281,
+                                        lineNumber: 280,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2695,12 +2695,12 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                         d: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6m12.5-6l1.5 6m-10-1h8"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 307,
+                                                        lineNumber: 306,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 299,
+                                                    lineNumber: 298,
                                                     columnNumber: 37
                                                 }, this),
                                                 totalItems > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2708,18 +2708,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     children: totalItems
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 314,
+                                                    lineNumber: 313,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 298,
+                                            lineNumber: 297,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 297,
+                                        lineNumber: 296,
                                         columnNumber: 29
                                     }, this)
                                 ]
@@ -2749,7 +2749,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                 onClick: toggleDrawer
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 326,
+                lineNumber: 325,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2771,22 +2771,22 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 d: "M6 18L18 6M6 6l12 12"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 348,
+                                lineNumber: 347,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 340,
+                            lineNumber: 339,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 336,
+                        lineNumber: 335,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 357,
+                        lineNumber: 356,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -2798,7 +2798,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Hệ thống cửa hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 359,
+                                lineNumber: 358,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2807,7 +2807,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Hướng dẫn sử dụng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 362,
+                                lineNumber: 361,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2816,19 +2816,19 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 children: "Chính sách bảo hành"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 365,
+                                lineNumber: 364,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 358,
+                        lineNumber: 357,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 331,
+                lineNumber: 330,
                 columnNumber: 13
             }, this)
         ]

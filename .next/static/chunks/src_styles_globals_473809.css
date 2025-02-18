@@ -1108,6 +1108,11 @@ img, video {
   background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1));
 }
 
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: .5;
 }
@@ -1688,6 +1693,11 @@ img, video {
 .focus\:ring-red-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-blue-200:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(191 219 254 / var(--tw-ring-opacity, 1));
 }
 
 .focus\:ring-offset-2:focus {

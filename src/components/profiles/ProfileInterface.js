@@ -3,6 +3,10 @@ import { addressApi } from '../../utils/apiClient';
 import { FiEdit2 } from "react-icons/fi"; // Icon sửa
 import { RiDeleteBinLine } from "react-icons/ri"; // Icon xóa
 import { MdStars } from "react-icons/md"; // Icon mặc định
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { updateProfile } from '../../store/slices/userSlice';
+
 
 
 // Component hiển thị trạng thái đơn hàng
@@ -320,6 +324,68 @@ export default function ProfileInterface({
         is_default: false
     });
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [profileData, setProfileData] = useState({
+        firstname: '',
+        lastname: '',
+        phone: '',
+        gender: ''
+    });
+    const [updateLoading, setUpdateLoading] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (user) {
+            setProfileData({
+                firstname: user.firstname || '',
+                lastname: user.lastname || '',
+                phone: user.phone || '',
+                gender: user.gender || ''
+            });
+        }
+    }, [user]);
+
+    const handleProfileChange = (e) => {
+        const { name, value } = e.target;
+        setProfileData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    // Thêm handler cho submit
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        setUpdateLoading(true);
+        try {
+            // Tạo object data thay vì FormData
+            const updateData = {
+                firstname: profileData.firstname,
+                lastname: profileData.lastname,
+                phone: profileData.phone,
+                gender: profileData.gender
+            };
+
+            const result = await dispatch(updateProfile(updateData)).unwrap();
+
+            // Cập nhật state với dữ liệu mới
+            setProfileData({
+                firstname: result.firstname || '',
+                lastname: result.lastname || '',
+                phone: result.phone || '',
+                gender: result.gender || ''
+            });
+
+            setIsEditing(false);
+            toast.success('Cập nhật thông tin thành công!');
+        } catch (error) {
+            toast.error(error.message || 'Có lỗi xảy ra khi cập nhật thông tin');
+        } finally {
+            setUpdateLoading(false);
+        }
+    };
+
+
 
     // Fetch addresses
     const fetchAddresses = async () => {
@@ -440,34 +506,153 @@ export default function ProfileInterface({
                     {/* Personal Info Tab */}
                     {selectedTab === 'info' && (
                         <div>
-                            <h2 className="text-xl font-semibold mb-6">Thông tin cá nhân</h2>
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-xl font-semibold">Thông tin cá nhân</h2>
+                                {!isEditing && (
+                                    <button
+                                        onClick={() => setIsEditing(true)}
+                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                    >
+                                        <FiEdit2 className="w-5 h-5 text-gray-600 " />
+                                    </button>
+                                )}
+                            </div>
+
                             {userLoading ? (
                                 <div className="flex justify-center items-center h-40">
                                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                                 </div>
                             ) : user ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <p className="text-gray-600">Họ</p>
-                                        <p className="font-medium">{user.firstname || 'Chưa cập nhật'}</p>
+                                isEditing ? (
+                                    // Form cập nhật
+                                    <form onSubmit={handleUpdateProfile} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {/* Họ */}
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Họ <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="firstname"
+                                                value={profileData.firstname}
+                                                onChange={handleProfileChange}
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                required
+                                            />
+                                        </div>
+
+                                        {/* Tên */}
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Tên <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="lastname"
+                                                value={profileData.lastname}
+                                                onChange={handleProfileChange}
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                required
+                                            />
+                                        </div>
+
+                                        {/* Email - readonly */}
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-medium text-gray-700">Email</label>
+                                            <input
+                                                type="email"
+                                                value={user.email}
+                                                className="w-full px-4 py-2 border rounded-lg bg-gray-50"
+                                                disabled
+                                            />
+                                        </div>
+
+                                        {/* Số điện thoại */}
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                value={profileData.phone}
+                                                onChange={handleProfileChange}
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                            />
+                                        </div>
+
+                                        {/* Giới tính */}
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Giới tính
+                                            </label>
+                                            <select
+                                                name="gender"
+                                                value={profileData.gender}
+                                                onChange={handleProfileChange}
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                            >
+                                                <option value="">Chọn giới tính</option>
+                                                <option value="male">Nam</option>
+                                                <option value="female">Nữ</option>
+                                                <option value="other">Khác</option>
+                                            </select>
+                                        </div>
+
+                                        {/* Buttons */}
+                                        <div className="md:col-span-2 flex justify-end gap-4">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsEditing(false);
+                                                    setProfileData({
+                                                        firstname: user.firstname || '',
+                                                        lastname: user.lastname || '',
+                                                        phone: user.phone || '',
+                                                        gender: user.gender || ''
+                                                    });
+                                                }}
+                                                className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                                            >
+                                                Hủy
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                disabled={updateLoading}
+                                                className={`px-6 py-2 rounded-lg text-white
+                                ${updateLoading ? 'bg-blue-400' : 'bg-green-600 hover:bg-green-700'}`}
+                                            >
+                                                {updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'}
+                                            </button>
+                                        </div>
+                                    </form>
+                                ) : (
+                                    // Hiển thị thông tin
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-gray-700">Họ</p>
+                                            <p className="">{user.firstname || 'Chưa cập nhật'}</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-gray-700">Tên</p>
+                                            <p className="">{user.lastname || 'Chưa cập nhật'}</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-gray-700">Email</p>
+                                            <p className="">{user.email || 'Chưa cập nhật'}</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-gray-700">Số điện thoại</p>
+                                            <p className="">{user.phone || 'Chưa cập nhật'}</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-gray-700">Giới tính</p>
+                                            <p className="">
+                                                {user.gender === "male" ? "Nam" :
+                                                    user.gender === "female" ? "Nữ" :
+                                                        user.gender === "other" ? "Khác" : "Chưa cập nhật"}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <p className="text-gray-600">Tên</p>
-                                        <p className="font-medium">{user.lastname || 'Chưa cập nhật'}</p>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <p className="text-gray-600">Email</p>
-                                        <p className="font-medium">{user.email || 'Chưa cập nhật'}</p>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <p className="text-gray-600">Số điện thoại</p>
-                                        <p className="font-medium">{user.phone || 'Chưa cập nhật'}</p>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <p className="text-gray-600">Giới tính</p>
-                                        <p className="font-medium">{user.gender || 'Chưa cập nhật'}</p>
-                                    </div>
-                                </div>
+                                )
                             ) : (
                                 <div className="text-center py-8 text-gray-500">
                                     <p>Không thể tải thông tin người dùng</p>
@@ -790,14 +975,14 @@ export default function ProfileInterface({
                                                         setSelectedAddress(null);
                                                     }}
                                                     className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-500 
-                                         transition-colors"
+                                                    transition-colors"
                                                 >
                                                     Hủy
                                                 </button>
                                                 <button
                                                     type="submit"
                                                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg 
-                                         hover:bg-blue-700 transition-colors"
+                                                    hover:bg-blue-700 transition-colors"
                                                 >
                                                     {selectedAddress ? 'Cập nhật' : 'Thêm mới'}
                                                 </button>

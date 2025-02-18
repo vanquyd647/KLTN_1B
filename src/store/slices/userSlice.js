@@ -64,7 +64,20 @@ export const getUserInfo = createAsyncThunk(
     }
 );
 
-
+export const updateProfile = createAsyncThunk(
+    'auth/updateProfile',
+    async (userData, { rejectWithValue }) => {
+        try {
+            const response = await userApi.updateUserProfile(userData);
+            // Đảm bảo trả về đúng dữ liệu user đã cập nhật
+            return response.data;
+        } catch (error) {
+            return rejectWithValue({
+                message: error.response?.data?.message || 'Không thể cập nhật thông tin.'
+            });
+        }
+    }
+);
 
 // Slice
 const userSlice = createSlice({
@@ -152,6 +165,26 @@ const userSlice = createSlice({
         builder.addCase(getUserInfo.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload || 'Failed to fetch user info';
+        });
+
+        // Update Profile
+        builder.addCase(updateProfile.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+        // Sửa lại reducer updateProfile.fulfilled
+        builder.addCase(updateProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            // Cập nhật state với dữ liệu mới
+            state.user = {
+                ...state.user,
+                ...action.payload
+            };
+            state.error = null;
+        });
+        builder.addCase(updateProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
         });
     },
 });

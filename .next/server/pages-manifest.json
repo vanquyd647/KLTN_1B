@@ -2,13 +2,13 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/search": "pages/search.js",
-  "/cart": "pages/cart.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/account/profile": "pages/account/profile.js",
+  "/cart": "pages/cart.js",
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
   "/payment/cancel": "pages/payment/cancel.js",
-  "/payment/success": "pages/payment/success.js"
+  "/payment/success": "pages/payment/success.js",
+  "/new-products": "pages/new-products.js"
 }
