@@ -24,7 +24,7 @@ import { getCartItems } from '../store/slices/cartSlice';
 // https://kltn-1a.onrender.com hihi
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5551/v1/api/',
+    baseURL: 'https://xxxx.ngrok.io/v1/api/',
 });
 
 // **Request Interceptor**
