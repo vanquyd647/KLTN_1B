@@ -1033,6 +1033,34 @@ const userApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
         }
+    },
+    /**
+ * Request password reset OTP
+ * @param {Object} data - Request data
+ * @param {string} data.email - User's email address
+ * @returns {Promise<Object>} - API response
+ */ forgotPassword: async (data)=>{
+        try {
+            const response = await apiClient.post('users/forgot-password', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể gửi yêu cầu đặt lại mật khẩu.';
+        }
+    },
+    /**
+     * Reset password using OTP
+     * @param {Object} data - Reset password data
+     * @param {string} data.email - User's email
+     * @param {string} data.otp - One-time password
+     * @param {string} data.newPassword - New password
+     * @returns {Promise<Object>} - API response
+     */ resetPassword: async (data)=>{
+        try {
+            const response = await apiClient.post('users/reset-password', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể đặt lại mật khẩu.';
+        }
     }
 };
 const adminApi = {

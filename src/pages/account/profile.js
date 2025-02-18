@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { getToken, getCartId } from '../../utils/storage';
-import { orderApi } from '../../utils/apiClient';
+import { orderApi, userApi } from '../../utils/apiClient';
 import Layout from '../../components/Layout';
 import AuthInterface from '../../components/profiles/AuthInterface';
 import ProfileInterface from '../../components/profiles/ProfileInterface';
@@ -37,6 +37,8 @@ export default function Profile() {
         lastname: '',
         phone: '',
         gender: '',
+        newPassword: '',
+        confirmNewPassword: '',
     });
     const [error, setError] = useState(null);
     const controller = new AbortController();
@@ -88,7 +90,7 @@ export default function Profile() {
             console.error('Failed to logout:', err);
         }
     };
-    
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -107,7 +109,44 @@ export default function Profile() {
             }
         }
     };
-    
+
+    // Thêm hàm xử lý quên mật khẩu
+    const handleForgotPassword = async (e) => {
+        e.preventDefault();
+        try {
+            await userApi.forgotPassword({ email: formData.email });
+            alert('Mã OTP đã được gửi đến email của bạn');
+            setAuthStep('reset-password');
+        } catch (error) {
+            alert(error.message || 'Có lỗi xảy ra');
+        }
+    };
+
+    // Thêm hàm xử lý reset mật khẩu
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+        if (formData.newPassword !== formData.confirmNewPassword) {
+            alert('Mật khẩu mới không khớp');
+            return;
+        }
+        try {
+            await userApi.resetPassword({
+                email: formData.email,
+                otp: otp,
+                newPassword: formData.newPassword
+            });
+            alert('Đặt lại mật khẩu thành công');
+            setAuthStep('login');
+            setFormData({
+                ...formData,
+                newPassword: '',
+                confirmNewPassword: ''
+            });
+            setOtp('');
+        } catch (error) {
+            alert(error.message || 'Có lỗi xảy ra');
+        }
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -153,6 +192,8 @@ export default function Profile() {
                     handleLogin={handleLogin}
                     handleRegister={handleRegister}
                     handleOtpSubmit={handleOtpSubmit}
+                    handleForgotPassword={handleForgotPassword} 
+                    handleResetPassword={handleResetPassword} 
                     otp={otp}
                     setOtp={setOtp}
                     passwordVisibility={passwordVisibility}

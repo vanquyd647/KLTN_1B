@@ -10,6 +10,8 @@ export default function AuthInterface({
     handleLogin,
     handleRegister,
     handleOtpSubmit,
+    handleForgotPassword,
+    handleResetPassword,
     otp,
     setOtp,
     passwordVisibility,
@@ -69,7 +71,118 @@ export default function AuthInterface({
                         >
                             Register
                         </button>
+                        <p>
+                            <button
+                                onClick={() => setAuthStep('forgot-password')}
+                                className="text-blue-600 hover:underline"
+                            >
+                                Quên mật khẩu?
+                            </button>
+                        </p>
                     </p>
+                </div>
+            )}
+            {/* Thêm form quên mật khẩu */}
+            {authStep === 'forgot-password' && (
+                <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
+                    <h2 className="text-2xl font-bold mb-4 text-center">Quên mật khẩu</h2>
+                    <form onSubmit={handleForgotPassword}>
+                        <div className="mb-4">
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="w-full border p-2 rounded"
+                                required
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            disabled={loading}
+                        >
+                            {loading ? 'Đang gửi...' : 'Gửi mã OTP'}
+                        </button>
+                    </form>
+                    <p className="mt-4 text-center">
+                        <button
+                            onClick={() => setAuthStep('login')}
+                            className="text-blue-600 hover:underline"
+                        >
+                            Quay lại đăng nhập
+                        </button>
+                    </p>
+                </div>
+            )}
+            {/* Thêm form reset mật khẩu */}
+            {authStep === 'reset-password' && (
+                <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
+                    <h2 className="text-2xl font-bold mb-4 text-center">Đặt lại mật khẩu</h2>
+                    <form onSubmit={handleResetPassword}>
+                        <div className="mb-4">
+                            <label>Mã OTP:</label>
+                            <input
+                                type="text"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                className="w-full border p-2 rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label>Mật khẩu mới:</label>
+                            <div className="relative">
+                                <input
+                                    type={passwordVisibility.newPassword ? 'text' : 'password'}
+                                    name="newPassword"
+                                    value={formData.newPassword}
+                                    onChange={handleChange}
+                                    className="w-full border p-2 rounded"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute right-2 top-2 text-gray-600"
+                                    onClick={() => togglePasswordVisibility('newPassword')}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={passwordVisibility.newPassword ? faEyeSlash : faEye}
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <label>Xác nhận mật khẩu mới:</label>
+                            <div className="relative">
+                                <input
+                                    type={passwordVisibility.confirmNewPassword ? 'text' : 'password'}
+                                    name="confirmNewPassword"
+                                    value={formData.confirmNewPassword}
+                                    onChange={handleChange}
+                                    className="w-full border p-2 rounded"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute right-2 top-2 text-gray-600"
+                                    onClick={() => togglePasswordVisibility('confirmNewPassword')}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={passwordVisibility.confirmNewPassword ? faEyeSlash : faEye}
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            disabled={loading}
+                        >
+                            {loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'}
+                        </button>
+                    </form>
                 </div>
             )}
             {authStep === 'register' && (
