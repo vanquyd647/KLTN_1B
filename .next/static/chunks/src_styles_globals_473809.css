@@ -343,6 +343,10 @@ img, video {
   visibility: hidden;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -361,6 +365,11 @@ img, video {
 
 .inset-0 {
   inset: 0;
+}
+
+.inset-y-0 {
+  top: 0;
+  bottom: 0;
 }
 
 .-right-2 {
@@ -417,6 +426,10 @@ img, video {
 
 .z-50 {
   z-index: 50;
+}
+
+.z-\[60\] {
+  z-index: 60;
 }
 
 .col-span-2 {
@@ -515,6 +528,10 @@ img, video {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.-mr-2 {
+  margin-right: -.5rem;
 }
 
 .line-clamp-2 {
@@ -616,6 +633,10 @@ img, video {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -626,6 +647,10 @@ img, video {
 
 .max-h-\[90vh\] {
   max-height: 90vh;
+}
+
+.max-h-\[calc\(100vh-180px\)\] {
+  max-height: calc(100vh - 180px);
 }
 
 .min-h-screen {
@@ -1013,6 +1038,11 @@ img, video {
   border-color: #0000;
 }
 
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(243 244 246 / var(--tw-border-opacity, 1));
+}
+
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
@@ -1251,6 +1281,14 @@ img, video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pr-10 {
+  padding-right: 2.5rem;
+}
+
+.pr-3 {
+  padding-right: .75rem;
 }
 
 .text-left {
@@ -1543,6 +1581,10 @@ img, video {
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
 }
 
+.last\:border-b-0:last-child {
+  border-bottom-width: 0;
+}
+
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
@@ -1804,12 +1846,36 @@ img, video {
 }
 
 @media (width >= 768px) {
+  .md\:absolute {
+    position: absolute;
+  }
+
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:left-auto {
+    left: auto;
+  }
+
+  .md\:right-0 {
+    right: 0;
+  }
+
+  .md\:top-full {
+    top: 100%;
+  }
+
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
   }
 
   .md\:ml-auto {
     margin-left: auto;
+  }
+
+  .md\:mt-2 {
+    margin-top: .5rem;
   }
 
   .md\:block {
@@ -1836,8 +1902,28 @@ img, video {
     height: 35rem;
   }
 
+  .md\:h-12 {
+    height: 3rem;
+  }
+
+  .md\:h-auto {
+    height: auto;
+  }
+
+  .md\:max-h-\[400px\] {
+    max-height: 400px;
+  }
+
   .md\:w-1\/2 {
     width: 50%;
+  }
+
+  .md\:w-12 {
+    width: 3rem;
+  }
+
+  .md\:w-96 {
+    width: 24rem;
   }
 
   .md\:grid-cols-2 {
@@ -1850,6 +1936,19 @@ img, video {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:rounded-lg {
+    border-radius: .5rem;
+  }
+
+  .md\:p-3 {
+    padding: .75rem;
+  }
+
+  .md\:text-sm {
+    font-size: .875rem;
+    line-height: 1.25rem;
   }
 }
 

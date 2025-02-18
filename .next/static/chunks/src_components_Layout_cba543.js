@@ -6,7 +6,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 __turbopack_export_value__((__turbopack_import__) => {
     return Promise.all([
-  "static/chunks/_4f3688._.js",
+  "static/chunks/src_components_711447._.js",
+  "static/chunks/node_modules_86b164._.js",
   "static/chunks/src_components_Layout_2c43a7.js"
 ].map((chunk) => __turbopack_load__(chunk))).then(() => {
         return __turbopack_import__("[project]/src/components/Layout.js [client] (ecmascript)");

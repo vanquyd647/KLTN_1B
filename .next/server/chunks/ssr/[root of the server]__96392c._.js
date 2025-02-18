@@ -407,9 +407,14 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 ;
 ;
-// https://kltn-1a.onrender.com hihi
+// https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/v1/api/'
+    baseURL: 'https://c918-118-71-16-139.ngrok-free.app/v1/api',
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+    },
+    withCredentials: true
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
@@ -590,6 +595,34 @@ const userApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể cập nhật thông tin người dùng.';
+        }
+    },
+    /**
+ * Request password reset OTP
+ * @param {Object} data - Request data
+ * @param {string} data.email - User's email address
+ * @returns {Promise<Object>} - API response
+ */ forgotPassword: async (data)=>{
+        try {
+            const response = await apiClient.post('users/forgot-password', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể gửi yêu cầu đặt lại mật khẩu.';
+        }
+    },
+    /**
+     * Reset password using OTP
+     * @param {Object} data - Reset password data
+     * @param {string} data.email - User's email
+     * @param {string} data.otp - One-time password
+     * @param {string} data.newPassword - New password
+     * @returns {Promise<Object>} - API response
+     */ resetPassword: async (data)=>{
+        try {
+            const response = await apiClient.post('users/reset-password', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể đặt lại mật khẩu.';
         }
     }
 };
@@ -1193,9 +1226,12 @@ const getUserInfo = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$redu
 const updateProfile = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('auth/updateProfile', async (userData, { rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["userApi"].updateUserProfile(userData);
+        // Đảm bảo trả về đúng dữ liệu user đã cập nhật
         return response.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || 'Không thể cập nhật thông tin.');
+        return rejectWithValue({
+            message: error.response?.data?.message || 'Không thể cập nhật thông tin.'
+        });
     }
 });
 // Slice
@@ -1287,8 +1323,10 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
             state.loading = true;
             state.error = null;
         });
+        // Sửa lại reducer updateProfile.fulfilled
         builder.addCase(updateProfile.fulfilled, (state, action)=>{
             state.loading = false;
+            // Cập nhật state với dữ liệu mới
             state.user = {
                 ...state.user,
                 ...action.payload
