@@ -1041,7 +1041,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://c918-118-71-16-139.ngrok-free.app/v1/api',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1877,49 +1877,78 @@ function Sidebar() {
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-        className: "p-6",
+        className: "p-4",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                className: "text-lg font-bold mb-4",
-                children: "Danh mục"
+                className: "text-xl font-bold mb-6 text-gray-800 border-b pb-2",
+                children: "Danh mục sản phẩm"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar.js",
                 lineNumber: 43,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                className: "space-y-4",
+                className: "space-y-6",
                 children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                        className: "group",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                 href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                                className: "hover:underline block font-bold",
-                                children: category.name
-                            }, void 0, false, {
+                                className: "flex items-center justify-between text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        children: category.name
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 52,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                        className: "w-4 h-4 transition-transform duration-200 group-hover:translate-x-1",
+                                        fill: "none",
+                                        stroke: "currentColor",
+                                        viewBox: "0 0 24 24",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                            strokeLinecap: "round",
+                                            strokeLinejoin: "round",
+                                            strokeWidth: "2",
+                                            d: "M9 5l7 7-7 7"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Sidebar.js",
+                                            lineNumber: 59,
+                                            columnNumber: 33
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 53,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/Sidebar.js",
                                 lineNumber: 48,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                className: "pl-4 mt-2 space-y-2",
+                                className: "pl-4 mt-2 space-y-2 border-l-2 border-gray-100",
                                 children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                             href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
-                                            className: "hover:underline text-gray-600 block",
+                                            className: "block py-1 text-gray-500 hover:text-blue-600 hover:pl-2 transition-all duration-200",
                                             children: subCategory.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Sidebar.js",
-                                            lineNumber: 58,
+                                            lineNumber: 66,
                                             columnNumber: 37
                                         }, this)
                                     }, subCategory.id, false, {
                                         fileName: "[project]/src/components/Sidebar.js",
-                                        lineNumber: 57,
+                                        lineNumber: 65,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Sidebar.js",
-                                lineNumber: 55,
+                                lineNumber: 63,
                                 columnNumber: 25
                             }, this)
                         ]

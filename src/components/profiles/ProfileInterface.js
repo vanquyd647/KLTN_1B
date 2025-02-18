@@ -532,7 +532,10 @@ export default function ProfileInterface({
                                 ? 'bg-blue-600 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200'
                             }`}
-                        onClick={() => setSelectedTab('orders')}
+                        onClick={() => {
+                            setSelectedTab('orders');
+                            setIsEditing(false);
+                        }}
                     >
                         Đơn hàng của tôi
                     </button>
@@ -542,7 +545,10 @@ export default function ProfileInterface({
                                 ? 'bg-blue-600 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200'
                             }`}
-                        onClick={() => setSelectedTab('address')}
+                        onClick={() => {
+                            setSelectedTab('address');
+                            setIsEditing(false);
+                        }}
                     >
                         Sổ địa chỉ
                     </button>
@@ -557,7 +563,6 @@ export default function ProfileInterface({
 
                 {/* Main Content */}
                 <div className="w-full lg:w-3/4 bg-white p-4 lg:p-6 rounded shadow-md">
-                    {/* Personal Info Tab */}
                     {/* Personal Info Tab */}
                     {selectedTab === 'info' && (
                         <div>

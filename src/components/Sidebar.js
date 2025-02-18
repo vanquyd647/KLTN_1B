@@ -1,4 +1,4 @@
-export default function Sidebar() {
+export default function Sidebar({ isMobile }) {
     const categories = [
         {
             id: 1,
@@ -39,25 +39,35 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="p-6">
-            <h3 className="text-lg font-bold mb-4">Danh mục</h3>
-            <ul className="space-y-4">
+        <aside className={`${isMobile ? 'py-2' : 'p-6'}`}>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 px-4">Danh mục sản phẩm</h3>
+            <ul className="space-y-1">
                 {categories.map((category) => (
-                    <li key={category.id}>
+                    <li key={category.id} className="group">
                         {/* Danh mục cha */}
                         <a
                             href={`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`}
-                            className="hover:underline block font-bold"
+                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 
+                                     transition-colors duration-200 font-medium group-hover:text-blue-600"
                         >
-                            {category.name}
+                            <span>{category.name}</span>
+                            <svg 
+                                className="ml-auto w-5 h-5 text-gray-400 group-hover:text-blue-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
+                            </svg>
                         </a>
                         {/* Danh mục con */}
-                        <ul className="pl-4 mt-2 space-y-2">
+                        <ul className="">
                             {category.subCategories.map((subCategory) => (
                                 <li key={subCategory.id}>
                                     <a
                                         href={`/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`}
-                                        className="hover:underline text-gray-600 block"
+                                        className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 
+                                                 hover:text-blue-600 transition-colors duration-200"
                                     >
                                         {subCategory.name}
                                     </a>

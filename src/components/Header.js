@@ -119,12 +119,11 @@ const Header = memo(function Header({ ...props }) {
     };
 
     const searchSection = (
-        <li className="relative static md:relative" ref={searchRef}>
-            {/* Search Button */}
+        <li className="relative" ref={searchRef}>
             <button
                 type="button"
                 onClick={handleSearchClick}
-                className="hover:underline focus:outline-none p-2"
+                className="hover:underline focus:outline-none"
                 aria-label="Search"
             >
                 <svg
@@ -142,102 +141,56 @@ const Header = memo(function Header({ ...props }) {
                     />
                 </svg>
             </button>
-    
-            {/* Search Dropdown */}
+
             {isSearchOpen && (
-                <div className="fixed md:absolute top-0 md:top-full left-0 md:left-auto right-0 md:right-0 h-screen md:h-auto w-full md:w-96 bg-white md:rounded-lg shadow-xl z-[60] md:mt-2">
-                    {/* Header for Mobile */}
-                    <div className="flex items-center justify-between p-4 md:hidden border-b border-gray-200">
-                        <h2 className="text-lg font-medium text-gray-900">Tìm kiếm</h2>
-                        <button
-                            onClick={() => {
-                                setIsSearchOpen(false);
-                                setSearchTerm('');
-                                setSearchResults([]);
-                            }}
-                            className="p-2 -mr-2"
-                        >
-                            <svg
-                                className="w-5 h-5 text-gray-500"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-    
-                    {/* Search Content */}
+                <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl z-50">
                     <div className="p-4">
-                        {/* Search Input */}
-                        <div className="relative">
-                            <div className="relative">
-                                <input
-                                    ref={searchInputRef}
-                                    type="search"
-                                    placeholder="Tìm kiếm sản phẩm..."
-                                    className="w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 text-base"
-                                    value={searchTerm}
-                                    onChange={handleSearchInput}
-                                    onKeyDown={handleKeyDown}
-                                    autoComplete="off"
-                                />
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <svg
-                                        className="w-5 h-5 text-gray-400"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                    </svg>
-                                </div>
-                            </div>
+                        <div id="header-search-container">
+                            <input
+                                ref={searchInputRef}
+                                type="search"
+                                placeholder="Tìm kiếm sản phẩm..."
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black"
+                                value={searchTerm}
+                                onChange={handleSearchInput}
+                                onKeyDown={handleKeyDown}
+                                autoComplete="off"
+                            />
                         </div>
-    
-                        {/* Search Results */}
-                        <div className="mt-4 max-h-[calc(100vh-180px)] md:max-h-[400px] overflow-y-auto">
+
+                        <div className="max-h-[400px] overflow-y-auto mt-2">
                             {searchResults.slice(0, 4).map((product) => (
                                 <Link
                                     key={product.id}
                                     href={`/productdetail/${product.slug}`}
-                                    className="flex items-center space-x-4 p-3 hover:bg-gray-50 rounded-lg border-b border-gray-100 last:border-b-0"
+                                    className="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-lg"
                                     onClick={() => {
                                         setIsSearchOpen(false);
                                         setSearchTerm('');
                                         setSearchResults([]);
                                     }}
                                 >
-                                    <div className="flex-shrink-0">
-                                        <img
-                                            src={product.productColors[0]?.ProductColor?.image || '/placeholder-image.jpg'}
-                                            alt={product.product_name}
-                                            className="w-16 h-16 md:w-12 md:h-12 object-cover rounded-lg"
-                                        />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-base md:text-sm font-medium text-gray-900 truncate">
+                                    <img
+                                        src={product.productColors[0]?.ProductColor?.image || '/placeholder-image.jpg'}
+                                        alt={product.product_name}
+                                        className="w-12 h-12 object-cover rounded"
+                                    />
+                                    <div>
+                                        <p className="text-sm font-medium text-black">
                                             {product.product_name}
                                         </p>
-                                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                                        <div className="flex items-center gap-2">
                                             {product.discount_price ? (
                                                 <>
-                                                    <p className="text-sm text-gray-400 line-through">
+                                                    <p className="text-sm line-through text-gray-400">
                                                         {product.price.toLocaleString('vi-VN')}đ
                                                     </p>
-                                                    <p className="text-sm font-semibold text-red-600">
+                                                    <p className="text-sm font-medium text-red-500">
                                                         {product.discount_price.toLocaleString('vi-VN')}đ
                                                     </p>
                                                 </>
                                             ) : (
-                                                <p className="text-sm font-medium text-gray-900">
+                                                <p className="text-sm text-gray-500">
                                                     {product.price.toLocaleString('vi-VN')}đ
                                                 </p>
                                             )}
@@ -245,26 +198,27 @@ const Header = memo(function Header({ ...props }) {
                                     </div>
                                 </Link>
                             ))}
-    
-                            {/* Xem thêm sản phẩm */}
+
                             {searchResults.length > 4 && (
                                 <Link
                                     href={`/search?keyword=${encodeURIComponent(searchTerm.trim())}`}
-                                    className="block w-full text-center py-3 mt-2 text-blue-600 hover:text-blue-700 font-medium border-t border-gray-100"
-                                    onClick={() => {
+                                    className="block w-full text-center py-2 mt-2 text-blue-600 hover:text-blue-700 font-medium border-t"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
                                         setIsSearchOpen(false);
                                         setSearchTerm('');
                                         setSearchResults([]);
+                                        router.push(`/search?keyword=${encodeURIComponent(searchTerm.trim())}`);
                                     }}
                                 >
-                                    Xem thêm {searchResults.length - 4} sản phẩm
+                                    Xem thêm sản phẩm
                                 </Link>
                             )}
-    
-                            {/* Không tìm thấy kết quả */}
+
                             {searchTerm.trim().length >= 2 && searchResults.length === 0 && (
-                                <div className="py-8 text-center">
-                                    <p className="text-gray-500">Không tìm thấy sản phẩm phù hợp</p>
+                                <div className="mt-4 text-center text-gray-500">
+                                    Không tìm thấy sản phẩm phù hợp
                                 </div>
                             )}
                         </div>
@@ -273,7 +227,7 @@ const Header = memo(function Header({ ...props }) {
             )}
         </li>
     );
-    
+
     return (
         <>
             <header className="bg-blue-600 text-white p-4 shadow">
