@@ -289,11 +289,19 @@ export default function Slug() {
                     <div className="md:w-1/2 flex flex-col items-center">
                         <div className="w-full max-h-96 overflow-hidden">
                             <img
-                                src={selectedColor?.ProductColor?.image || 'https://via.placeholder.com/500'}
+                                src={
+                                    // Nếu có màu được chọn thì hiển thị ảnh của màu đó
+                                    selectedColor?.ProductColor?.image ||
+                                    // Nếu không có màu được chọn, lấy ảnh của màu đầu tiên trong danh sách
+                                    currentProduct.productColors[0]?.ProductColor?.image ||
+                                    // Nếu không có ảnh nào thì hiển thị ảnh mặc định
+                                    'https://via.placeholder.com/500'
+                                }
                                 alt={currentProduct.product_name}
                                 className="w-full h-full object-contain rounded"
                             />
                         </div>
+
                         <div className="flex gap-2 mt-4 overflow-x-auto">
                             {currentProduct.productColors.map((color) => {
                                 const hasStock = isColorAvailable(color.id);

@@ -4739,7 +4739,10 @@ function Slug() {
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                     className: "w-full max-h-96 overflow-hidden",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                                        src: selectedColor?.ProductColor?.image || 'https://via.placeholder.com/500',
+                                        src: // Nếu có màu được chọn thì hiển thị ảnh của màu đó
+                                        selectedColor?.ProductColor?.image || // Nếu không có màu được chọn, lấy ảnh của màu đầu tiên trong danh sách
+                                        currentProduct.productColors[0]?.ProductColor?.image || // Nếu không có ảnh nào thì hiển thị ảnh mặc định
+                                        'https://via.placeholder.com/500',
                                         alt: currentProduct.product_name,
                                         className: "w-full h-full object-contain rounded"
                                     }, void 0, false, {
@@ -4770,7 +4773,7 @@ function Slug() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 311,
+                                                    lineNumber: 319,
                                                     columnNumber: 41
                                                 }, this),
                                                 !hasStock && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4780,24 +4783,24 @@ function Slug() {
                                                         children: "Hết hàng"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 318,
+                                                        lineNumber: 326,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 317,
+                                                    lineNumber: 325,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, color.id, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 302,
+                                            lineNumber: 310,
                                             columnNumber: 37
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 297,
+                                    lineNumber: 305,
                                     columnNumber: 25
                                 }, this)
                             ]
@@ -4810,7 +4813,7 @@ function Slug() {
                             className: "hidden md:block border-l border-gray-300"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 326,
+                            lineNumber: 334,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4821,7 +4824,7 @@ function Slug() {
                                     children: currentProduct.product_name
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 329,
+                                    lineNumber: 337,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4832,7 +4835,7 @@ function Slug() {
                                             children: "TÌNH TRẠNG: "
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 331,
+                                            lineNumber: 339,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -4840,13 +4843,13 @@ function Slug() {
                                             children: checkTotalStock() ? 'Còn hàng' : 'Hết hàng'
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 332,
+                                            lineNumber: 340,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 330,
+                                    lineNumber: 338,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4857,7 +4860,7 @@ function Slug() {
                                             children: "GIÁ:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 337,
+                                            lineNumber: 345,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4868,7 +4871,7 @@ function Slug() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 338,
+                                            lineNumber: 346,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4879,13 +4882,13 @@ function Slug() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 341,
+                                            lineNumber: 349,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 336,
+                                    lineNumber: 344,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4896,7 +4899,7 @@ function Slug() {
                                             children: "KÍCH THƯỚC:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 347,
+                                            lineNumber: 355,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4916,24 +4919,24 @@ function Slug() {
                                                         children: size.size
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 364,
+                                                        lineNumber: 372,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, size.id, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 354,
+                                                    lineNumber: 362,
                                                     columnNumber: 41
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 348,
+                                            lineNumber: 356,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 346,
+                                    lineNumber: 354,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4944,7 +4947,7 @@ function Slug() {
                                             children: "MÀU SẮC:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 377,
+                                            lineNumber: 385,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4968,29 +4971,29 @@ function Slug() {
                                                             className: "w-full h-0.5 bg-gray-400 transform rotate-45"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                            lineNumber: 396,
+                                                            lineNumber: 404,
                                                             columnNumber: 53
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 395,
+                                                        lineNumber: 403,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, color.id, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 383,
+                                                    lineNumber: 391,
                                                     columnNumber: 41
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 378,
+                                            lineNumber: 386,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 376,
+                                    lineNumber: 384,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5001,7 +5004,7 @@ function Slug() {
                                             children: "CHỌN SỐ LƯỢNG:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 406,
+                                            lineNumber: 414,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5014,7 +5017,7 @@ function Slug() {
                                                     children: "-"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 408,
+                                                    lineNumber: 416,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -5026,7 +5029,7 @@ function Slug() {
                                                     readOnly: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 415,
+                                                    lineNumber: 423,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5036,7 +5039,7 @@ function Slug() {
                                                     children: "+"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 423,
+                                                    lineNumber: 431,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -5048,19 +5051,19 @@ function Slug() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 430,
+                                                    lineNumber: 438,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 407,
+                                            lineNumber: 415,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 405,
+                                    lineNumber: 413,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5073,7 +5076,7 @@ function Slug() {
                                             children: "THÊM VÀO GIỎ"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 437,
+                                            lineNumber: 445,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5083,19 +5086,19 @@ function Slug() {
                                             children: "MUA NGAY"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 444,
+                                            lineNumber: 452,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 436,
+                                    lineNumber: 444,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 328,
+                            lineNumber: 336,
                             columnNumber: 21
                         }, this)
                     ]
@@ -5116,7 +5119,7 @@ function Slug() {
                                     children: "ĐÁNH GIÁ"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 457,
+                                    lineNumber: 465,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5125,13 +5128,13 @@ function Slug() {
                                     children: "MÔ TẢ SẢN PHẨM"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 466,
+                                    lineNumber: 474,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 456,
+                            lineNumber: 464,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5141,7 +5144,7 @@ function Slug() {
                                     description: currentProduct.description
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 478,
+                                    lineNumber: 486,
                                     columnNumber: 57
                                 }, this),
                                 activeTab === 'reviews' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductReviews$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -5159,19 +5162,19 @@ function Slug() {
                                     router: router
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 480,
+                                    lineNumber: 488,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 477,
+                            lineNumber: 485,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                    lineNumber: 455,
+                    lineNumber: 463,
                     columnNumber: 17
                 }, this)
             ]
