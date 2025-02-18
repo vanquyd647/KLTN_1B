@@ -2461,7 +2461,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "",
-                                                children: "Select"
+                                                children: "Chọn"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
                                                 lineNumber: 289,
@@ -2469,7 +2469,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "male",
-                                                children: "Male"
+                                                children: "Nam"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
                                                 lineNumber: 290,
@@ -2477,7 +2477,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "female",
-                                                children: "Female"
+                                                children: "Nữ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
                                                 lineNumber: 291,
@@ -2485,7 +2485,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                 value: "other",
-                                                children: "Other"
+                                                children: "Khác"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
                                                 lineNumber: 292,

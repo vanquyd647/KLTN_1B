@@ -286,10 +286,10 @@ export default function AuthInterface({
                                 className="w-full border p-2 rounded"
                                 required
                             >
-                                <option value="">Select</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                                <option value="">Chọn</option>
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                                <option value="other">Khác</option>
                             </select>
                         </div>
                         <button
