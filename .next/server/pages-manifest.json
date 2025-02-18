@@ -10,5 +10,6 @@
   "/payment": "pages/payment.js",
   "/payment/cancel": "pages/payment/cancel.js",
   "/payment/success": "pages/payment/success.js",
-  "/new-products": "pages/new-products.js"
+  "/new-products": "pages/new-products.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js"
 }

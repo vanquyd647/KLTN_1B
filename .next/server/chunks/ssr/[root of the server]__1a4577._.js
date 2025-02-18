@@ -1889,7 +1889,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$ca
 ;
 // https://kltn-1a.onrender.com hihi
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://192.168.0.104:5551/v1/api/'
+    baseURL: 'https://c918-118-71-16-139.ngrok-free.app/v1/api/',
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+    },
+    withCredentials: true
 });
 // **Request Interceptor**
 apiClient.interceptors.request.use(async (config)=>{
