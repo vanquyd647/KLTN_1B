@@ -369,7 +369,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/v1/api/',
+    baseURL: 'https://c918-118-71-16-139.ngrok-free.app/v1/api',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
