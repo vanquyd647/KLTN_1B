@@ -6556,6 +6556,7 @@ function Profile() {
     });
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const controller = new AbortController();
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Profile.useEffect": ()=>{
             const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])(); // Lấy token từ storage
@@ -6725,12 +6726,12 @@ function Profile() {
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 186,
+                lineNumber: 187,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 185,
+            lineNumber: 186,
             columnNumber: 13
         }, this);
     }
@@ -6745,16 +6746,16 @@ function Profile() {
             userLoading: loading
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 209,
+            lineNumber: 210,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 208,
+        lineNumber: 209,
         columnNumber: 9
     }, this);
 }
-_s(Profile, "c9O0bRJE+6WvrHhuJA3r50LZoCA=", false, function() {
+_s(Profile, "3LMhuIv+UDOAM0UmlMSOhBxBydE=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { getUserInfo, logoutUser, loginUser, registerUser, verifyOtp } from '../../store/slices/userSlice';
 import { getToken, getCartId } from '../../utils/storage';
 import { orderApi, userApi } from '../../utils/apiClient';
-import Layout from '../../components/Layout';
+// Dynamic import
+const Layout = dynamic(() => import('../../components/Layout'), {
+    ssr: false
+});
 import AuthInterface from '../../components/profiles/AuthInterface';
 import ProfileInterface from '../../components/profiles/ProfileInterface';
 import {
@@ -17,8 +21,9 @@ import {
 export default function Profile() {
     const dispatch = useDispatch();
     const router = useRouter();
-
     const { user, loading } = useSelector((state) => state.auth);
+
+    const [isMounted, setIsMounted] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authStep, setAuthStep] = useState('login');
     const [selectedTab, setSelectedTab] = useState('info');
@@ -42,23 +47,34 @@ export default function Profile() {
     });
     const [error, setError] = useState(null);
     const controller = new AbortController();
+    const [mounted, setMounted] = useState(false);
 
+    // Mounted effect
     useEffect(() => {
-        const token = getToken(); // Lấy token từ storage
-        if (token) {
-            setIsAuthenticated(true);
-            dispatch(getUserInfo())
-                .then(() => {
-                    setError(null); // Đặt lại lỗi nếu thành công
-                })
-                .catch((err) => {
+        setIsMounted(true);
+    }, []);
+
+    // Authentication effect
+    useEffect(() => {
+        const initializeAuth = async () => {
+            const token = getToken();
+            if (token) {
+                setIsAuthenticated(true);
+                try {
+                    await dispatch(getUserInfo()).unwrap();
+                    setError(null);
+                } catch (err) {
                     console.error('Failed to get user info:', err);
-                    setError(err.message || 'Failed to authenticate'); // Lưu lỗi
-                    setIsAuthenticated(false); // Đặt lại trạng thái
-                });
+                    setError(err.message || 'Failed to authenticate');
+                    setIsAuthenticated(false);
+                }
+            }
+        };
+
+        if (isMounted) {
+            initializeAuth();
         }
-        return () => controller.abort();
-    }, [dispatch]);
+    }, [dispatch, isMounted]);
 
     // Thêm function để lấy orders
     const fetchOrders = async () => {
@@ -180,6 +196,10 @@ export default function Profile() {
         });
     };
 
+    if (!isMounted) {
+        return null;
+    }
+
     if (!isAuthenticated) {
         return (
             <Layout>
@@ -192,8 +212,8 @@ export default function Profile() {
                     handleLogin={handleLogin}
                     handleRegister={handleRegister}
                     handleOtpSubmit={handleOtpSubmit}
-                    handleForgotPassword={handleForgotPassword} 
-                    handleResetPassword={handleResetPassword} 
+                    handleForgotPassword={handleForgotPassword}
+                    handleResetPassword={handleResetPassword}
                     otp={otp}
                     setOtp={setOtp}
                     passwordVisibility={passwordVisibility}

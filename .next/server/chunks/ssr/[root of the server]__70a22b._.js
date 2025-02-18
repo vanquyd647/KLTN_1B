@@ -7122,6 +7122,7 @@ function Profile() {
     });
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
     const controller = new AbortController();
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])(); // Lấy token từ storage
         if (token) {
@@ -7281,12 +7282,12 @@ function Profile() {
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 186,
+                lineNumber: 187,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 185,
+            lineNumber: 186,
             columnNumber: 13
         }, this);
     }
@@ -7301,12 +7302,12 @@ function Profile() {
             userLoading: loading
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 209,
+            lineNumber: 210,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 208,
+        lineNumber: 209,
         columnNumber: 9
     }, this);
 }
