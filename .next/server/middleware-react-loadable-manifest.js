@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\n  \"src/pages/account/profile.js -> ../../components/Layout\": {\n    \"id\": \"src/pages/account/profile.js -> ../../components/Layout\",\n    \"files\": [\n      \"static/chunks/src_007b87._.js\",\n      \"static/chunks/node_modules_70937c._.js\",\n      \"static/chunks/src_components_Layout_bd64ad.js\"\n    ]\n  }\n}"
