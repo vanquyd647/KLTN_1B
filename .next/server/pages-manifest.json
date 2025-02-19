@@ -1,17 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/search": "pages/search.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/account/profile": "pages/account/profile.js",
-  "/cart": "pages/cart.js",
-  "/checkout": "pages/checkout.js",
-  "/payment": "pages/payment.js",
-  "/payment/cancel": "pages/payment/cancel.js",
-  "/payment/success": "pages/payment/success.js",
-  "/new-products": "pages/new-products.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/account/register": "pages/account/register.js",
-  "/featured-products": "pages/featured-products.js"
+  "/": "pages/index.js"
 }
