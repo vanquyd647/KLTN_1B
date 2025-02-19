@@ -996,6 +996,20 @@ const orderApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
+    },
+    /**
+ * Gửi email xác nhận đơn hàng
+ * @param {Object} data - Dữ liệu đơn hàng
+ * @param {Array} data.checkoutItems - Danh sách sản phẩm đặt hàng
+ * @param {Object} data.orderDetails - Chi tiết đơn hàng
+ * @returns {Promise<Object>} - Kết quả gửi email
+ */ sendOrderConfirmation: async (data)=>{
+        try {
+            const response = await apiClient.post('orders/send-order-confirmation', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể gửi email xác nhận đơn hàng.';
+        }
     }
 };
 const paymentApi = {
@@ -2430,46 +2444,123 @@ const PaymentSuccess = ()=>{
     const { code, orderCode, status, method } = router.query;
     const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('Đang xử lý thanh toán...');
     const [isSuccess, setIsSuccess] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
+    const [errorMessage, setErrorMessage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         if (!router.isReady) return;
         const updatePaymentStatus = async ()=>{
             try {
+                // Lấy thông tin đơn hàng từ localStorage
+                const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+                const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems'));
+                // Kiểm tra null
+                if (!orderDetails || !checkoutItems) {
+                    console.error('Không tìm thấy thông tin đơn hàng');
+                    setIsSuccess(false);
+                    setMessage('Có lỗi xảy ra');
+                    setErrorMessage('Không tìm thấy thông tin đơn hàng');
+                    setTimeout(()=>router.push('/checkout'), 3000);
+                    return;
+                }
+                // Format lại checkoutItems theo cấu trúc yêu cầu
+                const formattedCheckoutItems = checkoutItems.map((item)=>({
+                        product: {
+                            product_name: item.product.product_name,
+                            price: item.product.discount_price
+                        },
+                        quantity: item.quantity,
+                        size: {
+                            name: item.size.name
+                        },
+                        color: {
+                            name: item.color.name,
+                            image_url: item.color.image_url
+                        }
+                    }));
+                const emailData = {
+                    checkoutItems: formattedCheckoutItems,
+                    orderDetails: {
+                        data: {
+                            order_id: orderDetails.data.order_id,
+                            email: orderDetails.data.email,
+                            amount: orderDetails.data.amount,
+                            shipping_fee: orderDetails.data.shipping_fee,
+                            discount_amount: orderDetails.data.discount_amount || 0,
+                            expires_at: orderDetails.data.expires_at,
+                            formData: orderDetails.data.formData
+                        }
+                    }
+                };
                 if (method === 'cod') {
-                    // Xử lý thanh toán COD
                     if (code === '00' && status === 'PAID') {
-                        setIsSuccess(true);
-                        setMessage('Đặt hàng thành công!');
-                        localStorage.removeItem('orderDetails');
-                        localStorage.removeItem('checkoutItems');
-                        setTimeout(()=>router.push('/'), 3000);
+                        try {
+                            // Gửi email trước
+                            await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["orderApi"].sendOrderConfirmation(emailData);
+                            setIsSuccess(true);
+                            setMessage('Đặt hàng thành công!');
+                            // Xóa localStorage sau khi gửi email thành công
+                            localStorage.removeItem('orderDetails');
+                            localStorage.removeItem('checkoutItems');
+                            setTimeout(()=>router.push('/'), 3000);
+                        } catch (emailError) {
+                            console.error('Lỗi gửi email xác nhận:', emailError);
+                            setIsSuccess(true); // Vẫn xem như thành công vì đơn hàng đã được tạo
+                            setMessage('Đặt hàng thành công!');
+                            setErrorMessage('Không gửi được email xác nhận, nhưng đơn hàng đã được ghi nhận');
+                            setTimeout(()=>router.push('/'), 3000);
+                        }
                     } else {
                         setIsSuccess(false);
                         setMessage('Đặt hàng thất bại!');
+                        setErrorMessage('Vui lòng thử lại hoặc liên hệ hỗ trợ');
                         setTimeout(()=>router.push('/checkout'), 3000);
                     }
                 } else {
-                    // Xử lý thanh toán VietQR
-                    await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["paymentApi"].updatePaymentStatus({
-                        orderCode: Number(orderCode),
-                        status: status === 'CANCELLED' ? 'cancelled' : 'paid',
-                        transactionId: Date.now().toString()
-                    });
-                    if (code === '00' && status === 'PAID') {
-                        setIsSuccess(true);
-                        setMessage('Thanh toán thành công!');
-                        localStorage.removeItem('orderDetails');
-                        localStorage.removeItem('checkoutItems');
-                        setTimeout(()=>router.push('/'), 3000);
-                    } else {
+                    try {
+                        // Xử lý thanh toán VietQR
+                        await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["paymentApi"].updatePaymentStatus({
+                            orderCode: Number(orderCode),
+                            status: status === 'CANCELLED' ? 'cancelled' : 'paid',
+                            transactionId: Date.now().toString()
+                        });
+                        if (code === '00' && status === 'PAID') {
+                            try {
+                                // Gửi email trước
+                                await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["orderApi"].sendOrderConfirmation(emailData);
+                                setIsSuccess(true);
+                                setMessage('Thanh toán thành công!');
+                                // Xóa localStorage sau khi gửi email thành công
+                                localStorage.removeItem('orderDetails');
+                                localStorage.removeItem('checkoutItems');
+                                setTimeout(()=>router.push('/'), 3000);
+                            } catch (emailError) {
+                                console.error('Lỗi gửi email xác nhận:', emailError);
+                                setIsSuccess(true);
+                                setMessage('Thanh toán thành công!');
+                                setErrorMessage('Không gửi được email xác nhận, nhưng thanh toán đã được ghi nhận');
+                                localStorage.removeItem('orderDetails');
+                                localStorage.removeItem('checkoutItems');
+                                setTimeout(()=>router.push('/'), 3000);
+                            }
+                        } else {
+                            setIsSuccess(false);
+                            setMessage('Thanh toán thất bại!');
+                            setErrorMessage('Vui lòng thử lại hoặc chọn phương thức thanh toán khác');
+                            setTimeout(()=>router.push('/checkout'), 3000);
+                        }
+                    } catch (error) {
+                        console.error('Lỗi cập nhật trạng thái:', error);
                         setIsSuccess(false);
-                        setMessage('Thanh toán thất bại!');
+                        setMessage('Có lỗi xảy ra');
+                        setErrorMessage('Không thể cập nhật trạng thái thanh toán. Vui lòng liên hệ hỗ trợ');
                         setTimeout(()=>router.push('/checkout'), 3000);
                     }
                 }
             } catch (error) {
-                console.error('Lỗi cập nhật trạng thái:', error);
+                console.error('Lỗi xử lý:', error);
                 setIsSuccess(false);
-                setMessage('Có lỗi xảy ra khi cập nhật trạng thái');
+                setMessage('Có lỗi xảy ra');
+                setErrorMessage(error.message || 'Vui lòng thử lại sau');
+                setTimeout(()=>router.push('/checkout'), 3000);
             }
         };
         updatePaymentStatus();
@@ -2478,7 +2569,8 @@ const PaymentSuccess = ()=>{
         code,
         orderCode,
         status,
-        method
+        method,
+        router
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-gray-100 flex items-center justify-center",
@@ -2502,17 +2594,17 @@ const PaymentSuccess = ()=>{
                                     d: "M5 13l4 4L19 7"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/payment/success.js",
-                                    lineNumber: 73,
+                                    lineNumber: 163,
                                     columnNumber: 37
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/payment/success.js",
-                                lineNumber: 67,
+                                lineNumber: 157,
                                 columnNumber: 33
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 66,
+                            lineNumber: 156,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
@@ -2520,23 +2612,31 @@ const PaymentSuccess = ()=>{
                             children: message
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 81,
+                            lineNumber: 171,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                             className: "text-gray-600",
-                            children: "Cảm ơn bạn đã thanh toán. Đơn hàng của bạn đang được xử lý."
+                            children: "Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 84,
+                            lineNumber: 174,
                             columnNumber: 29
+                        }, this),
+                        errorMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                            className: "text-yellow-600 mt-2",
+                            children: errorMessage
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/payment/success.js",
+                            lineNumber: 178,
+                            columnNumber: 33
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                             className: "text-sm text-gray-500 mt-4",
                             children: "Tự động chuyển hướng sau 3 giây..."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 87,
+                            lineNumber: 180,
                             columnNumber: 29
                         }, this)
                     ]
@@ -2556,17 +2656,17 @@ const PaymentSuccess = ()=>{
                                     d: "M6 18L18 6M6 6l12 12"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/payment/success.js",
-                                    lineNumber: 100,
+                                    lineNumber: 193,
                                     columnNumber: 37
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/payment/success.js",
-                                lineNumber: 94,
+                                lineNumber: 187,
                                 columnNumber: 33
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 93,
+                            lineNumber: 186,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
@@ -2574,15 +2674,15 @@ const PaymentSuccess = ()=>{
                             children: message
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 108,
+                            lineNumber: 201,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                             className: "text-gray-600",
-                            children: "Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại."
+                            children: errorMessage || 'Đang trong quá trình xử lý. Vui lòng chờ.'
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 111,
+                            lineNumber: 204,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -2590,24 +2690,24 @@ const PaymentSuccess = ()=>{
                             children: "Đang chuyển về trang thanh toán..."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/payment/success.js",
-                            lineNumber: 114,
+                            lineNumber: 207,
                             columnNumber: 29
                         }, this)
                     ]
                 }, void 0, true)
             }, void 0, false, {
                 fileName: "[project]/src/pages/payment/success.js",
-                lineNumber: 63,
+                lineNumber: 153,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/payment/success.js",
-            lineNumber: 62,
+            lineNumber: 152,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/payment/success.js",
-        lineNumber: 61,
+        lineNumber: 151,
         columnNumber: 9
     }, this);
 };

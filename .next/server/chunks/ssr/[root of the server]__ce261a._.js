@@ -409,7 +409,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://dc1c-118-71-16-139.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -995,6 +995,20 @@ const orderApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
+    },
+    /**
+ * Gửi email xác nhận đơn hàng
+ * @param {Object} data - Dữ liệu đơn hàng
+ * @param {Array} data.checkoutItems - Danh sách sản phẩm đặt hàng
+ * @param {Object} data.orderDetails - Chi tiết đơn hàng
+ * @returns {Promise<Object>} - Kết quả gửi email
+ */ sendOrderConfirmation: async (data)=>{
+        try {
+            const response = await apiClient.post('orders/send-order-confirmation', data);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể gửi email xác nhận đơn hàng.';
         }
     }
 };

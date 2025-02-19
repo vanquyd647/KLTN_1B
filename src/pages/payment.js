@@ -114,9 +114,6 @@ const PaymentPage = () => {
                     method: result.payment_method
                 }));
 
-                // Xóa thông tin đơn hàng cũ
-                localStorage.removeItem('orderDetails');
-
                 // Chuyển hướng với query params
                 router.push({
                     pathname: '/payment/success',
