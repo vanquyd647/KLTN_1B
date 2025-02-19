@@ -21,10 +21,10 @@ import {
 import { resetAuthState } from '../store/slices/userSlice';
 import { getCartItems } from '../store/slices/cartSlice';
 
-// https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://6257-183-81-47-27.ngrok-free.app
+// https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/,
 
 const apiClient = axios.create({
-    baseURL: 'https://6257-183-81-47-27.ngrok-free.app/v1/api',
+    baseURL: 'https://b87b-183-81-47-27.ngrok-free.app/v1/api',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
