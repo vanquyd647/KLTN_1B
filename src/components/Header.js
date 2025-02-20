@@ -143,14 +143,37 @@ const Header = memo(function Header({ ...props }) {
             </button>
 
             {isSearchOpen && (
-                <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl z-50">
+                <div className="fixed md:absolute top-0 md:top-full left-0 md:left-auto right-0 md:right-0 h-screen md:h-auto w-full md:w-96 bg-white md:rounded-lg shadow-xl z-[60] md:mt-2">
                     <div className="p-4">
+                        <div className="flex items-center justify-between p-4 md:hidden border-b border-gray-200">
+                            <h2 className="text-lg font-medium text-gray-900">Tìm kiếm</h2>
+                            <button
+                                onClick={() => {
+                                    setIsSearchOpen(false);
+                                    setSearchTerm('');
+                                    setSearchResults([]);
+                                }}
+                                className="p-2 -mr-2"
+                            >
+                                <svg
+                                    className="w-5 h-5 text-gray-500"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
                         <div id="header-search-container">
                             <input
                                 ref={searchInputRef}
                                 type="search"
                                 placeholder="Tìm kiếm sản phẩm..."
-                                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black"
+                                className="w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 text-base"
                                 value={searchTerm}
                                 onChange={handleSearchInput}
                                 onKeyDown={handleKeyDown}

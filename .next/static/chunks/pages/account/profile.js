@@ -1,5 +1,5 @@
 __turbopack_load_page_chunks__("/account/profile", [
-  "static/chunks/[root of the server]__930b99._.js",
+  "static/chunks/[root of the server]__06f78d._.js",
   "static/chunks/node_modules_next_ae94e1._.js",
   "static/chunks/node_modules_react-dom_82bb97._.js",
   "static/chunks/node_modules_axios_lib_9a6fdf._.js",
@@ -9,7 +9,7 @@ __turbopack_load_page_chunks__("/account/profile", [
   "static/chunks/node_modules_react-icons_ri_index_mjs_e8a241._.js",
   "static/chunks/node_modules_react-icons_lib_75a63d._.js",
   "static/chunks/node_modules_ebeb8d._.js",
-  "static/chunks/src_components_Layout_cba543.js",
+  "static/chunks/src_components_Layout_a2d792.js",
   "static/chunks/src_pages_account_profile_5771e1.js",
-  "static/chunks/src_pages_account_profile_1ff7d5.js"
+  "static/chunks/src_pages_account_profile_95aff1.js"
 ])
