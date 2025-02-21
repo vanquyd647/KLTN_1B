@@ -4,9 +4,6 @@
   "/": "pages/index.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/account/profile": "pages/account/profile.js",
-  "/cart": "pages/cart.js",
-  "/checkout": "pages/checkout.js",
-  "/payment": "pages/payment.js",
-  "/search": "pages/search.js",
-  "/payment/success": "pages/payment/success.js"
+  "/favorites": "pages/favorites.js",
+  "/search": "pages/search.js"
 }

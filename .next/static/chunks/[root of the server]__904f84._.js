@@ -649,6 +649,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
     "paymentApi": (()=>paymentApi),
@@ -666,7 +667,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://459d-118-71-16-139.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1422,6 +1423,58 @@ const addressApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể đặt địa chỉ mặc định.';
+        }
+    }
+};
+const favoriteApi = {
+    // Kiểm tra trạng thái yêu thích của sản phẩm
+    checkFavoriteStatus: async (productId)=>{
+        try {
+            const response = await apiClient.get(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể kiểm tra trạng thái yêu thích.';
+        }
+    },
+    // Lấy danh sách sản phẩm yêu thích
+    getFavorites: async (page = 1, limit = 10)=>{
+        try {
+            const response = await apiClient.get('favorites/favorites', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách yêu thích.';
+        }
+    },
+    // Thêm sản phẩm vào danh sách yêu thích
+    addToFavorite: async (productId)=>{
+        try {
+            const response = await apiClient.post(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể thêm vào yêu thích.';
+        }
+    },
+    // Xóa sản phẩm khỏi danh sách yêu thích
+    removeFromFavorite: async (productId)=>{
+        try {
+            const response = await apiClient.delete(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa khỏi yêu thích.';
+        }
+    },
+    // Chuyển danh sách yêu thích từ session sang tài khoản
+    transferFavorites: async ()=>{
+        try {
+            const response = await apiClient.post('favorites/favorites/transfer');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể chuyển danh sách yêu thích.';
         }
     }
 };

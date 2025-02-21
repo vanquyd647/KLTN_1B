@@ -832,6 +832,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
     "paymentApi": (()=>paymentApi),
@@ -849,7 +850,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://459d-118-71-16-139.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1605,6 +1606,58 @@ const addressApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể đặt địa chỉ mặc định.';
+        }
+    }
+};
+const favoriteApi = {
+    // Kiểm tra trạng thái yêu thích của sản phẩm
+    checkFavoriteStatus: async (productId)=>{
+        try {
+            const response = await apiClient.get(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể kiểm tra trạng thái yêu thích.';
+        }
+    },
+    // Lấy danh sách sản phẩm yêu thích
+    getFavorites: async (page = 1, limit = 10)=>{
+        try {
+            const response = await apiClient.get('favorites/favorites', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách yêu thích.';
+        }
+    },
+    // Thêm sản phẩm vào danh sách yêu thích
+    addToFavorite: async (productId)=>{
+        try {
+            const response = await apiClient.post(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể thêm vào yêu thích.';
+        }
+    },
+    // Xóa sản phẩm khỏi danh sách yêu thích
+    removeFromFavorite: async (productId)=>{
+        try {
+            const response = await apiClient.delete(`favorites/products/${productId}/favorite`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa khỏi yêu thích.';
+        }
+    },
+    // Chuyển danh sách yêu thích từ session sang tài khoản
+    transferFavorites: async ()=>{
+        try {
+            const response = await apiClient.post('favorites/favorites/transfer');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể chuyển danh sách yêu thích.';
         }
     }
 };
@@ -3928,8 +3981,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/link.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_import__("[project]/node_modules/@heroicons/react/24/outline/esm/HeartIcon.js [client] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_import__("[project]/node_modules/@heroicons/react/24/solid/esm/HeartIcon.js [client] (ecmascript) <export default as HeartIcon>");
 ;
 var _s = __turbopack_refresh__.signature();
+;
+;
 ;
 ;
 ;
@@ -3944,6 +4001,7 @@ function Index() {
     const [newProducts, setNewProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [featuredProducts, setFeaturedProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [favorites, setFavorites] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({});
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const pageSize = 10; // Default fetch size
     const fetchNewProducts = async ()=>{
@@ -3983,12 +4041,52 @@ function Index() {
     const handleProductClick = (slug)=>{
         router.push(`/productdetail/${slug}`);
     };
+    const handleFavoriteClick = async (e, productId)=>{
+        e.stopPropagation(); // Ngăn bubble up tới card
+        try {
+            if (favorites[productId]) {
+                await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["favoriteApi"].removeFromFavorite(productId);
+            } else {
+                await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["favoriteApi"].addToFavorite(productId);
+            }
+            setFavorites((prev)=>({
+                    ...prev,
+                    [productId]: !prev[productId]
+                }));
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        }
+    };
+    // Thêm useEffect để load trạng thái yêu thích
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Index.useEffect": ()=>{
+            const loadFavoriteStatus = {
+                "Index.useEffect.loadFavoriteStatus": async ()=>{
+                    try {
+                        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["favoriteApi"].getFavorites();
+                        // Chuyển đổi mảng favorites thành object với key là product_id
+                        const favoritesMap = {};
+                        // Sửa từ response.data.items thành response.data
+                        response.data.forEach({
+                            "Index.useEffect.loadFavoriteStatus": (item)=>{
+                                favoritesMap[item.product_id] = true;
+                            }
+                        }["Index.useEffect.loadFavoriteStatus"]);
+                        setFavorites(favoritesMap);
+                    } catch (error) {
+                        console.error('Error loading favorite status:', error);
+                    }
+                }
+            }["Index.useEffect.loadFavoriteStatus"];
+            loadFavoriteStatus();
+        }
+    }["Index.useEffect"], []);
     const hasNoProducts = !newProducts.length && !featuredProducts.length;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 59,
+                lineNumber: 98,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3997,17 +4095,17 @@ function Index() {
                     className: "hidden md:flex justify-center gap-4",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 64,
+                        lineNumber: 103,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/pages/index.js",
-                    lineNumber: 63,
+                    lineNumber: 102,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 62,
+                lineNumber: 101,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4017,14 +4115,14 @@ function Index() {
                     children: "Đang tải..."
                 }, void 0, false, {
                     fileName: "[project]/src/pages/index.js",
-                    lineNumber: 71,
+                    lineNumber: 110,
                     columnNumber: 21
                 }, this) : hasNoProducts ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-center text-gray-500 text-lg",
                     children: "Không có sản phẩm"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/index.js",
-                    lineNumber: 73,
+                    lineNumber: 112,
                     columnNumber: 21
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
                     children: [
@@ -4033,39 +4131,60 @@ function Index() {
                             children: "Sản phẩm mới"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 77,
+                            lineNumber: 116,
                             columnNumber: 25
                         }, this),
                         newProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
                             children: newProducts.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer",
+                                    className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative",
                                     onClick: ()=>handleProductClick(product.slug),
                                     children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: (e)=>handleFavoriteClick(e, product.id),
+                                            className: "absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100",
+                                            children: favorites[product.id] ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                                className: "h-6 w-6 text-red-500"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/index.js",
+                                                lineNumber: 130,
+                                                columnNumber: 49
+                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                                className: "h-6 w-6 text-gray-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/index.js",
+                                                lineNumber: 132,
+                                                columnNumber: 49
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/index.js",
+                                            lineNumber: 125,
+                                            columnNumber: 41
+                                        }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                             src: product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150',
                                             alt: product.product_name,
                                             className: "w-full h-40 object-cover rounded sm:h-60 md:h-72"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 86,
-                                            columnNumber: 37
+                                            lineNumber: 136,
+                                            columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                             className: "text-lg font-semibold mt-2",
                                             children: product.product_name
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 94,
-                                            columnNumber: 37
+                                            lineNumber: 144,
+                                            columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-gray-600 line-clamp-2",
                                             children: product.description
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 95,
-                                            columnNumber: 37
+                                            lineNumber: 145,
+                                            columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "mt-2",
@@ -4079,8 +4198,8 @@ function Index() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/index.js",
-                                                        lineNumber: 99,
-                                                        columnNumber: 49
+                                                        lineNumber: 149,
+                                                        columnNumber: 53
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "text-gray-500 line-through",
@@ -4090,8 +4209,8 @@ function Index() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/index.js",
-                                                        lineNumber: 102,
-                                                        columnNumber: 49
+                                                        lineNumber: 152,
+                                                        columnNumber: 53
                                                     }, this)
                                                 ]
                                             }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4102,13 +4221,13 @@ function Index() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/index.js",
-                                                lineNumber: 107,
-                                                columnNumber: 45
+                                                lineNumber: 157,
+                                                columnNumber: 49
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 96,
-                                            columnNumber: 37
+                                            lineNumber: 146,
+                                            columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex gap-1 mt-2",
@@ -4120,30 +4239,30 @@ function Index() {
                                                     title: color.color
                                                 }, color.id, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 114,
-                                                    columnNumber: 45
+                                                    lineNumber: 164,
+                                                    columnNumber: 49
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 112,
-                                            columnNumber: 37
+                                            lineNumber: 162,
+                                            columnNumber: 41
                                         }, this)
                                     ]
                                 }, product.id, true, {
                                     fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 81,
-                                    columnNumber: 33
+                                    lineNumber: 120,
+                                    columnNumber: 37
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 79,
+                            lineNumber: 118,
                             columnNumber: 29
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-center text-gray-500",
                             children: "Không có sản phẩm mới."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 126,
+                            lineNumber: 176,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4154,12 +4273,12 @@ function Index() {
                                 children: "Xem tất cả"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 129,
+                                lineNumber: 179,
                                 columnNumber: 29
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 128,
+                            lineNumber: 178,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -4167,7 +4286,7 @@ function Index() {
                             children: "Sản phẩm nổi bật"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 135,
+                            lineNumber: 185,
                             columnNumber: 25
                         }, this),
                         featuredProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4182,7 +4301,7 @@ function Index() {
                                             className: "w-full h-60 sm:h-72 md:h-80 object-cover rounded"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 144,
+                                            lineNumber: 194,
                                             columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -4190,7 +4309,7 @@ function Index() {
                                             children: product.product_name
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 152,
+                                            lineNumber: 202,
                                             columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4198,7 +4317,7 @@ function Index() {
                                             children: product.description
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 153,
+                                            lineNumber: 203,
                                             columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4213,7 +4332,7 @@ function Index() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/index.js",
-                                                        lineNumber: 157,
+                                                        lineNumber: 207,
                                                         columnNumber: 53
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4224,7 +4343,7 @@ function Index() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/index.js",
-                                                        lineNumber: 160,
+                                                        lineNumber: 210,
                                                         columnNumber: 53
                                                     }, this)
                                                 ]
@@ -4236,12 +4355,12 @@ function Index() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/index.js",
-                                                lineNumber: 165,
+                                                lineNumber: 215,
                                                 columnNumber: 49
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 154,
+                                            lineNumber: 204,
                                             columnNumber: 41
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4254,30 +4373,30 @@ function Index() {
                                                     title: color.color
                                                 }, color.id, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 172,
+                                                    lineNumber: 222,
                                                     columnNumber: 49
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 170,
+                                            lineNumber: 220,
                                             columnNumber: 41
                                         }, this)
                                     ]
                                 }, product.id, true, {
                                     fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 139,
+                                    lineNumber: 189,
                                     columnNumber: 37
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 137,
+                            lineNumber: 187,
                             columnNumber: 29
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-center text-gray-500",
                             children: "Không có sản phẩm nổi bật."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 184,
+                            lineNumber: 234,
                             columnNumber: 29
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4288,29 +4407,29 @@ function Index() {
                                 children: "Xem tất cả"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 187,
+                                lineNumber: 237,
                                 columnNumber: 29
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 186,
+                            lineNumber: 236,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true)
             }, void 0, false, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 69,
+                lineNumber: 108,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/index.js",
-        lineNumber: 58,
+        lineNumber: 97,
         columnNumber: 9
     }, this);
 }
-_s(Index, "GxsUn70n7ccVayzp51noQ+hN+mY=", false, function() {
+_s(Index, "Nu8iqU7y3B68Aq19y5aHAlfdHjs=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
