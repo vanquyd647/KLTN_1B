@@ -291,14 +291,14 @@ const CartPage = () => {
 
                                     return (
                                         <li key={`${item.id}-${index}`}
-                                            className={`flex gap-4 items-center ${isOutOfStock ? 'opacity-50' : ''}`}
+                                            className={`flex gap-4 items-center overflow-x-auto ${isOutOfStock ? 'opacity-50' : ''}`}
                                         >
                                             {/* Checkbox */}
                                             <input
                                                 type="checkbox"
                                                 checked={selectedItems.includes(item.id)}
                                                 onChange={() => toggleSelectItem(item.id)}
-                                                className="mr-2"
+                                                className="mr-1"
                                                 disabled={isOutOfStock}
                                             />
 
@@ -306,11 +306,11 @@ const CartPage = () => {
                                             <img
                                                 src={selectedColorImage}
                                                 alt={product.product_name || 'Product'}
-                                                className="w-24 h-24 object-cover rounded border"
+                                                className="w-16 h-16 object-cover rounded border"
                                             />
 
                                             {/* Product Details */}
-                                            <div className="flex-1" onClick={() => handleProductClick(product.slug)}>
+                                            <div className="flex-1 min-w-0" onClick={() => handleProductClick(product.slug)}>
                                                 <h3 className="text-lg font-semibold">
                                                     {product.product_name || 'Unknown Product'}
                                                 </h3>
@@ -337,7 +337,7 @@ const CartPage = () => {
                                             </div>
 
                                             {/* Quantity Controls */}
-                                            <div className="flex items-center gap-1 sm:gap-2">
+                                            <div className="flex items-center gap-1">
                                                 <button
                                                     onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                                                     className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base"

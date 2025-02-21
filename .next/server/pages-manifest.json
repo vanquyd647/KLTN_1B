@@ -5,5 +5,13 @@
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/account/profile": "pages/account/profile.js",
   "/favorites": "pages/favorites.js",
-  "/search": "pages/search.js"
+  "/search": "pages/search.js",
+  "/cart": "pages/cart.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/checkout": "pages/checkout.js",
+  "/payment": "pages/payment.js",
+  "/payment/cancel": "pages/payment/cancel.js",
+  "/payment/success": "pages/payment/success.js",
+  "/new-products": "pages/new-products.js",
+  "/featured-products": "pages/featured-products.js"
 }

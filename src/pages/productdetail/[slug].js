@@ -15,6 +15,15 @@ import { fetchReviewsByProduct, fetchAverageRating, createReview } from '../../s
 import Layout from '../../components/Layout';
 import ProductReviews from '../../components/slugs/ProductReviews';
 import ProductDescription from '../../components/slugs/ProductDescription';
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import {
+    addToFavorite,
+    removeFromFavorite,
+    getFavorites,
+    selectFavoriteStatuses
+} from '../../store/slices/favoriteSlice';
+
 
 export default function Slug() {
     // Redux setup
@@ -28,6 +37,10 @@ export default function Slug() {
     const { reviews, averageRating, pagination, reviewsError } = useSelector((state) => state.reviews);
     const { items: cartItems } = useSelector((state) => state.cart);
 
+    // Thêm vào phần Redux selectors
+    const favorites = useSelector(selectFavoriteStatuses);
+    const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
+
     // Local state
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -38,6 +51,11 @@ export default function Slug() {
     const [stocks, setStocks] = useState([]);
     const [stocksLoading, setStocksLoading] = useState(true);
     const [stocksError, setStocksError] = useState(null);
+
+    useEffect(() => {
+        dispatch(getFavorites({ page: 1, limit: 100 }));
+    }, [dispatch]);
+
 
     // API Calls
     useEffect(() => {
@@ -65,6 +83,31 @@ export default function Slug() {
         };
         fetchStocks();
     }, []);
+
+    const handleFavoriteClick = async (e) => {
+        e.stopPropagation();
+        if (!getToken()) {
+            router.push('/login');
+            return;
+        }
+
+        if (isUpdatingFavorite) return;
+        setIsUpdatingFavorite(true);
+
+        try {
+            if (favorites[currentProduct.id]) {
+                await dispatch(removeFromFavorite(currentProduct.id)).unwrap();
+            } else {
+                await dispatch(addToFavorite(currentProduct.id)).unwrap();
+            }
+            await dispatch(getFavorites({ page: 1, limit: 100 }));
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        } finally {
+            setIsUpdatingFavorite(false);
+        }
+    };
+
 
     // Stock Management Functions
     const getStockQuantity = (colorId, sizeId) => {
@@ -335,6 +378,22 @@ export default function Slug() {
                     {/* Product Details */}
                     <div className="md:w-1/2">
                         <h1 className="text-2xl font-bold mb-4">{currentProduct.product_name}</h1>
+                        <button
+                            onClick={handleFavoriteClick}
+                            disabled={isUpdatingFavorite}
+                            className={`
+                p-2 rounded-full hover:bg-gray-100 transition-colors
+                ${isUpdatingFavorite ? 'opacity-50 cursor-not-allowed' : ''}
+            `}
+                        >
+                            {isUpdatingFavorite ? (
+                                <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                            ) : favorites[currentProduct.id] ? (
+                                <HeartSolid className="h-6 w-6 text-red-500" />
+                            ) : (
+                                <HeartOutline className="h-6 w-6 text-gray-400" />
+                            )}
+                        </button>
                         <div className="mb-4">
                             <span className="text-lg font-semibold">TÌNH TRẠNG: </span>
                             <span className={`font-bold ${checkTotalStock() ? 'text-green-500' : 'text-red-500'}`}>

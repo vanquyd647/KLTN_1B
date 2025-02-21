@@ -529,6 +529,18 @@ img, video {
   margin-top: 2rem;
 }
 
+.mr-1 {
+  margin-right: .25rem;
+}
+
+.ml-1 {
+  margin-left: .25rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1034,6 +1046,11 @@ img, video {
 
 .border-transparent {
   border-color: #0000;
+}
+
+.border-t-blue-500 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(59 130 246 / var(--tw-border-opacity, 1));
 }
 
 .bg-black {

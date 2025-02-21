@@ -8,6 +8,7 @@ import colorsReducer from '../store/slices/colorsSlice';
 import categoryReducer from '../store/slices/categorySlice';
 import adminUserReducer from '../store/slices/adminUserSlice';
 import orderReducer from '../store/slices/orderSlice';
+import favoriteReducer from '../store/slices/favoriteSlice';
 
 const store = configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
         categories: categoryReducer,
         adminUser: adminUserReducer,
         order: orderReducer,
+        favorites: favoriteReducer,
     },
 });
 

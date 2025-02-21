@@ -6,6 +6,15 @@ import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar2';
 import Banner from '../../components/Banner';
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import {
+    addToFavorite,
+    removeFromFavorite,
+    getFavorites,
+    selectFavoriteStatuses
+} from '../../store/slices/favoriteSlice';
+
 
 export default function ProductsByCategory() {
     const dispatch = useDispatch();
@@ -22,6 +31,12 @@ export default function ProductsByCategory() {
     const pageSize = 10;
 
     const { categoryId, categoryName } = router.query;
+    const favorites = useSelector(selectFavoriteStatuses);
+
+    useEffect(() => {
+        dispatch(getFavorites({ page: 1, limit: 100 }));
+    }, [dispatch]);
+
 
     // Fetch products when filters or pagination change
     useEffect(() => {
@@ -62,6 +77,21 @@ export default function ProductsByCategory() {
         setSort(e.target.value);
         setCurrentPage(1); // Reset to the first page when filters change
     };
+
+    const handleFavoriteClick = async (e, productId) => {
+        e.stopPropagation();
+        try {
+            if (favorites[productId]) {
+                await dispatch(removeFromFavorite(productId)).unwrap();
+            } else {
+                await dispatch(addToFavorite(productId)).unwrap();
+            }
+            await dispatch(getFavorites({ page: 1, limit: 100 }));
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        }
+    };
+
 
     return (
         <Layout>
@@ -147,28 +177,59 @@ export default function ProductsByCategory() {
                     {products.map((product) => (
                         <div
                             key={product.id}
-                            className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                            className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative"
                             onClick={() => router.push(`/productdetail/${product.slug}`)}
                         >
+                            {/* Thêm nút favorite */}
+                            <button
+                                onClick={(e) => handleFavoriteClick(e, product.id)}
+                                className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
+                            >
+                                {favorites[product.id] ? (
+                                    <HeartSolid className="h-6 w-6 text-red-500" />
+                                ) : (
+                                    <HeartOutline className="h-6 w-6 text-gray-400" />
+                                )}
+                            </button>
+
+                            {/* Phần còn lại của card giữ nguyên */}
                             <img
-                                src={
-                                    product.productColors[0]?.ProductColor?.image ||
-                                    'https://via.placeholder.com/150'
-                                }
+                                src={product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150'}
                                 alt={product.product_name}
                                 className="w-full h-80 object-cover rounded"
                             />
                             <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
                             <p className="text-gray-600">{product.description}</p>
-                            <p className="text-red-500 font-bold">
-                                {product.discount_price.toLocaleString('vi-VN')} VND
-                            </p>
-                            <p className="text-gray-500 line-through">
-                                {product.price.toLocaleString('vi-VN')} VND
-                            </p>
+                            <div className="mt-2">
+                                {product.discount_price ? (
+                                    <>
+                                        <p className="text-red-500 font-bold">
+                                            {product.discount_price.toLocaleString('vi-VN')} đ
+                                        </p>
+                                        <p className="text-gray-500 line-through">
+                                            {product.price.toLocaleString('vi-VN')} đ
+                                        </p>
+                                    </>
+                                ) : (
+                                    <p className="text-gray-700 font-bold">
+                                        {product.price.toLocaleString('vi-VN')} đ
+                                    </p>
+                                )}
+                            </div>
+                            <div className="flex gap-1 mt-2">
+                                {product.productColors.map((color) => (
+                                    <div
+                                        key={color.id}
+                                        className="w-4 h-4 rounded-full border border-gray-300"
+                                        style={{ backgroundColor: color.hex_code }}
+                                        title={color.color}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     ))}
                 </div>
+
 
                 <div className="flex justify-center mt-6">
                     {currentPage < totalPages && (

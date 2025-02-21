@@ -6,6 +6,15 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar2';
 import Banner from '../components/Banner';
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import {
+    addToFavorite,
+    removeFromFavorite,
+    getFavorites,
+    selectFavoriteStatuses
+} from '../store/slices/favoriteSlice';
+
 
 export default function NewProducts() {
     const dispatch = useDispatch();
@@ -13,13 +22,18 @@ export default function NewProducts() {
     const { newProducts, loading, error } = useSelector((state) => state.products);
     const { data: colors, loading: colorsLoading, error: colorsError } = useSelector((state) => state.colors);
 
+    // Thêm vào phần khai báo selectors
+    const favorites = useSelector(selectFavoriteStatuses);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState('newest');
     const [priceRange, setPriceRange] = useState('');
     const [selectedColors, setSelectedColors] = useState([]);
     const pageSize = 10;
 
-
+    useEffect(() => {
+        dispatch(getFavorites({ page: 1, limit: 100 }));
+    }, [dispatch]);
 
     // Fetch dữ liệu khi thay đổi trang, sắp xếp, khoảng giá hoặc màu sắc
     useEffect(() => {
@@ -78,6 +92,21 @@ export default function NewProducts() {
     const handleLoadMore = () => {
         setCurrentPage((prevPage) => prevPage + 1);
     };
+
+    const handleFavoriteClick = async (e, productId) => {
+        e.stopPropagation();
+        try {
+            if (favorites[productId]) {
+                await dispatch(removeFromFavorite(productId)).unwrap();
+            } else {
+                await dispatch(addToFavorite(productId)).unwrap();
+            }
+            await dispatch(getFavorites({ page: 1, limit: 100 }));
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        }
+    };
+
 
     return (
         <Layout>
@@ -168,9 +197,19 @@ export default function NewProducts() {
                     {newProducts.items.map((product) => (
                         <div
                             key={product.id}
-                            className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                            className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative" // Thêm relative vào đây
                             onClick={() => handleProductClick(product.slug)}
                         >
+                            <button
+                                onClick={(e) => handleFavoriteClick(e, product.id)}
+                                className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
+                            >
+                                {favorites[product.id] ? (
+                                    <HeartSolid className="h-6 w-6 text-red-500" />
+                                ) : (
+                                    <HeartOutline className="h-6 w-6 text-gray-400" />
+                                )}
+                            </button>
                             <img
                                 src={
                                     product.productColors[0]?.ProductColor?.image ||

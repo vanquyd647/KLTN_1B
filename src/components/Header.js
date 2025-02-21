@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { productApi } from '../utils/apiClient';
 import Sidebar from './Sidebar';
+import { selectFavoriteCount } from '../store/slices/favoriteSlice';
 
 const Header = memo(function Header({ ...props }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -13,6 +14,7 @@ const Header = memo(function Header({ ...props }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+
     const searchRef = useRef(null);
     const searchInputRef = useRef(null);
     const router = useRouter();
@@ -24,6 +26,8 @@ const Header = memo(function Header({ ...props }) {
         }
         return sum;
     }, 0) || 0;
+
+    const favoriteCount = useSelector(selectFavoriteCount);
 
     // Xử lý drawer sidebar
     useEffect(() => {
@@ -118,8 +122,34 @@ const Header = memo(function Header({ ...props }) {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
+    const renderFavoriteIcon = () => (
+        <li className="relative">
+            <Link href="/favorites" className="hover:underline">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                </svg>
+                {favoriteCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                        {favoriteCount}
+                    </span>
+                )}
+            </Link>
+        </li>
+    );
+
     const searchSection = (
-        <li className="relative" ref={searchRef}>
+        <li className="relative w-6 h-6" ref={searchRef}>
             <button
                 type="button"
                 onClick={handleSearchClick}
@@ -305,13 +335,42 @@ const Header = memo(function Header({ ...props }) {
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-6 w-6"
-                                        fill="currentColor"
+                                        fill="none"
                                         viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
                                     >
                                         <path
-                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 7c0-3.31 2.69-6 6-6s6 2.69 6 6H6z"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                                         />
                                     </svg>
+                                </Link>
+                            </li>
+
+                            {/* Favorites Icon with Counter */}
+                            <li className="relative">
+                                <Link href="/favorites" className="hover:underline">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-6 w-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                        />
+                                    </svg>
+                                    {favoriteCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                                            {favoriteCount}
+                                        </span>
+                                    )}
                                 </Link>
                             </li>
 

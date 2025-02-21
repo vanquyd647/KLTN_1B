@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import { favoriteApi } from '../utils/apiClient';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavorites, removeFromFavorite } from '../store/slices/favoriteSlice';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import Banner from '@/components/Banner';
 
 export default function Favorites() {
     const router = useRouter();
-    const [favorites, setFavorites] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const { items, loading, error, pagination } = useSelector((state) => state.favorites);
 
     useEffect(() => {
         loadFavorites();
@@ -16,22 +17,15 @@ export default function Favorites() {
 
     const loadFavorites = async () => {
         try {
-            setLoading(true);
-            const response = await favoriteApi.getFavorites();
-            setFavorites(response.data);
-            setLoading(false);
+            await dispatch(getFavorites({ page: 1, limit: 10 })).unwrap();
         } catch (error) {
             console.error('Error loading favorites:', error);
-            setError('Không thể tải danh sách yêu thích');
-            setLoading(false);
         }
     };
 
     const handleRemoveFavorite = async (productId) => {
         try {
-            await favoriteApi.removeFromFavorite(productId);
-            // Cập nhật lại danh sách sau khi xóa
-            setFavorites(favorites.filter(item => item.product_id !== productId));
+            await dispatch(removeFromFavorite(productId)).unwrap();
         } catch (error) {
             console.error('Error removing favorite:', error);
         }
@@ -63,16 +57,19 @@ export default function Favorites() {
 
     return (
         <Layout>
+            <Banner title="Sản phẩm yêu thích" />
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-2xl font-bold mb-6">Sản phẩm yêu thích</h1>
+                <h1 className="text-2xl font-bold mb-6">
+                    Sản phẩm yêu thích ({pagination.total || 0})
+                </h1>
 
-                {favorites.length === 0 ? (
+                {items.length === 0 ? (
                     <div className="text-center text-gray-500">
                         Bạn chưa có sản phẩm yêu thích nào
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {favorites.map((item) => (
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                        {items.map((item) => (
                             <div
                                 key={item.id}
                                 className="bg-white rounded-lg shadow-md overflow-hidden relative"
