@@ -16,7 +16,7 @@ const StatusBadge = ({ status }) => {
             case 'pending':
                 return 'bg-yellow-100 text-yellow-800';
             case 'processing':
-                return 'bg-blue-100 text-blue-800';
+                return 'bg-gray-100 text-gray-800';
             case 'shipping':
                 return 'bg-indigo-100 text-indigo-800';
             case 'completed':
@@ -145,13 +145,13 @@ const OrderCard = ({ order, onViewDetail }) => {
             <div className="flex justify-between items-center border-t pt-3">
                 <div>
                     <p className="text-sm text-gray-600">Tổng tiền</p>
-                    <p className="font-medium text-lg text-blue-600">
+                    <p className="font-medium text-lg text-gray-600">
                         {formatPrice(order.pricing.final_price)}
                     </p>
                 </div>
                 <button
                     onClick={() => onViewDetail(order)}
-                    className="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                    className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition"
                 >
                     Xem chi tiết
                 </button>
@@ -289,7 +289,7 @@ const OrderDetail = ({ order, onClose }) => {
                             </div>
                             <div className="flex justify-between font-medium text-lg pt-2 border-t">
                                 <span>Tổng cộng</span>
-                                <span className="text-blue-600">{formatPrice(order.pricing.final_price)}</span>
+                                <span className="text-gray-600">{formatPrice(order.pricing.final_price)}</span>
                             </div>
                         </div>
                     </div>
@@ -519,7 +519,7 @@ export default function ProfileInterface({
                     <button
                         className={`w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
                             ${selectedTab === 'info'
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-gray-600 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200'
                             }`}
                         onClick={() => setSelectedTab('info')}
@@ -529,7 +529,7 @@ export default function ProfileInterface({
                     <button
                         className={`w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
                             ${selectedTab === 'orders'
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-gray-600 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200'
                             }`}
                         onClick={() => {
@@ -542,7 +542,7 @@ export default function ProfileInterface({
                     <button
                         className={`w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
                             ${selectedTab === 'address'
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-gray-600 text-white'
                                 : 'bg-gray-100 hover:bg-gray-200'
                             }`}
                         onClick={() => {
@@ -580,7 +580,7 @@ export default function ProfileInterface({
 
                             {userLoading ? (
                                 <div className="flex justify-center items-center h-40">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"></div>
                                 </div>
                             ) : user ? (
                                 isEditing ? (
@@ -596,7 +596,7 @@ export default function ProfileInterface({
                                                 name="firstname"
                                                 value={profileData.firstname}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
                                                 required
                                             />
                                         </div>
@@ -611,7 +611,7 @@ export default function ProfileInterface({
                                                 name="lastname"
                                                 value={profileData.lastname}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
                                                 required
                                             />
                                         </div>
@@ -635,7 +635,7 @@ export default function ProfileInterface({
                                                 name="phone"
                                                 value={profileData.phone}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
                                             />
                                         </div>
 
@@ -648,7 +648,7 @@ export default function ProfileInterface({
                                                 name="gender"
                                                 value={profileData.gender}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
                                             >
                                                 <option value="">Chọn giới tính</option>
                                                 <option value="male">Nam</option>
@@ -678,7 +678,7 @@ export default function ProfileInterface({
                                                 type="submit"
                                                 disabled={updateLoading}
                                                 className={`px-6 py-2 rounded-lg text-white
-                                ${updateLoading ? 'bg-blue-400' : 'bg-green-600 hover:bg-green-700'}`}
+                                ${updateLoading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}
                                             >
                                                 {updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'}
                                             </button>
@@ -727,7 +727,7 @@ export default function ProfileInterface({
                             <h2 className="text-xl font-semibold mb-6">Đơn hàng của tôi</h2>
                             {orderLoading ? (
                                 <div className="flex justify-center items-center h-40">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"></div>
                                 </div>
                             ) : orders?.data?.orders?.length > 0 ? (
                                 <div className="space-y-4">
@@ -764,7 +764,7 @@ export default function ProfileInterface({
                                         setShowAddressForm(true);
                                         setSelectedAddress(null);
                                     }}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                    className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
                                 >
                                     Thêm địa chỉ mới
                                 </button>
@@ -772,7 +772,7 @@ export default function ProfileInterface({
 
                             {addressLoading ? (
                                 <div className="flex justify-center items-center h-40">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"></div>
                                 </div>
                             ) : addresses.length > 0 ? (
                                 /* Address List */
@@ -789,7 +789,7 @@ export default function ProfileInterface({
                                                                 address.address_type === 'office' ? 'Văn phòng' : 'Khác'}
                                                         </span>
                                                         {address.is_default && (
-                                                            <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full 
+                                                            <span className="bg-gray-100 text-gray-800 text-xs px-2.5 py-1 rounded-full 
                                                                 font-medium flex items-center gap-1">
                                                                 <MdStars className="w-4 h-4" />
                                                                 Mặc định
@@ -929,7 +929,7 @@ export default function ProfileInterface({
                                                         address_type: e.target.value
                                                     })}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                 >
                                                     <option value="home">Nhà riêng</option>
                                                     <option value="office">Văn phòng</option>
@@ -950,7 +950,7 @@ export default function ProfileInterface({
                                                         street: e.target.value
                                                     })}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                     required
                                                 />
                                             </div>
@@ -964,7 +964,7 @@ export default function ProfileInterface({
                                                     value={provinces.find(p => p.name === addressFormData.city)?.code || ''}
                                                     onChange={handleProvinceChange}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                     required
                                                 >
                                                     <option value="">Chọn Tỉnh/Thành phố</option>
@@ -985,7 +985,7 @@ export default function ProfileInterface({
                                                     value={districts.find(d => d.name === addressFormData.district)?.code || ''}
                                                     onChange={handleDistrictChange}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                     required
                                                     disabled={!addressFormData.city}
                                                 >
@@ -1007,7 +1007,7 @@ export default function ProfileInterface({
                                                     value={wards.find(w => w.name === addressFormData.ward)?.code || ''}
                                                     onChange={handleWardChange}
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                     required
                                                     disabled={!addressFormData.district}
                                                 >
@@ -1029,7 +1029,7 @@ export default function ProfileInterface({
                                                         ...addressFormData,
                                                         is_default: e.target.checked
                                                     })}
-                                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                    className="h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 rounded"
                                                 />
                                                 <label htmlFor="is_default" className="ml-2 text-sm text-gray-700">
                                                     Đặt làm địa chỉ mặc định
@@ -1050,8 +1050,8 @@ export default function ProfileInterface({
                                                 </button>
                                                 <button
                                                     type="submit"
-                                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg 
-                                                                hover:bg-blue-700 transition-colors"
+                                                    className="px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg 
+                                                                hover:bg-gray-700 transition-colors"
                                                 >
                                                     {selectedAddress ? 'Cập nhật' : 'Thêm mới'}
                                                 </button>

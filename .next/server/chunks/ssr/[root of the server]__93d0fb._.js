@@ -2729,7 +2729,7 @@ function Sidebar({ isMobile }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
                                 href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                                className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50    transition-colors duration-200 font-medium group-hover:text-blue-600",
+                                className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50    transition-colors duration-200 font-medium group-hover:text-gray-600",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                         children: category.name
@@ -2739,7 +2739,7 @@ function Sidebar({ isMobile }) {
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
-                                        className: "ml-auto w-5 h-5 text-gray-400 group-hover:text-blue-600",
+                                        className: "ml-auto w-5 h-5 text-gray-400 group-hover:text-gray-600",
                                         fill: "none",
                                         viewBox: "0 0 24 24",
                                         stroke: "currentColor",
@@ -2769,7 +2769,7 @@ function Sidebar({ isMobile }) {
                                 children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
                                             href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
-                                            className: "block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50    hover:text-blue-600 transition-colors duration-200",
+                                            className: "block px-8 py-2 text-sm text-gray-600 hover:bg-gray-50    hover:text-gray-600 transition-colors duration-200",
                                             children: subCategory.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Sidebar.js",
@@ -3080,7 +3080,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 ref: searchInputRef,
                                 type: "search",
                                 placeholder: "Tìm kiếm sản phẩm...",
-                                className: "w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 text-base",
+                                className: "w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 text-gray-900 text-base",
                                 value: searchTerm,
                                 onChange: handleSearchInput,
                                 onKeyDown: handleKeyDown,
@@ -3183,7 +3183,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this)),
                                 searchResults.length > 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: `/search?keyword=${encodeURIComponent(searchTerm.trim())}`,
-                                    className: "block w-full text-center py-2 mt-2 text-blue-600 hover:text-blue-700 font-medium border-t",
+                                    className: "block w-full text-center py-2 mt-2 text-gray-600 hover:text-gray-700 font-medium border-t",
                                     onClick: (e)=>{
                                         e.preventDefault();
                                         e.stopPropagation();
@@ -3232,7 +3232,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("header", {
-                className: "bg-blue-600 text-white p-4 shadow",
+                className: "bg-gray-800 text-white p-4 shadow",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                     className: "container mx-auto flex justify-between items-center",
                     children: [
@@ -3477,7 +3477,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 className: `fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                        className: "absolute top-4 right-4 text-blue-600 focus:outline-none",
+                        className: "absolute top-4 right-4 text-gray-600 focus:outline-none",
                         onClick: toggleDrawer,
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
                             xmlns: "http://www.w3.org/2000/svg",
@@ -3520,7 +3520,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/store-locations",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -3564,7 +3564,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/user-guide",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -3596,7 +3596,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/warranty-policy",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -4665,7 +4665,10 @@ function Favorites() {
                         columnNumber: 21
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
-                        children: items.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        children: items.map((item)=>{
+                            // Kiểm tra item và item.product tồn tại
+                            if (!item || !item.product) return null;
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                 className: "bg-white rounded-lg shadow-md overflow-hidden relative",
                                 onClick: ()=>handleProductClick(item.product.slug),
                                 children: [
@@ -4673,13 +4676,13 @@ function Favorites() {
                                         className: "relative",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
-                                                src: item.product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/300',
+                                                src: item.product.productColors?.[0]?.ProductColor?.image || 'https://via.placeholder.com/300',
                                                 alt: item.product.product_name,
                                                 className: "w-full h-64 object-cover"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 79,
-                                                columnNumber: 37
+                                                lineNumber: 83,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                 onClick: (e)=>{
@@ -4691,19 +4694,19 @@ function Favorites() {
                                                     className: "h-6 w-6 text-red-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/favorites.js",
-                                                    lineNumber: 92,
-                                                    columnNumber: 41
+                                                    lineNumber: 98,
+                                                    columnNumber: 45
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 85,
-                                                columnNumber: 37
+                                                lineNumber: 91,
+                                                columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 78,
-                                        columnNumber: 33
+                                        lineNumber: 82,
+                                        columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "p-4",
@@ -4713,16 +4716,16 @@ function Favorites() {
                                                 children: item.product.product_name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 97,
-                                                columnNumber: 37
+                                                lineNumber: 103,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                 className: "text-gray-600 text-sm mb-2 line-clamp-2",
                                                 children: item.product.description
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 100,
-                                                columnNumber: 37
+                                                lineNumber: 106,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                 className: "mt-2",
@@ -4736,8 +4739,8 @@ function Favorites() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 106,
-                                                            columnNumber: 49
+                                                            lineNumber: 112,
+                                                            columnNumber: 53
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                             className: "text-gray-500 line-through",
@@ -4747,8 +4750,8 @@ function Favorites() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 109,
-                                                            columnNumber: 49
+                                                            lineNumber: 115,
+                                                            columnNumber: 53
                                                         }, this)
                                                     ]
                                                 }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4759,17 +4762,17 @@ function Favorites() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/favorites.js",
-                                                    lineNumber: 114,
-                                                    columnNumber: 45
+                                                    lineNumber: 120,
+                                                    columnNumber: 49
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 103,
-                                                columnNumber: 37
+                                                lineNumber: 109,
+                                                columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                 className: "flex gap-2 mt-3",
-                                                children: item.product.productColors.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                children: item.product.productColors?.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "w-4 h-4 rounded-full border border-gray-300",
                                                         style: {
                                                             backgroundColor: color.hex_code
@@ -4777,26 +4780,27 @@ function Favorites() {
                                                         title: color.color
                                                     }, color.id, false, {
                                                         fileName: "[project]/src/pages/favorites.js",
-                                                        lineNumber: 122,
-                                                        columnNumber: 45
+                                                        lineNumber: 128,
+                                                        columnNumber: 49
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 120,
-                                                columnNumber: 37
+                                                lineNumber: 126,
+                                                columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 96,
-                                        columnNumber: 33
+                                        lineNumber: 102,
+                                        columnNumber: 37
                                     }, this)
                                 ]
                             }, item.id, true, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 73,
-                                columnNumber: 29
-                            }, this))
+                                lineNumber: 77,
+                                columnNumber: 33
+                            }, this);
+                        })
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
                         lineNumber: 71,

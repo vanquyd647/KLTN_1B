@@ -418,7 +418,7 @@ const CartPage = () => {
                             router.push('/checkout');
                         }}
                         disabled={selectedItems.length === 0}
-                        className="mt-6 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400 font-bold"
+                        className="mt-6 w-full bg-gray-600 text-white px-4 py-2 rounded hover:bg-red-700 transition disabled:bg-gray-400 font-bold"
                     >
                         ĐẶT HÀNG
                     </button>

@@ -387,7 +387,7 @@ const CheckoutPage = () => {
     };
 
     return (
-        <Layout>
+        
             <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                     <StockErrorAlert />
@@ -550,7 +550,7 @@ const CheckoutPage = () => {
                     )}
                 </div>
             </div>
-        </Layout>
+        
     );
 };
 

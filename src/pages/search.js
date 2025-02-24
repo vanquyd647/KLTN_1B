@@ -5,6 +5,11 @@ import { useDispatch } from 'react-redux';
 import { searchProductsByNameAndColor } from '../store/slices/productSlice';
 import Layout from '../components/Layout';
 import Banner from '../components/Banner';
+import { useSelector } from 'react-redux';
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import { addToFavorite, removeFromFavorite, selectFavoriteStatuses } from '../store/slices/favoriteSlice';
+
 
 export default function SearchPage() {
     const router = useRouter();
@@ -78,6 +83,24 @@ export default function SearchPage() {
         router.push(`/productdetail/${slug}`);
     };
 
+    // Thêm vào đầu component
+    const favoriteStatuses = useSelector(selectFavoriteStatuses);
+
+    // Thêm handler xử lý yêu thích
+    const handleFavoriteClick = async (e, productId) => {
+        e.stopPropagation();
+        try {
+            if (favoriteStatuses[productId]) {
+                await dispatch(removeFromFavorite(productId)).unwrap();
+            } else {
+                await dispatch(addToFavorite(productId)).unwrap();
+            }
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        }
+    };
+
+
     if (loading) {
         return (
             <Layout>
@@ -109,9 +132,19 @@ export default function SearchPage() {
                             {products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer"
+                                    className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative"
                                     onClick={() => handleProductClick(product.slug)}
                                 >
+                                    <button
+                                        onClick={(e) => handleFavoriteClick(e, product.id)}
+                                        className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
+                                    >
+                                        {favoriteStatuses[product.id] ? (
+                                            <HeartSolid className="h-6 w-6 text-red-500" />
+                                        ) : (
+                                            <HeartOutline className="h-6 w-6 text-gray-400" />
+                                        )}
+                                    </button>
                                     <img
                                         src={
                                             product.productColors[0]?.ProductColor?.image ||

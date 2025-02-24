@@ -1781,7 +1781,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
                                 disabled: loading,
                                 children: loading ? 'Logging in...' : 'Login'
                             }, void 0, false, {
@@ -1802,7 +1802,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             ' ',
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setAuthStep('register'),
-                                className: "text-blue-600 hover:underline",
+                                className: "text-gray-600 hover:underline",
                                 children: "Register"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
@@ -1812,7 +1812,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>setAuthStep('forgot-password'),
-                                    className: "text-blue-600 hover:underline",
+                                    className: "text-gray-600 hover:underline",
                                     children: "Quên mật khẩu?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
@@ -1880,7 +1880,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
                                 disabled: loading,
                                 children: loading ? 'Đang gửi...' : 'Gửi mã OTP'
                             }, void 0, false, {
@@ -1898,7 +1898,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         className: "mt-4 text-center",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setAuthStep('login'),
-                            className: "text-blue-600 hover:underline",
+                            className: "text-gray-600 hover:underline",
                             children: "Quay lại đăng nhập"
                         }, void 0, false, {
                             fileName: "[project]/src/components/profiles/AuthInterface.js",
@@ -2065,7 +2065,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
                                 disabled: loading,
                                 children: loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'
                             }, void 0, false, {
@@ -2380,7 +2380,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
                                 disabled: loading,
                                 children: loading ? 'Registering...' : 'Register'
                             }, void 0, false, {
@@ -2401,7 +2401,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             ' ',
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setAuthStep('login'),
-                                className: "text-blue-600 hover:underline",
+                                className: "text-gray-600 hover:underline",
                                 children: "Login"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
@@ -2463,7 +2463,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
                                 disabled: loading,
                                 children: loading ? 'Verifying...' : 'Verify OTP'
                             }, void 0, false, {
@@ -2531,7 +2531,7 @@ const StatusBadge = ({ status })=>{
             case 'pending':
                 return 'bg-yellow-100 text-yellow-800';
             case 'processing':
-                return 'bg-blue-100 text-blue-800';
+                return 'bg-gray-100 text-gray-800';
             case 'shipping':
                 return 'bg-indigo-100 text-indigo-800';
             case 'completed':
@@ -2750,7 +2750,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "font-medium text-lg text-blue-600",
+                                className: "font-medium text-lg text-gray-600",
                                 children: formatPrice(order.pricing.final_price)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -2765,7 +2765,7 @@ const OrderCard = ({ order, onViewDetail })=>{
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>onViewDetail(order),
-                        className: "px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition",
+                        className: "px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition",
                         children: "Xem chi tiết"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -3295,7 +3295,7 @@ const OrderDetail = ({ order, onClose })=>{
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-blue-600",
+                                                className: "text-gray-600",
                                                 children: formatPrice(order.pricing.final_price)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -3547,7 +3547,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 className: `w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
-                            ${selectedTab === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
+                            ${selectedTab === 'info' ? 'bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
                                 onClick: ()=>setSelectedTab('info'),
                                 children: "Thông tin cá nhân"
                             }, void 0, false, {
@@ -3557,7 +3557,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 className: `w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
-                            ${selectedTab === 'orders' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
+                            ${selectedTab === 'orders' ? 'bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
                                 onClick: ()=>{
                                     setSelectedTab('orders');
                                     setIsEditing(false);
@@ -3570,7 +3570,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 className: `w-full text-left px-4 py-2 mb-2 rounded transition duration-200 
-                            ${selectedTab === 'address' ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
+                            ${selectedTab === 'address' ? 'bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`,
                                 onClick: ()=>{
                                     setSelectedTab('address');
                                     setIsEditing(false);
@@ -3636,7 +3636,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                     userLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex justify-center items-center h-40",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                             lineNumber: 583,
@@ -3677,7 +3677,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         name: "firstname",
                                                         value: profileData.firstname,
                                                         onChange: handleProfileChange,
-                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200",
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -3716,7 +3716,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         name: "lastname",
                                                         value: profileData.lastname,
                                                         onChange: handleProfileChange,
-                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200",
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -3772,7 +3772,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         name: "phone",
                                                         value: profileData.phone,
                                                         onChange: handleProfileChange,
-                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                         lineNumber: 633,
@@ -3799,7 +3799,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         name: "gender",
                                                         value: profileData.gender,
                                                         onChange: handleProfileChange,
-                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-200",
+                                                        className: "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                 value: "",
@@ -3870,7 +3870,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         type: "submit",
                                                         disabled: updateLoading,
                                                         className: `px-6 py-2 rounded-lg text-white
-                                ${updateLoading ? 'bg-blue-400' : 'bg-green-600 hover:bg-green-700'}`,
+                                ${updateLoading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`,
                                                         children: updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -4055,7 +4055,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                     orderLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex justify-center items-center h-40",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                             lineNumber: 730,
@@ -4125,7 +4125,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                     setShowAddressForm(true);
                                                     setSelectedAddress(null);
                                                 },
-                                                className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700",
+                                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700",
                                                 children: "Thêm địa chỉ mới"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -4141,7 +4141,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                     addressLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex justify-center items-center h-40",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+                                            className: "animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                             lineNumber: 775,
@@ -4173,7 +4173,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full    font-medium flex items-center gap-1",
+                                                                            className: "bg-gray-100 text-gray-800 text-xs px-2.5 py-1 rounded-full    font-medium flex items-center gap-1",
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$md$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["MdStars"], {
                                                                                     className: "w-4 h-4"
@@ -4529,7 +4529,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             ...addressFormData,
                                                                             address_type: e.target.value
                                                                         }),
-                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-gray-500 focus:border-transparent",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                                                             value: "home",
@@ -4585,7 +4585,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             ...addressFormData,
                                                                             street: e.target.value
                                                                         }),
-                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-gray-500 focus:border-transparent",
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
@@ -4612,7 +4612,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                                                     value: provinces.find((p)=>p.name === addressFormData.city)?.code || '',
                                                                     onChange: handleProvinceChange,
-                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-gray-500 focus:border-transparent",
                                                                     required: true,
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -4657,7 +4657,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                                                     value: districts.find((d)=>d.name === addressFormData.district)?.code || '',
                                                                     onChange: handleDistrictChange,
-                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-gray-500 focus:border-transparent",
                                                                     required: true,
                                                                     disabled: !addressFormData.city,
                                                                     children: [
@@ -4703,7 +4703,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                                                     value: wards.find((w)=>w.name === addressFormData.ward)?.code || '',
                                                                     onChange: handleWardChange,
-                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                                                    className: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none    focus:ring-2 focus:ring-gray-500 focus:border-transparent",
                                                                     required: true,
                                                                     disabled: !addressFormData.district,
                                                                     children: [
@@ -4746,7 +4746,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             ...addressFormData,
                                                                             is_default: e.target.checked
                                                                         }),
-                                                                    className: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                                    className: "h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 rounded"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                                     lineNumber: 1024,
@@ -4785,7 +4785,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                     type: "submit",
-                                                                    className: "px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg    hover:bg-blue-700 transition-colors",
+                                                                    className: "px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg    hover:bg-gray-700 transition-colors",
                                                                     children: selectedAddress ? 'Cập nhật' : 'Thêm mới'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",

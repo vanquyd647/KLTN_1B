@@ -93,7 +93,7 @@ export default function ProductReviews({
                     .map((page) => (
                         <button
                             key={page}
-                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'
+                            className={`px-2 py-1 text-sm border rounded ${pagination.currentPage === page ? 'bg-gray-600 text-white' : 'hover:bg-gray-100'
                                 }`}
                             onClick={() => handlePageChange(page)}
                         >
@@ -122,7 +122,7 @@ export default function ProductReviews({
                 {!getToken() ? (
                     <button
                         onClick={() => router.push('/account/profile')}
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                        className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
                     >
                         Vui lòng đăng nhập để đánh giá sản phẩm
                     </button>
@@ -166,7 +166,7 @@ export default function ProductReviews({
                             <button
                                 id="submit-review-button"
                                 type="submit"
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
                             >
                                 Submit Review
                             </button>

@@ -2729,7 +2729,7 @@ function Sidebar({ isMobile }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
                                 href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                                className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50    transition-colors duration-200 font-medium group-hover:text-blue-600",
+                                className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50    transition-colors duration-200 font-medium group-hover:text-gray-600",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                         children: category.name
@@ -2739,7 +2739,7 @@ function Sidebar({ isMobile }) {
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
-                                        className: "ml-auto w-5 h-5 text-gray-400 group-hover:text-blue-600",
+                                        className: "ml-auto w-5 h-5 text-gray-400 group-hover:text-gray-600",
                                         fill: "none",
                                         viewBox: "0 0 24 24",
                                         stroke: "currentColor",
@@ -2769,7 +2769,7 @@ function Sidebar({ isMobile }) {
                                 children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
                                             href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
-                                            className: "block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50    hover:text-blue-600 transition-colors duration-200",
+                                            className: "block px-8 py-2 text-sm text-gray-600 hover:bg-gray-50    hover:text-gray-600 transition-colors duration-200",
                                             children: subCategory.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Sidebar.js",
@@ -3080,7 +3080,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 ref: searchInputRef,
                                 type: "search",
                                 placeholder: "Tìm kiếm sản phẩm...",
-                                className: "w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 text-base",
+                                className: "w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 text-gray-900 text-base",
                                 value: searchTerm,
                                 onChange: handleSearchInput,
                                 onKeyDown: handleKeyDown,
@@ -3183,7 +3183,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this)),
                                 searchResults.length > 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: `/search?keyword=${encodeURIComponent(searchTerm.trim())}`,
-                                    className: "block w-full text-center py-2 mt-2 text-blue-600 hover:text-blue-700 font-medium border-t",
+                                    className: "block w-full text-center py-2 mt-2 text-gray-600 hover:text-gray-700 font-medium border-t",
                                     onClick: (e)=>{
                                         e.preventDefault();
                                         e.stopPropagation();
@@ -3232,7 +3232,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("header", {
-                className: "bg-blue-600 text-white p-4 shadow",
+                className: "bg-gray-800 text-white p-4 shadow",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                     className: "container mx-auto flex justify-between items-center",
                     children: [
@@ -3477,7 +3477,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 className: `fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                        className: "absolute top-4 right-4 text-blue-600 focus:outline-none",
+                        className: "absolute top-4 right-4 text-gray-600 focus:outline-none",
                         onClick: toggleDrawer,
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
                             xmlns: "http://www.w3.org/2000/svg",
@@ -3520,7 +3520,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/store-locations",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -3564,7 +3564,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/user-guide",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -3596,7 +3596,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/warranty-policy",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
@@ -4157,7 +4157,7 @@ const BackToTop = ()=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
         children: isVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
             onClick: scrollToTop,
-            className: "fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700    text-white w-12 h-12 rounded-full shadow-lg    transition-all duration-300 ease-in-out    flex items-center justify-center   z-50 group",
+            className: "fixed bottom-8 right-8 bg-gray-600 hover:bg-gray-700    text-white w-12 h-12 rounded-full shadow-lg    transition-all duration-300 ease-in-out    flex items-center justify-center   z-50 group",
             "aria-label": "Về đầu trang",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
                 className: "w-6 h-6 group-hover:-translate-y-1 transition-transform duration-300",
@@ -4317,7 +4317,7 @@ const ServiceFeatures = ()=>{
                         className: "bg-white p-6 rounded-lg shadow-md    hover:shadow-lg transition-shadow duration-300   flex flex-col items-center text-center",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                className: "text-blue-600 mb-4",
+                                className: "text-gray-600 mb-4",
                                 children: feature.icon
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ServiceFeatures.js",
@@ -4651,7 +4651,7 @@ function ProductReviews({ reviews, averageRating, pagination, reviewsError, hand
                     Array.from({
                         length: pagination.totalPages
                     }, (_, index)=>index + 1).filter((page)=>Math.abs(page - pagination.currentPage) <= 1).map((page)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                            className: `px-2 py-1 text-sm border rounded ${pagination.currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`,
+                            className: `px-2 py-1 text-sm border rounded ${pagination.currentPage === page ? 'bg-gray-600 text-white' : 'hover:bg-gray-100'}`,
                             onClick: ()=>handlePageChange(page),
                             children: page
                         }, page, false, {
@@ -4698,7 +4698,7 @@ function ProductReviews({ reviews, averageRating, pagination, reviewsError, hand
                     }, this),
                     !getToken() ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                         onClick: ()=>router.push('/account/profile'),
-                        className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition",
+                        className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition",
                         children: "Vui lòng đăng nhập để đánh giá sản phẩm"
                     }, void 0, false, {
                         fileName: "[project]/src/components/slugs/ProductReviews.js",
@@ -4763,7 +4763,7 @@ function ProductReviews({ reviews, averageRating, pagination, reviewsError, hand
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                     id: "submit-review-button",
                                     type: "submit",
-                                    className: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition",
+                                    className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition",
                                     children: "Submit Review"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/slugs/ProductReviews.js",
@@ -5185,7 +5185,7 @@ function Slug() {
                                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                             className: `
                                             w-16 h-16 rounded overflow-hidden border-2 relative
-                                            ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500 border-blue-500' : 'border-gray-300'}
+                                            ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500 border-gray-500' : 'border-gray-300'}
                                             ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                                         `,
                                             onClick: ()=>hasStock && setSelectedColor(color),
@@ -5258,7 +5258,7 @@ function Slug() {
                 ${isUpdatingFavorite ? 'opacity-50 cursor-not-allowed' : ''}
             `,
                                     children: isUpdatingFavorite ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                        className: "w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
+                                        className: "w-6 h-6 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/productdetail/[slug].js",
                                         lineNumber: 390,
@@ -5364,7 +5364,7 @@ function Slug() {
                                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                     className: `
                                                 px-8 py-2 border rounded relative
-                                                ${selectedSize?.id === size.id ? 'bg-blue-100' : ''}
+                                                ${selectedSize?.id === size.id ? 'bg-gray-100' : ''}
                                                 ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}
                                             `,
                                                     onClick: ()=>isAvailable && setSelectedSize(size),
@@ -5411,7 +5411,7 @@ function Slug() {
                                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                     className: `
                                                 w-8 h-8 rounded-full border relative
-                                                ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500' : ''}
+                                                ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500' : ''}
                                                 ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
                                             `,
                                                     style: {
@@ -5524,7 +5524,7 @@ function Slug() {
                                     className: "flex flex-wrap gap-4 mt-4 sm:flex-nowrap sm:gap-4 sm:justify-start",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                            className: "bg-blue-600 text-white text-xl px-6 py-3 rounded hover:bg-blue-700 transition transform scale-100 hover:scale-105 w-full sm:w-auto",
+                                            className: "bg-gray-600 text-white text-xl px-6 py-3 rounded hover:bg-gray-700 transition transform scale-100 hover:scale-105 w-full sm:w-auto",
                                             onClick: handleAddToCart,
                                             disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity() === 0,
                                             children: "THÊM VÀO GIỎ"
@@ -5568,7 +5568,7 @@ function Slug() {
                             className: "flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                    className: `w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'reviews' ? 'bg-white border-blue-600 text-blue-600' : 'bg-white border-gray-300 text-gray-500'} rounded-md`,
+                                    className: `w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'reviews' ? 'bg-white border-gray-600 text-gray-600' : 'bg-white border-gray-300 text-gray-500'} rounded-md`,
                                     onClick: ()=>setActiveTab('reviews'),
                                     children: "ĐÁNH GIÁ"
                                 }, void 0, false, {
@@ -5577,7 +5577,7 @@ function Slug() {
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                    className: `w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'description' ? 'bg-white border-blue-600 text-blue-600' : 'bg-white border-gray-300 text-gray-500'} rounded-md`,
+                                    className: `w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'description' ? 'bg-white border-gray-600 text-gray-600' : 'bg-white border-gray-300 text-gray-500'} rounded-md`,
                                     onClick: ()=>setActiveTab('description'),
                                     children: "MÔ TẢ SẢN PHẨM"
                                 }, void 0, false, {

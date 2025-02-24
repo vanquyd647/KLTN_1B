@@ -164,7 +164,7 @@ export default function Index() {
                                 <p className="text-center text-gray-500">Không có sản phẩm mới.</p>
                             )}
                             <div className="flex justify-center mt-6">
-                                <Link href="/new-products" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                <Link href="/new-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
                                     Xem tất cả
                                 </Link>
                             </div>
@@ -182,7 +182,7 @@ export default function Index() {
                                 <p className="text-center text-gray-500">Không có sản phẩm nổi bật.</p>
                             )}
                             <div className="flex justify-center mt-6">
-                                <Link href="/featured-products" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                <Link href="/featured-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
                                     Xem tất cả
                                 </Link>
                             </div>

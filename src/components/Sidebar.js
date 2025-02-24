@@ -47,12 +47,12 @@ export default function Sidebar({ isMobile }) {
                         {/* Danh mục cha */}
                         <a
                             href={`/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`}
-                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 
-                                        transition-colors duration-200 font-medium group-hover:text-blue-600"
+                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 
+                                        transition-colors duration-200 font-medium group-hover:text-gray-600"
                         >
                             <span>{category.name}</span>
                             <svg
-                                className="ml-auto w-5 h-5 text-gray-400 group-hover:text-blue-600"
+                                className="ml-auto w-5 h-5 text-gray-400 group-hover:text-gray-600"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -66,8 +66,8 @@ export default function Sidebar({ isMobile }) {
                                 <li key={subCategory.id}>
                                     <a
                                         href={`/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`}
-                                        className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 
-                                                hover:text-blue-600 transition-colors duration-200"
+                                        className="block px-8 py-2 text-sm text-gray-600 hover:bg-gray-50 
+                                                hover:text-gray-600 transition-colors duration-200"
                                     >
                                         {subCategory.name}
                                     </a>

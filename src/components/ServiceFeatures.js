@@ -54,7 +54,7 @@ const ServiceFeatures = () => {
                                      hover:shadow-lg transition-shadow duration-300
                                      flex flex-col items-center text-center"
                         >
-                            <div className="text-blue-600 mb-4">
+                            <div className="text-gray-600 mb-4">
                                 {feature.icon}
                             </div>
                             <h3 className="text-lg font-semibold text-gray-800 mb-2">

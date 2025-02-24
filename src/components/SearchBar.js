@@ -62,7 +62,7 @@ export default function SearchBar() {
                 ref={searchInputRef}
                 type="search"
                 placeholder="Tìm kiếm sản phẩm..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 text-black"
                 value={searchTerm}
                 onChange={handleSearchInput}
                 onKeyDown={handleKeyDown}

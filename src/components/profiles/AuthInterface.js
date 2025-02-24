@@ -57,7 +57,7 @@ export default function AuthInterface({
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Logging in...' : 'Login'}
@@ -67,14 +67,14 @@ export default function AuthInterface({
                         Don&apos;t have an account?{' '}
                         <button
                             onClick={() => setAuthStep('register')}
-                            className="text-blue-600 hover:underline"
+                            className="text-gray-600 hover:underline"
                         >
                             Register
                         </button>
                         <p>
                             <button
                                 onClick={() => setAuthStep('forgot-password')}
-                                className="text-blue-600 hover:underline"
+                                className="text-gray-600 hover:underline"
                             >
                                 Quên mật khẩu?
                             </button>
@@ -100,7 +100,7 @@ export default function AuthInterface({
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Đang gửi...' : 'Gửi mã OTP'}
@@ -109,7 +109,7 @@ export default function AuthInterface({
                     <p className="mt-4 text-center">
                         <button
                             onClick={() => setAuthStep('login')}
-                            className="text-blue-600 hover:underline"
+                            className="text-gray-600 hover:underline"
                         >
                             Quay lại đăng nhập
                         </button>
@@ -177,7 +177,7 @@ export default function AuthInterface({
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'}
@@ -294,7 +294,7 @@ export default function AuthInterface({
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Registering...' : 'Register'}
@@ -304,7 +304,7 @@ export default function AuthInterface({
                         Have an account?{' '}
                         <button
                             onClick={() => setAuthStep('login')}
-                            className="text-blue-600 hover:underline"
+                            className="text-gray-600 hover:underline"
                         >
                             Login
                         </button>
@@ -327,7 +327,7 @@ export default function AuthInterface({
                         </div>
                         <button
                             type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Verifying...' : 'Verify OTP'}

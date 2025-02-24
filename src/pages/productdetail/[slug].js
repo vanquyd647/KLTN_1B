@@ -354,7 +354,7 @@ export default function Slug() {
                                         key={color.id}
                                         className={`
                                             w-16 h-16 rounded overflow-hidden border-2 relative
-                                            ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500 border-blue-500' : 'border-gray-300'}
+                                            ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500 border-gray-500' : 'border-gray-300'}
                                             ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                                         `}
                                         onClick={() => hasStock && setSelectedColor(color)}
@@ -387,7 +387,7 @@ export default function Slug() {
             `}
                         >
                             {isUpdatingFavorite ? (
-                                <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                                <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin" />
                             ) : favorites[currentProduct.id] ? (
                                 <HeartSolid className="h-6 w-6 text-red-500" />
                             ) : (
@@ -422,7 +422,7 @@ export default function Slug() {
                                             key={size.id}
                                             className={`
                                                 px-8 py-2 border rounded relative
-                                                ${selectedSize?.id === size.id ? 'bg-blue-100' : ''}
+                                                ${selectedSize?.id === size.id ? 'bg-gray-100' : ''}
                                                 ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}
                                             `}
                                             onClick={() => isAvailable && setSelectedSize(size)}
@@ -451,7 +451,7 @@ export default function Slug() {
                                             key={color.id}
                                             className={`
                                                 w-8 h-8 rounded-full border relative
-                                                ${selectedColor?.id === color.id ? 'ring-2 ring-blue-500' : ''}
+                                                ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500' : ''}
                                                 ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
                                             `}
                                             style={{ backgroundColor: color.hex_code }}
@@ -502,7 +502,7 @@ export default function Slug() {
                         {/* Add to Cart and Buy Now Buttons */}
                         <div className="flex flex-wrap gap-4 mt-4 sm:flex-nowrap sm:gap-4 sm:justify-start">
                             <button
-                                className="bg-blue-600 text-white text-xl px-6 py-3 rounded hover:bg-blue-700 transition transform scale-100 hover:scale-105 w-full sm:w-auto"
+                                className="bg-gray-600 text-white text-xl px-6 py-3 rounded hover:bg-gray-700 transition transform scale-100 hover:scale-105 w-full sm:w-auto"
                                 onClick={handleAddToCart}
                                 disabled={!selectedSize || !selectedColor || getMaxAvailableQuantity() === 0}
                             >
@@ -523,7 +523,7 @@ export default function Slug() {
                     <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
                         <button
                             className={`w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'reviews'
-                                ? 'bg-white border-blue-600 text-blue-600'
+                                ? 'bg-white border-gray-600 text-gray-600'
                                 : 'bg-white border-gray-300 text-gray-500'
                                 } rounded-md`}
                             onClick={() => setActiveTab('reviews')}
@@ -532,7 +532,7 @@ export default function Slug() {
                         </button>
                         <button
                             className={`w-full sm:w-auto px-4 py-2 border text-base sm:text-lg font-bold ${activeTab === 'description'
-                                ? 'bg-white border-blue-600 text-blue-600'
+                                ? 'bg-white border-gray-600 text-gray-600'
                                 : 'bg-white border-gray-300 text-gray-500'
                                 } rounded-md`}
                             onClick={() => setActiveTab('description')}

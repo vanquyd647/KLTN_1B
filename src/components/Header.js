@@ -203,7 +203,7 @@ const Header = memo(function Header({ ...props }) {
                                 ref={searchInputRef}
                                 type="search"
                                 placeholder="Tìm kiếm sản phẩm..."
-                                className="w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 text-base"
+                                className="w-full p-4 md:p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 text-gray-900 text-base"
                                 value={searchTerm}
                                 onChange={handleSearchInput}
                                 onKeyDown={handleKeyDown}
@@ -255,7 +255,7 @@ const Header = memo(function Header({ ...props }) {
                             {searchResults.length > 4 && (
                                 <Link
                                     href={`/search?keyword=${encodeURIComponent(searchTerm.trim())}`}
-                                    className="block w-full text-center py-2 mt-2 text-blue-600 hover:text-blue-700 font-medium border-t"
+                                    className="block w-full text-center py-2 mt-2 text-gray-600 hover:text-gray-700 font-medium border-t"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
@@ -283,7 +283,7 @@ const Header = memo(function Header({ ...props }) {
 
     return (
         <>
-            <header className="bg-blue-600 text-white p-4 shadow">
+            <header className="bg-gray-800 text-white p-4 shadow">
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Drawer Toggle Button for Sidebar */}
                     <button
@@ -415,7 +415,7 @@ const Header = memo(function Header({ ...props }) {
             >
                 {/* Close Button */}
                 <button
-                    className="absolute top-4 right-4 text-blue-600 focus:outline-none"
+                    className="absolute top-4 right-4 text-gray-600 focus:outline-none"
                     onClick={toggleDrawer}
                 >
                     <svg
@@ -442,7 +442,7 @@ const Header = memo(function Header({ ...props }) {
                     <nav className="py-2">
                         <Link
                             href="/store-locations"
-                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600"
                             onClick={toggleDrawer}
                         >
                             <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -455,7 +455,7 @@ const Header = memo(function Header({ ...props }) {
                         </Link>
                         <Link
                             href="/user-guide"
-                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600"
                             onClick={toggleDrawer}
                         >
                             <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -466,7 +466,7 @@ const Header = memo(function Header({ ...props }) {
                         </Link>
                         <Link
                             href="/warranty-policy"
-                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                            className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600"
                             onClick={toggleDrawer}
                         >
                             <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
