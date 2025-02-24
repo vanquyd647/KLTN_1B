@@ -652,6 +652,7 @@ __turbopack_esm__({
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
+    "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
@@ -1478,6 +1479,25 @@ const favoriteApi = {
         }
     }
 };
+const orderTrackingApi = {
+    /**
+     * Tra cứu thông tin đơn hàng
+     * @param {string} orderId - Mã đơn hàng
+     * @param {string} identifier - Email hoặc số điện thoại người đặt
+     * @returns {Promise<Object>} - Thông tin đơn hàng
+     */ trackOrder: async (orderId, identifier)=>{
+        try {
+            const response = await apiClient.get(`order-tracking/${orderId}`, {
+                params: {
+                    identifier
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
 ;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -1523,7 +1543,13 @@ const loginUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].login(credentials);
         return response;
     } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
+        // Chuẩn hóa thông báo lỗi
+        return rejectWithValue({
+            status: 'error',
+            code: error.response?.data?.code || 400,
+            message: error.response?.data?.message === "User not found" || error.response?.data?.message === "Invalid password" ? "Tài khoản hoặc mật khẩu không đúng" : error.response?.data?.message || "Đã có lỗi xảy ra",
+            data: null
+        });
     }
 });
 const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/logoutUser', async (_, { rejectWithValue })=>{
@@ -1607,7 +1633,7 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         builder.addCase(loginUser.fulfilled, (state, action)=>{
             state.loading = false;
             state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
+            state.token = action.payload.accessToken;
         });
         builder.addCase(loginUser.rejected, (state, action)=>{
             state.loading = false;

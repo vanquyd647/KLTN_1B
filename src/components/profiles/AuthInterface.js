@@ -17,12 +17,20 @@ export default function AuthInterface({
     passwordVisibility,
     togglePasswordVisibility,
     loading,
+    error,
 }) {
     return (
         <div className="container mx-auto px-4 py-6">
             {authStep === 'login' && (
                 <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
-                    <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-center">Đăng nhập</h2>
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                            {error.message === "User not found" || error.message === "Invalid password"
+                                ? "Tài khoản hoặc mật khẩu không đúng"
+                                : error.message}
+                        </div>
+                    )}
                     <form onSubmit={handleLogin}>
                         <div className="mb-4">
                             <label>Email:</label>
@@ -36,7 +44,7 @@ export default function AuthInterface({
                             />
                         </div>
                         <div className="mb-4">
-                            <label>Password:</label>
+                            <label>Mật khẩu:</label>
                             <div className="relative">
                                 <input
                                     type={passwordVisibility.password ? 'text' : 'password'}
@@ -60,21 +68,21 @@ export default function AuthInterface({
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
-                            {loading ? 'Logging in...' : 'Login'}
+                            {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                         </button>
                     </form>
                     <p className="mt-4 text-center">
-                        Don&apos;t have an account?{' '}
+                        Bạn chưa có tài khoản?{' '}
                         <button
                             onClick={() => setAuthStep('register')}
-                            className="text-gray-600 hover:underline"
+                            className="text-blue-600 hover:underline"
                         >
-                            Register
+                            Đăng ký
                         </button>
                         <p>
                             <button
                                 onClick={() => setAuthStep('forgot-password')}
-                                className="text-gray-600 hover:underline"
+                                className="text-blue-600 hover:underline"
                             >
                                 Quên mật khẩu?
                             </button>
@@ -109,7 +117,7 @@ export default function AuthInterface({
                     <p className="mt-4 text-center">
                         <button
                             onClick={() => setAuthStep('login')}
-                            className="text-gray-600 hover:underline"
+                            className="text-blue-600 hover:underline"
                         >
                             Quay lại đăng nhập
                         </button>
@@ -187,10 +195,15 @@ export default function AuthInterface({
             )}
             {authStep === 'register' && (
                 <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
-                    <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-center">Đăng ký</h2>
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                            {error.message || error}
+                        </div>
+                    )}
                     <form onSubmit={handleRegister}>
                         <div className="mb-4">
-                            <label>First Name:</label>
+                            <label>Họ:</label>
                             <input
                                 type="text"
                                 name="firstname"
@@ -201,7 +214,7 @@ export default function AuthInterface({
                             />
                         </div>
                         <div className="mb-4">
-                            <label>Last Name:</label>
+                            <label>Tên:</label>
                             <input
                                 type="text"
                                 name="lastname"
@@ -223,7 +236,7 @@ export default function AuthInterface({
                             />
                         </div>
                         <div className="mb-4">
-                            <label>Password:</label>
+                            <label>Mật khẩu:</label>
                             <div className="relative">
                                 <input
                                     type={passwordVisibility.password ? 'text' : 'password'}
@@ -245,7 +258,7 @@ export default function AuthInterface({
                             </div>
                         </div>
                         <div className="mb-4">
-                            <label>Confirm Password:</label>
+                            <label>Nhập lại mật khẩu:</label>
                             <div className="relative">
                                 <input
                                     type={passwordVisibility.confirmPassword ? 'text' : 'password'}
@@ -267,7 +280,7 @@ export default function AuthInterface({
                             </div>
                         </div>
                         <div className="mb-4">
-                            <label>Phone:</label>
+                            <label>Số điện thoại:</label>
                             <input
                                 type="text"
                                 name="phone"
@@ -278,7 +291,7 @@ export default function AuthInterface({
                             />
                         </div>
                         <div className="mb-4">
-                            <label>Gender:</label>
+                            <label>Chọn giới tinh:</label>
                             <select
                                 name="gender"
                                 value={formData.gender}
@@ -297,26 +310,27 @@ export default function AuthInterface({
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
-                            {loading ? 'Registering...' : 'Register'}
+                            {loading ? 'Đang đăng ký...' : 'Đăng ký'}
                         </button>
                     </form>
                     <p className="mt-4 text-center">
-                        Have an account?{' '}
+                        Đã có tài khoản?{' '}
                         <button
                             onClick={() => setAuthStep('login')}
-                            className="text-gray-600 hover:underline"
+                            className="text-blue-600 hover:underline"
                         >
-                            Login
+                            Đăng nhập
                         </button>
                     </p>
                 </div>
             )}
             {authStep === 'otp' && (
                 <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
-                    <h2 className="text-2xl font-bold mb-4 text-center">Verify OTP</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-center">Xác nhận OTP</h2>
+                    <p className="mb-4 text-center">Mã OTP đã được gửi đến email của bạn.</p>
                     <form onSubmit={handleOtpSubmit}>
                         <div className="mb-4">
-                            <label>Enter OTP:</label>
+                            <label>Nhập OTP:</label>
                             <input
                                 type="text"
                                 value={otp}
@@ -330,7 +344,7 @@ export default function AuthInterface({
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
                             disabled={loading}
                         >
-                            {loading ? 'Verifying...' : 'Verify OTP'}
+                            {loading ? 'Đang xác thực...' : 'Xác thực OTP'}
                         </button>
                     </form>
                 </div>

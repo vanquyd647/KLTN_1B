@@ -114,17 +114,28 @@ export default function Profile() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const result = await dispatch(loginUser({ email: formData.email, password: formData.password }));
-        if (result.meta.requestStatus === 'fulfilled') {
-            setIsAuthenticated(true);
-            await dispatch(getUserInfo());
-            // Thêm dispatch để lấy cart items mới sau khi login
-            const cartId = getCartId();
-            if (cartId) {
-                await dispatch(getCartItems(cartId));
+        setError(null); // Reset error state
+    
+        try {
+            const result = await dispatch(loginUser({ 
+                email: formData.email, 
+                password: formData.password 
+            })).unwrap();
+            
+            if (result.status === 'success') {
+                setIsAuthenticated(true);
+                await dispatch(getUserInfo());
+                const cartId = getCartId();
+                if (cartId) {
+                    await dispatch(getCartItems(cartId));
+                }
             }
+        } catch (err) {
+            setError(err);
+            console.error('Login error:', err);
         }
     };
+    
 
     // Thêm hàm xử lý quên mật khẩu
     const handleForgotPassword = async (e) => {
@@ -166,17 +177,24 @@ export default function Profile() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-
+        setError(null); // Reset error state before attempting registration
+    
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match. Please try again.');
+            setError('Mật khẩu không khớp. Vui lòng thử lại.');
             return;
         }
-
-        const result = await dispatch(registerUser(formData));
-        if (result.meta.requestStatus === 'fulfilled') {
-            setAuthStep('otp');
+    
+        try {
+            const result = await dispatch(registerUser(formData)).unwrap();
+            if (result.status === 'success') {
+                setAuthStep('otp');
+            }
+        } catch (err) {
+            setError(err); // Lưu lỗi vào state
+            console.error('Registration error:', err);
         }
     };
+    
 
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
@@ -219,6 +237,7 @@ export default function Profile() {
                     passwordVisibility={passwordVisibility}
                     togglePasswordVisibility={togglePasswordVisibility}
                     loading={loading}
+                    error={error}
                 />
             </Layout>
         );

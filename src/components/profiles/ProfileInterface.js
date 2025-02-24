@@ -131,7 +131,7 @@ const OrderCard = ({ order, onViewDetail }) => {
                                 {item.product.name}
                             </p>
                             <p className="text-xs lg:text-sm text-gray-600 truncate">
-                                Size: {item.variant.size} | Màu: {item.variant.color.name}
+                            Màu: {item.variant.color.name} | Size: {item.variant.size}
                             </p>
                             <p className="text-xs lg:text-sm text-gray-600">
                                 {item.quantity} x {formatPrice(item.price)}
@@ -236,7 +236,7 @@ const OrderDetail = ({ order, onClose }) => {
                                     <div className="flex-1">
                                         <p className="font-medium">{item.product.name}</p>
                                         <p className="text-sm text-gray-600">
-                                            Size: {item.variant.size} | Màu: {item.variant.color.name}
+                                            Màu: {item.variant.color.name} | Size: {item.variant.size}
                                         </p>
                                         <div className="flex justify-between mt-2">
                                             <p className="text-sm">Số lượng: {item.quantity}</p>
@@ -553,7 +553,7 @@ export default function ProfileInterface({
                         Sổ địa chỉ
                     </button>
                     <button
-                        className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 
+                        className="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-600 
                             transition duration-200 mt-6"
                         onClick={handleLogout}
                     >

@@ -33,7 +33,16 @@ export const loginUser = createAsyncThunk(
             const response = await userApi.login(credentials);
             return response;
         } catch (error) {
-            return rejectWithValue(error.response?.data || error.message);
+            // Chuẩn hóa thông báo lỗi
+            return rejectWithValue({
+                status: 'error',
+                code: error.response?.data?.code || 400,
+                message: error.response?.data?.message === "User not found" || 
+                        error.response?.data?.message === "Invalid password"
+                    ? "Tài khoản hoặc mật khẩu không đúng"
+                    : error.response?.data?.message || "Đã có lỗi xảy ra",
+                data: null
+            });
         }
     }
 );
@@ -132,7 +141,7 @@ const userSlice = createSlice({
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
+            state.token = action.payload.accessToken; 
         });
         builder.addCase(loginUser.rejected, (state, action) => {
             state.loading = false;

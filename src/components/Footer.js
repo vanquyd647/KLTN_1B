@@ -1,4 +1,5 @@
 // components/Footer.js
+import Link from "next/link";
 export default function Footer() {
     return (
         <footer className="bg-gray-800 text-white py-12">
@@ -63,6 +64,9 @@ export default function Footer() {
                             <li><a href="#" className="hover:text-blue-400">Chi tiết kích cỡ</a></li>
                             <li><a href="#" className="hover:text-blue-400">Chính sách đổi trả & bảo hành</a></li>
                             <li><a href="#" className="hover:text-blue-400">Quy trình giao nhận và thanh toán</a></li>
+                            <li>
+                                <Link href="/TrackOrder" className="hover:text-blue-400">Tra cứu đơn hàng</Link>
+                            </li>
                         </ul>
                     </div>
 

@@ -290,11 +290,14 @@ export default function Slug() {
             return;
         }
 
+        console.log('reviewRating', reviewRating);
+        console.log('reviewText', reviewText);
+
         try {
             await dispatch(
                 createReview({
                     productId: currentProduct.id,
-                    content: reviewText,
+                    reviewText: reviewText,
                     rating: reviewRating,
                 })
             ).unwrap();

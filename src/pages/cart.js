@@ -253,7 +253,7 @@ const CartPage = () => {
                     <h1 className="text-2xl font-bold mb-6 border-b pb-4">GIỎ HÀNG CỦA BẠN</h1>
 
                     {!items || items.length === 0 ? (
-                        <p className="text-center text-lg">Your cart is empty.</p>
+                        <p className="text-center text-lg">Giỏ hàng của bạn đang trống.</p>
                     ) : (
                         <>
                             {/* Select All Checkbox */}
@@ -268,7 +268,6 @@ const CartPage = () => {
                                     Chọn tất cả
                                 </label>
                             </div>
-
 
                             <ul className="space-y-4">
                                 {items.map((item, index) => {

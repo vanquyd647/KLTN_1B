@@ -932,4 +932,23 @@ const favoriteApi = {
     }
 };
 
-export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi, addressApi, favoriteApi };
+const orderTrackingApi = {
+    /**
+     * Tra cứu thông tin đơn hàng
+     * @param {string} orderId - Mã đơn hàng
+     * @param {string} identifier - Email hoặc số điện thoại người đặt
+     * @returns {Promise<Object>} - Thông tin đơn hàng
+     */
+    trackOrder: async (orderId, identifier) => {
+        try {
+            const response = await apiClient.get(`order-tracking/${orderId}`, {
+                params: { identifier }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
+
+export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi, addressApi, favoriteApi, orderTrackingApi };

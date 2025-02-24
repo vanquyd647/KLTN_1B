@@ -76,7 +76,7 @@ export default function Favorites() {
                             return (
                                 <div
                                     key={item.id}
-                                    className="bg-white rounded-lg shadow-md overflow-hidden relative"
+                                    className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative"
                                     onClick={() => handleProductClick(item.product.slug)}
                                 >
                                     <div className="relative">
@@ -86,7 +86,7 @@ export default function Favorites() {
                                                 'https://via.placeholder.com/300'
                                             }
                                             alt={item.product.product_name}
-                                            className="w-full h-64 object-cover"
+                                            className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
                                         />
                                         <button
                                             onClick={(e) => {

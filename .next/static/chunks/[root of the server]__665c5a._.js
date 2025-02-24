@@ -677,7 +677,13 @@ const loginUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].login(credentials);
         return response;
     } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
+        // Chuẩn hóa thông báo lỗi
+        return rejectWithValue({
+            status: 'error',
+            code: error.response?.data?.code || 400,
+            message: error.response?.data?.message === "User not found" || error.response?.data?.message === "Invalid password" ? "Tài khoản hoặc mật khẩu không đúng" : error.response?.data?.message || "Đã có lỗi xảy ra",
+            data: null
+        });
     }
 });
 const logoutUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('auth/logoutUser', async (_, { rejectWithValue })=>{
@@ -761,7 +767,7 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         builder.addCase(loginUser.fulfilled, (state, action)=>{
             state.loading = false;
             state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
+            state.token = action.payload.accessToken;
         });
         builder.addCase(loginUser.rejected, (state, action)=>{
             state.loading = false;
@@ -835,6 +841,7 @@ __turbopack_esm__({
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
+    "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
@@ -1658,6 +1665,25 @@ const favoriteApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể chuyển danh sách yêu thích.';
+        }
+    }
+};
+const orderTrackingApi = {
+    /**
+     * Tra cứu thông tin đơn hàng
+     * @param {string} orderId - Mã đơn hàng
+     * @param {string} identifier - Email hoặc số điện thoại người đặt
+     * @returns {Promise<Object>} - Thông tin đơn hàng
+     */ trackOrder: async (orderId, identifier)=>{
+        try {
+            const response = await apiClient.get(`order-tracking/${orderId}`, {
+                params: {
+                    identifier
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
         }
     }
 };
@@ -3560,6 +3586,8 @@ __turbopack_esm__({
     "default": (()=>Footer)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/link.js [client] (ecmascript)");
+;
 ;
 function Footer() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -3577,7 +3605,7 @@ function Footer() {
                                     children: "FASHION STORE"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 9,
+                                    lineNumber: 10,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3585,7 +3613,7 @@ function Footer() {
                                     children: "Hệ thống thời trang hàng đầu Việt Nam, hướng tới phong cách lịch lãm và trẻ trung."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 10,
+                                    lineNumber: 11,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3606,19 +3634,19 @@ function Footer() {
                                                         d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Footer.js",
-                                                        lineNumber: 16,
+                                                        lineNumber: 17,
                                                         columnNumber: 37
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 15,
+                                                    lineNumber: 16,
                                                     columnNumber: 33
                                                 }, this),
                                                 "Văn phòng: Tp. HCM"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 14,
+                                            lineNumber: 15,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3636,19 +3664,19 @@ function Footer() {
                                                         d: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Footer.js",
-                                                        lineNumber: 22,
+                                                        lineNumber: 23,
                                                         columnNumber: 37
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 21,
+                                                    lineNumber: 22,
                                                     columnNumber: 33
                                                 }, this),
                                                 "0999 999 999"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 20,
+                                            lineNumber: 21,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3666,25 +3694,25 @@ function Footer() {
                                                         d: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Footer.js",
-                                                        lineNumber: 28,
+                                                        lineNumber: 29,
                                                         columnNumber: 37
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 27,
+                                                    lineNumber: 28,
                                                     columnNumber: 33
                                                 }, this),
                                                 "cskh@fashionstore.vn"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 26,
+                                            lineNumber: 27,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 13,
+                                    lineNumber: 14,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3701,17 +3729,17 @@ function Footer() {
                                                     d: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 36,
+                                                    lineNumber: 37,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 35,
+                                                lineNumber: 36,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 34,
+                                            lineNumber: 35,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -3725,29 +3753,29 @@ function Footer() {
                                                     d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 41,
+                                                    lineNumber: 42,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 40,
+                                                lineNumber: 41,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 39,
+                                            lineNumber: 40,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 33,
+                                    lineNumber: 34,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 8,
+                            lineNumber: 9,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3757,7 +3785,7 @@ function Footer() {
                                     children: "Chính sách"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 49,
+                                    lineNumber: 50,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3768,21 +3796,6 @@ function Footer() {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
                                                 children: "Tìm kiếm"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 51,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 51,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Giới thiệu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 52,
@@ -3797,7 +3810,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
-                                                children: "Cơ hội việc làm"
+                                                children: "Giới thiệu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 53,
@@ -3807,17 +3820,32 @@ function Footer() {
                                             fileName: "[project]/src/components/Footer.js",
                                             lineNumber: 53,
                                             columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
+                                                className: "hover:text-blue-400",
+                                                children: "Cơ hội việc làm"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 54,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 54,
+                                            columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 50,
+                                    lineNumber: 51,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 48,
+                            lineNumber: 49,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3827,7 +3855,7 @@ function Footer() {
                                     children: "Hỗ trợ khách hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 59,
+                                    lineNumber: 60,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3838,21 +3866,6 @@ function Footer() {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
                                                 children: "Hướng dẫn mua hàng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 61,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 61,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Hướng dẫn sử dụng"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 62,
@@ -3867,7 +3880,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
-                                                children: "Chi tiết kích cỡ"
+                                                children: "Hướng dẫn sử dụng"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 63,
@@ -3882,7 +3895,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
-                                                children: "Chính sách đổi trả & bảo hành"
+                                                children: "Chi tiết kích cỡ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 64,
@@ -3897,7 +3910,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                 href: "#",
                                                 className: "hover:text-blue-400",
-                                                children: "Quy trình giao nhận và thanh toán"
+                                                children: "Chính sách đổi trả & bảo hành"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 65,
@@ -3907,17 +3920,47 @@ function Footer() {
                                             fileName: "[project]/src/components/Footer.js",
                                             lineNumber: 65,
                                             columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
+                                                className: "hover:text-blue-400",
+                                                children: "Quy trình giao nhận và thanh toán"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 66,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 66,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                                href: "/TrackOrder",
+                                                className: "hover:text-blue-400",
+                                                children: "Tra cứu đơn hàng"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 68,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 67,
+                                            columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 60,
+                                    lineNumber: 61,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 58,
+                            lineNumber: 59,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3927,7 +3970,7 @@ function Footer() {
                                     children: "Phương thức thanh toán"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 71,
+                                    lineNumber: 75,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3943,12 +3986,12 @@ function Footer() {
                                                     className: "h-12 object-contain mx-auto"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 76,
+                                                    lineNumber: 80,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 75,
+                                                lineNumber: 79,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3959,35 +4002,35 @@ function Footer() {
                                                     className: "h-12 object-contain mx-auto"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 85,
+                                                    lineNumber: 89,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 84,
+                                                lineNumber: 88,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Footer.js",
-                                        lineNumber: 73,
+                                        lineNumber: 77,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 72,
+                                    lineNumber: 76,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 70,
+                            lineNumber: 74,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Footer.js",
-                    lineNumber: 6,
+                    lineNumber: 7,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3997,23 +4040,23 @@ function Footer() {
                         children: "© 2025 Fashion Store. All rights reserved."
                     }, void 0, false, {
                         fileName: "[project]/src/components/Footer.js",
-                        lineNumber: 97,
+                        lineNumber: 101,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/Footer.js",
-                    lineNumber: 96,
+                    lineNumber: 100,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/Footer.js",
-            lineNumber: 5,
+            lineNumber: 6,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Footer.js",
-        lineNumber: 4,
+        lineNumber: 5,
         columnNumber: 9
     }, this);
 }
@@ -4542,7 +4585,7 @@ function ProductReviews({ reviews, averageRating, pagination, reviewsError, hand
                                     columnNumber: 29
                                 }, this)),
                             reviews?.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                children: "No reviews available for this product."
+                                children: "Không có đánh giá nào cho sản phẩm này."
                             }, void 0, false, {
                                 fileName: "[project]/src/components/slugs/ProductReviews.js",
                                 lineNumber: 70,
@@ -4699,7 +4742,7 @@ function ProductReviews({ reviews, averageRating, pagination, reviewsError, hand
                                     id: "submit-review-button",
                                     type: "submit",
                                     className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition",
-                                    children: "Submit Review"
+                                    children: "Gửi Đánh giá"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/slugs/ProductReviews.js",
                                     lineNumber: 166,
@@ -5055,10 +5098,12 @@ function Slug() {
             alert('Vui lòng nhập nội dung đánh giá');
             return;
         }
+        console.log('reviewRating', reviewRating);
+        console.log('reviewText', reviewText);
         try {
             await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$reviewsSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createReview"])({
                 productId: currentProduct.id,
-                content: reviewText,
+                reviewText: reviewText,
                 rating: reviewRating
             })).unwrap();
             setReviewText('');
@@ -5085,7 +5130,7 @@ function Slug() {
         children: "Đang tải..."
     }, void 0, false, {
         fileName: "[project]/src/pages/productdetail/[slug].js",
-        lineNumber: 322,
+        lineNumber: 325,
         columnNumber: 49
     }, this);
     if (productError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5095,7 +5140,7 @@ function Slug() {
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/productdetail/[slug].js",
-        lineNumber: 323,
+        lineNumber: 326,
         columnNumber: 30
     }, this);
     if (stocksError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5105,14 +5150,14 @@ function Slug() {
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/productdetail/[slug].js",
-        lineNumber: 324,
+        lineNumber: 327,
         columnNumber: 29
     }, this);
     if (!currentProduct) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: "Không tìm thấy sản phẩm."
     }, void 0, false, {
         fileName: "[project]/src/pages/productdetail/[slug].js",
-        lineNumber: 325,
+        lineNumber: 328,
         columnNumber: 33
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -5136,12 +5181,12 @@ function Slug() {
                                         className: "w-full h-full object-contain rounded"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                        lineNumber: 334,
+                                        lineNumber: 337,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 333,
+                                    lineNumber: 336,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5162,7 +5207,7 @@ function Slug() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 362,
+                                                    lineNumber: 365,
                                                     columnNumber: 41
                                                 }, this),
                                                 !hasStock && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5172,37 +5217,37 @@ function Slug() {
                                                         children: "Hết hàng"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 369,
+                                                        lineNumber: 372,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 368,
+                                                    lineNumber: 371,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, color.id, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 353,
+                                            lineNumber: 356,
                                             columnNumber: 37
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 348,
+                                    lineNumber: 351,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 332,
+                            lineNumber: 335,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "hidden md:block border-l border-gray-300"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 377,
+                            lineNumber: 380,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5213,7 +5258,7 @@ function Slug() {
                                     children: currentProduct.product_name
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 380,
+                                    lineNumber: 383,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5227,24 +5272,24 @@ function Slug() {
                                         className: "w-6 h-6 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                        lineNumber: 390,
+                                        lineNumber: 393,
                                         columnNumber: 33
                                     }, this) : favorites[currentProduct.id] ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
                                         className: "h-6 w-6 text-red-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                        lineNumber: 392,
+                                        lineNumber: 395,
                                         columnNumber: 33
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
                                         className: "h-6 w-6 text-gray-400"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                        lineNumber: 394,
+                                        lineNumber: 397,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 381,
+                                    lineNumber: 384,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5255,7 +5300,7 @@ function Slug() {
                                             children: "TÌNH TRẠNG: "
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 398,
+                                            lineNumber: 401,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5263,13 +5308,13 @@ function Slug() {
                                             children: checkTotalStock() ? 'Còn hàng' : 'Hết hàng'
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 399,
+                                            lineNumber: 402,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 397,
+                                    lineNumber: 400,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5280,7 +5325,7 @@ function Slug() {
                                             children: "GIÁ:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 404,
+                                            lineNumber: 407,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5291,7 +5336,7 @@ function Slug() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 405,
+                                            lineNumber: 408,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5302,13 +5347,13 @@ function Slug() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 408,
+                                            lineNumber: 411,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 403,
+                                    lineNumber: 406,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5319,7 +5364,7 @@ function Slug() {
                                             children: "KÍCH THƯỚC:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 414,
+                                            lineNumber: 417,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5339,24 +5384,24 @@ function Slug() {
                                                         children: size.size
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 431,
+                                                        lineNumber: 434,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, size.id, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 421,
+                                                    lineNumber: 424,
                                                     columnNumber: 41
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 415,
+                                            lineNumber: 418,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 413,
+                                    lineNumber: 416,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5367,7 +5412,7 @@ function Slug() {
                                             children: "MÀU SẮC:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 444,
+                                            lineNumber: 447,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5391,29 +5436,29 @@ function Slug() {
                                                             className: "w-full h-0.5 bg-gray-400 transform rotate-45"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                            lineNumber: 463,
+                                                            lineNumber: 466,
                                                             columnNumber: 53
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                        lineNumber: 462,
+                                                        lineNumber: 465,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, color.id, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 450,
+                                                    lineNumber: 453,
                                                     columnNumber: 41
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 445,
+                                            lineNumber: 448,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 443,
+                                    lineNumber: 446,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5424,7 +5469,7 @@ function Slug() {
                                             children: "CHỌN SỐ LƯỢNG:"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 473,
+                                            lineNumber: 476,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5437,7 +5482,7 @@ function Slug() {
                                                     children: "-"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 475,
+                                                    lineNumber: 478,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5449,7 +5494,7 @@ function Slug() {
                                                     readOnly: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 482,
+                                                    lineNumber: 485,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5459,7 +5504,7 @@ function Slug() {
                                                     children: "+"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 490,
+                                                    lineNumber: 493,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5471,19 +5516,19 @@ function Slug() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                                    lineNumber: 497,
+                                                    lineNumber: 500,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 474,
+                                            lineNumber: 477,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 472,
+                                    lineNumber: 475,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5496,7 +5541,7 @@ function Slug() {
                                             children: "THÊM VÀO GIỎ"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 504,
+                                            lineNumber: 507,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5506,25 +5551,25 @@ function Slug() {
                                             children: "MUA NGAY"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                                            lineNumber: 511,
+                                            lineNumber: 514,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 503,
+                                    lineNumber: 506,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 379,
+                            lineNumber: 382,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                    lineNumber: 330,
+                    lineNumber: 333,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5539,7 +5584,7 @@ function Slug() {
                                     children: "ĐÁNH GIÁ"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 524,
+                                    lineNumber: 527,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5548,13 +5593,13 @@ function Slug() {
                                     children: "MÔ TẢ SẢN PHẨM"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 533,
+                                    lineNumber: 536,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 523,
+                            lineNumber: 526,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5564,7 +5609,7 @@ function Slug() {
                                     description: currentProduct.description
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 545,
+                                    lineNumber: 548,
                                     columnNumber: 57
                                 }, this),
                                 activeTab === 'reviews' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$slugs$2f$ProductReviews$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -5582,30 +5627,30 @@ function Slug() {
                                     router: router
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                                    lineNumber: 547,
+                                    lineNumber: 550,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/productdetail/[slug].js",
-                            lineNumber: 544,
+                            lineNumber: 547,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/productdetail/[slug].js",
-                    lineNumber: 522,
+                    lineNumber: 525,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/productdetail/[slug].js",
-            lineNumber: 329,
+            lineNumber: 332,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/productdetail/[slug].js",
-        lineNumber: 328,
+        lineNumber: 331,
         columnNumber: 9
     }, this);
 }

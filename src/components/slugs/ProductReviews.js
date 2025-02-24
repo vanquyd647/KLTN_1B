@@ -67,7 +67,7 @@ export default function ProductReviews({
                                 <p>{review.review_text}</p>
                             </div>
                         ))}
-                        {reviews?.length === 0 && <p>No reviews available for this product.</p>}
+                        {reviews?.length === 0 && <p>Không có đánh giá nào cho sản phẩm này.</p>}
                     </div>
                 )}
             </div>
@@ -168,7 +168,7 @@ export default function ProductReviews({
                                 type="submit"
                                 className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
                             >
-                                Submit Review
+                                Gửi Đánh giá
                             </button>
                         </form>
 
