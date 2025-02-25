@@ -2186,7 +2186,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$us
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://6758-183-81-47-27.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -2442,7 +2442,7 @@ const productApi = {
     },
     // Get all products
     getProducts: async ()=>{
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
     // Get product details by slug
@@ -2462,7 +2462,9 @@ const productApi = {
     },
     // Get products with pagination
     getProductsByPagination: async (page, limit)=>{
+        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        console.log('API response:', response.data);
         return response.data;
     },
     // Get new products with pagination
@@ -2831,6 +2833,14 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    },
+    updateStock: async (stockId, stockData)=>{
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
         }
     }
 };

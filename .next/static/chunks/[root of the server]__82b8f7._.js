@@ -668,7 +668,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://6758-183-81-47-27.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -924,7 +924,7 @@ const productApi = {
     },
     // Get all products
     getProducts: async ()=>{
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
     // Get product details by slug
@@ -944,7 +944,9 @@ const productApi = {
     },
     // Get products with pagination
     getProductsByPagination: async (page, limit)=>{
+        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        console.log('API response:', response.data);
         return response.data;
     },
     // Get new products with pagination
@@ -1313,6 +1315,14 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    },
+    updateStock: async (stockId, stockData)=>{
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
         }
     }
 };
@@ -1726,7 +1736,12 @@ const fetchProducts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_m
 });
 const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
     try {
+        console.log('Calling fetchProductsByPagination with:', {
+            page,
+            limit
+        });
         const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
+        console.log('Response:', paginatedProducts);
         return paginatedProducts;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
@@ -1826,6 +1841,8 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         },
         visibleFeaturedProducts: [],
         loading: false,
+        fetchLoading: false,
+        submitLoading: false,
         error: null
     },
     reducers: {
@@ -1885,7 +1902,7 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         });
         // Fetch products with pagination
         builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
+            state.fetchLoading = true;
             state.error = null;
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
@@ -1896,10 +1913,10 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            state.loading = false;
+            state.fetchLoading = true;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.fetchLoading = true;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
@@ -1974,28 +1991,41 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
         });
         // Create product
         builder.addCase(createProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(createProduct.fulfilled, (state, action)=>{
-            state.items.push(action.payload);
-            state.loading = false;
+            // Kiểm tra cấu trúc response và cập nhật state phù hợp
+            const newProduct = Array.isArray(action.payload.data) ? action.payload.data[0] : action.payload.data;
+            if (state.items) {
+                state.items.push(newProduct);
+            } else {
+                state.items = [
+                    newProduct
+                ];
+            }
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(createProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Update product
         builder.addCase(updateProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(updateProduct.fulfilled, (state, action)=>{
-            const index = state.items.findIndex((item)=>item.slug === action.payload.slug);
-            if (index !== -1) {
-                state.items[index] = action.payload;
+            // Cập nhật sản phẩm trong danh sách
+            if (state.pagination && state.pagination.items) {
+                const index = state.pagination.items.findIndex((item)=>item.slug === action.payload.data.slug);
+                if (index !== -1) {
+                    state.pagination.items[index] = action.payload.data;
+                }
             }
-            state.loading = false;
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(updateProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Delete product
         builder.addCase(deleteProduct.pending, (state)=>{

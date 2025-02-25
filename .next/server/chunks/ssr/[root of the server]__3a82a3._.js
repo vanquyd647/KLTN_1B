@@ -471,7 +471,7 @@ const productApi = {
     },
     // Get all products
     getProducts: async ()=>{
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
     // Get product details by slug
@@ -491,7 +491,9 @@ const productApi = {
     },
     // Get products with pagination
     getProductsByPagination: async (page, limit)=>{
+        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        console.log('API response:', response.data);
         return response.data;
     },
     // Get new products with pagination
@@ -860,6 +862,14 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    },
+    updateStock: async (stockId, stockData)=>{
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
         }
     }
 };
@@ -1279,7 +1289,12 @@ const fetchProducts = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
 });
 const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
     try {
+        console.log('Calling fetchProductsByPagination with:', {
+            page,
+            limit
+        });
         const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
+        console.log('Response:', paginatedProducts);
         return paginatedProducts;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
@@ -1379,6 +1394,8 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         },
         visibleFeaturedProducts: [],
         loading: false,
+        fetchLoading: false,
+        submitLoading: false,
         error: null
     },
     reducers: {
@@ -1438,7 +1455,7 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Fetch products with pagination
         builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
+            state.fetchLoading = true;
             state.error = null;
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
@@ -1449,10 +1466,10 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            state.loading = false;
+            state.fetchLoading = true;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.fetchLoading = true;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
@@ -1527,28 +1544,41 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Create product
         builder.addCase(createProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(createProduct.fulfilled, (state, action)=>{
-            state.items.push(action.payload);
-            state.loading = false;
+            // Kiểm tra cấu trúc response và cập nhật state phù hợp
+            const newProduct = Array.isArray(action.payload.data) ? action.payload.data[0] : action.payload.data;
+            if (state.items) {
+                state.items.push(newProduct);
+            } else {
+                state.items = [
+                    newProduct
+                ];
+            }
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(createProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Update product
         builder.addCase(updateProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(updateProduct.fulfilled, (state, action)=>{
-            const index = state.items.findIndex((item)=>item.slug === action.payload.slug);
-            if (index !== -1) {
-                state.items[index] = action.payload;
+            // Cập nhật sản phẩm trong danh sách
+            if (state.pagination && state.pagination.items) {
+                const index = state.pagination.items.findIndex((item)=>item.slug === action.payload.data.slug);
+                if (index !== -1) {
+                    state.pagination.items[index] = action.payload.data;
+                }
             }
-            state.loading = false;
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(updateProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Delete product
         builder.addCase(deleteProduct.pending, (state)=>{
@@ -2756,36 +2786,14 @@ function Sidebar({ isMobile }) {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("a", {
                                 href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
                                 className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50    transition-colors duration-200 font-medium group-hover:text-gray-600",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                        children: category.name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/Sidebar.js",
-                                        lineNumber: 53,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
-                                        className: "ml-auto w-5 h-5 text-gray-400 group-hover:text-gray-600",
-                                        fill: "none",
-                                        viewBox: "0 0 24 24",
-                                        stroke: "currentColor",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
-                                            strokeLinecap: "round",
-                                            strokeLinejoin: "round",
-                                            strokeWidth: 2,
-                                            d: "M9 5l7 7-7 7"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Sidebar.js",
-                                            lineNumber: 60,
-                                            columnNumber: 33
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/Sidebar.js",
-                                        lineNumber: 54,
-                                        columnNumber: 29
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                    children: category.name
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Sidebar.js",
+                                    lineNumber: 53,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
                                 fileName: "[project]/src/components/Sidebar.js",
                                 lineNumber: 48,
                                 columnNumber: 25
@@ -2799,17 +2807,17 @@ function Sidebar({ isMobile }) {
                                             children: subCategory.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Sidebar.js",
-                                            lineNumber: 67,
+                                            lineNumber: 59,
                                             columnNumber: 37
                                         }, this)
                                     }, subCategory.id, false, {
                                         fileName: "[project]/src/components/Sidebar.js",
-                                        lineNumber: 66,
+                                        lineNumber: 58,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Sidebar.js",
-                                lineNumber: 64,
+                                lineNumber: 56,
                                 columnNumber: 25
                             }, this)
                         ]
@@ -3545,6 +3553,38 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 className: "py-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/TrackOrder",
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
+                                        onClick: toggleDrawer,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
+                                                className: "w-5 h-5 mr-3",
+                                                fill: "none",
+                                                viewBox: "0 0 24 24",
+                                                stroke: "currentColor",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
+                                                    strokeLinecap: "round",
+                                                    strokeLinejoin: "round",
+                                                    strokeWidth: 2,
+                                                    d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Header.js",
+                                                    lineNumber: 449,
+                                                    columnNumber: 33
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Header.js",
+                                                lineNumber: 448,
+                                                columnNumber: 29
+                                            }, this),
+                                            "Tra cứu đơn hàng"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/Header.js",
+                                        lineNumber: 443,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/store-locations",
                                         className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                                         onClick: toggleDrawer,
@@ -3562,7 +3602,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 449,
+                                                        lineNumber: 460,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
@@ -3572,20 +3612,20 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 451,
+                                                        lineNumber: 462,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 448,
+                                                lineNumber: 459,
                                                 columnNumber: 29
                                             }, this),
                                             "Hệ thống cửa hàng"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 443,
+                                        lineNumber: 454,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3605,19 +3645,19 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 462,
+                                                    lineNumber: 473,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 461,
+                                                lineNumber: 472,
                                                 columnNumber: 29
                                             }, this),
                                             "Hướng dẫn sử dụng"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 456,
+                                        lineNumber: 467,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3637,19 +3677,19 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 473,
+                                                    lineNumber: 484,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 472,
+                                                lineNumber: 483,
                                                 columnNumber: 29
                                             }, this),
                                             "Chính sách bảo hành"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 467,
+                                        lineNumber: 478,
                                         columnNumber: 25
                                     }, this)
                                 ]

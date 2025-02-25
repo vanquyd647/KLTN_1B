@@ -23,7 +23,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 
 const apiClient = axios.create({
-    baseURL: 'https://6758-183-81-47-27.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -325,7 +325,7 @@ const productApi = {
 
     // Get all products
     getProducts: async () => {
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
 
@@ -349,7 +349,9 @@ const productApi = {
 
     // Get products with pagination
     getProductsByPagination: async (page, limit) => {
+        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        console.log('API response:', response.data);
         return response.data;
     },
 
@@ -759,7 +761,17 @@ const stockApi = {
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
         }
+    },
+
+    updateStock: async (stockId, stockData) => {
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
+        }
     }
+
 };
 
 const carrierApi = {

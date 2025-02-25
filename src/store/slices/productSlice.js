@@ -21,13 +21,16 @@ export const fetchProductsByPagination = createAsyncThunk(
     'products/fetchProductsByPagination',
     async ({ page, limit }, { rejectWithValue }) => {
         try {
+            console.log('Calling fetchProductsByPagination with:', { page, limit });
             const paginatedProducts = await productApi.getProductsByPagination(page, limit);
+            console.log('Response:', paginatedProducts);
             return paginatedProducts;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
         }
     }
 );
+
 
 // Fetch new products with pagination
 export const fetchNewProductsByPagination = createAsyncThunk(
@@ -158,6 +161,8 @@ const productSlice = createSlice({
         },
         visibleFeaturedProducts: [], // Featured products visible on the index page
         loading: false,
+        fetchLoading: false,    // loading cho fetch data
+        submitLoading: false,   // loading cho create/update/delete
         error: null,
     },
     reducers: {
@@ -222,23 +227,23 @@ const productSlice = createSlice({
         // Fetch products with pagination
         builder
             .addCase(fetchProductsByPagination.pending, (state) => {
-                state.loading = true;
+                state.fetchLoading = true;
                 state.error = null;
             })
             .addCase(fetchProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
                 state.pagination = {
-                    items: products || [],
+                    items: products || [], // Lưu danh sách sản phẩm
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
                     currentPage: pagination.currentPage || 1,
                     pageSize: pagination.pageSize || 10,
                 };
-                state.loading = false;
+                state.fetchLoading = true;
             })
             .addCase(fetchProductsByPagination.rejected, (state, action) => {
                 state.error = action.payload;
-                state.loading = false;
+                state.fetchLoading = true;
             });
 
         // Fetch new products with pagination
@@ -334,40 +339,53 @@ const productSlice = createSlice({
                 state.error = action.payload;
                 state.loading = false;
             });
-
         // Create product
         builder
             .addCase(createProduct.pending, (state) => {
-                state.loading = true;
+                state.submitLoading = true;
                 state.error = null;
             })
             .addCase(createProduct.fulfilled, (state, action) => {
-                state.items.push(action.payload);
-                state.loading = false;
+                // Kiểm tra cấu trúc response và cập nhật state phù hợp
+                const newProduct = Array.isArray(action.payload.data)
+                    ? action.payload.data[0]
+                    : action.payload.data;
+
+                if (state.items) {
+                    state.items.push(newProduct);
+                } else {
+                    state.items = [newProduct];
+                }
+                state.submitLoading = false;
+                state.error = null;
             })
             .addCase(createProduct.rejected, (state, action) => {
                 state.error = action.payload;
-                state.loading = false;
+                state.submitLoading = false;
             });
-
         // Update product
         builder
             .addCase(updateProduct.pending, (state) => {
-                state.loading = true;
+                state.submitLoading = true;
                 state.error = null;
             })
             .addCase(updateProduct.fulfilled, (state, action) => {
-                const index = state.items.findIndex((item) => item.slug === action.payload.slug);
-                if (index !== -1) {
-                    state.items[index] = action.payload;
+                // Cập nhật sản phẩm trong danh sách
+                if (state.pagination && state.pagination.items) {
+                    const index = state.pagination.items.findIndex(
+                        item => item.slug === action.payload.data.slug
+                    );
+                    if (index !== -1) {
+                        state.pagination.items[index] = action.payload.data;
+                    }
                 }
-                state.loading = false;
+                state.submitLoading = false;
+                state.error = null;
             })
             .addCase(updateProduct.rejected, (state, action) => {
                 state.error = action.payload;
-                state.loading = false;
+                state.submitLoading = false;
             });
-
         // Delete product
         builder
             .addCase(deleteProduct.pending, (state) => {

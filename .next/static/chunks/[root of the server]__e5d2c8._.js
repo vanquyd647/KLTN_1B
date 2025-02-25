@@ -1113,7 +1113,7 @@ const productApi = {
     },
     // Get all products
     getProducts: async ()=>{
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
     // Get product details by slug
@@ -1133,7 +1133,9 @@ const productApi = {
     },
     // Get products with pagination
     getProductsByPagination: async (page, limit)=>{
+        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
         const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
+        console.log('API response:', response.data);
         return response.data;
     },
     // Get new products with pagination
@@ -1502,6 +1504,14 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    },
+    updateStock: async (stockId, stockData)=>{
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
         }
     }
 };
