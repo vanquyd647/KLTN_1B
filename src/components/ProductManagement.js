@@ -16,6 +16,11 @@ const ProductManagement = () => {
     const [stockData, setStockData] = useState({});
     const [editingStock, setEditingStock] = useState(null);
     const [reloadTrigger, setReloadTrigger] = useState(0);
+    const [sortConfig, setSortConfig] = useState({
+        key: null,
+        direction: 'asc'
+    });
+
 
     const handleEdit = (product) => {
         setEditingProduct(product);
@@ -48,6 +53,37 @@ const ProductManagement = () => {
 
         fetchStockData();
     }, [reloadTrigger]);
+
+    const handleSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const sortedProducts = React.useMemo(() => {
+        if (!sortConfig.key) return pagination?.items;
+
+        return [...(pagination?.items || [])].sort((a, b) => {
+            if (sortConfig.key === 'product_name') {
+                return sortConfig.direction === 'asc'
+                    ? a.product_name.localeCompare(b.product_name)
+                    : b.product_name.localeCompare(a.product_name);
+            }
+            if (sortConfig.key === 'price') {
+                return sortConfig.direction === 'asc'
+                    ? a.price - b.price
+                    : b.price - a.price;
+            }
+            if (sortConfig.key === 'status') {
+                return sortConfig.direction === 'asc'
+                    ? a.status.localeCompare(b.status)
+                    : b.status.localeCompare(a.status);
+            }
+            return 0;
+        });
+    }, [pagination?.items, sortConfig]);
 
     const handleUpdateStock = async (stock, newQuantity) => {
         try {
@@ -105,7 +141,6 @@ const ProductManagement = () => {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-800">Quản lý sản phẩm</h2>
-                    <p className="text-gray-600 mt-1">Quản lý và cập nhật thông tin sản phẩm</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
@@ -116,7 +151,6 @@ const ProductManagement = () => {
                     </svg>
                     Thêm sản phẩm
                 </button>
-
             </div>
 
             {/* Product Table */}
@@ -125,14 +159,53 @@ const ProductManagement = () => {
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                             <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sản phẩm</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Giá</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                                <th
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('product_name')}
+                                >
+                                    <div className="flex items-center">
+                                        Sản phẩm
+                                        {sortConfig.key === 'product_name' && (
+                                            <span className="ml-2">
+                                                {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                                            </span>
+                                        )}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('price')}
+                                >
+                                    <div className="flex items-center">
+                                        Giá
+                                        {sortConfig.key === 'price' && (
+                                            <span className="ml-2">
+                                                {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                                            </span>
+                                        )}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                                    onClick={() => handleSort('status')}
+                                >
+                                    <div className="flex items-center">
+                                        Trạng thái
+                                        {sortConfig.key === 'status' && (
+                                            <span className="ml-2">
+                                                {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                                            </span>
+                                        )}
+                                    </div>
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Thao tác
+                                </th>
                             </tr>
                         </thead>
+
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {pagination?.items?.map((product) => (
+                            {sortedProducts?.map((product) => (
                                 <tr key={product.id} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center">
@@ -173,23 +246,74 @@ const ProductManagement = () => {
                                             {product.status === 'available' ? 'Còn hàng' : 'Hết hàng'}
                                         </span>
                                     </td>
-
-                                    <td>
-                                        <button
-                                            onClick={() => handleEdit(product)}
-                                            className="text-blue-600 hover:text-blue-900 mr-4"
-                                        >
-                                            Sửa
-                                        </button>
-                                        <button
-                                            onClick={() => handleViewDetails(product)}
-                                            className="text-blue-600 hover:text-blue-900 mr-4"
-                                        >
-                                            Chi tiết
-                                        </button>
-                                        <button className="text-red-600 hover:text-red-900">
-                                            Xóa
-                                        </button>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="flex items-center space-x-4">
+                                            {/* Edit Icon */}
+                                            <button
+                                                onClick={() => handleEdit(product)}
+                                                className="text-blue-600 hover:text-blue-900"
+                                                title="Sửa"
+                                            >
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                            {/* View Details Icon */}
+                                            <button
+                                                onClick={() => handleViewDetails(product)}
+                                                className="text-green-600 hover:text-green-900"
+                                                title="Chi tiết"
+                                            >
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                    />
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                            {/* Delete Icon */}
+                                            <button
+                                                className="text-red-600 hover:text-red-900"
+                                                title="Xóa"
+                                            >
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -198,8 +322,6 @@ const ProductManagement = () => {
                 </div>
             </div>
 
-            {/* Pagination */}
-            {/* Pagination */}
             {/* Pagination */}
             {pagination && (
                 <div className="mt-4 flex justify-between items-center">

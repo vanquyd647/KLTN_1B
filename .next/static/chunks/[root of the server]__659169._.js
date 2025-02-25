@@ -3745,6 +3745,10 @@ const ProductManagement = ()=>{
     const [stockData, setStockData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({});
     const [editingStock, setEditingStock] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [reloadTrigger, setReloadTrigger] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [sortConfig, setSortConfig] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        key: null,
+        direction: 'asc'
+    });
     const handleEdit = (product)=>{
         setEditingProduct(product);
     };
@@ -3788,6 +3792,40 @@ const ProductManagement = ()=>{
     }["ProductManagement.useEffect"], [
         reloadTrigger
     ]);
+    const handleSort = (key)=>{
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({
+            key,
+            direction
+        });
+    };
+    const sortedProducts = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ProductManagement.useMemo[sortedProducts]": ()=>{
+            if (!sortConfig.key) return pagination?.items;
+            return [
+                ...pagination?.items || []
+            ].sort({
+                "ProductManagement.useMemo[sortedProducts]": (a, b)=>{
+                    if (sortConfig.key === 'product_name') {
+                        return sortConfig.direction === 'asc' ? a.product_name.localeCompare(b.product_name) : b.product_name.localeCompare(a.product_name);
+                    }
+                    if (sortConfig.key === 'price') {
+                        return sortConfig.direction === 'asc' ? a.price - b.price : b.price - a.price;
+                    }
+                    if (sortConfig.key === 'status') {
+                        return sortConfig.direction === 'asc' ? a.status.localeCompare(b.status) : b.status.localeCompare(a.status);
+                    }
+                    return 0;
+                }
+            }["ProductManagement.useMemo[sortedProducts]"]);
+        }
+    }["ProductManagement.useMemo[sortedProducts]"], [
+        pagination?.items,
+        sortConfig
+    ]);
     const handleUpdateStock = async (stock, newQuantity)=>{
         try {
             // Gọi API cập nhật stock
@@ -3826,12 +3864,12 @@ const ProductManagement = ()=>{
             className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
         }, void 0, false, {
             fileName: "[project]/src/components/ProductManagement.js",
-            lineNumber: 92,
+            lineNumber: 128,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/ProductManagement.js",
-        lineNumber: 91,
+        lineNumber: 127,
         columnNumber: 9
     }, this);
     if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3842,7 +3880,7 @@ const ProductManagement = ()=>{
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ProductManagement.js",
-        lineNumber: 97,
+        lineNumber: 133,
         columnNumber: 9
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3852,27 +3890,17 @@ const ProductManagement = ()=>{
                 className: "flex justify-between items-center mb-6",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-bold text-gray-800",
-                                children: "Quản lý sản phẩm"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 107,
-                                columnNumber: 21
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-600 mt-1",
-                                children: "Quản lý và cập nhật thông tin sản phẩm"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 108,
-                                columnNumber: 21
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                            className: "text-2xl font-bold text-gray-800",
+                            children: "Quản lý sản phẩm"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/ProductManagement.js",
+                            lineNumber: 143,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 106,
+                        lineNumber: 142,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3891,25 +3919,25 @@ const ProductManagement = ()=>{
                                     d: "M12 6v6m0 0v6m0-6h6m-6 0H6"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 115,
+                                    lineNumber: 150,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 114,
+                                lineNumber: 149,
                                 columnNumber: 21
                             }, this),
                             "Thêm sản phẩm"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 110,
+                        lineNumber: 145,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 105,
+                lineNumber: 141,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3924,27 +3952,81 @@ const ProductManagement = ()=>{
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                            children: "Sản phẩm"
+                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer",
+                                            onClick: ()=>handleSort('product_name'),
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center",
+                                                children: [
+                                                    "Sản phẩm",
+                                                    sortConfig.key === 'product_name' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "ml-2",
+                                                        children: sortConfig.direction === 'asc' ? '↑' : '↓'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/ProductManagement.js",
+                                                        lineNumber: 169,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                lineNumber: 166,
+                                                columnNumber: 37
+                                            }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 128,
+                                            lineNumber: 162,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                            children: "Giá"
+                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer",
+                                            onClick: ()=>handleSort('price'),
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center",
+                                                children: [
+                                                    "Giá",
+                                                    sortConfig.key === 'price' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "ml-2",
+                                                        children: sortConfig.direction === 'asc' ? '↑' : '↓'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/ProductManagement.js",
+                                                        lineNumber: 182,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                lineNumber: 179,
+                                                columnNumber: 37
+                                            }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 129,
+                                            lineNumber: 175,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                            children: "Trạng thái"
+                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer",
+                                            onClick: ()=>handleSort('status'),
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center",
+                                                children: [
+                                                    "Trạng thái",
+                                                    sortConfig.key === 'status' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "ml-2",
+                                                        children: sortConfig.direction === 'asc' ? '↑' : '↓'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/ProductManagement.js",
+                                                        lineNumber: 195,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                lineNumber: 192,
+                                                columnNumber: 37
+                                            }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 130,
+                                            lineNumber: 188,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -3952,23 +4034,23 @@ const ProductManagement = ()=>{
                                             children: "Thao tác"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 131,
+                                            lineNumber: 201,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 127,
+                                    lineNumber: 161,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 126,
+                                lineNumber: 160,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
                                 className: "bg-white divide-y divide-gray-200",
-                                children: pagination?.items?.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                children: sortedProducts?.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                         className: "hover:bg-gray-50",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -3984,12 +4066,12 @@ const ProductManagement = ()=>{
                                                                 alt: product.product_name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 140,
+                                                                lineNumber: 213,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/ProductManagement.js",
-                                                            lineNumber: 139,
+                                                            lineNumber: 212,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4000,7 +4082,7 @@ const ProductManagement = ()=>{
                                                                     children: product.product_name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                    lineNumber: 147,
+                                                                    lineNumber: 220,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4008,7 +4090,7 @@ const ProductManagement = ()=>{
                                                                     children: product.categories.map((cat)=>cat.name).join(', ')
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                    lineNumber: 148,
+                                                                    lineNumber: 221,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4021,29 +4103,29 @@ const ProductManagement = ()=>{
                                                                             title: color.color
                                                                         }, color.id, false, {
                                                                             fileName: "[project]/src/components/ProductManagement.js",
-                                                                            lineNumber: 151,
+                                                                            lineNumber: 224,
                                                                             columnNumber: 57
                                                                         }, this))
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                    lineNumber: 149,
+                                                                    lineNumber: 222,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/ProductManagement.js",
-                                                            lineNumber: 146,
+                                                            lineNumber: 219,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                    lineNumber: 138,
+                                                    lineNumber: 211,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 137,
+                                                lineNumber: 210,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -4057,7 +4139,7 @@ const ProductManagement = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 163,
+                                                        lineNumber: 236,
                                                         columnNumber: 41
                                                     }, this),
                                                     product.discount_price < product.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4068,13 +4150,13 @@ const ProductManagement = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 165,
+                                                        lineNumber: 238,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 162,
+                                                lineNumber: 235,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -4084,73 +4166,153 @@ const ProductManagement = ()=>{
                                                     children: product.status === 'available' ? 'Còn hàng' : 'Hết hàng'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                    lineNumber: 169,
+                                                    lineNumber: 242,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 168,
+                                                lineNumber: 241,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                        onClick: ()=>handleEdit(product),
-                                                        className: "text-blue-600 hover:text-blue-900 mr-4",
-                                                        children: "Sửa"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 178,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                        onClick: ()=>handleViewDetails(product),
-                                                        className: "text-blue-600 hover:text-blue-900 mr-4",
-                                                        children: "Chi tiết"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 184,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                        className: "text-red-600 hover:text-red-900",
-                                                        children: "Xóa"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 190,
-                                                        columnNumber: 41
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
+                                                className: "px-6 py-4 whitespace-nowrap",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center space-x-4",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>handleEdit(product),
+                                                            className: "text-blue-600 hover:text-blue-900",
+                                                            title: "Sửa",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                className: "w-5 h-5",
+                                                                fill: "none",
+                                                                stroke: "currentColor",
+                                                                viewBox: "0 0 24 24",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                    strokeLinecap: "round",
+                                                                    strokeLinejoin: "round",
+                                                                    strokeWidth: 2,
+                                                                    d: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/ProductManagement.js",
+                                                                    lineNumber: 263,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                                lineNumber: 257,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/ProductManagement.js",
+                                                            lineNumber: 252,
+                                                            columnNumber: 45
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>handleViewDetails(product),
+                                                            className: "text-green-600 hover:text-green-900",
+                                                            title: "Chi tiết",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                className: "w-5 h-5",
+                                                                fill: "none",
+                                                                stroke: "currentColor",
+                                                                viewBox: "0 0 24 24",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                        strokeLinecap: "round",
+                                                                        strokeLinejoin: "round",
+                                                                        strokeWidth: 2,
+                                                                        d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/ProductManagement.js",
+                                                                        lineNumber: 283,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                        strokeLinecap: "round",
+                                                                        strokeLinejoin: "round",
+                                                                        strokeWidth: 2,
+                                                                        d: "M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/ProductManagement.js",
+                                                                        lineNumber: 289,
+                                                                        columnNumber: 53
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                                lineNumber: 277,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/ProductManagement.js",
+                                                            lineNumber: 272,
+                                                            columnNumber: 45
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            className: "text-red-600 hover:text-red-900",
+                                                            title: "Xóa",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                className: "w-5 h-5",
+                                                                fill: "none",
+                                                                stroke: "currentColor",
+                                                                viewBox: "0 0 24 24",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                    strokeLinecap: "round",
+                                                                    strokeLinejoin: "round",
+                                                                    strokeWidth: 2,
+                                                                    d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/ProductManagement.js",
+                                                                    lineNumber: 308,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/ProductManagement.js",
+                                                                lineNumber: 302,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/ProductManagement.js",
+                                                            lineNumber: 298,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/ProductManagement.js",
+                                                    lineNumber: 250,
+                                                    columnNumber: 41
+                                                }, this)
+                                            }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 177,
+                                                lineNumber: 249,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, product.id, true, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 136,
+                                        lineNumber: 209,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 134,
+                                lineNumber: 207,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 125,
+                        lineNumber: 159,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/ProductManagement.js",
-                    lineNumber: 124,
+                    lineNumber: 158,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 123,
+                lineNumber: 157,
                 columnNumber: 13
             }, this),
             pagination && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4166,7 +4328,7 @@ const ProductManagement = ()=>{
                                 children: (currentPage - 1) * itemsPerPage + 1
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 208,
+                                lineNumber: 330,
                                 columnNumber: 25
                             }, this),
                             ' ',
@@ -4177,7 +4339,7 @@ const ProductManagement = ()=>{
                                 children: Math.min(currentPage * itemsPerPage, pagination.totalItems)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 212,
+                                lineNumber: 334,
                                 columnNumber: 25
                             }, this),
                             ' ',
@@ -4188,14 +4350,14 @@ const ProductManagement = ()=>{
                                 children: pagination.totalItems
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 216,
+                                lineNumber: 338,
                                 columnNumber: 25
                             }, this),
                             " sản phẩm"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 206,
+                        lineNumber: 328,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4208,7 +4370,7 @@ const ProductManagement = ()=>{
                                 children: "Trước"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 219,
+                                lineNumber: 341,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4223,13 +4385,13 @@ const ProductManagement = ()=>{
                                             children: index + 1
                                         }, index + 1, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 235,
+                                            lineNumber: 357,
                                             columnNumber: 37
                                         }, this));
                                 })()
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 231,
+                                lineNumber: 353,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4244,19 +4406,19 @@ const ProductManagement = ()=>{
                                 children: "Sau"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 249,
+                                lineNumber: 371,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 218,
+                        lineNumber: 340,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 205,
+                lineNumber: 327,
                 columnNumber: 17
             }, this),
             selectedProduct && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4274,7 +4436,7 @@ const ProductManagement = ()=>{
                                         children: selectedProduct.product_name
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 274,
+                                        lineNumber: 396,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4292,23 +4454,23 @@ const ProductManagement = ()=>{
                                                 d: "M6 18L18 6M6 6l12 12"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 280,
+                                                lineNumber: 402,
                                                 columnNumber: 41
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 279,
+                                            lineNumber: 401,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 275,
+                                        lineNumber: 397,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 273,
+                                lineNumber: 395,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4322,7 +4484,7 @@ const ProductManagement = ()=>{
                                                 className: "w-full h-64 object-cover rounded-lg"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 287,
+                                                lineNumber: 409,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4335,18 +4497,18 @@ const ProductManagement = ()=>{
                                                         title: color.color
                                                     }, color.id, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 294,
+                                                        lineNumber: 416,
                                                         columnNumber: 45
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 292,
+                                                lineNumber: 414,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 286,
+                                        lineNumber: 408,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4359,7 +4521,7 @@ const ProductManagement = ()=>{
                                                         children: "Mô tả"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 306,
+                                                        lineNumber: 428,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4367,13 +4529,13 @@ const ProductManagement = ()=>{
                                                         children: selectedProduct.description
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 307,
+                                                        lineNumber: 429,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 305,
+                                                lineNumber: 427,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4383,7 +4545,7 @@ const ProductManagement = ()=>{
                                                         children: "Danh mục"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 311,
+                                                        lineNumber: 433,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4393,18 +4555,18 @@ const ProductManagement = ()=>{
                                                                 children: cat.name
                                                             }, cat.id, false, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 314,
+                                                                lineNumber: 436,
                                                                 columnNumber: 49
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 312,
+                                                        lineNumber: 434,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 310,
+                                                lineNumber: 432,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4414,7 +4576,7 @@ const ProductManagement = ()=>{
                                                         children: "Kích thước"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 322,
+                                                        lineNumber: 444,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4424,18 +4586,18 @@ const ProductManagement = ()=>{
                                                                 children: size.size
                                                             }, size.id, false, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 325,
+                                                                lineNumber: 447,
                                                                 columnNumber: 49
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 323,
+                                                        lineNumber: 445,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 321,
+                                                lineNumber: 443,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4445,7 +4607,7 @@ const ProductManagement = ()=>{
                                                         children: "Giá"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 333,
+                                                        lineNumber: 455,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4459,7 +4621,7 @@ const ProductManagement = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 335,
+                                                                lineNumber: 457,
                                                                 columnNumber: 45
                                                             }, this),
                                                             selectedProduct.discount_price < selectedProduct.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4470,19 +4632,19 @@ const ProductManagement = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 339,
+                                                                lineNumber: 461,
                                                                 columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 334,
+                                                        lineNumber: 456,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 332,
+                                                lineNumber: 454,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4493,7 +4655,7 @@ const ProductManagement = ()=>{
                                                         children: "Chi tiết tồn kho"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 347,
+                                                        lineNumber: 469,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4511,7 +4673,7 @@ const ProductManagement = ()=>{
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                                lineNumber: 352,
+                                                                                lineNumber: 474,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4519,7 +4681,7 @@ const ProductManagement = ()=>{
                                                                                 children: "|"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                                lineNumber: 355,
+                                                                                lineNumber: 477,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4530,13 +4692,13 @@ const ProductManagement = ()=>{
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                                lineNumber: 356,
+                                                                                lineNumber: 478,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                                        lineNumber: 351,
+                                                                        lineNumber: 473,
                                                                         columnNumber: 53
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4555,7 +4717,7 @@ const ProductManagement = ()=>{
                                                                                     }
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                                    lineNumber: 363,
+                                                                                    lineNumber: 485,
                                                                                     columnNumber: 65
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4573,17 +4735,17 @@ const ProductManagement = ()=>{
                                                                                             d: "M6 18L18 6M6 6l12 12"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/ProductManagement.js",
-                                                                                            lineNumber: 379,
+                                                                                            lineNumber: 501,
                                                                                             columnNumber: 73
                                                                                         }, this)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                                                        lineNumber: 378,
+                                                                                        lineNumber: 500,
                                                                                         columnNumber: 69
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                                    lineNumber: 374,
+                                                                                    lineNumber: 496,
                                                                                     columnNumber: 65
                                                                                 }, this)
                                                                             ]
@@ -4597,7 +4759,7 @@ const ProductManagement = ()=>{
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                                    lineNumber: 385,
+                                                                                    lineNumber: 507,
                                                                                     columnNumber: 65
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4615,69 +4777,69 @@ const ProductManagement = ()=>{
                                                                                             d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/ProductManagement.js",
-                                                                                            lineNumber: 393,
+                                                                                            lineNumber: 515,
                                                                                             columnNumber: 73
                                                                                         }, this)
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                                                        lineNumber: 392,
+                                                                                        lineNumber: 514,
                                                                                         columnNumber: 69
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/ProductManagement.js",
-                                                                                    lineNumber: 388,
+                                                                                    lineNumber: 510,
                                                                                     columnNumber: 65
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                                        lineNumber: 360,
+                                                                        lineNumber: 482,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, index, true, {
                                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                                lineNumber: 350,
+                                                                lineNumber: 472,
                                                                 columnNumber: 49
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductManagement.js",
-                                                        lineNumber: 348,
+                                                        lineNumber: 470,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductManagement.js",
-                                                lineNumber: 346,
+                                                lineNumber: 468,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 304,
+                                        lineNumber: 426,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 285,
+                                lineNumber: 407,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductManagement.js",
-                        lineNumber: 272,
+                        lineNumber: 394,
                         columnNumber: 25
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/ProductManagement.js",
-                    lineNumber: 271,
+                    lineNumber: 393,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 270,
+                lineNumber: 392,
                 columnNumber: 17
             }, this),
             isAddModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4693,7 +4855,7 @@ const ProductManagement = ()=>{
                                     children: "Thêm sản phẩm mới"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 414,
+                                    lineNumber: 536,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4711,23 +4873,23 @@ const ProductManagement = ()=>{
                                             d: "M6 18L18 6M6 6l12 12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 420,
+                                            lineNumber: 542,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 419,
+                                        lineNumber: 541,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 415,
+                                    lineNumber: 537,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/ProductManagement.js",
-                            lineNumber: 413,
+                            lineNumber: 535,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductForm$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -4738,18 +4900,18 @@ const ProductManagement = ()=>{
                             onCancel: ()=>setIsAddModalOpen(false)
                         }, void 0, false, {
                             fileName: "[project]/src/components/ProductManagement.js",
-                            lineNumber: 425,
+                            lineNumber: 547,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/ProductManagement.js",
-                    lineNumber: 412,
+                    lineNumber: 534,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 411,
+                lineNumber: 533,
                 columnNumber: 17
             }, this),
             editingProduct && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4765,7 +4927,7 @@ const ProductManagement = ()=>{
                                     children: "Sửa sản phẩm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 441,
+                                    lineNumber: 563,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4783,23 +4945,23 @@ const ProductManagement = ()=>{
                                             d: "M6 18L18 6M6 6l12 12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 447,
+                                            lineNumber: 569,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductManagement.js",
-                                        lineNumber: 446,
+                                        lineNumber: 568,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 442,
+                                    lineNumber: 564,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/ProductManagement.js",
-                            lineNumber: 440,
+                            lineNumber: 562,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductForm$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -4822,28 +4984,28 @@ const ProductManagement = ()=>{
                             onCancel: ()=>setEditingProduct(null)
                         }, void 0, false, {
                             fileName: "[project]/src/components/ProductManagement.js",
-                            lineNumber: 452,
+                            lineNumber: 574,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/ProductManagement.js",
-                    lineNumber: 439,
+                    lineNumber: 561,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductManagement.js",
-                lineNumber: 438,
+                lineNumber: 560,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ProductManagement.js",
-        lineNumber: 103,
+        lineNumber: 139,
         columnNumber: 9
     }, this);
 };
-_s(ProductManagement, "u9dX2w83CJ/wsCQFBn2Kj4MEzm8=", false, function() {
+_s(ProductManagement, "OEo+bITGR7XsRKlQebID8KcqXdo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
