@@ -393,7 +393,12 @@ const productSlice = createSlice({
                 state.error = null;
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
-                state.items = state.items.filter((item) => item.slug !== action.meta.arg);
+                // Kiểm tra và cập nhật pagination.items thay vì items
+                if (state.pagination && state.pagination.items) {
+                    state.pagination.items = state.pagination.items.filter(
+                        (item) => item.slug !== action.meta.arg
+                    );
+                }
                 state.loading = false;
             })
             .addCase(deleteProduct.rejected, (state, action) => {

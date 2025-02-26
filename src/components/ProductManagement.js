@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsByPagination } from '@/store/slices/productSlice';
+import { fetchProductsByPagination, deleteProduct } from '@/store/slices/productSlice';
 import ProductForm from './ProductForm';
 import { stockApi } from '../utils/apiClient';
 
@@ -24,6 +24,18 @@ const ProductManagement = () => {
 
     const handleEdit = (product) => {
         setEditingProduct(product);
+    };
+
+    const handleDelete = async (product) => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+            try {
+                await dispatch(deleteProduct(product.slug));
+                // Reload data sau khi xóa thành công
+                setReloadTrigger(prev => prev + 1);
+            } catch (error) {
+                console.error('Lỗi khi xóa sản phẩm:', error);
+            }
+        }
     };
 
     useEffect(() => {
@@ -296,6 +308,7 @@ const ProductManagement = () => {
                                             </button>
                                             {/* Delete Icon */}
                                             <button
+                                                onClick={() => handleDelete(product)}
                                                 className="text-red-600 hover:text-red-900"
                                                 title="Xóa"
                                             >
