@@ -696,6 +696,32 @@ const orderApi = {
         }
     },
 
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate }) => {
+        try {
+            // Tạo query params
+            const params = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+
+            // Thêm các filter tùy chọn
+            if (status) {
+                params.append('status', status);
+            }
+            if (startDate) {
+                params.append('startDate', startDate);
+            }
+            if (endDate) {
+                params.append('endDate', endDate);
+            }
+
+            const response = await apiClient.get(`orders?${params}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
+    },
+
     /**
  * Gửi email xác nhận đơn hàng
  * @param {Object} data - Dữ liệu đơn hàng
@@ -749,6 +775,23 @@ const paymentApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
         }
+    },
+
+    /**
+     * Cập nhật trạng thái thanh toán
+     * @param {Object} statusData - Dữ liệu cập nhật trạng thái
+     * @param {string} statusData.orderId - ID đơn hàng
+     * @param {string} statusData.paymentMethod - Phương thức thanh toán ('payos' hoặc 'cash_on_delivery')
+     * @param {string} statusData.paymentStatus - Trạng thái thanh toán ('pending', 'processing', 'paid', 'cancelled')
+     * @returns {Promise<Object>} - Kết quả cập nhật
+     */
+    updatePaymentMethodStatus: async (statusData) => {
+        try {
+            const response = await apiClient.put('payments/update-status', statusData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
+        }
     }
 };
 
@@ -788,8 +831,8 @@ const carrierApi = {
     // Lấy danh sách nhà vận chuyển
     getCarriers: async (query = {}) => {
         try {
-            const { page = 1, limit = 10, status } = query;
-            const queryString = new URLSearchParams({ page, limit, status }).toString();
+            const { page = 1, limit = 10 } = query;
+            const queryString = new URLSearchParams({ page, limit }).toString();
             const response = await apiClient.get(`carriers?${queryString}`);
             return response.data;
         } catch (error) {

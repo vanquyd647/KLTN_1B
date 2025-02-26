@@ -1585,7 +1585,10 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.loading = true;
             state.error = null;
         }).addCase(deleteProduct.fulfilled, (state, action)=>{
-            state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
+            // Kiểm tra và cập nhật pagination.items thay vì items
+            if (state.pagination && state.pagination.items) {
+                state.pagination.items = state.pagination.items.filter((item)=>item.slug !== action.meta.arg);
+            }
             state.loading = false;
         }).addCase(deleteProduct.rejected, (state, action)=>{
             state.error = action.payload;

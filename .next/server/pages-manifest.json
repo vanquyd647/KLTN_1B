@@ -8,5 +8,7 @@
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
   "/payment/success": "pages/payment/success.js",
-  "/TrackOrder": "pages/TrackOrder.js"
+  "/TrackOrder": "pages/TrackOrder.js",
+  "/favorites": "pages/favorites.js",
+  "/account/profile": "pages/account/profile.js"
 }
