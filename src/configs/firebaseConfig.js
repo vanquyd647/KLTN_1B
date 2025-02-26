@@ -1,22 +1,19 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // Import firestore từ firebase/firestore
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-
-// Firebase config
 const firebaseConfig = {
-    apiKey: 'AIzaSyDF-_GnYs8IBi1lkLdcSuH4Qdrdz4CVnNw',
-    authDomain: 'red89-f8933.firebaseapp.com',
-    projectId: 'red89-f8933',
-    storageBucket: 'red89-f8933.appspot.com',
-    messagingSenderId: '148816240907',
-    appId: '1:148816240907:web:9aba16f39bce554467820e',
-    measurementId: 'G-L2NV721VLZ'
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-
 
 initializeApp(firebaseConfig);
 export const auth = getAuth();
-export const firestore = getFirestore(); // Sử dụng getFirestore() để khởi tạo firestore
+export const firestore = getFirestore();
 export const storage = getStorage();
