@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, updateProduct } from '../store/slices/productSlice';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from '../configs/firebaseConfig';
 
 const ProductForm = ({ product, onSuccess, onCancel }) => {
     const dispatch = useDispatch();
@@ -21,10 +23,75 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
         stock: []
     });
 
+    console.log('formData:', formData);
+
     const [tempCategory, setTempCategory] = useState('');
     const [tempColor, setTempColor] = useState({ color: '', hex_code: '', image: '' });
     const [tempSize, setTempSize] = useState('');
     const [tempStock, setTempStock] = useState({ size: '', color: '', quantity: 0 });
+    // Thêm states mới
+    const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+
+    // Thêm hàm xử lý upload
+    const handleImageUpload = async (file) => {
+        // Kiểm tra kích thước file (giới hạn 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File quá lớn! Vui lòng chọn file nhỏ hơn 5MB');
+            return;
+        }
+
+        // Kiểm tra loại file
+        if (!file.type.startsWith('image/')) {
+            alert('Vui lòng chọn file ảnh!');
+            return;
+        }
+
+        setUploading(true);
+        setUploadProgress(0);
+
+        try {
+            // Tạo tên file unique
+            const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+            const storageRef = ref(storage, `products/${fileName}`);
+
+            // Tạo upload task
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            // Theo dõi tiến trình upload
+            uploadTask.on('state_changed',
+                // Progress handler
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setUploadProgress(Math.round(progress));
+                },
+                // Error handler
+                (error) => {
+                    console.error('Upload error:', error);
+                    alert('Lỗi khi tải ảnh lên! Vui lòng thử lại.');
+                    setUploading(false);
+                },
+                // Complete handler
+                async () => {
+                    try {
+                        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                        setTempColor(prev => ({ ...prev, image: downloadURL }));
+                        alert('Tải ảnh lên thành công!');
+                    } catch (error) {
+                        console.error('Error getting download URL:', error);
+                        alert('Lỗi khi lấy URL ảnh!');
+                    } finally {
+                        setUploading(false);
+                        setUploadProgress(0);
+                    }
+                }
+            );
+        } catch (error) {
+            console.error('Upload setup error:', error);
+            alert('Có lỗi xảy ra khi chuẩn bị tải ảnh!');
+            setUploading(false);
+        }
+    };
 
     // Handlers for form inputs
     const handleBasicInfoChange = (e) => {
@@ -406,13 +473,62 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                         placeholder="Mã màu (hex)"
                         className="border rounded-lg p-2"
                     />
-                    <input
-                        type="text"
-                        value={tempColor.image}
-                        onChange={(e) => setTempColor(prev => ({ ...prev, image: e.target.value }))}
-                        placeholder="URL hình ảnh"
-                        className="border rounded-lg p-2"
-                    />
+                    <div className="space-y-2">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    handleImageUpload(file);
+                                }
+                            }}
+                            className="block w-full text-sm text-gray-500
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-full file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-blue-50 file:text-blue-700
+                                        hover:file:bg-blue-100"
+                            disabled={uploading}
+                        />
+                        {uploading && (
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                                <svg className="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span>Đang tải ảnh... {uploadProgress}%</span>
+                            </div>
+                        )}
+                        {tempColor.image && (
+                            <div className="flex items-center gap-2">
+                                <img
+                                    src={tempColor.image}
+                                    alt="Preview"
+                                    className="w-20 h-20 object-cover rounded"
+                                />
+                                <div className="flex flex-col gap-1">
+                                    <a
+                                        href={tempColor.image}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm text-blue-500 hover:underline"
+                                    >
+                                        Xem ảnh
+                                    </a>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setTempColor(prev => ({ ...prev, image: '' }));
+                                        }}
+                                        className="text-sm text-red-500 hover:underline"
+                                    >
+                                        Xóa ảnh
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <button
                     type="button"
@@ -423,24 +539,49 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 </button>
                 <div className="grid grid-cols-2 gap-4">
                     {formData.colors.map((color, index) => (
-                        <div key={index} className="flex items-center gap-2 p-2 border rounded-lg">
-                            <div
-                                className="w-6 h-6 rounded-full"
-                                style={{ backgroundColor: color.hex_code }}
-                            />
-                            <span>{color.color}</span>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setFormData(prev => ({
-                                        ...prev,
-                                        colors: prev.colors.filter((_, i) => i !== index)
-                                    }));
-                                }}
-                                className="ml-auto text-red-500"
-                            >
-                                ×
-                            </button>
+                        <div key={index} className="flex items-center gap-4 p-3 border rounded-lg">
+                            <div className="flex items-center gap-2">
+                                <div
+                                    className="w-6 h-6 rounded-full border"
+                                    style={{ backgroundColor: color.hex_code }}
+                                />
+                                <span className="font-medium">{color.color}</span>
+                            </div>
+
+                            {color.image && (
+                                <div className="flex-1">
+                                    <img
+                                        src={color.image}
+                                        alt={`Màu ${color.color}`}
+                                        className="w-20 h-20 object-cover rounded-lg"
+                                    />
+                                </div>
+                            )}
+
+                            <div className="flex items-center gap-2">
+                                <a
+                                    href={color.image}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-blue-500 hover:underline"
+                                >
+                                    Xem ảnh
+                                </a>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            colors: prev.colors.filter((_, i) => i !== index)
+                                        }));
+                                    }}
+                                    className="text-red-500 hover:text-red-700"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
