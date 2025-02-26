@@ -3226,7 +3226,7 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$app__$5b$external$5d$__$28$firebase$2f$app$2c$__esm_import$29$__ = __turbopack_import__("[externals]/firebase/app [external] (firebase/app, esm_import)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$auth__$5b$external$5d$__$28$firebase$2f$auth$2c$__esm_import$29$__ = __turbopack_import__("[externals]/firebase/auth [external] (firebase/auth, esm_import)");
-var __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$firestore__$5b$external$5d$__$28$firebase$2f$firestore$2c$__esm_import$29$__ = __turbopack_import__("[externals]/firebase/firestore [external] (firebase/firestore, esm_import)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$firestore__$5b$external$5d$__$28$firebase$2f$firestore$2c$__esm_import$29$__ = __turbopack_import__("[externals]/firebase/firestore [external] (firebase/firestore, esm_import)"); // Import firestore từ firebase/firestore
 var __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$storage__$5b$external$5d$__$28$firebase$2f$storage$2c$__esm_import$29$__ = __turbopack_import__("[externals]/firebase/storage [external] (firebase/storage, esm_import)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
     __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$app__$5b$external$5d$__$28$firebase$2f$app$2c$__esm_import$29$__,
@@ -3239,18 +3239,19 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 ;
 ;
+// Firebase config
 const firebaseConfig = {
-    apiKey: ("TURBOPACK compile-time value", "AIzaSyDF-_GnYs8IBi1lkLdcSuH4Qdrdz4CVnNw"),
-    authDomain: ("TURBOPACK compile-time value", "red89-f8933.firebaseapp.com"),
-    projectId: ("TURBOPACK compile-time value", "red89-f8933"),
-    storageBucket: ("TURBOPACK compile-time value", "red89-f8933.appspot.com"),
-    messagingSenderId: ("TURBOPACK compile-time value", "148816240907"),
-    appId: ("TURBOPACK compile-time value", "1:148816240907:web:9aba16f39bce554467820e"),
-    measurementId: ("TURBOPACK compile-time value", "G-L2NV721VLZ")
+    apiKey: 'AIzaSyDF-_GnYs8IBi1lkLdcSuH4Qdrdz4CVnNw',
+    authDomain: 'red89-f8933.firebaseapp.com',
+    projectId: 'red89-f8933',
+    storageBucket: 'red89-f8933.appspot.com',
+    messagingSenderId: '148816240907',
+    appId: '1:148816240907:web:9aba16f39bce554467820e',
+    measurementId: 'G-L2NV721VLZ'
 };
 (0, __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$app__$5b$external$5d$__$28$firebase$2f$app$2c$__esm_import$29$__["initializeApp"])(firebaseConfig);
 const auth = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$auth__$5b$external$5d$__$28$firebase$2f$auth$2c$__esm_import$29$__["getAuth"])();
-const firestore = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$firestore__$5b$external$5d$__$28$firebase$2f$firestore$2c$__esm_import$29$__["getFirestore"])();
+const firestore = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$firestore__$5b$external$5d$__$28$firebase$2f$firestore$2c$__esm_import$29$__["getFirestore"])(); // Sử dụng getFirestore() để khởi tạo firestore
 const storage = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$firebase$2f$storage__$5b$external$5d$__$28$firebase$2f$storage$2c$__esm_import$29$__["getStorage"])();
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),

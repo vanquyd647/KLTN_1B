@@ -2,5 +2,11 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/admin": "pages/admin.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/productdetail/[slug]": "pages/productdetail/[slug].js",
+  "/cart": "pages/cart.js",
+  "/checkout": "pages/checkout.js",
+  "/payment": "pages/payment.js",
+  "/payment/success": "pages/payment/success.js",
+  "/TrackOrder": "pages/TrackOrder.js"
 }
