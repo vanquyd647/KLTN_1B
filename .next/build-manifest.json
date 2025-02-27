@@ -10,18 +10,6 @@
       "static/chunks/src_pages__app_5771e1._.js",
       "static/chunks/src_pages__app_70ea2e._.js"
     ],
-    "/admin": [
-      "static/chunks/[root of the server]__0a4e2a._.js",
-      "static/chunks/node_modules_next_dist_434803._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_@firebase_storage_dist_index_esm2017_0c4756.js",
-      "static/chunks/node_modules_@firebase_auth_dist_esm2017_f0a06e._.js",
-      "static/chunks/node_modules_@firebase_firestore_dist_index_esm2017_06c08c.js",
-      "static/chunks/node_modules_abebbc._.js",
-      "static/chunks/src_pages_admin_index_5771e1.js",
-      "static/chunks/src_pages_admin_index_d50654.js"
-    ],
     "/": [
       "static/chunks/[root of the server]__7375bf._.js",
       "static/chunks/node_modules_next_b6a9d6._.js",
@@ -30,69 +18,6 @@
       "static/chunks/node_modules_78555f._.js",
       "static/chunks/src_pages_index_5771e1._.js",
       "static/chunks/src_pages_index_14bd0f._.js"
-    ],
-    "/productdetail/[slug]": [
-      "static/chunks/[root of the server]__665c5a._.js",
-      "static/chunks/node_modules_next_b6a9d6._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_78555f._.js",
-      "static/chunks/src_pages_productdetail_[slug]_5771e1.js",
-      "static/chunks/src_pages_productdetail_[slug]_65d79d.js"
-    ],
-    "/cart": [
-      "static/chunks/[root of the server]__fa3ff3._.js",
-      "static/chunks/node_modules_next_9be927._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_5cd500._.js",
-      "static/chunks/src_pages_cart_5771e1._.js",
-      "static/chunks/src_pages_cart_28316f._.js"
-    ],
-    "/checkout": [
-      "static/chunks/[root of the server]__3b872d._.js",
-      "static/chunks/node_modules_next_b6a9d6._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_5cd500._.js",
-      "static/chunks/src_pages_checkout_5771e1._.js",
-      "static/chunks/src_pages_checkout_77e86f._.js"
-    ],
-    "/payment": [
-      "static/chunks/[root of the server]__e5d2c8._.js",
-      "static/chunks/node_modules_next_cc4070._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_8b3ed2._.js",
-      "static/chunks/src_pages_payment_5771e1._.js",
-      "static/chunks/src_pages_payment_7eea6c._.js"
-    ],
-    "/payment/success": [
-      "static/chunks/node_modules_next_2791c6._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_8b3ed2._.js",
-      "static/chunks/[root of the server]__cb7eec._.js",
-      "static/chunks/src_pages_payment_success_5771e1.js",
-      "static/chunks/src_pages_payment_success_b424f9.js"
-    ],
-    "/TrackOrder": [
-      "static/chunks/[root of the server]__a08184._.js",
-      "static/chunks/node_modules_next_9be927._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_e2a807._.js",
-      "static/chunks/src_pages_TrackOrder_5771e1._.js",
-      "static/chunks/src_pages_TrackOrder_6af7f8._.js"
-    ],
-    "/favorites": [
-      "static/chunks/[root of the server]__7a5266._.js",
-      "static/chunks/node_modules_next_b6a9d6._.js",
-      "static/chunks/node_modules_react-dom_82bb97._.js",
-      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-      "static/chunks/node_modules_413947._.js",
-      "static/chunks/src_pages_favorites_5771e1._.js",
-      "static/chunks/src_pages_favorites_24c13f._.js"
     ],
     "/account/profile": [
       "static/chunks/[root of the server]__06f78d._.js",
@@ -108,26 +33,36 @@
       "static/chunks/src_components_Layout_a2d792.js",
       "static/chunks/src_pages_account_profile_5771e1.js",
       "static/chunks/src_pages_account_profile_95aff1.js"
+    ],
+    "/admin": [
+      "static/chunks/[root of the server]__b1b753._.js",
+      "static/chunks/node_modules_next_dist_434803._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+      "static/chunks/node_modules_@firebase_storage_dist_index_esm2017_0c4756.js",
+      "static/chunks/node_modules_@firebase_auth_dist_esm2017_f0a06e._.js",
+      "static/chunks/node_modules_@firebase_firestore_dist_index_esm2017_06c08c.js",
+      "static/chunks/node_modules_463719._.js",
+      "static/chunks/src_pages_admin_index_5771e1.js",
+      "static/chunks/src_pages_admin_index_b777a3.js"
+    ],
+    "/favorites": [
+      "static/chunks/[root of the server]__7a5266._.js",
+      "static/chunks/node_modules_next_b6a9d6._.js",
+      "static/chunks/node_modules_react-dom_82bb97._.js",
+      "static/chunks/node_modules_axios_lib_9a6fdf._.js",
+      "static/chunks/node_modules_413947._.js",
+      "static/chunks/src_pages_favorites_5771e1._.js",
+      "static/chunks/src_pages_favorites_24c13f._.js"
     ]
   },
   "devFiles": [],
   "ampDevFiles": [],
-  "polyfillFiles": [
-    "static/chunks/node_modules_next_dist_build_polyfills_polyfill-nomodule.js"
-  ],
+  "polyfillFiles": [],
   "lowPriorityFiles": [
     "static/development/_ssgManifest.js",
     "static/development/_buildManifest.js"
   ],
-  "rootMainFiles": [
-    "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
-    "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
-    "static/chunks/node_modules_next_dist_client_523921._.js",
-    "static/chunks/node_modules_next_dist_4bb10e._.js",
-    "static/chunks/node_modules_@swc_helpers_cjs_00636a._.js",
-    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_d0a96d._.js",
-    "static/chunks/_e69f0d._.js",
-    "static/chunks/_d95469._.js"
-  ],
+  "rootMainFiles": [],
   "ampFirstPages": []
 }

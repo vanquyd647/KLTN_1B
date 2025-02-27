@@ -460,6 +460,49 @@ const adminApi = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Get all users (Admin only) 
+    getAllUsers: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, email, phone, name } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (email) query.append('email', email);
+            if (phone) query.append('phone', phone);
+            if (name) query.append('name', name);
+            const response = await apiClient.get(`users/admin/users?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch users list';
+        }
+    },
+    // Create new user (Admin only)
+    createUser: async (userData)=>{
+        try {
+            const response = await apiClient.post('users/admin/users', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create user';
+        }
+    },
+    // Update user (Admin only) 
+    updateUser: async (userId, userData)=>{
+        try {
+            const response = await apiClient.put(`users/admin/users/${userId}`, userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update user';
+        }
+    },
+    deleteUser: async (userId)=>{
+        try {
+            const response = await apiClient.delete(`users/admin/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete user';
+        }
     }
 };
 // **Product API**
@@ -7172,35 +7215,484 @@ __turbopack_async_result__();
 "[project]/src/components/UserManagement.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
-{
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, a: __turbopack_async_module__, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+__turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
 // components/UserManagement.js
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_import__("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [ssr] (ecmascript)");
+var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+]);
+([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
 ;
 ;
 const UserManagement = ()=>{
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-        className: "space-y-6",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-            className: "text-2xl font-bold",
-            children: "Quản lý người dùng"
+    const [users, setUsers] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(true);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    const [totalPages, setTotalPages] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
+    const [filters, setFilters] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
+        email: '',
+        phone: '',
+        name: ''
+    });
+    const roleLabels = {
+        'superadmin': 'Super Admin',
+        'admin': 'Admin',
+        'customer': 'Khách hàng'
+    };
+    const roleColors = {
+        'superadmin': 'bg-purple-100 text-purple-800',
+        'admin': 'bg-blue-100 text-blue-800',
+        'customer': 'bg-green-100 text-green-800'
+    };
+    const genderLabels = {
+        'male': 'Nam',
+        'female': 'Nữ',
+        'other': 'Khác'
+    };
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        fetchUsers();
+    }, [
+        currentPage,
+        filters
+    ]);
+    const fetchUsers = async ()=>{
+        try {
+            setLoading(true);
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["adminApi"].getAllUsers({
+                page: currentPage,
+                limit: 10,
+                ...filters
+            });
+            setUsers(response.data.users);
+            setTotalPages(response.data.pagination.totalPages);
+        } catch (error) {
+            setError('Không thể tải danh sách người dùng');
+        } finally{
+            setLoading(false);
+        }
+    };
+    const formatDate = (dateString)=>{
+        return new Date(dateString).toLocaleDateString('vi-VN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+    const handleFilterChange = (e)=>{
+        const { name, value } = e.target;
+        setFilters((prev)=>({
+                ...prev,
+                [name]: value
+            }));
+        setCurrentPage(1);
+    };
+    if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "flex items-center justify-center min-h-screen",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
         }, void 0, false, {
             fileName: "[project]/src/components/UserManagement.js",
-            lineNumber: 7,
+            lineNumber: 77,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/UserManagement.js",
-        lineNumber: 6,
+        lineNumber: 76,
+        columnNumber: 9
+    }, this);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "p-6 max-w-full mx-auto",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold text-gray-800 mb-4",
+                        children: "Quản lý người dùng"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/UserManagement.js",
+                        lineNumber: 85,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "email",
+                                placeholder: "Tìm theo email",
+                                value: filters.email,
+                                onChange: handleFilterChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 89,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "phone",
+                                placeholder: "Tìm theo số điện thoại",
+                                value: filters.phone,
+                                onChange: handleFilterChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 97,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "name",
+                                placeholder: "Tìm theo tên",
+                                value: filters.name,
+                                onChange: handleFilterChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 105,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/UserManagement.js",
+                        lineNumber: 88,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/UserManagement.js",
+                lineNumber: 84,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white rounded-lg shadow overflow-x-auto",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("table", {
+                    className: "min-w-full divide-y divide-gray-200",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("thead", {
+                            className: "bg-gray-50",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tr", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "ID"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 121,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Họ tên"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 122,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Email"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 123,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Số điện thoại"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 124,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Giới tính"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 125,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Vai trò"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 126,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Ngày tạo"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 127,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                        className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                        children: "Thao tác"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/UserManagement.js",
+                                        lineNumber: 128,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 120,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/UserManagement.js",
+                            lineNumber: 119,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tbody", {
+                            className: "bg-white divide-y divide-gray-200",
+                            children: users.map((user)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tr", {
+                                    className: "hover:bg-gray-50",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: [
+                                                "#",
+                                                user.id
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 134,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: [
+                                                user.firstname,
+                                                " ",
+                                                user.lastname
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 135,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: user.email
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 138,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: user.phone
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 139,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: genderLabels[user.gender]
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 140,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                className: "flex flex-wrap gap-1",
+                                                children: user.roles.map((role)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                                        className: `px-2 py-1 text-xs rounded-full ${roleColors[role]}`,
+                                                        children: roleLabels[role]
+                                                    }, role, false, {
+                                                        fileName: "[project]/src/components/UserManagement.js",
+                                                        lineNumber: 146,
+                                                        columnNumber: 45
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/UserManagement.js",
+                                                lineNumber: 144,
+                                                columnNumber: 37
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 143,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: formatDate(user.created_at)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 155,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4 whitespace-nowrap",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                className: "flex space-x-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                        className: "text-blue-600 hover:text-blue-900",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
+                                                            className: "w-5 h-5",
+                                                            fill: "none",
+                                                            stroke: "currentColor",
+                                                            viewBox: "0 0 24 24",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
+                                                                strokeLinecap: "round",
+                                                                strokeLinejoin: "round",
+                                                                strokeWidth: "2",
+                                                                d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/UserManagement.js",
+                                                                lineNumber: 162,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/UserManagement.js",
+                                                            lineNumber: 161,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/UserManagement.js",
+                                                        lineNumber: 160,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                        className: "text-red-600 hover:text-red-900",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
+                                                            className: "w-5 h-5",
+                                                            fill: "none",
+                                                            stroke: "currentColor",
+                                                            viewBox: "0 0 24 24",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
+                                                                strokeLinecap: "round",
+                                                                strokeLinejoin: "round",
+                                                                strokeWidth: "2",
+                                                                d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/UserManagement.js",
+                                                                lineNumber: 167,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/UserManagement.js",
+                                                            lineNumber: 166,
+                                                            columnNumber: 45
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/UserManagement.js",
+                                                        lineNumber: 165,
+                                                        columnNumber: 41
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/UserManagement.js",
+                                                lineNumber: 159,
+                                                columnNumber: 37
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/UserManagement.js",
+                                            lineNumber: 158,
+                                            columnNumber: 33
+                                        }, this)
+                                    ]
+                                }, user.id, true, {
+                                    fileName: "[project]/src/components/UserManagement.js",
+                                    lineNumber: 133,
+                                    columnNumber: 29
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/UserManagement.js",
+                            lineNumber: 131,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/UserManagement.js",
+                    lineNumber: 118,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/UserManagement.js",
+                lineNumber: 117,
+                columnNumber: 13
+            }, this),
+            totalPages > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "mt-4 flex justify-between items-center",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        children: [
+                            "Trang ",
+                            currentPage,
+                            " / ",
+                            totalPages
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/UserManagement.js",
+                        lineNumber: 181,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex space-x-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setCurrentPage((prev)=>Math.max(prev - 1, 1)),
+                                disabled: currentPage === 1,
+                                className: `px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-100 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-600'}`,
+                                children: "Trước"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 185,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setCurrentPage((prev)=>prev + 1),
+                                disabled: currentPage >= totalPages,
+                                className: `px-4 py-2 rounded ${currentPage >= totalPages ? 'bg-gray-100 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-600'}`,
+                                children: "Sau"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/UserManagement.js",
+                                lineNumber: 196,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/UserManagement.js",
+                        lineNumber: 184,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/UserManagement.js",
+                lineNumber: 180,
+                columnNumber: 17
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/UserManagement.js",
+        lineNumber: 82,
         columnNumber: 9
     }, this);
 };
 const __TURBOPACK__default__export__ = UserManagement;
-}}),
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, false);}),
 "[project]/src/components/BlogManagement.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -7252,9 +7744,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BlogMan
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
     __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
     __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$OrderManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$OrderManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$OrderManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
 ;

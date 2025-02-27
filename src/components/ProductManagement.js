@@ -20,6 +20,43 @@ const ProductManagement = () => {
         key: null,
         direction: 'asc'
     });
+    const [filters, setFilters] = useState({
+        name: '',
+        categories: null,
+        colors: null,
+        sizes: null,
+        priceRange: null,
+        sort: 'newest'
+    });
+    const [categories, setCategories] = useState([]);
+    const [colors, setColors] = useState([]);
+    const [isFilterLoading, setIsFilterLoading] = useState(false);
+
+    // Thêm sau các state
+    const extractFiltersFromProducts = (products) => {
+        const uniqueCategories = new Set();
+        const uniqueColors = new Set();
+
+        products?.forEach(product => {
+            // Extract categories
+            product.categories?.forEach(cat => {
+                uniqueCategories.add(JSON.stringify({ id: cat.id, name: cat.name }));
+            });
+
+            // Extract colors
+            product.productColors?.forEach(color => {
+                uniqueColors.add(JSON.stringify({
+                    id: color.id,
+                    color: color.color,
+                    hex_code: color.hex_code
+                }));
+            });
+        });
+
+        setCategories(Array.from(uniqueCategories).map(cat => JSON.parse(cat)));
+        setColors(Array.from(uniqueColors).map(color => JSON.parse(color)));
+    };
+
 
 
     const handleEdit = (product) => {
@@ -41,9 +78,17 @@ const ProductManagement = () => {
     useEffect(() => {
         dispatch(fetchProductsByPagination({
             page: currentPage,
-            limit: itemsPerPage
+            limit: itemsPerPage,
+            ...filters
         }));
-    }, [dispatch, currentPage, itemsPerPage, reloadTrigger]);
+    }, [dispatch, currentPage, itemsPerPage, filters, reloadTrigger]);
+
+    useEffect(() => {
+        if (pagination?.items) {
+            extractFiltersFromProducts(pagination.items);
+        }
+    }, [pagination?.items]);
+
 
     useEffect(() => {
         const fetchStockData = async () => {
@@ -135,17 +180,100 @@ const ProductManagement = () => {
         setSelectedProduct(product);
     };
 
+    // Hàm xử lý đặt lại filter
+    const handleResetFilters = () => {
+        setFilters({
+            name: '',
+            categories: null,
+            colors: null,
+            sizes: null,
+            priceRange: null,
+            sort: 'newest'
+        });
+        setCurrentPage(1); // Reset về trang 1
+    };
+
+    // Hàm xử lý áp dụng filter
+    const handleApplyFilters = async () => {
+        setIsFilterLoading(true);
+        try {
+            setCurrentPage(1);
+            await dispatch(fetchProductsByPagination({
+                page: 1,
+                limit: itemsPerPage,
+                ...filters
+            }));
+        } finally {
+            setIsFilterLoading(false);
+        }
+    };
+
     if (loading) return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
         </div>
     );
 
-    if (error) return (
-        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            Lỗi: {error}
-        </div>
-    );
+    // Kiểm tra nếu không có sản phẩm hoặc có lỗi
+    if (error || !pagination?.items || pagination.items.length === 0) {
+        return (
+            <div className="p-6 max-w-full mx-auto">
+                {/* Giữ lại phần Header */}
+                <div className="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800">Quản lý sản phẩm</h2>
+                    </div>
+                    <button
+                        onClick={() => setIsAddModalOpen(true)}
+                        className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+                    >
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Thêm sản phẩm
+                    </button>
+                </div>
+
+                {/* Giữ lại phần Filter Section */}
+                <div className="mb-6 bg-white p-4 rounded-lg shadow">
+                    {/* Giữ nguyên nội dung phần filter */}
+                    {/* ... */}
+                </div>
+
+                {/* Thông báo không có sản phẩm */}
+                <div className="bg-white rounded-lg shadow p-6 text-center">
+                    <svg
+                        className="mx-auto h-12 w-12 text-gray-400 mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Không tìm thấy sản phẩm
+                    </h3>
+                    <p className="text-gray-500">
+                        {error ?
+                            "Đã có lỗi xảy ra khi tìm kiếm sản phẩm. Vui lòng thử lại." :
+                            "Không có sản phẩm nào phù hợp với điều kiện tìm kiếm của bạn."
+                        }
+                    </p>
+                    <button
+                        onClick={handleResetFilters}
+                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                    >
+                        Đặt lại bộ lọc
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="p-6 max-w-full mx-auto">
@@ -163,6 +291,147 @@ const ProductManagement = () => {
                     </svg>
                     Thêm sản phẩm
                 </button>
+            </div>
+
+            {/* Thêm Filter Section */}
+            <div className="mb-6 bg-white p-4 rounded-lg shadow">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Search by name */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Tìm kiếm
+                        </label>
+                        <input
+                            type="text"
+                            className="w-full border rounded-md p-2"
+                            placeholder="Tên sản phẩm..."
+                            value={filters.name}
+                            onChange={(e) => setFilters(prev => ({
+                                ...prev,
+                                name: e.target.value
+                            }))}
+                        />
+                    </div>
+
+                    {/* Price Range Filter */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Khoảng giá
+                        </label>
+                        <select
+                            className="w-full border rounded-md p-2"
+                            value={filters.priceRange || ''}
+                            onChange={(e) => setFilters(prev => ({
+                                ...prev,
+                                priceRange: e.target.value
+                            }))}
+                        >
+                            <option value="">Tất cả giá</option>
+                            <option value="0-100000">Dưới 100.000đ</option>
+                            <option value="100000-500000">100.000đ - 500.000đ</option>
+                            <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+                            <option value="1000000-up">Trên 1.000.000đ</option>
+                        </select>
+                    </div>
+
+                    {/* Sort Options */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Sắp xếp
+                        </label>
+                        <select
+                            className="w-full border rounded-md p-2"
+                            value={filters.sort}
+                            onChange={(e) => setFilters(prev => ({
+                                ...prev,
+                                sort: e.target.value
+                            }))}
+                        >
+                            <option value="newest">Mới nhất</option>
+                            <option value="price_asc">Giá tăng dần</option>
+                            <option value="price_desc">Giá giảm dần</option>
+                            <option value="name_asc">Tên A-Z</option>
+                            <option value="name_desc">Tên Z-A</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Advanced Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    {/* Categories Filter */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Danh mục
+                        </label>
+                        <select
+                            className="w-full border rounded-md p-2"
+                            value={filters.categories || ''}
+                            onChange={(e) => setFilters(prev => ({
+                                ...prev,
+                                categories: e.target.value
+                            }))}
+                        >
+                            <option value="">Tất cả danh mục</option>
+                            {categories.map(cat => (
+                                <option key={cat.id} value={cat.id}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Colors Filter */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Màu sắc
+                        </label>
+                        <select
+                            className="w-full border rounded-md p-2"
+                            value={filters.colors || ''}
+                            onChange={(e) => setFilters(prev => ({
+                                ...prev,
+                                colors: e.target.value
+                            }))}
+                        >
+                            <option value="">Tất cả màu</option>
+                            {colors.map(color => (
+                                <option
+                                    key={color.id}
+                                    value={color.id}
+                                    style={{ backgroundColor: color.hex_code }}
+                                >
+                                    {color.color}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                {/* Filter Actions */}
+                <div className="flex justify-end mt-4 space-x-2">
+                    <button
+                        onClick={handleResetFilters}
+                        className="px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                    >
+                        Đặt lại
+                    </button>
+                    <button
+                        onClick={handleApplyFilters}
+                        disabled={isFilterLoading}
+                        className={`px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors 
+    ${isFilterLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        {isFilterLoading ? (
+                            <span className="flex items-center">
+                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Đang xử lý...
+                            </span>
+                        ) : 'Áp dụng'}
+                    </button>
+                </div>
             </div>
 
             {/* Product Table */}

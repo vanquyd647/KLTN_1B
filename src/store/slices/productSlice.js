@@ -19,12 +19,12 @@ export const fetchProducts = createAsyncThunk(
 // Fetch products with pagination
 export const fetchProductsByPagination = createAsyncThunk(
     'products/fetchProductsByPagination',
-    async ({ page, limit }, { rejectWithValue }) => {
+    async (params, { rejectWithValue }) => {
         try {
-            console.log('Calling fetchProductsByPagination with:', { page, limit });
-            const paginatedProducts = await productApi.getProductsByPagination(page, limit);
-            console.log('Response:', paginatedProducts);
-            return paginatedProducts;
+            console.log('Calling fetchProductsByPagination with params:', params);
+            const response = await productApi.getProductsByPagination(params);
+            console.log('API Response:', response);
+            return response;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
         }
@@ -159,6 +159,21 @@ const productSlice = createSlice({
                 pageSize: 10,
             },
         },
+        pagination: {
+            items: [],
+            totalItems: 0,
+            totalPages: 0,
+            currentPage: 1,
+            pageSize: 10,
+            filters: {
+                name: '',
+                categories: null,
+                colors: null,
+                sizes: null,
+                priceRange: null,
+                sort: 'newest'
+            }
+        },
         visibleFeaturedProducts: [], // Featured products visible on the index page
         loading: false,
         fetchLoading: false,    // loading cho fetch data
@@ -207,6 +222,12 @@ const productSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        updateFilters: (state, action) => {
+            state.pagination.filters = {
+                ...state.pagination.filters,
+                ...action.payload
+            };
+        }
     },
     extraReducers: (builder) => {
         // Fetch all products
@@ -233,17 +254,18 @@ const productSlice = createSlice({
             .addCase(fetchProductsByPagination.fulfilled, (state, action) => {
                 const { products, pagination } = action.payload.data;
                 state.pagination = {
-                    items: products || [], // Lưu danh sách sản phẩm
+                    ...state.pagination,
+                    items: products || [],
                     totalItems: pagination.totalItems || 0,
                     totalPages: pagination.totalPages || 0,
                     currentPage: pagination.currentPage || 1,
-                    pageSize: pagination.pageSize || 10,
+                    pageSize: pagination.pageSize || 10
                 };
-                state.fetchLoading = true;
+                state.fetchLoading = false;
             })
             .addCase(fetchProductsByPagination.rejected, (state, action) => {
                 state.error = action.payload;
-                state.fetchLoading = true;
+                state.fetchLoading = false;
             });
 
         // Fetch new products with pagination

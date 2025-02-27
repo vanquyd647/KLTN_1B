@@ -313,6 +313,56 @@ const adminApi = {
             throw error.response?.data || error.message;
         }
     },
+
+    // Get all users (Admin only) 
+    getAllUsers: async (params = {}) => {
+        try {
+            const { page = 1, limit = 10, email, phone, name } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+
+            if (email) query.append('email', email);
+            if (phone) query.append('phone', phone);
+            if (name) query.append('name', name);
+
+            const response = await apiClient.get(`users/admin/users?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch users list';
+        }
+    },
+
+    // Create new user (Admin only)
+    createUser: async (userData) => {
+        try {
+            const response = await apiClient.post('users/admin/users', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create user';
+        }
+    },
+
+    // Update user (Admin only) 
+    updateUser: async (userId, userData) => {
+        try {
+            const response = await apiClient.put(`users/admin/users/${userId}`, userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update user';
+        }
+    },
+
+    deleteUser: async (userId) => {
+        try {
+            const response = await apiClient.delete(`users/admin/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete user';
+        }
+    },
+
 };
 
 // **Product API**
@@ -348,11 +398,43 @@ const productApi = {
     },
 
     // Get products with pagination
-    getProductsByPagination: async (page, limit) => {
-        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        console.log('API response:', response.data);
-        return response.data;
+    getProductsByPagination: async (params = {}) => {
+        try {
+            const {
+                page = 1,
+                limit = 20,
+                name,
+                categories,
+                colors,
+                sizes,
+                priceRange,
+                sort = 'newest'
+            } = params;
+
+            // Xây dựng query parameters
+            const queryParams = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+
+            // Thêm các filter tùy chọn
+            if (name) queryParams.append('name', name);
+            if (categories) queryParams.append('categories', categories);
+            if (colors) queryParams.append('colors', colors);
+            if (sizes) queryParams.append('sizes', sizes);
+            if (priceRange) queryParams.append('priceRange', priceRange);
+            if (sort) queryParams.append('sort', sort);
+
+            console.log('API call to:', `products/pagination?${queryParams.toString()}`);
+
+            const response = await apiClient.get(`products/pagination?${queryParams.toString()}`);
+            console.log('API response:', response.data);
+
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error.response?.data || 'Failed to fetch products.';
+        }
     },
 
     // Get new products with pagination
