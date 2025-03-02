@@ -190,6 +190,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
@@ -1150,6 +1151,83 @@ const orderTrackingApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
+const couponApi = {
+    // Tạo mã giảm giá mới (Admin)
+    createCoupon: async (couponData)=>{
+        try {
+            const response = await apiClient.post('coupons', couponData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo mã giảm giá.';
+        }
+    },
+    // Lấy danh sách mã giảm giá (Admin)
+    getAllCoupons: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, is_active } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (typeof is_active !== 'undefined') {
+                query.append('is_active', is_active);
+            }
+            const response = await apiClient.get(`coupons?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách mã giảm giá.';
+        }
+    },
+    // Lấy chi tiết mã giảm giá (Admin)
+    getCouponById: async (id)=>{
+        try {
+            const response = await apiClient.get(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin mã giảm giá.';
+        }
+    },
+    // Kiểm tra mã giảm giá (Public)
+    validateCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/validate', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Mã giảm giá không hợp lệ.';
+        }
+    },
+    // Áp dụng mã giảm giá (Public)
+    applyCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/apply', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể áp dụng mã giảm giá.';
+        }
+    },
+    // Cập nhật mã giảm giá (Admin)
+    updateCoupon: async (id, updateData)=>{
+        try {
+            const response = await apiClient.put(`coupons/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật mã giảm giá.';
+        }
+    },
+    // Xóa mã giảm giá (Admin)
+    deleteCoupon: async (id)=>{
+        try {
+            const response = await apiClient.delete(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa mã giảm giá.';
         }
     }
 };

@@ -190,6 +190,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
@@ -460,6 +461,49 @@ const adminApi = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Get all users (Admin only) 
+    getAllUsers: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, email, phone, name } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (email) query.append('email', email);
+            if (phone) query.append('phone', phone);
+            if (name) query.append('name', name);
+            const response = await apiClient.get(`users/admin/users?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch users list';
+        }
+    },
+    // Create new user (Admin only)
+    createUser: async (userData)=>{
+        try {
+            const response = await apiClient.post('users/admin/users', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create user';
+        }
+    },
+    // Update user (Admin only) 
+    updateUser: async (userId, userData)=>{
+        try {
+            const response = await apiClient.put(`users/admin/users/${userId}`, userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update user';
+        }
+    },
+    deleteUser: async (userId)=>{
+        try {
+            const response = await apiClient.delete(`users/admin/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete user';
+        }
     }
 };
 // **Product API**
@@ -490,11 +534,29 @@ const productApi = {
         return response.data;
     },
     // Get products with pagination
-    getProductsByPagination: async (page, limit)=>{
-        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        console.log('API response:', response.data);
-        return response.data;
+    getProductsByPagination: async (params = {})=>{
+        try {
+            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            // Xây dựng query parameters
+            const queryParams = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter tùy chọn
+            if (name) queryParams.append('name', name);
+            if (categories) queryParams.append('categories', categories);
+            if (colors) queryParams.append('colors', colors);
+            if (sizes) queryParams.append('sizes', sizes);
+            if (priceRange) queryParams.append('priceRange', priceRange);
+            if (sort) queryParams.append('sort', sort);
+            console.log('API call to:', `products/pagination?${queryParams.toString()}`);
+            const response = await apiClient.get(`products/pagination?${queryParams.toString()}`);
+            console.log('API response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error.response?.data || 'Failed to fetch products.';
+        }
     },
     // Get new products with pagination
     getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
@@ -805,6 +867,29 @@ const orderApi = {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
     },
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate })=>{
+        try {
+            // Tạo query params
+            const params = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter tùy chọn
+            if (status) {
+                params.append('status', status);
+            }
+            if (startDate) {
+                params.append('startDate', startDate);
+            }
+            if (endDate) {
+                params.append('endDate', endDate);
+            }
+            const response = await apiClient.get(`orders?${params}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
+    },
     /**
  * Gửi email xác nhận đơn hàng
  * @param {Object} data - Dữ liệu đơn hàng
@@ -852,6 +937,21 @@ const paymentApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
         }
+    },
+    /**
+     * Cập nhật trạng thái thanh toán
+     * @param {Object} statusData - Dữ liệu cập nhật trạng thái
+     * @param {string} statusData.orderId - ID đơn hàng
+     * @param {string} statusData.paymentMethod - Phương thức thanh toán ('payos' hoặc 'cash_on_delivery')
+     * @param {string} statusData.paymentStatus - Trạng thái thanh toán ('pending', 'processing', 'paid', 'cancelled')
+     * @returns {Promise<Object>} - Kết quả cập nhật
+     */ updatePaymentMethodStatus: async (statusData)=>{
+        try {
+            const response = await apiClient.put('payments/update-status', statusData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
+        }
     }
 };
 const stockApi = {
@@ -886,11 +986,10 @@ const carrierApi = {
     // Lấy danh sách nhà vận chuyển
     getCarriers: async (query = {})=>{
         try {
-            const { page = 1, limit = 10, status } = query;
+            const { page = 1, limit = 10 } = query;
             const queryString = new URLSearchParams({
                 page,
-                limit,
-                status
+                limit
             }).toString();
             const response = await apiClient.get(`carriers?${queryString}`);
             return response.data;
@@ -1052,6 +1151,83 @@ const orderTrackingApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
+const couponApi = {
+    // Tạo mã giảm giá mới (Admin)
+    createCoupon: async (couponData)=>{
+        try {
+            const response = await apiClient.post('coupons', couponData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo mã giảm giá.';
+        }
+    },
+    // Lấy danh sách mã giảm giá (Admin)
+    getAllCoupons: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, is_active } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (typeof is_active !== 'undefined') {
+                query.append('is_active', is_active);
+            }
+            const response = await apiClient.get(`coupons?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách mã giảm giá.';
+        }
+    },
+    // Lấy chi tiết mã giảm giá (Admin)
+    getCouponById: async (id)=>{
+        try {
+            const response = await apiClient.get(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin mã giảm giá.';
+        }
+    },
+    // Kiểm tra mã giảm giá (Public)
+    validateCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/validate', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Mã giảm giá không hợp lệ.';
+        }
+    },
+    // Áp dụng mã giảm giá (Public)
+    applyCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/apply', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể áp dụng mã giảm giá.';
+        }
+    },
+    // Cập nhật mã giảm giá (Admin)
+    updateCoupon: async (id, updateData)=>{
+        try {
+            const response = await apiClient.put(`coupons/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật mã giảm giá.';
+        }
+    },
+    // Xóa mã giảm giá (Admin)
+    deleteCoupon: async (id)=>{
+        try {
+            const response = await apiClient.delete(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa mã giảm giá.';
         }
     }
 };
@@ -1287,15 +1463,12 @@ const fetchProducts = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         return rejectWithValue(error.response?.data || 'Failed to fetch products');
     }
 });
-const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
+const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async (params, { rejectWithValue })=>{
     try {
-        console.log('Calling fetchProductsByPagination with:', {
-            page,
-            limit
-        });
-        const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
-        console.log('Response:', paginatedProducts);
-        return paginatedProducts;
+        console.log('Calling fetchProductsByPagination with params:', params);
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(params);
+        console.log('API Response:', response);
+        return response;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
     }
@@ -1392,6 +1565,21 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
                 pageSize: 10
             }
         },
+        pagination: {
+            items: [],
+            totalItems: 0,
+            totalPages: 0,
+            currentPage: 1,
+            pageSize: 10,
+            filters: {
+                name: '',
+                categories: null,
+                colors: null,
+                sizes: null,
+                priceRange: null,
+                sort: 'newest'
+            }
+        },
         visibleFeaturedProducts: [],
         loading: false,
         fetchLoading: false,
@@ -1439,6 +1627,12 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.visibleFeaturedProducts = [];
             state.loading = false;
             state.error = null;
+        },
+        updateFilters: (state, action)=>{
+            state.pagination.filters = {
+                ...state.pagination.filters,
+                ...action.payload
+            };
         }
     },
     extraReducers: (builder)=>{
@@ -1460,16 +1654,17 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
             state.pagination = {
+                ...state.pagination,
                 items: products || [],
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            state.fetchLoading = true;
+            state.fetchLoading = false;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
             state.error = action.payload;
-            state.fetchLoading = true;
+            state.fetchLoading = false;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
@@ -1585,7 +1780,10 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.loading = true;
             state.error = null;
         }).addCase(deleteProduct.fulfilled, (state, action)=>{
-            state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
+            // Kiểm tra và cập nhật pagination.items thay vì items
+            if (state.pagination && state.pagination.items) {
+                state.pagination.items = state.pagination.items.filter((item)=>item.slug !== action.meta.arg);
+            }
             state.loading = false;
         }).addCase(deleteProduct.rejected, (state, action)=>{
             state.error = action.payload;
@@ -4590,13 +4788,17 @@ const CheckoutPage = ()=>{
     const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
     const [items, setItems] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
     const [errorMessage, setErrorMessage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
-    const [discountCode, setDiscountCode] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
-    const [discountAmount, setDiscountAmount] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
-    const [stockError, setStockError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
     const [carriers, setCarriers] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
     const [selectedCarrier, setSelectedCarrier] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
     const [addresses, setAddresses] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
     const [selectedAddress, setSelectedAddress] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [stockError, setStockError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    // States cho mã giảm giá
+    const [couponCode, setCouponCode] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const [couponError, setCouponError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('');
+    const [couponInfo, setCouponInfo] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [isValidatingCoupon, setIsValidatingCoupon] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
+    const [discountAmount, setDiscountAmount] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
         name: '',
         email: '',
@@ -4610,12 +4812,12 @@ const CheckoutPage = ()=>{
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         const loadUserData = async ()=>{
             const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])();
-            console.log("Token:", token); // Kiểm tra token
+            console.log("Token:", token);
             if (token) {
                 try {
-                    console.log("Fetching user info..."); // Log trước khi gọi API
+                    console.log("Fetching user info...");
                     const userInfo = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$userSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getUserInfo"])()).unwrap();
-                    console.log("User info received:", userInfo); // Log kết quả
+                    console.log("User info received:", userInfo);
                     if (userInfo) {
                         const firstname = userInfo.firstname || '';
                         const lastname = userInfo.lastname || '';
@@ -4630,9 +4832,9 @@ const CheckoutPage = ()=>{
                                 phone: userInfo.phone?.toString() || ''
                             }));
                         try {
-                            console.log("Fetching addresses..."); // Log trước khi gọi API address
+                            console.log("Fetching addresses...");
                             const addressResponse = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["addressApi"].getAddresses();
-                            console.log("Address response:", addressResponse); // Log kết quả
+                            console.log("Address response:", addressResponse);
                             if (addressResponse.status === "success" && addressResponse.data) {
                                 setAddresses(addressResponse.data);
                                 const defaultAddress = addressResponse.data.find((addr)=>addr.is_default);
@@ -4656,25 +4858,23 @@ const CheckoutPage = ()=>{
                     console.error('Error loading user data:', error);
                 }
             } else {
-                console.log("No token found"); // Log khi không có token
+                console.log("No token found");
             }
         };
         loadUserData();
-    }, []); // Xóa dispatch từ dependencies nếu không cần thiết
+    }, []);
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         const storedItems = localStorage.getItem('checkoutItems');
         if (storedItems) {
             setItems(JSON.parse(storedItems));
         }
     }, []);
-    // Cập nhật phần useEffect cho carriers
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         const loadCarriers = async ()=>{
             try {
                 const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["carrierApi"].getCarriers({
                     status: 'active'
                 });
-                // Kiểm tra response và lấy data từ rows
                 if (response.success && response.data.rows) {
                     setCarriers(response.data.rows);
                     const subtotal = calculateTotal();
@@ -4704,19 +4904,56 @@ const CheckoutPage = ()=>{
         const subtotal = calculateTotal();
         const shipping = selectedCarrier?.price || 0;
         const discount = discountAmount || 0;
-        return subtotal + shipping - discount;
+        const finalPrice = subtotal + shipping - discount;
+        // Chỉ trả về giá trị, không set state ở đây
+        return finalPrice <= 0 ? 0 : finalPrice;
     };
+    // Tạo một useEffect để theo dõi thay đổi của finalPrice và hiển thị message
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const finalPrice = calculateFinalPrice();
+        if (finalPrice === 0) {
+            setMessage('Đơn hàng của bạn được miễn phí hoàn toàn!');
+        } else {
+            setMessage(''); // Clear message nếu không miễn phí
+        }
+    }, [
+        calculateTotal(),
+        selectedCarrier?.price,
+        discountAmount
+    ]);
     const handleChange = (e)=>{
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
-    const handleApplyDiscount = ()=>{
-        if (discountCode === 'DISCOUNT10') {
-            setDiscountAmount(10000);
-        } else {
+    // Hàm xử lý kiểm tra mã giảm giá
+    const handleValidateCoupon = async ()=>{
+        if (!couponCode.trim()) {
+            setCouponError('Vui lòng nhập mã giảm giá');
+            return;
+        }
+        setIsValidatingCoupon(true);
+        setCouponError('');
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["couponApi"].validateCoupon(couponCode);
+            if (response.success && response.data.status === 'valid') {
+                const { couponInfo } = response.data;
+                // Convert string to number for discount_amount
+                const discountAmt = parseFloat(couponInfo.discount_amount) || 0;
+                setCouponInfo({
+                    ...couponInfo,
+                    discount_amount: discountAmt
+                });
+                setDiscountAmount(discountAmt);
+                setCouponError('');
+            }
+        } catch (error) {
+            setCouponError(error.message || 'Mã giảm giá không hợp lệ');
+            setCouponInfo(null);
             setDiscountAmount(0);
+        } finally{
+            setIsValidatingCoupon(false);
         }
     };
     const AddressSelection = ()=>{
@@ -4729,7 +4966,7 @@ const CheckoutPage = ()=>{
                     children: "Chọn địa chỉ giao hàng"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 170,
+                    lineNumber: 211,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4758,7 +4995,7 @@ const CheckoutPage = ()=>{
                                                 children: address.address_type === 'home' ? 'Nhà riêng' : 'Văn phòng'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 195,
+                                                lineNumber: 236,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4772,7 +5009,7 @@ const CheckoutPage = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 198,
+                                                lineNumber: 239,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4784,13 +5021,13 @@ const CheckoutPage = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 201,
+                                                lineNumber: 242,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 194,
+                                        lineNumber: 235,
                                         columnNumber: 33
                                     }, this),
                                     address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -4798,33 +5035,32 @@ const CheckoutPage = ()=>{
                                         children: "Mặc định"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 206,
+                                        lineNumber: 247,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 193,
+                                lineNumber: 234,
                                 columnNumber: 29
                             }, this)
                         }, address.id, false, {
                             fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 175,
+                            lineNumber: 216,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 173,
+                    lineNumber: 214,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/checkout.js",
-            lineNumber: 169,
+            lineNumber: 210,
             columnNumber: 13
         }, this);
     };
-    // Cập nhật component CarrierSelection
     const CarrierSelection = ()=>{
         const subtotal = calculateTotal();
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4835,7 +5071,7 @@ const CheckoutPage = ()=>{
                     children: "Phương thức vận chuyển"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 224,
+                    lineNumber: 264,
                     columnNumber: 17
                 }, this),
                 subtotal >= 200000 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4843,15 +5079,13 @@ const CheckoutPage = ()=>{
                     children: "Đơn hàng trên 200,000 VND được miễn phí vận chuyển!"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 226,
+                    lineNumber: 266,
                     columnNumber: 21
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                     className: "space-y-2",
                     children: carriers.map((carrier)=>{
-                        // Ẩn carrier miễn phí nếu đơn hàng dưới 200k
                         if (carrier.price === 0 && subtotal < 200000) return null;
-                        // Ẩn carrier có phí nếu đơn hàng trên 200k
                         if (subtotal >= 200000 && carrier.price > 0) return null;
                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                             className: `p-3 border rounded cursor-pointer transition-colors
@@ -4867,7 +5101,7 @@ const CheckoutPage = ()=>{
                                                 children: carrier.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 248,
+                                                lineNumber: 286,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4875,7 +5109,7 @@ const CheckoutPage = ()=>{
                                                 children: carrier.description
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 249,
+                                                lineNumber: 287,
                                                 columnNumber: 41
                                             }, this),
                                             carrier.contact_phone && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4886,13 +5120,13 @@ const CheckoutPage = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 253,
+                                                lineNumber: 291,
                                                 columnNumber: 45
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 247,
+                                        lineNumber: 285,
                                         columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4902,35 +5136,35 @@ const CheckoutPage = ()=>{
                                             children: carrier.price === 0 ? 'Miễn phí' : `${carrier.price.toLocaleString()} VND`
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/checkout.js",
-                                            lineNumber: 259,
+                                            lineNumber: 297,
                                             columnNumber: 41
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 258,
+                                        lineNumber: 296,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 246,
+                                lineNumber: 284,
                                 columnNumber: 33
                             }, this)
                         }, carrier.id, false, {
                             fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 238,
+                            lineNumber: 276,
                             columnNumber: 29
                         }, this);
                     })
                 }, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 230,
+                    lineNumber: 270,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/checkout.js",
-            lineNumber: 223,
+            lineNumber: 263,
             columnNumber: 13
         }, this);
     };
@@ -4944,30 +5178,35 @@ const CheckoutPage = ()=>{
         setError('');
         setErrorMessage('');
         setMessage('');
-        const orderData = {
-            cart_id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])(),
-            carrier_id: selectedCarrier.id,
-            discount_code: discountCode,
-            discount_amount: discountAmount,
-            original_price: calculateTotal(),
-            discounted_price: calculateTotal() - discountAmount,
-            final_price: calculateFinalPrice(),
-            items: items.map((item)=>({
-                    product_id: item.product.id,
-                    size_id: item.size.id,
-                    color_id: item.color.id,
-                    quantity: item.quantity,
-                    price: item.product.discount_price || item.product.price
-                })),
-            ...formData,
-            address_id: null
-        };
         try {
+            // Nếu có mã giảm giá hợp lệ, áp dụng trước khi tạo order
+            if (couponInfo) {
+                await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["couponApi"].applyCoupon(couponCode);
+            }
+            const orderData = {
+                cart_id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])(),
+                carrier_id: selectedCarrier.id,
+                coupon_code: couponInfo ? couponCode : null,
+                discount_amount: discountAmount,
+                original_price: calculateTotal(),
+                discounted_price: calculateTotal() - discountAmount,
+                final_price: calculateFinalPrice(),
+                items: items.map((item)=>({
+                        product_id: item.product.id,
+                        size_id: item.size.id,
+                        color_id: item.color.id,
+                        quantity: item.quantity,
+                        price: item.product.discount_price || item.product.price
+                    })),
+                ...formData,
+                address_id: null
+            };
             const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$orderSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["createOrder"])(orderData)).unwrap();
             console.log('Order submitted successfully:', result);
             const orderDetails = {
                 ...result,
                 data: {
+                    original_price: calculateTotal(),
                     ...result.data,
                     shipping_fee: selectedCarrier?.price || 0,
                     discount_amount: discountAmount || 0,
@@ -5018,17 +5257,17 @@ const CheckoutPage = ()=>{
                                         clipRule: "evenodd"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 354,
+                                        lineNumber: 397,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 353,
+                                    lineNumber: 396,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 352,
+                                lineNumber: 395,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5038,18 +5277,18 @@ const CheckoutPage = ()=>{
                                     children: stockError.message
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 358,
+                                    lineNumber: 401,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 357,
+                                lineNumber: 400,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 351,
+                        lineNumber: 394,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5071,7 +5310,7 @@ const CheckoutPage = ()=>{
                                     ]
                                 }, `out-${index}`, true, {
                                     fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 364,
+                                    lineNumber: 407,
                                     columnNumber: 29
                                 }, this)),
                             stockError.notFoundItems.map((item, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5087,13 +5326,13 @@ const CheckoutPage = ()=>{
                                     ]
                                 }, `not-${index}`, true, {
                                     fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 370,
+                                    lineNumber: 413,
                                     columnNumber: 29
                                 }, this))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 362,
+                        lineNumber: 405,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5104,23 +5343,23 @@ const CheckoutPage = ()=>{
                             children: "Trở về giỏ hàng"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 377,
+                            lineNumber: 420,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 376,
+                        lineNumber: 419,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/checkout.js",
-                lineNumber: 350,
+                lineNumber: 393,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/checkout.js",
-            lineNumber: 349,
+            lineNumber: 392,
             columnNumber: 13
         }, this);
     };
@@ -5131,13 +5370,13 @@ const CheckoutPage = ()=>{
                 className: "md:col-span-2",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(StockErrorAlert, {}, void 0, false, {
                     fileName: "[project]/src/pages/checkout.js",
-                    lineNumber: 393,
-                    columnNumber: 21
+                    lineNumber: 435,
+                    columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/checkout.js",
-                lineNumber: 392,
-                columnNumber: 17
+                lineNumber: 434,
+                columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                 className: "bg-white p-6 rounded shadow-md",
@@ -5147,8 +5386,8 @@ const CheckoutPage = ()=>{
                         children: "Thông tin đặt hàng"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 397,
-                        columnNumber: 21
+                        lineNumber: 439,
+                        columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
                         onSubmit: handleSubmit,
@@ -5156,8 +5395,8 @@ const CheckoutPage = ()=>{
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(AddressSelection, {}, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 400,
-                                columnNumber: 25
+                                lineNumber: 442,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5169,8 +5408,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 402,
-                                columnNumber: 25
+                                lineNumber: 444,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "email",
@@ -5182,8 +5421,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 411,
-                                columnNumber: 25
+                                lineNumber: 453,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5195,8 +5434,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 420,
-                                columnNumber: 25
+                                lineNumber: 462,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5208,8 +5447,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 429,
-                                columnNumber: 25
+                                lineNumber: 471,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5221,8 +5460,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 438,
-                                columnNumber: 25
+                                lineNumber: 480,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5234,8 +5473,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 447,
-                                columnNumber: 25
+                                lineNumber: 489,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5247,8 +5486,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 456,
-                                columnNumber: 25
+                                lineNumber: 498,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -5260,8 +5499,8 @@ const CheckoutPage = ()=>{
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 465,
-                                columnNumber: 25
+                                lineNumber: 507,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                 type: "submit",
@@ -5270,20 +5509,20 @@ const CheckoutPage = ()=>{
                                 children: loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 475,
-                                columnNumber: 25
+                                lineNumber: 517,
+                                columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 399,
-                        columnNumber: 21
+                        lineNumber: 441,
+                        columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/checkout.js",
-                lineNumber: 396,
-                columnNumber: 17
+                lineNumber: 438,
+                columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                 className: "bg-gray-100 p-6 rounded shadow-md",
@@ -5293,8 +5532,8 @@ const CheckoutPage = ()=>{
                         children: "Thông tin đơn hàng"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 487,
-                        columnNumber: 21
+                        lineNumber: 528,
+                        columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
                         className: "mb-4",
@@ -5310,22 +5549,22 @@ const CheckoutPage = ()=>{
                                                 className: "w-20 h-20 object-cover rounded"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 492,
-                                                columnNumber: 37
+                                                lineNumber: 533,
+                                                columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                                 className: "absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2",
                                                 children: item.quantity
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 497,
-                                                columnNumber: 37
+                                                lineNumber: 538,
+                                                columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 491,
-                                        columnNumber: 33
+                                        lineNumber: 532,
+                                        columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         children: [
@@ -5334,8 +5573,8 @@ const CheckoutPage = ()=>{
                                                 children: item.product.product_name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 502,
-                                                columnNumber: 37
+                                                lineNumber: 543,
+                                                columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                 children: [
@@ -5345,14 +5584,14 @@ const CheckoutPage = ()=>{
                                                         children: item.color.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/checkout.js",
-                                                        lineNumber: 503,
-                                                        columnNumber: 49
+                                                        lineNumber: 544,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 503,
-                                                columnNumber: 37
+                                                lineNumber: 544,
+                                                columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                 children: [
@@ -5362,14 +5601,14 @@ const CheckoutPage = ()=>{
                                                         children: item.size.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/checkout.js",
-                                                        lineNumber: 504,
-                                                        columnNumber: 52
+                                                        lineNumber: 545,
+                                                        columnNumber: 48
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 504,
-                                                columnNumber: 37
+                                                lineNumber: 545,
+                                                columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                                 children: [
@@ -5378,30 +5617,118 @@ const CheckoutPage = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/checkout.js",
-                                                lineNumber: 505,
-                                                columnNumber: 37
+                                                lineNumber: 546,
+                                                columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 501,
-                                        columnNumber: 33
+                                        lineNumber: 542,
+                                        columnNumber: 29
                                     }, this)
                                 ]
                             }, item.id, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 490,
-                                columnNumber: 29
+                                lineNumber: 531,
+                                columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 488,
-                        columnNumber: 21
+                        lineNumber: 529,
+                        columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(CarrierSelection, {}, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 511,
-                        columnNumber: 21
+                        lineNumber: 552,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        value: couponCode,
+                                        onChange: (e)=>setCouponCode(e.target.value),
+                                        placeholder: "Nhập mã giảm giá",
+                                        className: "border p-2 flex-grow",
+                                        disabled: isValidatingCoupon
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/checkout.js",
+                                        lineNumber: 557,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        onClick: handleValidateCoupon,
+                                        className: "bg-blue-500 text-white px-4 py-2 rounded",
+                                        disabled: isValidatingCoupon,
+                                        children: isValidatingCoupon ? 'Đang kiểm tra...' : 'Áp dụng'
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/checkout.js",
+                                        lineNumber: 565,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/checkout.js",
+                                lineNumber: 556,
+                                columnNumber: 21
+                            }, this),
+                            couponError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                className: "text-red-500 mt-2 text-sm",
+                                children: couponError
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/checkout.js",
+                                lineNumber: 575,
+                                columnNumber: 25
+                            }, this),
+                            couponInfo && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "mt-2 p-2 bg-green-50 border border-green-200 rounded",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-green-600",
+                                        children: [
+                                            "Mã giảm giá hợp lệ: Giảm ",
+                                            couponInfo.discount_amount.toLocaleString(),
+                                            " VND"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/checkout.js",
+                                        lineNumber: 580,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-sm text-gray-600",
+                                        children: couponInfo.description
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/checkout.js",
+                                        lineNumber: 583,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-sm text-gray-600",
+                                        children: [
+                                            "Hạn sử dụng: ",
+                                            new Date(couponInfo.expiry_date).toLocaleDateString('vi-VN')
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/checkout.js",
+                                        lineNumber: 586,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/checkout.js",
+                                lineNumber: 579,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/checkout.js",
+                        lineNumber: 555,
+                        columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                         className: "border-t pt-2 mt-4",
@@ -5417,14 +5744,14 @@ const CheckoutPage = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 514,
-                                        columnNumber: 38
+                                        lineNumber: 595,
+                                        columnNumber: 34
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 514,
-                                columnNumber: 25
+                                lineNumber: 595,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                 children: [
@@ -5437,14 +5764,14 @@ const CheckoutPage = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 517,
-                                        columnNumber: 44
+                                        lineNumber: 598,
+                                        columnNumber: 40
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 517,
-                                columnNumber: 25
+                                lineNumber: 598,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                 children: [
@@ -5458,14 +5785,14 @@ const CheckoutPage = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 520,
-                                        columnNumber: 38
+                                        lineNumber: 601,
+                                        columnNumber: 34
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 520,
-                                columnNumber: 25
+                                lineNumber: 601,
+                                columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                                 className: "text-xl font-bold mt-2",
@@ -5479,76 +5806,40 @@ const CheckoutPage = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/checkout.js",
-                                        lineNumber: 524,
-                                        columnNumber: 40
+                                        lineNumber: 605,
+                                        columnNumber: 36
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/checkout.js",
-                                lineNumber: 523,
-                                columnNumber: 25
+                                lineNumber: 604,
+                                columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 513,
-                        columnNumber: 21
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "mt-4",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "flex gap-2",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: discountCode,
-                                    onChange: (e)=>setDiscountCode(e.target.value),
-                                    placeholder: "Nhập mã giảm giá",
-                                    className: "border p-2 flex-grow"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 532,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                    onClick: handleApplyDiscount,
-                                    className: "bg-blue-500 text-white px-4 py-2 rounded",
-                                    children: "Áp dụng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/checkout.js",
-                                    lineNumber: 539,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/checkout.js",
-                            lineNumber: 531,
-                            columnNumber: 25
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 530,
-                        columnNumber: 21
+                        lineNumber: 594,
+                        columnNumber: 17
                     }, this),
                     errorMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                         className: "text-red-500 mt-4",
                         children: errorMessage
                     }, void 0, false, {
                         fileName: "[project]/src/pages/checkout.js",
-                        lineNumber: 549,
-                        columnNumber: 25
+                        lineNumber: 612,
+                        columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/checkout.js",
-                lineNumber: 486,
-                columnNumber: 17
+                lineNumber: 527,
+                columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/checkout.js",
-        lineNumber: 391,
-        columnNumber: 13
+        lineNumber: 433,
+        columnNumber: 9
     }, this);
 };
 const __TURBOPACK__default__export__ = CheckoutPage;

@@ -190,6 +190,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
@@ -460,6 +461,49 @@ const adminApi = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Get all users (Admin only) 
+    getAllUsers: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, email, phone, name } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (email) query.append('email', email);
+            if (phone) query.append('phone', phone);
+            if (name) query.append('name', name);
+            const response = await apiClient.get(`users/admin/users?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch users list';
+        }
+    },
+    // Create new user (Admin only)
+    createUser: async (userData)=>{
+        try {
+            const response = await apiClient.post('users/admin/users', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create user';
+        }
+    },
+    // Update user (Admin only) 
+    updateUser: async (userId, userData)=>{
+        try {
+            const response = await apiClient.put(`users/admin/users/${userId}`, userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update user';
+        }
+    },
+    deleteUser: async (userId)=>{
+        try {
+            const response = await apiClient.delete(`users/admin/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete user';
+        }
     }
 };
 // **Product API**
@@ -490,11 +534,29 @@ const productApi = {
         return response.data;
     },
     // Get products with pagination
-    getProductsByPagination: async (page, limit)=>{
-        console.log('API call to:', `products/pagination?page=${page}&limit=${limit}`);
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        console.log('API response:', response.data);
-        return response.data;
+    getProductsByPagination: async (params = {})=>{
+        try {
+            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            // Xây dựng query parameters
+            const queryParams = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter tùy chọn
+            if (name) queryParams.append('name', name);
+            if (categories) queryParams.append('categories', categories);
+            if (colors) queryParams.append('colors', colors);
+            if (sizes) queryParams.append('sizes', sizes);
+            if (priceRange) queryParams.append('priceRange', priceRange);
+            if (sort) queryParams.append('sort', sort);
+            console.log('API call to:', `products/pagination?${queryParams.toString()}`);
+            const response = await apiClient.get(`products/pagination?${queryParams.toString()}`);
+            console.log('API response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error.response?.data || 'Failed to fetch products.';
+        }
     },
     // Get new products with pagination
     getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
@@ -1092,6 +1154,83 @@ const orderTrackingApi = {
         }
     }
 };
+const couponApi = {
+    // Tạo mã giảm giá mới (Admin)
+    createCoupon: async (couponData)=>{
+        try {
+            const response = await apiClient.post('coupons', couponData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo mã giảm giá.';
+        }
+    },
+    // Lấy danh sách mã giảm giá (Admin)
+    getAllCoupons: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, is_active } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (typeof is_active !== 'undefined') {
+                query.append('is_active', is_active);
+            }
+            const response = await apiClient.get(`coupons?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách mã giảm giá.';
+        }
+    },
+    // Lấy chi tiết mã giảm giá (Admin)
+    getCouponById: async (id)=>{
+        try {
+            const response = await apiClient.get(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin mã giảm giá.';
+        }
+    },
+    // Kiểm tra mã giảm giá (Public)
+    validateCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/validate', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Mã giảm giá không hợp lệ.';
+        }
+    },
+    // Áp dụng mã giảm giá (Public)
+    applyCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/apply', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể áp dụng mã giảm giá.';
+        }
+    },
+    // Cập nhật mã giảm giá (Admin)
+    updateCoupon: async (id, updateData)=>{
+        try {
+            const response = await apiClient.put(`coupons/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật mã giảm giá.';
+        }
+    },
+    // Xóa mã giảm giá (Admin)
+    deleteCoupon: async (id)=>{
+        try {
+            const response = await apiClient.delete(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa mã giảm giá.';
+        }
+    }
+};
 ;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
@@ -1324,15 +1463,12 @@ const fetchProducts = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         return rejectWithValue(error.response?.data || 'Failed to fetch products');
     }
 });
-const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
+const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async (params, { rejectWithValue })=>{
     try {
-        console.log('Calling fetchProductsByPagination with:', {
-            page,
-            limit
-        });
-        const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
-        console.log('Response:', paginatedProducts);
-        return paginatedProducts;
+        console.log('Calling fetchProductsByPagination with params:', params);
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(params);
+        console.log('API Response:', response);
+        return response;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
     }
@@ -1429,6 +1565,21 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
                 pageSize: 10
             }
         },
+        pagination: {
+            items: [],
+            totalItems: 0,
+            totalPages: 0,
+            currentPage: 1,
+            pageSize: 10,
+            filters: {
+                name: '',
+                categories: null,
+                colors: null,
+                sizes: null,
+                priceRange: null,
+                sort: 'newest'
+            }
+        },
         visibleFeaturedProducts: [],
         loading: false,
         fetchLoading: false,
@@ -1476,6 +1627,12 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.visibleFeaturedProducts = [];
             state.loading = false;
             state.error = null;
+        },
+        updateFilters: (state, action)=>{
+            state.pagination.filters = {
+                ...state.pagination.filters,
+                ...action.payload
+            };
         }
     },
     extraReducers: (builder)=>{
@@ -1497,16 +1654,17 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
             state.pagination = {
+                ...state.pagination,
                 items: products || [],
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            state.fetchLoading = true;
+            state.fetchLoading = false;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
             state.error = action.payload;
-            state.fetchLoading = true;
+            state.fetchLoading = false;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{

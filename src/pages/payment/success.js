@@ -51,6 +51,7 @@ const PaymentSuccess = () => {
                         data: {
                             order_id: orderDetails.data.order_id,
                             email: orderDetails.data.email,
+                            original_price: orderDetails.data.original_price,
                             amount: orderDetails.data.amount,
                             shipping_fee: orderDetails.data.shipping_fee,
                             discount_amount: orderDetails.data.discount_amount || 0,

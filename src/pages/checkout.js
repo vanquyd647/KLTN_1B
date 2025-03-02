@@ -4,11 +4,10 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { getCartId } from '@/utils/storage';
 import { createOrder } from '../store/slices/orderSlice';
-import { carrierApi } from '@/utils/apiClient';
+import { carrierApi, couponApi } from '@/utils/apiClient';
 import { getUserInfo } from '../store/slices/userSlice';
 import { getToken } from '../utils/storage';
 import { addressApi } from '../utils/apiClient';
-
 
 const CheckoutPage = () => {
     const dispatch = useDispatch();
@@ -20,13 +19,18 @@ const CheckoutPage = () => {
 
     const [items, setItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [discountCode, setDiscountCode] = useState('');
-    const [discountAmount, setDiscountAmount] = useState(0);
-    const [stockError, setStockError] = useState(null);
     const [carriers, setCarriers] = useState([]);
     const [selectedCarrier, setSelectedCarrier] = useState(null);
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const [stockError, setStockError] = useState(null);
+
+    // States cho mã giảm giá
+    const [couponCode, setCouponCode] = useState('');
+    const [couponError, setCouponError] = useState('');
+    const [couponInfo, setCouponInfo] = useState(null);
+    const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
+    const [discountAmount, setDiscountAmount] = useState(0);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -42,13 +46,13 @@ const CheckoutPage = () => {
     useEffect(() => {
         const loadUserData = async () => {
             const token = getToken();
-            console.log("Token:", token); // Kiểm tra token
+            console.log("Token:", token);
 
             if (token) {
                 try {
-                    console.log("Fetching user info..."); // Log trước khi gọi API
+                    console.log("Fetching user info...");
                     const userInfo = await dispatch(getUserInfo()).unwrap();
-                    console.log("User info received:", userInfo); // Log kết quả
+                    console.log("User info received:", userInfo);
 
                     if (userInfo) {
                         const firstname = userInfo.firstname || '';
@@ -63,9 +67,9 @@ const CheckoutPage = () => {
                         }));
 
                         try {
-                            console.log("Fetching addresses..."); // Log trước khi gọi API address
+                            console.log("Fetching addresses...");
                             const addressResponse = await addressApi.getAddresses();
-                            console.log("Address response:", addressResponse); // Log kết quả
+                            console.log("Address response:", addressResponse);
 
                             if (addressResponse.status === "success" && addressResponse.data) {
                                 setAddresses(addressResponse.data);
@@ -91,13 +95,12 @@ const CheckoutPage = () => {
                     console.error('Error loading user data:', error);
                 }
             } else {
-                console.log("No token found"); // Log khi không có token
+                console.log("No token found");
             }
         };
 
         loadUserData();
-    }, []);  // Xóa dispatch từ dependencies nếu không cần thiết
-
+    }, []);
 
     useEffect(() => {
         const storedItems = localStorage.getItem('checkoutItems');
@@ -106,13 +109,11 @@ const CheckoutPage = () => {
         }
     }, []);
 
-    // Cập nhật phần useEffect cho carriers
     useEffect(() => {
         const loadCarriers = async () => {
             try {
                 const response = await carrierApi.getCarriers({ status: 'active' });
 
-                // Kiểm tra response và lấy data từ rows
                 if (response.success && response.data.rows) {
                     setCarriers(response.data.rows);
 
@@ -147,20 +148,60 @@ const CheckoutPage = () => {
         const subtotal = calculateTotal();
         const shipping = selectedCarrier?.price || 0;
         const discount = discountAmount || 0;
-        return subtotal + shipping - discount;
+        const finalPrice = subtotal + shipping - discount;
+
+        // Chỉ trả về giá trị, không set state ở đây
+        return finalPrice <= 0 ? 0 : finalPrice;
     };
+
+    // Tạo một useEffect để theo dõi thay đổi của finalPrice và hiển thị message
+    useEffect(() => {
+        const finalPrice = calculateFinalPrice();
+        if (finalPrice === 0) {
+            setMessage('Đơn hàng của bạn được miễn phí hoàn toàn!');
+        } else {
+            setMessage(''); // Clear message nếu không miễn phí
+        }
+    }, [calculateTotal(), selectedCarrier?.price, discountAmount]);
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleApplyDiscount = () => {
-        if (discountCode === 'DISCOUNT10') {
-            setDiscountAmount(10000);
-        } else {
+    // Hàm xử lý kiểm tra mã giảm giá
+    const handleValidateCoupon = async () => {
+        if (!couponCode.trim()) {
+            setCouponError('Vui lòng nhập mã giảm giá');
+            return;
+        }
+
+        setIsValidatingCoupon(true);
+        setCouponError('');
+
+        try {
+            const response = await couponApi.validateCoupon(couponCode);
+            if (response.success && response.data.status === 'valid') {
+                const { couponInfo } = response.data;
+                // Convert string to number for discount_amount
+                const discountAmt = parseFloat(couponInfo.discount_amount) || 0;
+
+                setCouponInfo({
+                    ...couponInfo,
+                    discount_amount: discountAmt
+                });
+                setDiscountAmount(discountAmt);
+                setCouponError('');
+            }
+        } catch (error) {
+            setCouponError(error.message || 'Mã giảm giá không hợp lệ');
+            setCouponInfo(null);
             setDiscountAmount(0);
+        } finally {
+            setIsValidatingCoupon(false);
         }
     };
+
 
     const AddressSelection = () => {
         if (!addresses.length) return null;
@@ -215,7 +256,6 @@ const CheckoutPage = () => {
         );
     };
 
-    // Cập nhật component CarrierSelection
     const CarrierSelection = () => {
         const subtotal = calculateTotal();
 
@@ -229,9 +269,7 @@ const CheckoutPage = () => {
                 )}
                 <div className="space-y-2">
                     {carriers.map((carrier) => {
-                        // Ẩn carrier miễn phí nếu đơn hàng dưới 200k
                         if (carrier.price === 0 && subtotal < 200000) return null;
-                        // Ẩn carrier có phí nếu đơn hàng trên 200k
                         if (subtotal >= 200000 && carrier.price > 0) return null;
 
                         return (
@@ -271,7 +309,6 @@ const CheckoutPage = () => {
         );
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -285,35 +322,41 @@ const CheckoutPage = () => {
         setErrorMessage('');
         setMessage('');
 
-        const orderData = {
-            cart_id: getCartId(),
-            carrier_id: selectedCarrier.id,
-            discount_code: discountCode,
-            discount_amount: discountAmount,
-            original_price: calculateTotal(),
-            discounted_price: calculateTotal() - discountAmount,
-            final_price: calculateFinalPrice(),
-            items: items.map(item => ({
-                product_id: item.product.id,
-                size_id: item.size.id,
-                color_id: item.color.id,
-                quantity: item.quantity,
-                price: item.product.discount_price || item.product.price
-            })),
-            ...formData,
-            address_id: null,
-        };
-
         try {
+            // Nếu có mã giảm giá hợp lệ, áp dụng trước khi tạo order
+            if (couponInfo) {
+                await couponApi.applyCoupon(couponCode);
+            }
+
+            const orderData = {
+                cart_id: getCartId(),
+                carrier_id: selectedCarrier.id,
+                coupon_code: couponInfo ? couponCode : null,
+                discount_amount: discountAmount,
+                original_price: calculateTotal(),
+                discounted_price: calculateTotal() - discountAmount,
+                final_price: calculateFinalPrice(),
+                items: items.map(item => ({
+                    product_id: item.product.id,
+                    size_id: item.size.id,
+                    color_id: item.color.id,
+                    quantity: item.quantity,
+                    price: item.product.discount_price || item.product.price
+                })),
+                ...formData,
+                address_id: null,
+            };
+
             const result = await dispatch(createOrder(orderData)).unwrap();
             console.log('Order submitted successfully:', result);
             const orderDetails = {
                 ...result,
                 data: {
+                    original_price: calculateTotal(),
                     ...result.data,
-                    shipping_fee: selectedCarrier?.price || 0,    // Lấy giá shipping từ carrier đã chọn
-                    discount_amount: discountAmount || 0,          // Lấy giá trị discount đã áp dụng
-                    formData: formData,                             // Lưu thông tin người mua
+                    shipping_fee: selectedCarrier?.price || 0,
+                    discount_amount: discountAmount || 0,
+                    formData: formData,
                 }
             };
 
@@ -387,170 +430,189 @@ const CheckoutPage = () => {
     };
 
     return (
-        
-            <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="md:col-span-2">
-                    <StockErrorAlert />
-                </div>
-
-                <div className="bg-white p-6 rounded shadow-md">
-                    <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <AddressSelection />
-
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            placeholder="Họ và tên"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            placeholder="Email"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="phone"
-                            value={formData.phone}
-                            placeholder="Số điện thoại"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="street"
-                            value={formData.street}
-                            placeholder="Địa chỉ"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="ward"
-                            value={formData.ward}
-                            placeholder="Phường/Xã"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="district"
-                            value={formData.district}
-                            placeholder="Quận/Huyện"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="city"
-                            value={formData.city}
-                            placeholder="Thành phố"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="country"
-                            value={formData.country}
-                            placeholder="Quốc gia"
-                            className="border p-2 w-full"
-                            onChange={handleChange}
-                            required
-                        />
-
-                        <button
-                            type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded w-full"
-                            disabled={loading}
-                        >
-                            {loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'}
-                        </button>
-                    </form>
-
-                </div>
-
-                <div className="bg-gray-100 p-6 rounded shadow-md">
-                    <h2 className="text-xl font-bold mb-4">Thông tin đơn hàng</h2>
-                    <ul className="mb-4">
-                        {items.map(item => (
-                            <li key={item.id} className="flex items-center gap-4 border-b pb-2 relative">
-                                <div className="relative">
-                                    <img
-                                        src={item.color.image_url}
-                                        alt={item.product.product_name}
-                                        className="w-20 h-20 object-cover rounded"
-                                    />
-                                    <span className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
-                                        {item.quantity}
-                                    </span>
-                                </div>
-                                <div>
-                                    <p className="font-bold">{item.product.product_name}</p>
-                                    <p>Màu sắc: <span className="text-gray-700">{item.color.name}</span></p>
-                                    <p>Kích thước: <span className="text-gray-700">{item.size.name}</span></p>
-                                    <p>{(item.product.discount_price || item.product.price).toLocaleString()} VND</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <CarrierSelection />
-
-                    <div className="border-t pt-2 mt-4">
-                        <p>Tạm tính: <span className="font-bold">
-                            {calculateTotal().toLocaleString()} VND
-                        </span></p>
-                        <p>Phí vận chuyển: <span className="font-bold">
-                            {(selectedCarrier?.price || 0).toLocaleString()} VND
-                        </span></p>
-                        <p>Giảm giá: <span className="font-bold text-green-500">
-                            -{discountAmount.toLocaleString()} VND
-                        </span></p>
-                        <p className="text-xl font-bold mt-2">
-                            Tổng tiền: <span className="text-red-500">
-                                {calculateFinalPrice().toLocaleString()} VND
-                            </span>
-                        </p>
-                    </div>
-
-                    <div className="mt-4">
-                        <div className="flex gap-2">
-                            <input
-                                type="text"
-                                value={discountCode}
-                                onChange={(e) => setDiscountCode(e.target.value)}
-                                placeholder="Nhập mã giảm giá"
-                                className="border p-2 flex-grow"
-                            />
-                            <button
-                                onClick={handleApplyDiscount}
-                                className="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
-                                Áp dụng
-                            </button>
-                        </div>
-                    </div>
-
-                    {errorMessage && (
-                        <div className="text-red-500 mt-4">{errorMessage}</div>
-                    )}
-                </div>
+        <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+                <StockErrorAlert />
             </div>
-        
+
+            <div className="bg-white p-6 rounded shadow-md">
+                <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <AddressSelection />
+
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        placeholder="Họ và tên"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        placeholder="Email"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        placeholder="Số điện thoại"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="street"
+                        value={formData.street}
+                        placeholder="Địa chỉ"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="ward"
+                        value={formData.ward}
+                        placeholder="Phường/Xã"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="district"
+                        value={formData.district}
+                        placeholder="Quận/Huyện"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        placeholder="Thành phố"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="country"
+                        value={formData.country}
+                        placeholder="Quốc gia"
+                        className="border p-2 w-full"
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <button
+                        type="submit"
+                        className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+                        disabled={loading}
+                    >
+                        {loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'}
+                    </button>
+                </form>
+            </div>
+
+            <div className="bg-gray-100 p-6 rounded shadow-md">
+                <h2 className="text-xl font-bold mb-4">Thông tin đơn hàng</h2>
+                <ul className="mb-4">
+                    {items.map(item => (
+                        <li key={item.id} className="flex items-center gap-4 border-b pb-2 relative">
+                            <div className="relative">
+                                <img
+                                    src={item.color.image_url}
+                                    alt={item.product.product_name}
+                                    className="w-20 h-20 object-cover rounded"
+                                />
+                                <span className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
+                                    {item.quantity}
+                                </span>
+                            </div>
+                            <div>
+                                <p className="font-bold">{item.product.product_name}</p>
+                                <p>Màu sắc: <span className="text-gray-700">{item.color.name}</span></p>
+                                <p>Kích thước: <span className="text-gray-700">{item.size.name}</span></p>
+                                <p>{(item.product.discount_price || item.product.price).toLocaleString()} VND</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+
+                <CarrierSelection />
+
+                {/* Phần mã giảm giá */}
+                <div className="mt-4">
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value)}
+                            placeholder="Nhập mã giảm giá"
+                            className="border p-2 flex-grow"
+                            disabled={isValidatingCoupon}
+                        />
+                        <button
+                            onClick={handleValidateCoupon}
+                            className="bg-blue-500 text-white px-4 py-2 rounded"
+                            disabled={isValidatingCoupon}
+                        >
+                            {isValidatingCoupon ? 'Đang kiểm tra...' : 'Áp dụng'}
+                        </button>
+                    </div>
+
+                    {couponError && (
+                        <p className="text-red-500 mt-2 text-sm">{couponError}</p>
+                    )}
+
+                    {couponInfo && (
+                        <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded">
+                            <p className="text-green-600">
+                                Mã giảm giá hợp lệ: Giảm {(couponInfo.discount_amount).toLocaleString()} VND
+                            </p>
+                            <p className="text-sm text-gray-600">
+                                {couponInfo.description}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                                Hạn sử dụng: {new Date(couponInfo.expiry_date).toLocaleDateString('vi-VN')}
+                            </p>
+                        </div>
+                    )}
+
+                </div>
+
+                <div className="border-t pt-2 mt-4">
+                    <p>Tạm tính: <span className="font-bold">
+                        {calculateTotal().toLocaleString()} VND
+                    </span></p>
+                    <p>Phí vận chuyển: <span className="font-bold">
+                        {(selectedCarrier?.price || 0).toLocaleString()} VND
+                    </span></p>
+                    <p>Giảm giá: <span className="font-bold text-green-500">
+                        -{discountAmount.toLocaleString()} VND
+                    </span></p>
+                    <p className="text-xl font-bold mt-2">
+                        Tổng tiền: <span className="text-red-500">
+                            {calculateFinalPrice().toLocaleString()} VND
+                        </span>
+                    </p>
+                </div>
+
+                {errorMessage && (
+                    <div className="text-red-500 mt-4">{errorMessage}</div>
+                )}
+            </div>
+        </div>
     );
 };
 

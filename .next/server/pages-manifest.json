@@ -3,6 +3,10 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/account/profile": "pages/account/profile.js",
-  "/admin": "pages/admin.js",
-  "/favorites": "pages/favorites.js"
+  "/cart": "pages/cart.js",
+  "/productdetail/[slug]": "pages/productdetail/[slug].js",
+  "/checkout": "pages/checkout.js",
+  "/payment": "pages/payment.js",
+  "/payment/success": "pages/payment/success.js",
+  "/_error": "pages/_error.js"
 }
