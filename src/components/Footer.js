@@ -50,7 +50,11 @@ export default function Footer() {
                         <h3 className="text-lg font-semibold mb-4">Chính sách</h3>
                         <ul className="space-y-2">
                             <li><a href="#" className="hover:text-blue-400">Tìm kiếm</a></li>
-                            <li><a href="#" className="hover:text-blue-400">Giới thiệu</a></li>
+                            <li>
+                                <Link href="/about" className="hover:text-blue-400">
+                                    Giới thiệu
+                                </Link>
+                            </li>
                             <li><a href="#" className="hover:text-blue-400">Cơ hội việc làm</a></li>
                         </ul>
                     </div>

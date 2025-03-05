@@ -1,11 +1,436 @@
-// components/Statistics.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { revenueApi } from '../utils/apiClient';
+import { Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+} from 'chart.js';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 const Statistics = () => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [viewMode, setViewMode] = useState('all'); // all, daily, monthly
+
+    const [stats, setStats] = useState({
+        overall: {
+            revenues: [],
+            totalRevenue: 0,
+            count: 0
+        },
+        daily: {
+            date: '',
+            revenues: [],
+            totalAmount: 0,
+            count: 0
+        },
+        monthly: {
+            year: 0,
+            month: 0,
+            revenues: [],
+            totalAmount: 0,
+            count: 0
+        }
+    });
+
+    const [dateFilter, setDateFilter] = useState(() => {
+        const today = new Date();
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        return {
+            startDate: startOfMonth.toISOString().split('T')[0],
+            endDate: today.toISOString().split('T')[0]
+        };
+    });
+
+
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+    const [selectedMonth, setSelectedMonth] = useState({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1
+    });
+
+    // Utility functions
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount || 0);
+    };
+
+    const paymentMethodLabels = {
+        'cash_on_delivery': 'Thanh toán khi nhận hàng',
+        'payos': 'PayOS'
+    };
+
+    const fetchAllStats = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            let responses;
+
+            switch (viewMode) {
+                case 'daily':
+                    responses = await revenueApi.getDailyRevenue(selectedDate);
+                    if (responses.data.code === 200) {
+                        setStats(prev => ({
+                            ...prev,
+                            daily: {
+                                date: selectedDate,
+                                revenues: responses.data.data.revenues || [],
+                                totalAmount: responses.data.data.totalAmount || 0,
+                                count: responses.data.data.count || 0
+                            }
+                        }));
+                    }
+                    break;
+
+                case 'monthly':
+                    responses = await revenueApi.getMonthlyRevenue(
+                        selectedMonth.year,
+                        selectedMonth.month
+                    );
+                    if (responses.data.code === 200) {
+                        setStats(prev => ({
+                            ...prev,
+                            monthly: {
+                                year: selectedMonth.year,
+                                month: selectedMonth.month,
+                                revenues: responses.data.data.revenues || [],
+                                totalAmount: responses.data.data.totalAmount || 0,
+                                count: responses.data.data.count || 0
+                            }
+                        }));
+                    }
+                    break;
+
+                default: // 'all'
+                    responses = await revenueApi.getRevenueStats({
+                        startDate: dateFilter.startDate,
+                        endDate: dateFilter.endDate
+                    });
+                    console.log('API Response:', responses); // Kiểm tra response
+                    if (responses.data.code === 200) {
+                        console.log('Response data:', responses.data.data); // Kiểm tra data
+                        setStats(prev => ({
+                            ...prev,
+                            overall: {
+                                revenues: responses.data.data.revenues || [],
+                                totalRevenue: responses.data.data.totalRevenue || 0,
+                                count: responses.data.data.count || 0
+                            }
+                        }));
+                    }
+                    break;
+
+
+            }
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+            setError(error.message || 'Không thể tải dữ liệu thống kê');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchAllStats();
+    }, [viewMode, dateFilter, selectedDate, selectedMonth]);
+
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setDateFilter(prev => {
+            const newFilter = {
+                ...prev,
+                [name]: value
+            };
+
+            if (name === 'startDate' && newFilter.startDate > newFilter.endDate) {
+                newFilter.endDate = newFilter.startDate;
+            }
+            if (name === 'endDate' && newFilter.endDate < newFilter.startDate) {
+                newFilter.startDate = newFilter.endDate;
+            }
+
+            return newFilter;
+        });
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="text-red-500 p-4">{error}</div>;
+    }
+
+    // Prepare chart data based on view mode
+    const getChartData = () => {
+        let data;
+        switch (viewMode) {
+            case 'daily':
+                data = stats.daily.revenues;
+                break;
+            case 'monthly':
+                data = stats.monthly.revenues;
+                break;
+            default:
+                data = stats.overall.revenues;
+        }
+
+        return {
+            labels: data.map(r => formatDate(r.created_at)),
+            datasets: [{
+                label: 'Doanh thu',
+                data: data.map(r => parseFloat(r.amount)),
+                borderColor: 'rgb(59, 130, 246)',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.1,
+                fill: true
+            }]
+        };
+    };
+
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Thống kê</h2>
-            {/* Add your statistics content here */}
+        <div className="space-y-6 p-6">
+            {/* Tabs chọn chế độ xem */}
+            <div className="flex space-x-4 mb-6">
+                <button
+                    onClick={() => setViewMode('all')}
+                    className={`px-4 py-2 rounded ${viewMode === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                >
+                    Tổng quan
+                </button>
+                <button
+                    onClick={() => setViewMode('daily')}
+                    className={`px-4 py-2 rounded ${viewMode === 'daily' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                >
+                    Theo ngày
+                </button>
+                <button
+                    onClick={() => setViewMode('monthly')}
+                    className={`px-4 py-2 rounded ${viewMode === 'monthly' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                >
+                    Theo tháng
+                </button>
+            </div>
+
+            {/* Filters based on view mode */}
+            {viewMode === 'all' && (
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <h2 className="text-2xl font-bold">Thống kê doanh thu</h2>
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex flex-col">
+                            <label className="text-sm text-gray-600 mb-1">Từ ngày</label>
+                            <input
+                                type="date"
+                                name="startDate"
+                                value={dateFilter.startDate}
+                                onChange={handleFilterChange}
+                                className="border rounded-lg px-3 py-2"
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm text-gray-600 mb-1">Đến ngày</label>
+                            <input
+                                type="date"
+                                name="endDate"
+                                value={dateFilter.endDate}
+                                onChange={handleFilterChange}
+                                className="border rounded-lg px-3 py-2"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {viewMode === 'daily' && (
+                <div className="mb-6">
+                    <label className="block text-sm font-medium mb-2">Chọn ngày:</label>
+                    <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        className="border rounded px-3 py-2"
+                    />
+                </div>
+            )}
+
+            {viewMode === 'monthly' && (
+                <div className="mb-6 flex space-x-4">
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Năm:</label>
+                        <select
+                            value={selectedMonth.year}
+                            onChange={(e) => setSelectedMonth(prev => ({ ...prev, year: parseInt(e.target.value) }))}
+                            className="border rounded px-3 py-2"
+                        >
+                            {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                                <option key={year} value={year}>{year}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Tháng:</label>
+                        <select
+                            value={selectedMonth.month}
+                            onChange={(e) => setSelectedMonth(prev => ({ ...prev, month: parseInt(e.target.value) }))}
+                            className="border rounded px-3 py-2"
+                        >
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
+                                <option key={month} value={month}>{month}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+            )}
+
+            {/* Statistics Summary */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow">
+                    <h3 className="text-lg font-semibold mb-2">
+                        {viewMode === 'daily' ? 'Doanh thu ngày' :
+                            viewMode === 'monthly' ? `Doanh thu tháng ${selectedMonth.month}/${selectedMonth.year}` :
+                                'Tổng doanh thu'}
+                    </h3>
+                    <p className="text-3xl font-bold text-blue-600">
+                        {viewMode === 'daily' ? formatCurrency(stats.daily.totalAmount) :
+                            viewMode === 'monthly' ? formatCurrency(stats.monthly.totalAmount) :
+                                formatCurrency(stats.overall.totalRevenue)}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-2">
+                        {viewMode === 'daily' ? `${stats.daily.count} đơn hàng` :
+                            viewMode === 'monthly' ? `${stats.monthly.count} đơn hàng` :
+                                `Tổng ${stats.overall.count} đơn hàng`}
+                    </p>
+                </div>
+            </div>
+
+            {/* Revenue Chart */}
+            <div className="bg-white p-6 rounded-lg shadow">
+                <h3 className="text-lg font-semibold mb-4">Biểu đồ doanh thu</h3>
+                <div className="h-[400px]">
+                    <Line
+                        data={getChartData()}
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ doanh thu theo thời gian'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function (value) {
+                                            return formatCurrency(value);
+                                        }
+                                    }
+                                }
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Transaction Details Table */}
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="flex justify-between items-center p-6">
+                    <h3 className="text-lg font-semibold">Chi tiết giao dịch</h3>
+                    <p className="text-sm text-gray-500">
+                        {viewMode === 'daily' ? `${stats.daily.revenues.length} giao dịch` :
+                            viewMode === 'monthly' ? `${stats.monthly.revenues.length} giao dịch` :
+                                `${stats.overall.revenues.length} giao dịch`}
+                    </p>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    Thời gian
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    Mã đơn hàng
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    Số tiền
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    Phương thức
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    Trạng thái
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {(viewMode === 'daily' ? stats.daily.revenues :
+                                viewMode === 'monthly' ? stats.monthly.revenues :
+                                    stats.overall.revenues).map((revenue) => (
+                                        <tr key={revenue.id} className="hover:bg-gray-50">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                                {formatDate(revenue.created_at)}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                                #{revenue.order?.id}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                {formatCurrency(revenue.amount)}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                                {paymentMethodLabels[revenue.payment?.payment_method] || 'N/A'}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`px-2 py-1 text-xs font-semibold rounded-full 
+                                            ${revenue.payment?.payment_status === 'paid'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : 'bg-yellow-100 text-yellow-800'
+                                                    }`}>
+                                                    {revenue.payment?.payment_status === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán'}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 };

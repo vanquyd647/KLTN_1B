@@ -846,6 +846,7 @@ __turbopack_esm__({
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
+    "revenueApi": (()=>revenueApi),
     "reviewApi": (()=>reviewApi),
     "stockApi": (()=>stockApi),
     "userApi": (()=>userApi)
@@ -1509,14 +1510,15 @@ const orderApi = {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
     },
-    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate })=>{
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate, orderId, customerName, customerEmail, customerPhone// Thêm filter số điện thoại
+     })=>{
         try {
             // Tạo query params
             const params = new URLSearchParams({
                 page: String(page),
                 limit: String(limit)
             });
-            // Thêm các filter tùy chọn
+            // Thêm các filter hiện tại
             if (status) {
                 params.append('status', status);
             }
@@ -1525,6 +1527,19 @@ const orderApi = {
             }
             if (endDate) {
                 params.append('endDate', endDate);
+            }
+            // Thêm các filter mới
+            if (orderId) {
+                params.append('orderId', orderId);
+            }
+            if (customerName) {
+                params.append('customerName', customerName);
+            }
+            if (customerEmail) {
+                params.append('customerEmail', customerEmail);
+            }
+            if (customerPhone) {
+                params.append('customerPhone', customerPhone);
             }
             const response = await apiClient.get(`orders?${params}`);
             return response.data;
@@ -1809,13 +1824,36 @@ const couponApi = {
     // Lấy danh sách mã giảm giá (Admin)
     getAllCoupons: async (params = {})=>{
         try {
-            const { page = 1, limit = 10, is_active } = params;
+            const { page = 1, limit = 10, search, is_active, startDate, endDate, minAmount, maxAmount, sortBy = 'created_at', sortOrder = 'DESC' } = params;
+            // Xây dựng query parameters
             const query = new URLSearchParams({
                 page: String(page),
                 limit: String(limit)
             });
+            // Thêm các filter tùy chọn
+            if (search) {
+                query.append('search', search);
+            }
             if (typeof is_active !== 'undefined') {
                 query.append('is_active', is_active);
+            }
+            if (startDate) {
+                query.append('startDate', startDate);
+            }
+            if (endDate) {
+                query.append('endDate', endDate);
+            }
+            if (minAmount) {
+                query.append('minAmount', minAmount);
+            }
+            if (maxAmount) {
+                query.append('maxAmount', maxAmount);
+            }
+            if (sortBy) {
+                query.append('sortBy', sortBy);
+            }
+            if (sortOrder) {
+                query.append('sortOrder', sortOrder);
             }
             const response = await apiClient.get(`coupons?${query}`);
             return response.data;
@@ -1870,6 +1908,51 @@ const couponApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể xóa mã giảm giá.';
+        }
+    }
+};
+const revenueApi = {
+    // Lấy thống kê doanh thu
+    getRevenueStats: async (filters = {})=>{
+        try {
+            const queryParams = new URLSearchParams();
+            if (filters.startDate) {
+                queryParams.append('startDate', filters.startDate);
+            }
+            if (filters.endDate) {
+                queryParams.append('endDate', filters.endDate);
+            }
+            const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+        }
+    },
+    // Lấy doanh thu theo ngày
+    getDailyRevenue: async (date)=>{
+        try {
+            const response = await apiClient.get('revenue/daily', {
+                params: {
+                    date
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo ngày.';
+        }
+    },
+    // Lấy doanh thu theo tháng
+    getMonthlyRevenue: async (year, month)=>{
+        try {
+            const response = await apiClient.get('revenue/monthly', {
+                params: {
+                    year,
+                    month
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
         }
     }
 };
@@ -4045,13 +4128,13 @@ function Footer() {
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                                href: "/about",
                                                 className: "hover:text-blue-400",
                                                 children: "Giới thiệu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 53,
+                                                lineNumber: 54,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
@@ -4066,12 +4149,12 @@ function Footer() {
                                                 children: "Cơ hội việc làm"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 54,
+                                                lineNumber: 58,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 54,
+                                            lineNumber: 58,
                                             columnNumber: 29
                                         }, this)
                                     ]
@@ -4093,7 +4176,7 @@ function Footer() {
                                     children: "Hỗ trợ khách hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 60,
+                                    lineNumber: 64,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -4106,66 +4189,6 @@ function Footer() {
                                                 children: "Hướng dẫn mua hàng"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 62,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 62,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Hướng dẫn sử dụng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 63,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 63,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Chi tiết kích cỡ"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 64,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 64,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Chính sách đổi trả & bảo hành"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 65,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 65,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
-                                                className: "hover:text-blue-400",
-                                                children: "Quy trình giao nhận và thanh toán"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 66,
                                                 columnNumber: 33
                                             }, this)
@@ -4175,10 +4198,25 @@ function Footer() {
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/TrackOrder",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
                                                 className: "hover:text-blue-400",
-                                                children: "Tra cứu đơn hàng"
+                                                children: "Hướng dẫn sử dụng"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 67,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 67,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
+                                                className: "hover:text-blue-400",
+                                                children: "Chi tiết kích cỡ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
                                                 lineNumber: 68,
@@ -4186,19 +4224,64 @@ function Footer() {
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Footer.js",
-                                            lineNumber: 67,
+                                            lineNumber: 68,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
+                                                className: "hover:text-blue-400",
+                                                children: "Chính sách đổi trả & bảo hành"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 69,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 69,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: "#",
+                                                className: "hover:text-blue-400",
+                                                children: "Quy trình giao nhận và thanh toán"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 70,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 70,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                                href: "/TrackOrder",
+                                                className: "hover:text-blue-400",
+                                                children: "Tra cứu đơn hàng"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Footer.js",
+                                                lineNumber: 72,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Footer.js",
+                                            lineNumber: 71,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 61,
+                                    lineNumber: 65,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 59,
+                            lineNumber: 63,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4208,7 +4291,7 @@ function Footer() {
                                     children: "Phương thức thanh toán"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 75,
+                                    lineNumber: 79,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4224,12 +4307,12 @@ function Footer() {
                                                     className: "h-12 object-contain mx-auto"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 80,
+                                                    lineNumber: 84,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 79,
+                                                lineNumber: 83,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4240,29 +4323,29 @@ function Footer() {
                                                     className: "h-12 object-contain mx-auto"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Footer.js",
-                                                    lineNumber: 89,
+                                                    lineNumber: 93,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Footer.js",
-                                                lineNumber: 88,
+                                                lineNumber: 92,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Footer.js",
-                                        lineNumber: 77,
+                                        lineNumber: 81,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Footer.js",
-                                    lineNumber: 76,
+                                    lineNumber: 80,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Footer.js",
-                            lineNumber: 74,
+                            lineNumber: 78,
                             columnNumber: 21
                         }, this)
                     ]
@@ -4278,12 +4361,12 @@ function Footer() {
                         children: "© 2025 Fashion Store. All rights reserved."
                     }, void 0, false, {
                         fileName: "[project]/src/components/Footer.js",
-                        lineNumber: 101,
+                        lineNumber: 105,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/Footer.js",
-                    lineNumber: 100,
+                    lineNumber: 104,
                     columnNumber: 17
                 }, this)
             ]
@@ -5913,7 +5996,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-const PAGE_PATH = "/productdetail/[slug]";
+const PAGE_PATH = "/search";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{

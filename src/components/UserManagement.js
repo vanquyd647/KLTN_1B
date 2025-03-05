@@ -264,7 +264,7 @@ const UserManagement = () => {
                 </div>
 
                 {/* Filters */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <input
                         type="text"
                         name="email"
@@ -289,6 +289,25 @@ const UserManagement = () => {
                         onChange={handleFilterChange}
                         className="border rounded-lg px-3 py-2"
                     />
+                </div>
+                <div>
+                    <button
+                        onClick={() => {
+                            setLocalFilters({
+                                email: '',
+                                phone: '',
+                                name: ''
+                            });
+                            setFilters({
+                                email: '',
+                                phone: '',
+                                name: ''
+                            });
+                        }}
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                    >
+                        Đặt lại
+                    </button>
                 </div>
             </div>
 

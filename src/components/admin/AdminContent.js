@@ -1,3 +1,4 @@
+// components/admin/AdminContent.js
 import React from 'react';
 import ProductManagement from '../ProductManagement';
 import OrderManagement from '../OrderManagement';
@@ -5,6 +6,7 @@ import Statistics from '../Statistics';
 import ShippingManagement from '../ShippingManagement';
 import UserManagement from '../UserManagement';
 import BlogManagement from '../BlogManagement';
+import CouponManagement from '../CouponManagement'; // Thêm import
 
 const AdminContent = ({ activeTab, loading }) => {
     const renderContent = () => {
@@ -25,6 +27,8 @@ const AdminContent = ({ activeTab, loading }) => {
                 return <UserManagement />;
             case 'blogs':
                 return <BlogManagement />;
+            case 'coupons': // Thêm case mới
+                return <CouponManagement />;
             default:
                 return <ProductManagement />;
         }

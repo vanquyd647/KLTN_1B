@@ -408,14 +408,14 @@ const ProductManagement = () => {
                 </div>
 
                 {/* Filter Actions */}
-                <div className="flex justify-end mt-4 space-x-2">
+                <div className="flex justify-start mt-4 space-x-2">
                     <button
                         onClick={handleResetFilters}
-                        className="px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
                     >
                         Đặt lại
                     </button>
-                    <button
+                    {/* <button
                         onClick={handleApplyFilters}
                         disabled={isFilterLoading}
                         className={`px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors 
@@ -430,7 +430,7 @@ const ProductManagement = () => {
                                 Đang xử lý...
                             </span>
                         ) : 'Áp dụng'}
-                    </button>
+                    </button> */}
                 </div>
             </div>
 

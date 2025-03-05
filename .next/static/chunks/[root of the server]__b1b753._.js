@@ -838,6 +838,7 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
@@ -845,6 +846,7 @@ __turbopack_esm__({
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
+    "revenueApi": (()=>revenueApi),
     "reviewApi": (()=>reviewApi),
     "stockApi": (()=>stockApi),
     "userApi": (()=>userApi)
@@ -1508,14 +1510,15 @@ const orderApi = {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
     },
-    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate })=>{
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate, orderId, customerName, customerEmail, customerPhone// Thêm filter số điện thoại
+     })=>{
         try {
             // Tạo query params
             const params = new URLSearchParams({
                 page: String(page),
                 limit: String(limit)
             });
-            // Thêm các filter tùy chọn
+            // Thêm các filter hiện tại
             if (status) {
                 params.append('status', status);
             }
@@ -1524,6 +1527,19 @@ const orderApi = {
             }
             if (endDate) {
                 params.append('endDate', endDate);
+            }
+            // Thêm các filter mới
+            if (orderId) {
+                params.append('orderId', orderId);
+            }
+            if (customerName) {
+                params.append('customerName', customerName);
+            }
+            if (customerEmail) {
+                params.append('customerEmail', customerEmail);
+            }
+            if (customerPhone) {
+                params.append('customerPhone', customerPhone);
             }
             const response = await apiClient.get(`orders?${params}`);
             return response.data;
@@ -1792,6 +1808,128 @@ const orderTrackingApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
+const couponApi = {
+    // Tạo mã giảm giá mới (Admin)
+    createCoupon: async (couponData)=>{
+        try {
+            const response = await apiClient.post('coupons', couponData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo mã giảm giá.';
+        }
+    },
+    // Lấy danh sách mã giảm giá (Admin)
+    getAllCoupons: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, is_active } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (typeof is_active !== 'undefined') {
+                query.append('is_active', is_active);
+            }
+            const response = await apiClient.get(`coupons?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách mã giảm giá.';
+        }
+    },
+    // Lấy chi tiết mã giảm giá (Admin)
+    getCouponById: async (id)=>{
+        try {
+            const response = await apiClient.get(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin mã giảm giá.';
+        }
+    },
+    // Kiểm tra mã giảm giá (Public)
+    validateCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/validate', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Mã giảm giá không hợp lệ.';
+        }
+    },
+    // Áp dụng mã giảm giá (Public)
+    applyCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/apply', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể áp dụng mã giảm giá.';
+        }
+    },
+    // Cập nhật mã giảm giá (Admin)
+    updateCoupon: async (id, updateData)=>{
+        try {
+            const response = await apiClient.put(`coupons/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật mã giảm giá.';
+        }
+    },
+    // Xóa mã giảm giá (Admin)
+    deleteCoupon: async (id)=>{
+        try {
+            const response = await apiClient.delete(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa mã giảm giá.';
+        }
+    }
+};
+const revenueApi = {
+    // Lấy thống kê doanh thu
+    getRevenueStats: async (filters = {})=>{
+        try {
+            const queryParams = new URLSearchParams();
+            if (filters.startDate) {
+                queryParams.append('startDate', filters.startDate);
+            }
+            if (filters.endDate) {
+                queryParams.append('endDate', filters.endDate);
+            }
+            const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+        }
+    },
+    // Lấy doanh thu theo ngày
+    getDailyRevenue: async (date)=>{
+        try {
+            const response = await apiClient.get('revenue/daily', {
+                params: {
+                    date
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo ngày.';
+        }
+    },
+    // Lấy doanh thu theo tháng
+    getMonthlyRevenue: async (year, month)=>{
+        try {
+            const response = await apiClient.get('revenue/monthly', {
+                params: {
+                    year,
+                    month
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
         }
     }
 };
@@ -2251,6 +2389,44 @@ const menuItems = [
             {
                 id: 'customer-report',
                 label: 'Báo cáo khách hàng'
+            }
+        ]
+    },
+    {
+        id: 'coupons',
+        label: 'Quản lý mã giảm giá',
+        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+            className: "w-5 h-5 mr-2",
+            fill: "none",
+            viewBox: "0 0 24 24",
+            stroke: "currentColor",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                strokeWidth: 2,
+                d: "M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+            }, void 0, false, {
+                fileName: "[project]/src/utils/adminMenuItems.js",
+                lineNumber: 114,
+                columnNumber: 13
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/utils/adminMenuItems.js",
+            lineNumber: 113,
+            columnNumber: 15
+        }, this),
+        subItems: [
+            {
+                id: 'coupon-list',
+                label: 'Danh sách mã giảm giá'
+            },
+            {
+                id: 'add-coupon',
+                label: 'Thêm mã giảm giá'
+            },
+            {
+                id: 'coupon-stats',
+                label: 'Thống kê sử dụng'
             }
         ]
     }
@@ -4830,71 +5006,16 @@ const ProductManagement = ()=>{
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex justify-end mt-4 space-x-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: handleResetFilters,
-                                className: "px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors",
-                                children: "Đặt lại"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 412,
-                                columnNumber: 21
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: handleApplyFilters,
-                                disabled: isFilterLoading,
-                                className: `px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors 
-    ${isFilterLoading ? 'opacity-50 cursor-not-allowed' : ''}`,
-                                children: isFilterLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "flex items-center",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                            className: "animate-spin -ml-1 mr-2 h-4 w-4 text-white",
-                                            xmlns: "http://www.w3.org/2000/svg",
-                                            fill: "none",
-                                            viewBox: "0 0 24 24",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
-                                                    className: "opacity-25",
-                                                    cx: "12",
-                                                    cy: "12",
-                                                    r: "10",
-                                                    stroke: "currentColor",
-                                                    strokeWidth: "4"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/ProductManagement.js",
-                                                    lineNumber: 427,
-                                                    columnNumber: 37
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                    className: "opacity-75",
-                                                    fill: "currentColor",
-                                                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/ProductManagement.js",
-                                                    lineNumber: 428,
-                                                    columnNumber: 37
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/components/ProductManagement.js",
-                                            lineNumber: 426,
-                                            columnNumber: 33
-                                        }, this),
-                                        "Đang xử lý..."
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/ProductManagement.js",
-                                    lineNumber: 425,
-                                    columnNumber: 29
-                                }, this) : 'Áp dụng'
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ProductManagement.js",
-                                lineNumber: 418,
-                                columnNumber: 21
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handleResetFilters,
+                            className: "px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors",
+                            children: "Đặt lại"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/ProductManagement.js",
+                            lineNumber: 412,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/src/components/ProductManagement.js",
                         lineNumber: 411,
                         columnNumber: 17
@@ -5990,15 +6111,16 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
-// components/OrderManagement.js
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lodash$2f$debounce$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/lodash/debounce.js [client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
+;
 ;
 ;
 const OrderManagement = ()=>{
@@ -6008,10 +6130,25 @@ const OrderManagement = ()=>{
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
     const [totalPages, setTotalPages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
-    const [filters, setFilters] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+    // Tách state cho input values và filters
+    const [inputValues, setInputValues] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
         status: '',
         startDate: '',
-        endDate: ''
+        endDate: '',
+        orderId: '',
+        customerName: '',
+        customerEmail: '',
+        customerPhone: ''
+    });
+    // State cho filters thực sự (sẽ trigger API call)
+    const [activeFilters, setActiveFilters] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        status: '',
+        startDate: '',
+        endDate: '',
+        orderId: '',
+        customerName: '',
+        customerEmail: '',
+        customerPhone: ''
     });
     const statusLabels = {
         'pending': 'Chờ xác nhận',
@@ -6047,13 +6184,58 @@ const OrderManagement = ()=>{
         'paid': 'bg-green-100 text-green-800',
         'cancelled': 'bg-red-100 text-red-800'
     };
+    // Debounced function để cập nhật active filters
+    const debouncedSetFilters = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useCallback"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lodash$2f$debounce$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"])({
+        "OrderManagement.useCallback[debouncedSetFilters]": (newFilters)=>{
+            setActiveFilters(newFilters);
+        }
+    }["OrderManagement.useCallback[debouncedSetFilters]"], 500), []);
+    // Handle input change
+    const handleInputChange = (e)=>{
+        const { name, value } = e.target;
+        setInputValues((prev)=>({
+                ...prev,
+                [name]: value
+            }));
+        // Với status và date, update ngay lập tức
+        if ([
+            'status',
+            'startDate',
+            'endDate'
+        ].includes(name)) {
+            setActiveFilters((prev)=>({
+                    ...prev,
+                    [name]: value
+                }));
+        } else {
+            // Với các input text, dùng debounce
+            debouncedSetFilters({
+                ...activeFilters,
+                [name]: value
+            });
+        }
+    };
+    // Reset all filters
+    const handleResetFilters = ()=>{
+        const emptyFilters = {
+            status: '',
+            startDate: '',
+            endDate: '',
+            orderId: '',
+            customerName: '',
+            customerEmail: '',
+            customerPhone: ''
+        };
+        setInputValues(emptyFilters);
+        setActiveFilters(emptyFilters);
+    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "OrderManagement.useEffect": ()=>{
             fetchOrders();
         }
     }["OrderManagement.useEffect"], [
         currentPage,
-        filters
+        activeFilters
     ]);
     const fetchOrders = async ()=>{
         try {
@@ -6061,7 +6243,7 @@ const OrderManagement = ()=>{
             const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["orderApi"].getAllOrders({
                 page: currentPage,
                 limit: 10,
-                ...filters
+                ...activeFilters
             });
             setOrders(response.data.orders);
             setTotalPages(response.data.pagination.totalPages);
@@ -6081,17 +6263,12 @@ const OrderManagement = ()=>{
     };
     const handlePaymentUpdate = async (orderId, paymentMethod, paymentStatus)=>{
         try {
-            console.log('Sending payment update:', {
-                order_id: orderId,
-                payment_method: paymentMethod,
-                payment_status: paymentStatus
-            });
             await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["paymentApi"].updatePaymentMethodStatus({
                 order_id: orderId,
                 payment_method: paymentMethod,
                 payment_status: paymentStatus
             });
-            fetchOrders(); // Refresh danh sách đơn hàng
+            fetchOrders();
         } catch (error) {
             console.error('Payment update error:', error);
             setError('Không thể cập nhật thông tin thanh toán');
@@ -6109,12 +6286,12 @@ const OrderManagement = ()=>{
             className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
         }, void 0, false, {
             fileName: "[project]/src/components/OrderManagement.js",
-            lineNumber: 119,
+            lineNumber: 173,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/OrderManagement.js",
-        lineNumber: 118,
+        lineNumber: 172,
         columnNumber: 5
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6128,7 +6305,7 @@ const OrderManagement = ()=>{
                         children: "Quản lý đơn hàng"
                     }, void 0, false, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 126,
+                        lineNumber: 180,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6136,11 +6313,8 @@ const OrderManagement = ()=>{
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                 name: "status",
-                                value: filters.status,
-                                onChange: (e)=>setFilters({
-                                        ...filters,
-                                        status: e.target.value
-                                    }),
+                                value: inputValues.status,
+                                onChange: handleInputChange,
                                 className: "border rounded-lg px-3 py-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -6148,7 +6322,7 @@ const OrderManagement = ()=>{
                                         children: "Tất cả trạng thái"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 135,
+                                        lineNumber: 189,
                                         columnNumber: 13
                                     }, this),
                                     Object.entries(statusLabels).map(([value, label])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -6156,53 +6330,111 @@ const OrderManagement = ()=>{
                                             children: label
                                         }, value, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 137,
+                                            lineNumber: 191,
                                             columnNumber: 15
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 129,
+                                lineNumber: 183,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "orderId",
+                                placeholder: "Tìm theo mã đơn hàng",
+                                value: inputValues.orderId,
+                                onChange: handleInputChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/OrderManagement.js",
+                                lineNumber: 195,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "customerName",
+                                placeholder: "Tìm theo tên khách hàng",
+                                value: inputValues.customerName,
+                                onChange: handleInputChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/OrderManagement.js",
+                                lineNumber: 204,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "customerEmail",
+                                placeholder: "Tìm theo email",
+                                value: inputValues.customerEmail,
+                                onChange: handleInputChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/OrderManagement.js",
+                                lineNumber: 213,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                name: "customerPhone",
+                                placeholder: "Tìm theo số điện thoại",
+                                value: inputValues.customerPhone,
+                                onChange: handleInputChange,
+                                className: "border rounded-lg px-3 py-2"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/OrderManagement.js",
+                                lineNumber: 222,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "date",
                                 name: "startDate",
-                                value: filters.startDate,
-                                onChange: (e)=>setFilters({
-                                        ...filters,
-                                        startDate: e.target.value
-                                    }),
+                                value: inputValues.startDate,
+                                onChange: handleInputChange,
                                 className: "border rounded-lg px-3 py-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 141,
+                                lineNumber: 231,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "date",
                                 name: "endDate",
-                                value: filters.endDate,
-                                onChange: (e)=>setFilters({
-                                        ...filters,
-                                        endDate: e.target.value
-                                    }),
+                                value: inputValues.endDate,
+                                onChange: handleInputChange,
                                 className: "border rounded-lg px-3 py-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 149,
+                                lineNumber: 239,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 128,
+                        lineNumber: 182,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handleResetFilters,
+                            className: "bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200",
+                            children: "Đặt lại"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/OrderManagement.js",
+                            lineNumber: 249,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/OrderManagement.js",
+                        lineNumber: 248,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/OrderManagement.js",
-                lineNumber: 125,
+                lineNumber: 179,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6219,7 +6451,7 @@ const OrderManagement = ()=>{
                                         children: "Mã đơn"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 163,
+                                        lineNumber: 262,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6227,7 +6459,7 @@ const OrderManagement = ()=>{
                                         children: "Thông tin khách hàng"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 164,
+                                        lineNumber: 263,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6235,7 +6467,7 @@ const OrderManagement = ()=>{
                                         children: "Sản phẩm"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 165,
+                                        lineNumber: 264,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6243,7 +6475,7 @@ const OrderManagement = ()=>{
                                         children: "Tổng tiền"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 166,
+                                        lineNumber: 265,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6251,7 +6483,7 @@ const OrderManagement = ()=>{
                                         children: "Thanh toán"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 167,
+                                        lineNumber: 266,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6259,7 +6491,7 @@ const OrderManagement = ()=>{
                                         children: "Trạng thái"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 168,
+                                        lineNumber: 267,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -6267,18 +6499,18 @@ const OrderManagement = ()=>{
                                         children: "Ngày đặt"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
-                                        lineNumber: 169,
+                                        lineNumber: 268,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 162,
+                                lineNumber: 261,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/OrderManagement.js",
-                            lineNumber: 161,
+                            lineNumber: 260,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -6293,7 +6525,7 @@ const OrderManagement = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 175,
+                                            lineNumber: 274,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6306,14 +6538,14 @@ const OrderManagement = ()=>{
                                                         children: order.shipping.recipient.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 180,
+                                                        lineNumber: 279,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         children: order.shipping.recipient.phone
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 181,
+                                                        lineNumber: 280,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6321,7 +6553,7 @@ const OrderManagement = ()=>{
                                                         children: order.shipping.recipient.email
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 182,
+                                                        lineNumber: 281,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6329,18 +6561,18 @@ const OrderManagement = ()=>{
                                                         children: formatAddress(order.shipping.recipient.address)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 183,
+                                                        lineNumber: 282,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 179,
+                                                lineNumber: 278,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 178,
+                                            lineNumber: 277,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6355,7 +6587,7 @@ const OrderManagement = ()=>{
                                                                 children: item.product.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 192,
+                                                                lineNumber: 291,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6369,23 +6601,23 @@ const OrderManagement = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 193,
+                                                                lineNumber: 292,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, index, true, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 191,
+                                                        lineNumber: 290,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 189,
+                                                lineNumber: 288,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 188,
+                                            lineNumber: 287,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6401,7 +6633,7 @@ const OrderManagement = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 202,
+                                                        lineNumber: 301,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6413,18 +6645,18 @@ const OrderManagement = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 205,
+                                                        lineNumber: 304,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 201,
+                                                lineNumber: 300,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 200,
+                                            lineNumber: 299,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6441,12 +6673,12 @@ const OrderManagement = ()=>{
                                                                 children: label
                                                             }, value, false, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 223,
+                                                                lineNumber: 322,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 213,
+                                                        lineNumber: 312,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -6458,23 +6690,23 @@ const OrderManagement = ()=>{
                                                                 children: label
                                                             }, value, false, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 239,
+                                                                lineNumber: 338,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 228,
+                                                        lineNumber: 327,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 211,
+                                                lineNumber: 310,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 210,
+                                            lineNumber: 309,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6488,17 +6720,17 @@ const OrderManagement = ()=>{
                                                         children: label
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 251,
+                                                        lineNumber: 350,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 245,
+                                                lineNumber: 344,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 244,
+                                            lineNumber: 343,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6506,29 +6738,29 @@ const OrderManagement = ()=>{
                                             children: formatDate(order.dates.created_at)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 255,
+                                            lineNumber: 354,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, order.id, true, {
                                     fileName: "[project]/src/components/OrderManagement.js",
-                                    lineNumber: 174,
+                                    lineNumber: 273,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/components/OrderManagement.js",
-                            lineNumber: 172,
+                            lineNumber: 271,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/OrderManagement.js",
-                    lineNumber: 160,
+                    lineNumber: 259,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/OrderManagement.js",
-                lineNumber: 159,
+                lineNumber: 258,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6543,7 +6775,7 @@ const OrderManagement = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 266,
+                        lineNumber: 365,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6556,7 +6788,7 @@ const OrderManagement = ()=>{
                                 children: "Trước"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 270,
+                                lineNumber: 369,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -6566,29 +6798,29 @@ const OrderManagement = ()=>{
                                 children: "Sau"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 279,
+                                lineNumber: 378,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 269,
+                        lineNumber: 368,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/OrderManagement.js",
-                lineNumber: 265,
+                lineNumber: 364,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/OrderManagement.js",
-        lineNumber: 124,
+        lineNumber: 178,
         columnNumber: 5
     }, this);
 };
-_s(OrderManagement, "Wk3euUd/W4I9mLiT8It7so4CHU8=");
+_s(OrderManagement, "MW9yVqTUOsWK2K92hPLRzpHHlhQ=");
 _c = OrderManagement;
 const __TURBOPACK__default__export__ = OrderManagement;
 var _c;
@@ -6602,31 +6834,728 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
-// components/Statistics.js
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/chart.js/dist/chart.js [client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-chartjs-2/dist/index.js [client] (ecmascript)");
+;
+var _s = __turbopack_refresh__.signature();
 ;
 ;
+;
+;
+__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Chart"].register(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["CategoryScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LinearScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["PointElement"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LineElement"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Title"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Tooltip"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Legend"]);
 const Statistics = ()=>{
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "space-y-6",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-            className: "text-2xl font-bold",
-            children: "Thống kê"
+    _s();
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [viewMode, setViewMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('all'); // all, daily, monthly
+    const [stats, setStats] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        overall: {
+            revenues: [],
+            totalRevenue: 0,
+            count: 0
+        },
+        daily: {
+            date: '',
+            revenues: [],
+            totalAmount: 0,
+            count: 0
+        },
+        monthly: {
+            year: 0,
+            month: 0,
+            revenues: [],
+            totalAmount: 0,
+            count: 0
+        }
+    });
+    const [dateFilter, setDateFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        "Statistics.useState": ()=>{
+            const today = new Date();
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            return {
+                startDate: startOfMonth.toISOString().split('T')[0],
+                endDate: today.toISOString().split('T')[0]
+            };
+        }
+    }["Statistics.useState"]);
+    const [selectedDate, setSelectedDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(new Date().toISOString().split('T')[0]);
+    const [selectedMonth, setSelectedMonth] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1
+    });
+    // Utility functions
+    const formatDate = (dateString)=>{
+        return new Date(dateString).toLocaleString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+    const formatCurrency = (amount)=>{
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount || 0);
+    };
+    const paymentMethodLabels = {
+        'cash_on_delivery': 'Thanh toán khi nhận hàng',
+        'payos': 'PayOS'
+    };
+    const fetchAllStats = async ()=>{
+        try {
+            setLoading(true);
+            setError(null);
+            let responses;
+            switch(viewMode){
+                case 'daily':
+                    responses = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["revenueApi"].getDailyRevenue(selectedDate);
+                    if (responses.data.code === 200) {
+                        setStats((prev)=>({
+                                ...prev,
+                                daily: {
+                                    date: selectedDate,
+                                    revenues: responses.data.data.revenues || [],
+                                    totalAmount: responses.data.data.totalAmount || 0,
+                                    count: responses.data.data.count || 0
+                                }
+                            }));
+                    }
+                    break;
+                case 'monthly':
+                    responses = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["revenueApi"].getMonthlyRevenue(selectedMonth.year, selectedMonth.month);
+                    if (responses.data.code === 200) {
+                        setStats((prev)=>({
+                                ...prev,
+                                monthly: {
+                                    year: selectedMonth.year,
+                                    month: selectedMonth.month,
+                                    revenues: responses.data.data.revenues || [],
+                                    totalAmount: responses.data.data.totalAmount || 0,
+                                    count: responses.data.data.count || 0
+                                }
+                            }));
+                    }
+                    break;
+                default:
+                    responses = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["revenueApi"].getRevenueStats({
+                        startDate: dateFilter.startDate,
+                        endDate: dateFilter.endDate
+                    });
+                    console.log('API Response:', responses); // Kiểm tra response
+                    if (responses.data.code === 200) {
+                        console.log('Response data:', responses.data.data); // Kiểm tra data
+                        setStats((prev)=>({
+                                ...prev,
+                                overall: {
+                                    revenues: responses.data.data.revenues || [],
+                                    totalRevenue: responses.data.data.totalRevenue || 0,
+                                    count: responses.data.data.count || 0
+                                }
+                            }));
+                    }
+                    break;
+            }
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+            setError(error.message || 'Không thể tải dữ liệu thống kê');
+        } finally{
+            setLoading(false);
+        }
+    };
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Statistics.useEffect": ()=>{
+            fetchAllStats();
+        }
+    }["Statistics.useEffect"], [
+        viewMode,
+        dateFilter,
+        selectedDate,
+        selectedMonth
+    ]);
+    const handleFilterChange = (e)=>{
+        const { name, value } = e.target;
+        setDateFilter((prev)=>{
+            const newFilter = {
+                ...prev,
+                [name]: value
+            };
+            if (name === 'startDate' && newFilter.startDate > newFilter.endDate) {
+                newFilter.endDate = newFilter.startDate;
+            }
+            if (name === 'endDate' && newFilter.endDate < newFilter.startDate) {
+                newFilter.startDate = newFilter.endDate;
+            }
+            return newFilter;
+        });
+    };
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex items-center justify-center min-h-screen",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+            }, void 0, false, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 187,
+                columnNumber: 17
+            }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/Statistics.js",
-            lineNumber: 7,
+            lineNumber: 186,
             columnNumber: 13
-        }, this)
-    }, void 0, false, {
+        }, this);
+    }
+    if (error) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "text-red-500 p-4",
+            children: error
+        }, void 0, false, {
+            fileName: "[project]/src/components/Statistics.js",
+            lineNumber: 193,
+            columnNumber: 16
+        }, this);
+    }
+    // Prepare chart data based on view mode
+    const getChartData = ()=>{
+        let data;
+        switch(viewMode){
+            case 'daily':
+                data = stats.daily.revenues;
+                break;
+            case 'monthly':
+                data = stats.monthly.revenues;
+                break;
+            default:
+                data = stats.overall.revenues;
+        }
+        return {
+            labels: data.map((r)=>formatDate(r.created_at)),
+            datasets: [
+                {
+                    label: 'Doanh thu',
+                    data: data.map((r)=>parseFloat(r.amount)),
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                }
+            ]
+        };
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "space-y-6 p-6",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex space-x-4 mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setViewMode('all'),
+                        className: `px-4 py-2 rounded ${viewMode === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`,
+                        children: "Tổng quan"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 227,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setViewMode('daily'),
+                        className: `px-4 py-2 rounded ${viewMode === 'daily' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`,
+                        children: "Theo ngày"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 233,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setViewMode('monthly'),
+                        className: `px-4 py-2 rounded ${viewMode === 'monthly' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`,
+                        children: "Theo tháng"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 239,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 226,
+                columnNumber: 13
+            }, this),
+            viewMode === 'all' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold",
+                        children: "Thống kê doanh thu"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 250,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-col md:flex-row gap-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "text-sm text-gray-600 mb-1",
+                                        children: "Từ ngày"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 253,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "date",
+                                        name: "startDate",
+                                        value: dateFilter.startDate,
+                                        onChange: handleFilterChange,
+                                        className: "border rounded-lg px-3 py-2"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 254,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 252,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "text-sm text-gray-600 mb-1",
+                                        children: "Đến ngày"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 263,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "date",
+                                        name: "endDate",
+                                        value: dateFilter.endDate,
+                                        onChange: handleFilterChange,
+                                        className: "border rounded-lg px-3 py-2"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 264,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 262,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 251,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 249,
+                columnNumber: 17
+            }, this),
+            viewMode === 'daily' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                        className: "block text-sm font-medium mb-2",
+                        children: "Chọn ngày:"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 278,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                        type: "date",
+                        value: selectedDate,
+                        onChange: (e)=>setSelectedDate(e.target.value),
+                        className: "border rounded px-3 py-2"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 279,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 277,
+                columnNumber: 17
+            }, this),
+            viewMode === 'monthly' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-6 flex space-x-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block text-sm font-medium mb-2",
+                                children: "Năm:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 291,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                value: selectedMonth.year,
+                                onChange: (e)=>setSelectedMonth((prev)=>({
+                                            ...prev,
+                                            year: parseInt(e.target.value)
+                                        })),
+                                className: "border rounded px-3 py-2",
+                                children: Array.from({
+                                    length: 5
+                                }, (_, i)=>new Date().getFullYear() - i).map((year)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: year,
+                                        children: year
+                                    }, year, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 298,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 292,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 290,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "block text-sm font-medium mb-2",
+                                children: "Tháng:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 303,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                value: selectedMonth.month,
+                                onChange: (e)=>setSelectedMonth((prev)=>({
+                                            ...prev,
+                                            month: parseInt(e.target.value)
+                                        })),
+                                className: "border rounded px-3 py-2",
+                                children: Array.from({
+                                    length: 12
+                                }, (_, i)=>i + 1).map((month)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                        value: month,
+                                        children: month
+                                    }, month, false, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 310,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 304,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 302,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 289,
+                columnNumber: 17
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 md:grid-cols-3 gap-6",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-white p-6 rounded-lg shadow",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                            className: "text-lg font-semibold mb-2",
+                            children: viewMode === 'daily' ? 'Doanh thu ngày' : viewMode === 'monthly' ? `Doanh thu tháng ${selectedMonth.month}/${selectedMonth.year}` : 'Tổng doanh thu'
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 320,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-3xl font-bold text-blue-600",
+                            children: viewMode === 'daily' ? formatCurrency(stats.daily.totalAmount) : viewMode === 'monthly' ? formatCurrency(stats.monthly.totalAmount) : formatCurrency(stats.overall.totalRevenue)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 325,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-sm text-gray-500 mt-2",
+                            children: viewMode === 'daily' ? `${stats.daily.count} đơn hàng` : viewMode === 'monthly' ? `${stats.monthly.count} đơn hàng` : `Tổng ${stats.overall.count} đơn hàng`
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 330,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/Statistics.js",
+                    lineNumber: 319,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 318,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-white p-6 rounded-lg shadow",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-4",
+                        children: "Biểu đồ doanh thu"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 340,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "h-[400px]",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Line"], {
+                            data: getChartData(),
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Biểu đồ doanh thu theo thời gian'
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function(value) {
+                                                return formatCurrency(value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 342,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 341,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 339,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-white rounded-lg shadow overflow-hidden",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center p-6",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-semibold",
+                                children: "Chi tiết giao dịch"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 374,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm text-gray-500",
+                                children: viewMode === 'daily' ? `${stats.daily.revenues.length} giao dịch` : viewMode === 'monthly' ? `${stats.monthly.revenues.length} giao dịch` : `${stats.overall.revenues.length} giao dịch`
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Statistics.js",
+                                lineNumber: 375,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 373,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "overflow-x-auto",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                            className: "min-w-full divide-y divide-gray-200",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                    className: "bg-gray-50",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Thời gian"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 385,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Mã đơn hàng"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 388,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Số tiền"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 391,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Phương thức"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 394,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Trạng thái"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 397,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 384,
+                                        columnNumber: 29
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Statistics.js",
+                                    lineNumber: 383,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                    className: "bg-white divide-y divide-gray-200",
+                                    children: (viewMode === 'daily' ? stats.daily.revenues : viewMode === 'monthly' ? stats.monthly.revenues : stats.overall.revenues).map((revenue)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                            className: "hover:bg-gray-50",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 whitespace-nowrap text-sm",
+                                                    children: formatDate(revenue.created_at)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 407,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 whitespace-nowrap text-sm",
+                                                    children: [
+                                                        "#",
+                                                        revenue.order?.id
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 410,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 whitespace-nowrap text-sm font-medium",
+                                                    children: formatCurrency(revenue.amount)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 413,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 whitespace-nowrap text-sm",
+                                                    children: paymentMethodLabels[revenue.payment?.payment_method] || 'N/A'
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 416,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 whitespace-nowrap",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: `px-2 py-1 text-xs font-semibold rounded-full 
+                                            ${revenue.payment?.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`,
+                                                        children: revenue.payment?.payment_status === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Statistics.js",
+                                                        lineNumber: 420,
+                                                        columnNumber: 49
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 419,
+                                                    columnNumber: 45
+                                                }, this)
+                                            ]
+                                        }, revenue.id, true, {
+                                            fileName: "[project]/src/components/Statistics.js",
+                                            lineNumber: 406,
+                                            columnNumber: 41
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Statistics.js",
+                                    lineNumber: 402,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 382,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 381,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 372,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/src/components/Statistics.js",
-        lineNumber: 6,
+        lineNumber: 224,
         columnNumber: 9
     }, this);
 };
+_s(Statistics, "qEFZR7ibBRu73Xts99HxDhATazM=");
 _c = Statistics;
 const __TURBOPACK__default__export__ = Statistics;
 var _c;
@@ -8113,7 +9042,7 @@ const UserManagement = ()=>{
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+                        className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "text",
@@ -8156,6 +9085,32 @@ const UserManagement = ()=>{
                         fileName: "[project]/src/components/UserManagement.js",
                         lineNumber: 267,
                         columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>{
+                                setLocalFilters({
+                                    email: '',
+                                    phone: '',
+                                    name: ''
+                                });
+                                setFilters({
+                                    email: '',
+                                    phone: '',
+                                    name: ''
+                                });
+                            },
+                            className: "bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200",
+                            children: "Đặt lại"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/UserManagement.js",
+                            lineNumber: 294,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/UserManagement.js",
+                        lineNumber: 293,
+                        columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
@@ -8177,7 +9132,7 @@ const UserManagement = ()=>{
                                         children: "ID"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 300,
+                                        lineNumber: 319,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8185,7 +9140,7 @@ const UserManagement = ()=>{
                                         children: "Họ tên"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 301,
+                                        lineNumber: 320,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8193,7 +9148,7 @@ const UserManagement = ()=>{
                                         children: "Email"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 302,
+                                        lineNumber: 321,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8201,7 +9156,7 @@ const UserManagement = ()=>{
                                         children: "Số điện thoại"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 303,
+                                        lineNumber: 322,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8209,7 +9164,7 @@ const UserManagement = ()=>{
                                         children: "Giới tính"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 304,
+                                        lineNumber: 323,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8217,7 +9172,7 @@ const UserManagement = ()=>{
                                         children: "Vai trò"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 305,
+                                        lineNumber: 324,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -8225,18 +9180,18 @@ const UserManagement = ()=>{
                                         children: "Thao tác"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 306,
+                                        lineNumber: 325,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 299,
+                                lineNumber: 318,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/UserManagement.js",
-                            lineNumber: 298,
+                            lineNumber: 317,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -8251,7 +9206,7 @@ const UserManagement = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 312,
+                                            lineNumber: 331,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8263,7 +9218,7 @@ const UserManagement = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 313,
+                                            lineNumber: 332,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8271,7 +9226,7 @@ const UserManagement = ()=>{
                                             children: user.email
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 316,
+                                            lineNumber: 335,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8279,7 +9234,7 @@ const UserManagement = ()=>{
                                             children: user.phone
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 317,
+                                            lineNumber: 336,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8287,7 +9242,7 @@ const UserManagement = ()=>{
                                             children: genderLabels[user.gender]
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 318,
+                                            lineNumber: 337,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8299,17 +9254,17 @@ const UserManagement = ()=>{
                                                         children: roleLabels[role]
                                                     }, role, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 324,
+                                                        lineNumber: 343,
                                                         columnNumber: 45
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                lineNumber: 322,
+                                                lineNumber: 341,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 321,
+                                            lineNumber: 340,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -8332,17 +9287,17 @@ const UserManagement = ()=>{
                                                                 d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                                lineNumber: 340,
+                                                                lineNumber: 359,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/UserManagement.js",
-                                                            lineNumber: 339,
+                                                            lineNumber: 358,
                                                             columnNumber: 45
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 335,
+                                                        lineNumber: 354,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8363,50 +9318,50 @@ const UserManagement = ()=>{
                                                                 d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                                lineNumber: 352,
+                                                                lineNumber: 371,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/UserManagement.js",
-                                                            lineNumber: 351,
+                                                            lineNumber: 370,
                                                             columnNumber: 45
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 344,
+                                                        lineNumber: 363,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                lineNumber: 334,
+                                                lineNumber: 353,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 333,
+                                            lineNumber: 352,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, user.id, true, {
                                     fileName: "[project]/src/components/UserManagement.js",
-                                    lineNumber: 311,
+                                    lineNumber: 330,
                                     columnNumber: 29
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/components/UserManagement.js",
-                            lineNumber: 309,
+                            lineNumber: 328,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/UserManagement.js",
-                    lineNumber: 297,
+                    lineNumber: 316,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 296,
+                lineNumber: 315,
                 columnNumber: 13
             }, this),
             totalPages > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8421,7 +9376,7 @@ const UserManagement = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 367,
+                        lineNumber: 386,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8434,7 +9389,7 @@ const UserManagement = ()=>{
                                 children: "Trước"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 371,
+                                lineNumber: 390,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8444,19 +9399,19 @@ const UserManagement = ()=>{
                                 children: "Sau"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 381,
+                                lineNumber: 400,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 370,
+                        lineNumber: 389,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 366,
+                lineNumber: 385,
                 columnNumber: 17
             }, this),
             showModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserFormModal$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -8473,7 +9428,7 @@ const UserManagement = ()=>{
                 genderLabels: genderLabels
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 397,
+                lineNumber: 416,
                 columnNumber: 17
             }, this),
             showConfirmDelete && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$DeleteConfirmModal$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -8482,7 +9437,7 @@ const UserManagement = ()=>{
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 412,
+                lineNumber: 431,
                 columnNumber: 17
             }, this)
         ]
@@ -8544,6 +9499,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
+// components/admin/AdminContent.js
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
@@ -8555,6 +9511,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Statist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ShippingManagement.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/UserManagement.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BlogManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/BlogManagement.js [client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module './CouponManagement'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+;
 ;
 ;
 ;
@@ -8571,7 +9533,7 @@ const AdminContent = ({ activeTab, loading })=>{
                 children: "Loading..."
             }, void 0, false, {
                 fileName: "[project]/src/components/admin/AdminContent.js",
-                lineNumber: 12,
+                lineNumber: 14,
                 columnNumber: 20
             }, this);
         }
@@ -8579,43 +9541,49 @@ const AdminContent = ({ activeTab, loading })=>{
             case 'products':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 17,
+                    lineNumber: 19,
                     columnNumber: 24
                 }, this);
             case 'orders':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$OrderManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 19,
+                    lineNumber: 21,
                     columnNumber: 24
                 }, this);
             case 'statistics':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Statistics$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 21,
+                    lineNumber: 23,
                     columnNumber: 24
                 }, this);
             case 'shipping':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 23,
+                    lineNumber: 25,
                     columnNumber: 24
                 }, this);
             case 'users':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 25,
+                    lineNumber: 27,
                     columnNumber: 24
                 }, this);
             case 'blogs':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BlogManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 27,
+                    lineNumber: 29,
+                    columnNumber: 24
+                }, this);
+            case 'coupons':
+                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CouponManagement, {}, void 0, false, {
+                    fileName: "[project]/src/components/admin/AdminContent.js",
+                    lineNumber: 31,
                     columnNumber: 24
                 }, this);
             default:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 29,
+                    lineNumber: 33,
                     columnNumber: 24
                 }, this);
         }
@@ -8627,12 +9595,12 @@ const AdminContent = ({ activeTab, loading })=>{
             children: renderContent()
         }, void 0, false, {
             fileName: "[project]/src/components/admin/AdminContent.js",
-            lineNumber: 35,
+            lineNumber: 39,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/admin/AdminContent.js",
-        lineNumber: 34,
+        lineNumber: 38,
         columnNumber: 9
     }, this);
 };

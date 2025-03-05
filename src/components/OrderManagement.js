@@ -1,7 +1,6 @@
-// components/OrderManagement.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { orderApi, paymentApi } from '../utils/apiClient';
-
+import debounce from 'lodash/debounce';
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -9,10 +8,27 @@ const OrderManagement = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [filters, setFilters] = useState({
+
+  // Tách state cho input values và filters
+  const [inputValues, setInputValues] = useState({
     status: '',
     startDate: '',
-    endDate: ''
+    endDate: '',
+    orderId: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: ''
+  });
+
+  // State cho filters thực sự (sẽ trigger API call)
+  const [activeFilters, setActiveFilters] = useState({
+    status: '',
+    startDate: '',
+    endDate: '',
+    orderId: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: ''
   });
 
   const statusLabels = {
@@ -54,9 +70,55 @@ const OrderManagement = () => {
     'cancelled': 'bg-red-100 text-red-800'
   };
 
+  // Debounced function để cập nhật active filters
+  const debouncedSetFilters = useCallback(
+    debounce((newFilters) => {
+      setActiveFilters(newFilters);
+    }, 500),
+    []
+  );
+
+  // Handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Với status và date, update ngay lập tức
+    if (['status', 'startDate', 'endDate'].includes(name)) {
+      setActiveFilters(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    } else {
+      // Với các input text, dùng debounce
+      debouncedSetFilters({
+        ...activeFilters,
+        [name]: value
+      });
+    }
+  };
+
+  // Reset all filters
+  const handleResetFilters = () => {
+    const emptyFilters = {
+      status: '',
+      startDate: '',
+      endDate: '',
+      orderId: '',
+      customerName: '',
+      customerEmail: '',
+      customerPhone: ''
+    };
+    setInputValues(emptyFilters);
+    setActiveFilters(emptyFilters);
+  };
+
   useEffect(() => {
     fetchOrders();
-  }, [currentPage, filters]);
+  }, [currentPage, activeFilters]);
 
   const fetchOrders = async () => {
     try {
@@ -64,7 +126,7 @@ const OrderManagement = () => {
       const response = await orderApi.getAllOrders({
         page: currentPage,
         limit: 10,
-        ...filters
+        ...activeFilters
       });
       setOrders(response.data.orders);
       setTotalPages(response.data.pagination.totalPages);
@@ -86,25 +148,17 @@ const OrderManagement = () => {
 
   const handlePaymentUpdate = async (orderId, paymentMethod, paymentStatus) => {
     try {
-      console.log('Sending payment update:', {
+      await paymentApi.updatePaymentMethodStatus({
         order_id: orderId,
         payment_method: paymentMethod,
         payment_status: paymentStatus
       });
-
-      await paymentApi.updatePaymentMethodStatus({
-        order_id: orderId, // Sửa tên field từ orderId thành order_id
-        payment_method: paymentMethod,
-        payment_status: paymentStatus
-      });
-
-      fetchOrders(); // Refresh danh sách đơn hàng
+      fetchOrders();
     } catch (error) {
       console.error('Payment update error:', error);
       setError('Không thể cập nhật thông tin thanh toán');
     }
   };
-
 
   const formatAddress = (address) => {
     return `${address.street}, ${address.ward}, ${address.district}, ${address.city}`;
@@ -128,8 +182,8 @@ const OrderManagement = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <select
             name="status"
-            value={filters.status}
-            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+            value={inputValues.status}
+            onChange={handleInputChange}
             className="border rounded-lg px-3 py-2"
           >
             <option value="">Tất cả trạng thái</option>
@@ -139,20 +193,65 @@ const OrderManagement = () => {
           </select>
 
           <input
+            type="text"
+            name="orderId"
+            placeholder="Tìm theo mã đơn hàng"
+            value={inputValues.orderId}
+            onChange={handleInputChange}
+            className="border rounded-lg px-3 py-2"
+          />
+
+          <input
+            type="text"
+            name="customerName"
+            placeholder="Tìm theo tên khách hàng"
+            value={inputValues.customerName}
+            onChange={handleInputChange}
+            className="border rounded-lg px-3 py-2"
+          />
+
+          <input
+            type="text"
+            name="customerEmail"
+            placeholder="Tìm theo email"
+            value={inputValues.customerEmail}
+            onChange={handleInputChange}
+            className="border rounded-lg px-3 py-2"
+          />
+
+          <input
+            type="text"
+            name="customerPhone"
+            placeholder="Tìm theo số điện thoại"
+            value={inputValues.customerPhone}
+            onChange={handleInputChange}
+            className="border rounded-lg px-3 py-2"
+          />
+
+          <input
             type="date"
             name="startDate"
-            value={filters.startDate}
-            onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+            value={inputValues.startDate}
+            onChange={handleInputChange}
             className="border rounded-lg px-3 py-2"
           />
 
           <input
             type="date"
             name="endDate"
-            value={filters.endDate}
-            onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+            value={inputValues.endDate}
+            onChange={handleInputChange}
             className="border rounded-lg px-3 py-2"
           />
+        </div>
+
+        <div className=" mt-4">
+          <button
+            onClick={handleResetFilters}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+          >
+            Đặt lại
+          </button>
         </div>
       </div>
 

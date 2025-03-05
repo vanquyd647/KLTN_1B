@@ -347,6 +347,8 @@ const CheckoutPage = () => {
                 address_id: null,
             };
 
+            console.log('Order data:', orderData);
+
             const result = await dispatch(createOrder(orderData)).unwrap();
             console.log('Order submitted successfully:', result);
             const orderDetails = {
