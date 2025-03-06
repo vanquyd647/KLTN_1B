@@ -198,6 +198,7 @@ __turbopack_esm__({
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
+    "revenueApi": (()=>revenueApi),
     "reviewApi": (()=>reviewApi),
     "stockApi": (()=>stockApi),
     "userApi": (()=>userApi)
@@ -331,7 +332,7 @@ const userApi = {
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setToken"])(accessToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["removeCartId"])(); // Xóa cart ID cũ nếu có
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setCartId"])(cart_id); // Lưu cart ID mới
+            // setCartId(cart_id); // Lưu cart ID mới
             }
             // Kiểm tra và lưu session ID từ headers
             const sessionId = response.headers['x-session-id'];
@@ -867,14 +868,15 @@ const orderApi = {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
     },
-    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate })=>{
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate, orderId, customerName, customerEmail, customerPhone// Thêm filter số điện thoại
+     })=>{
         try {
             // Tạo query params
             const params = new URLSearchParams({
                 page: String(page),
                 limit: String(limit)
             });
-            // Thêm các filter tùy chọn
+            // Thêm các filter hiện tại
             if (status) {
                 params.append('status', status);
             }
@@ -883,6 +885,19 @@ const orderApi = {
             }
             if (endDate) {
                 params.append('endDate', endDate);
+            }
+            // Thêm các filter mới
+            if (orderId) {
+                params.append('orderId', orderId);
+            }
+            if (customerName) {
+                params.append('customerName', customerName);
+            }
+            if (customerEmail) {
+                params.append('customerEmail', customerEmail);
+            }
+            if (customerPhone) {
+                params.append('customerPhone', customerPhone);
             }
             const response = await apiClient.get(`orders?${params}`);
             return response.data;
@@ -1167,13 +1182,36 @@ const couponApi = {
     // Lấy danh sách mã giảm giá (Admin)
     getAllCoupons: async (params = {})=>{
         try {
-            const { page = 1, limit = 10, is_active } = params;
+            const { page = 1, limit = 10, search, is_active, startDate, endDate, minAmount, maxAmount, sortBy = 'created_at', sortOrder = 'DESC' } = params;
+            // Xây dựng query parameters
             const query = new URLSearchParams({
                 page: String(page),
                 limit: String(limit)
             });
+            // Thêm các filter tùy chọn
+            if (search) {
+                query.append('search', search);
+            }
             if (typeof is_active !== 'undefined') {
                 query.append('is_active', is_active);
+            }
+            if (startDate) {
+                query.append('startDate', startDate);
+            }
+            if (endDate) {
+                query.append('endDate', endDate);
+            }
+            if (minAmount) {
+                query.append('minAmount', minAmount);
+            }
+            if (maxAmount) {
+                query.append('maxAmount', maxAmount);
+            }
+            if (sortBy) {
+                query.append('sortBy', sortBy);
+            }
+            if (sortOrder) {
+                query.append('sortOrder', sortOrder);
             }
             const response = await apiClient.get(`coupons?${query}`);
             return response.data;
@@ -1228,6 +1266,51 @@ const couponApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể xóa mã giảm giá.';
+        }
+    }
+};
+const revenueApi = {
+    // Lấy thống kê doanh thu
+    getRevenueStats: async (filters = {})=>{
+        try {
+            const queryParams = new URLSearchParams();
+            if (filters.startDate) {
+                queryParams.append('startDate', filters.startDate);
+            }
+            if (filters.endDate) {
+                queryParams.append('endDate', filters.endDate);
+            }
+            const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+        }
+    },
+    // Lấy doanh thu theo ngày
+    getDailyRevenue: async (date)=>{
+        try {
+            const response = await apiClient.get('revenue/daily', {
+                params: {
+                    date
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo ngày.';
+        }
+    },
+    // Lấy doanh thu theo tháng
+    getMonthlyRevenue: async (year, month)=>{
+        try {
+            const response = await apiClient.get('revenue/monthly', {
+                params: {
+                    year,
+                    month
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
         }
     }
 };
@@ -2573,7 +2656,9 @@ __turbopack_esm__({
     "removeFromFavorite": (()=>removeFromFavorite),
     "resetFavoriteState": (()=>resetFavoriteState),
     "selectFavoriteCount": (()=>selectFavoriteCount),
+    "selectFavoriteError": (()=>selectFavoriteError),
     "selectFavoriteItems": (()=>selectFavoriteItems),
+    "selectFavoriteLoading": (()=>selectFavoriteLoading),
     "selectFavoriteStatuses": (()=>selectFavoriteStatuses),
     "transferFavorites": (()=>transferFavorites)
 });
@@ -2651,6 +2736,8 @@ const initialState = {
 };
 const selectFavoriteCount = (state)=>state.favorites.pagination.total || 0;
 const selectFavoriteItems = (state)=>state.favorites.items;
+const selectFavoriteLoading = (state)=>state.favorites.loading;
+const selectFavoriteError = (state)=>state.favorites.error;
 const selectFavoriteStatuses = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSelector"])([
     selectFavoriteItems
 ], (items)=>items.reduce((acc, item)=>{

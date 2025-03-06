@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { debounce } from 'lodash';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { productApi } from '../utils/apiClient';
+import { selectFavoriteTotal, forceUpdateFavorites } from '../store/slices/favoriteSlice';
 import Sidebar from './Sidebar';
-import { selectFavoriteCount } from '../store/slices/favoriteSlice';
 
-const Header = memo(function Header({ ...props }) {
+const Header = memo(function Header({ isCartPage }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { items } = useSelector((state) => state.cart);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -27,8 +27,23 @@ const Header = memo(function Header({ ...props }) {
         return sum;
     }, 0) || 0;
 
-    const favoriteCount = useSelector(selectFavoriteCount);
-
+    const dispatch = useDispatch();
+    
+    // Lấy trực tiếp total từ selector 
+    const favoriteCount = useSelector(selectFavoriteTotal);
+    
+    // Thêm effect để tự động cập nhật
+    useEffect(() => {
+        // Cập nhật ngay khi mount
+        dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
+        
+        // Cập nhật định kỳ mỗi 30s
+        const interval = setInterval(() => {
+            dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
+        }, 30000);
+        
+        return () => clearInterval(interval);
+    }, [dispatch]);
     // Xử lý drawer sidebar
     useEffect(() => {
         const handleResize = () => {
@@ -121,32 +136,6 @@ const Header = memo(function Header({ ...props }) {
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
-
-    const renderFavoriteIcon = () => (
-        <li className="relative">
-            <Link href="/favorites" className="hover:underline">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                </svg>
-                {favoriteCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                        {favoriteCount}
-                    </span>
-                )}
-            </Link>
-        </li>
-    );
 
     const searchSection = (
         <li className="relative w-6 h-6" ref={searchRef}>

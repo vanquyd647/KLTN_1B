@@ -8,5 +8,8 @@
   "/checkout": "pages/checkout.js",
   "/admin": "pages/admin.js",
   "/payment": "pages/payment.js",
-  "/payment/cancel": "pages/payment/cancel.js"
+  "/payment/cancel": "pages/payment/cancel.js",
+  "/favorites": "pages/favorites.js",
+  "/account/login": "pages/account/login.js",
+  "/_error": "pages/_error.js"
 }

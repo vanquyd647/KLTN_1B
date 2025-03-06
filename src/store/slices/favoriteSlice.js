@@ -15,6 +15,22 @@ export const getFavorites = createAsyncThunk(
     }
 );
 
+export const forceUpdateFavorites = createAsyncThunk(
+    'favorites/forceUpdate',
+    async ({ page = 1, limit = 10 }, { dispatch, rejectWithValue }) => {
+        try {
+            const response = await favoriteApi.getFavorites(page, limit);
+            return response;
+        } catch (error) {
+            console.error('Error fetching favorites:', error);
+            return rejectWithValue(error);
+        }
+    }
+);
+
+// Thêm selector mới
+export const selectFavoriteState = state => state.favorites;
+
 export const checkFavoriteStatus = createAsyncThunk(
     'favorites/checkStatus',
     async (productId, { rejectWithValue }) => {
@@ -29,9 +45,10 @@ export const checkFavoriteStatus = createAsyncThunk(
 
 export const addToFavorite = createAsyncThunk(
     'favorites/add',
-    async (productId, { rejectWithValue }) => {
+    async (productId, { dispatch, rejectWithValue }) => {
         try {
             const response = await favoriteApi.addToFavorite(productId);
+            await dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
             return { productId, ...response };
         } catch (error) {
             return rejectWithValue(error);
@@ -41,9 +58,10 @@ export const addToFavorite = createAsyncThunk(
 
 export const removeFromFavorite = createAsyncThunk(
     'favorites/remove',
-    async (productId, { rejectWithValue }) => {
+    async (productId, { dispatch, rejectWithValue }) => {
         try {
             const response = await favoriteApi.removeFromFavorite(productId);
+            await dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
             return { productId, ...response };
         } catch (error) {
             return rejectWithValue(error);
@@ -53,9 +71,10 @@ export const removeFromFavorite = createAsyncThunk(
 
 export const transferFavorites = createAsyncThunk(
     'favorites/transfer',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const response = await favoriteApi.transferFavorites();
+            await dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
             return response;
         } catch (error) {
             return rejectWithValue(error);
@@ -63,7 +82,6 @@ export const transferFavorites = createAsyncThunk(
     }
 );
 
-// Initial state
 const initialState = {
     items: [],
     pagination: {
@@ -74,11 +92,12 @@ const initialState = {
     },
     loading: false,
     error: null,
-    favoriteStatuses: {} // Lưu trạng thái yêu thích của từng sản phẩm
+    favoriteStatuses: {}
 };
 
 export const selectFavoriteCount = (state) => state.favorites.pagination.total || 0;
 export const selectFavoriteItems = state => state.favorites.items;
+export const selectFavoriteTotal = (state) => state.favorites.pagination.total || 0;
 
 export const selectFavoriteStatuses = createSelector(
     [selectFavoriteItems],
@@ -88,18 +107,14 @@ export const selectFavoriteStatuses = createSelector(
     }, {})
 );
 
-// Slice
 const favoriteSlice = createSlice({
     name: 'favorites',
     initialState,
     reducers: {
-        resetFavoriteState: (state) => {
-            return initialState;
-        }
+        resetFavoriteState: () => initialState
     },
     extraReducers: (builder) => {
         builder
-            // getFavorites
             .addCase(getFavorites.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -109,39 +124,52 @@ const favoriteSlice = createSlice({
                 state.items = action.payload.data;
                 state.pagination = action.payload.pagination;
                 state.error = null;
+                // Cập nhật favoriteStatuses
+                state.favoriteStatuses = action.payload.data.reduce((acc, item) => {
+                    acc[item.product_id] = true;
+                    return acc;
+                }, {});
             })
             .addCase(getFavorites.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload?.message || 'Có lỗi xảy ra';
             })
-
-            // checkFavoriteStatus
+            .addCase(forceUpdateFavorites.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(forceUpdateFavorites.fulfilled, (state, action) => {
+                state.loading = false;
+                state.items = action.payload.data;
+                state.pagination = action.payload.pagination;
+                state.error = null;
+                // Cập nhật favoriteStatuses
+                state.favoriteStatuses = action.payload.data.reduce((acc, item) => {
+                    acc[item.product_id] = true;
+                    return acc;
+                }, {});
+            })
+            .addCase(forceUpdateFavorites.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload?.message || 'Failed to update favorites';
+            })
             .addCase(checkFavoriteStatus.fulfilled, (state, action) => {
                 state.favoriteStatuses[action.payload.productId] = action.payload.data;
             })
-
-            // addToFavorite
             .addCase(addToFavorite.fulfilled, (state, action) => {
-                // Thêm item mới vào danh sách
-                state.items.push({
+                const newItem = {
                     product_id: action.payload.productId,
-                    // Thêm các thông tin khác nếu cần
-                });
-                state.favoriteStatuses[action.payload.productId] = true;
-                state.pagination.total += 1;
+                };
+                if (!state.items.find(item => item.product_id === newItem.product_id)) {
+                    state.items.push(newItem);
+                    state.favoriteStatuses[action.payload.productId] = true;
+                    state.pagination.total += 1;
+                }
             })
-
-            // removeFromFavorite
             .addCase(removeFromFavorite.fulfilled, (state, action) => {
-                // Xóa khỏi items và cập nhật status
                 state.items = state.items.filter(item => item.product_id !== action.payload.productId);
-                delete state.favoriteStatuses[action.payload.productId]; // Xóa status thay vì set false
+                delete state.favoriteStatuses[action.payload.productId];
                 state.pagination.total = Math.max(0, state.pagination.total - 1);
-            })
-
-            // transferFavorites
-            .addCase(transferFavorites.fulfilled, (state) => {
-                // Có thể cập nhật state nếu cần
             });
     }
 });

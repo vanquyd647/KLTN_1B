@@ -102,6 +102,7 @@ export default function Profile() {
             // Thêm dispatch resetCartState để xóa state cart cũ
             dispatch(resetCartState());
             setIsAuthenticated(false);
+            window.location.reload();
         } catch (err) {
             console.error('Failed to logout:', err);
         }
@@ -135,6 +136,7 @@ export default function Profile() {
 
                     if (cartResponse?.id) {
                         await dispatch(getCartItems(cartResponse.id));
+                        window.location.reload();
                     }
                 }
             }
