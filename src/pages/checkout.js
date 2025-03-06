@@ -24,6 +24,9 @@ const CheckoutPage = () => {
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [stockError, setStockError] = useState(null);
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
 
     // States cho mã giảm giá
     const [couponCode, setCouponCode] = useState('');
@@ -40,7 +43,7 @@ const CheckoutPage = () => {
         ward: '',
         district: '',
         city: '',
-        country: '',
+        country: 'Viet Nam',
     });
 
     useEffect(() => {
@@ -137,6 +140,74 @@ const CheckoutPage = () => {
 
         loadCarriers();
     }, [items]);
+
+    const handleProvinceChange = (e) => {
+        const provinceCode = e.target.value;
+        const selectedProvince = provinces.find(p => p.code === Number(provinceCode));
+
+        setFormData(prev => ({
+            ...prev,
+            city: selectedProvince?.name || '',
+            district: '',
+            ward: ''
+        }));
+
+        setDistricts(selectedProvince?.districts || []);
+        setWards([]);
+    };
+
+    useEffect(() => {
+        const fetchProvinces = async () => {
+            try {
+                const response = await fetch('https://provinces.open-api.vn/api/?depth=3');
+                const data = await response.json();
+                setProvinces(data);
+
+                // Nếu có sẵn địa chỉ, set up districts và wards
+                if (formData.city) {
+                    const selectedProvince = data.find(p => p.name === formData.city);
+                    if (selectedProvince) {
+                        setDistricts(selectedProvince.districts);
+
+                        const selectedDistrict = selectedProvince.districts.find(
+                            d => d.name === formData.district
+                        );
+                        if (selectedDistrict) {
+                            setWards(selectedDistrict.wards);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch provinces:', error);
+            }
+        };
+        fetchProvinces();
+    }, []);
+
+
+    const handleDistrictChange = (e) => {
+        const districtCode = e.target.value;
+        const selectedDistrict = districts.find(d => d.code === Number(districtCode));
+
+        setFormData(prev => ({
+            ...prev,
+            district: selectedDistrict?.name || '',
+            ward: ''
+        }));
+
+        setWards(selectedDistrict?.wards || []);
+    };
+
+    const handleWardChange = (e) => {
+        const wardCode = e.target.value;
+        const selectedWard = wards.find(w => w.code === Number(wardCode));
+
+        setFormData(prev => ({
+            ...prev,
+            ward: selectedWard?.name || ''
+        }));
+    };
+
 
     const calculateTotal = () => {
         return items.reduce((total, item) =>
@@ -474,38 +545,73 @@ const CheckoutPage = () => {
                         type="text"
                         name="street"
                         value={formData.street}
-                        placeholder="Địa chỉ"
+                        placeholder="Đường"
                         className="border p-2 w-full"
                         onChange={handleChange}
                         required
                     />
-                    <input
-                        type="text"
-                        name="ward"
-                        value={formData.ward}
-                        placeholder="Phường/Xã"
-                        className="border p-2 w-full"
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="district"
-                        value={formData.district}
-                        placeholder="Quận/Huyện"
-                        className="border p-2 w-full"
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        placeholder="Thành phố"
-                        className="border p-2 w-full"
-                        onChange={handleChange}
-                        required
-                    />
+                    {/* Tỉnh/Thành phố */}
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                            Tỉnh/Thành phố
+                        </label>
+                        <select
+                            name="city"
+                            value={provinces.find(p => p.name === formData.city)?.code || ''}
+                            onChange={handleProvinceChange}
+                            className="border p-2 w-full rounded-md"
+                            required
+                        >
+                            <option value="">Chọn Tỉnh/Thành phố</option>
+                            {provinces.map(province => (
+                                <option key={province.code} value={province.code}>
+                                    {province.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* Quận/Huyện */}
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                            Quận/Huyện
+                        </label>
+                        <select
+                            name="district"
+                            value={districts.find(d => d.name === formData.district)?.code || ''}
+                            onChange={handleDistrictChange}
+                            className="border p-2 w-full rounded-md"
+                            required
+                            disabled={!formData.city}
+                        >
+                            <option value="">Chọn Quận/Huyện</option>
+                            {districts.map(district => (
+                                <option key={district.code} value={district.code}>
+                                    {district.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* Phường/Xã */}
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                            Phường/Xã
+                        </label>
+                        <select
+                            name="ward"
+                            value={wards.find(w => w.name === formData.ward)?.code || ''}
+                            onChange={handleWardChange}
+                            className="border p-2 w-full rounded-md"
+                            required
+                            disabled={!formData.district}
+                        >
+                            <option value="">Chọn Phường/Xã</option>
+                            {wards.map(ward => (
+                                <option key={ward.code} value={ward.code}>
+                                    {ward.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <input
                         type="text"
                         name="country"
