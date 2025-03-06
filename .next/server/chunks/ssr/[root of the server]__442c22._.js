@@ -190,12 +190,15 @@ __turbopack_esm__({
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
     "colorsApi": (()=>colorsApi),
+    "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
     "orderApi": (()=>orderApi),
+    "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
     "productApi": (()=>productApi),
     "productsByCategoryApi": (()=>productsByCategoryApi),
+    "revenueApi": (()=>revenueApi),
     "reviewApi": (()=>reviewApi),
     "stockApi": (()=>stockApi),
     "userApi": (()=>userApi)
@@ -214,7 +217,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'http://localhost:5551/v1/api/',
+    baseURL: 'https://59d8-1-52-90-166.ngrok-free.app/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -329,7 +332,7 @@ const userApi = {
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setToken"])(accessToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["removeCartId"])(); // Xóa cart ID cũ nếu có
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setCartId"])(cart_id); // Lưu cart ID mới
+            // setCartId(cart_id); // Lưu cart ID mới
             }
             // Kiểm tra và lưu session ID từ headers
             const sessionId = response.headers['x-session-id'];
@@ -459,6 +462,49 @@ const adminApi = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Get all users (Admin only) 
+    getAllUsers: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, email, phone, name } = params;
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            if (email) query.append('email', email);
+            if (phone) query.append('phone', phone);
+            if (name) query.append('name', name);
+            const response = await apiClient.get(`users/admin/users?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to fetch users list';
+        }
+    },
+    // Create new user (Admin only)
+    createUser: async (userData)=>{
+        try {
+            const response = await apiClient.post('users/admin/users', userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to create user';
+        }
+    },
+    // Update user (Admin only) 
+    updateUser: async (userId, userData)=>{
+        try {
+            const response = await apiClient.put(`users/admin/users/${userId}`, userData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update user';
+        }
+    },
+    deleteUser: async (userId)=>{
+        try {
+            const response = await apiClient.delete(`users/admin/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to delete user';
+        }
     }
 };
 // **Product API**
@@ -470,7 +516,7 @@ const productApi = {
     },
     // Get all products
     getProducts: async ()=>{
-        const response = await apiClient.get('products/');
+        const response = await apiClient.get('products');
         return response.data.data;
     },
     // Get product details by slug
@@ -489,9 +535,29 @@ const productApi = {
         return response.data;
     },
     // Get products with pagination
-    getProductsByPagination: async (page, limit)=>{
-        const response = await apiClient.get(`products/pagination?page=${page}&limit=${limit}`);
-        return response.data;
+    getProductsByPagination: async (params = {})=>{
+        try {
+            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            // Xây dựng query parameters
+            const queryParams = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter tùy chọn
+            if (name) queryParams.append('name', name);
+            if (categories) queryParams.append('categories', categories);
+            if (colors) queryParams.append('colors', colors);
+            if (sizes) queryParams.append('sizes', sizes);
+            if (priceRange) queryParams.append('priceRange', priceRange);
+            if (sort) queryParams.append('sort', sort);
+            console.log('API call to:', `products/pagination?${queryParams.toString()}`);
+            const response = await apiClient.get(`products/pagination?${queryParams.toString()}`);
+            console.log('API response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            throw error.response?.data || 'Failed to fetch products.';
+        }
     },
     // Get new products with pagination
     getNewProductsByPagination: async (page, limit, sort, priceRange, colorIds)=>{
@@ -802,6 +868,43 @@ const orderApi = {
             throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
         }
     },
+    getAllOrders: async ({ page = 1, limit = 10, status, startDate, endDate, orderId, customerName, customerEmail, customerPhone// Thêm filter số điện thoại
+     })=>{
+        try {
+            // Tạo query params
+            const params = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter hiện tại
+            if (status) {
+                params.append('status', status);
+            }
+            if (startDate) {
+                params.append('startDate', startDate);
+            }
+            if (endDate) {
+                params.append('endDate', endDate);
+            }
+            // Thêm các filter mới
+            if (orderId) {
+                params.append('orderId', orderId);
+            }
+            if (customerName) {
+                params.append('customerName', customerName);
+            }
+            if (customerEmail) {
+                params.append('customerEmail', customerEmail);
+            }
+            if (customerPhone) {
+                params.append('customerPhone', customerPhone);
+            }
+            const response = await apiClient.get(`orders?${params}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách đơn hàng.';
+        }
+    },
     /**
  * Gửi email xác nhận đơn hàng
  * @param {Object} data - Dữ liệu đơn hàng
@@ -849,6 +952,21 @@ const paymentApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
         }
+    },
+    /**
+     * Cập nhật trạng thái thanh toán
+     * @param {Object} statusData - Dữ liệu cập nhật trạng thái
+     * @param {string} statusData.orderId - ID đơn hàng
+     * @param {string} statusData.paymentMethod - Phương thức thanh toán ('payos' hoặc 'cash_on_delivery')
+     * @param {string} statusData.paymentStatus - Trạng thái thanh toán ('pending', 'processing', 'paid', 'cancelled')
+     * @returns {Promise<Object>} - Kết quả cập nhật
+     */ updatePaymentMethodStatus: async (statusData)=>{
+        try {
+            const response = await apiClient.put('payments/update-status', statusData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật trạng thái thanh toán.';
+        }
     }
 };
 const stockApi = {
@@ -859,6 +977,14 @@ const stockApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch product stocks.';
+        }
+    },
+    updateStock: async (stockId, stockData)=>{
+        try {
+            const response = await apiClient.put(`product-stocks/${stockId}`, stockData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Failed to update stock.';
         }
     }
 };
@@ -875,11 +1001,10 @@ const carrierApi = {
     // Lấy danh sách nhà vận chuyển
     getCarriers: async (query = {})=>{
         try {
-            const { page = 1, limit = 10, status } = query;
+            const { page = 1, limit = 10 } = query;
             const queryString = new URLSearchParams({
                 page,
-                limit,
-                status
+                limit
             }).toString();
             const response = await apiClient.get(`carriers?${queryString}`);
             return response.data;
@@ -1025,6 +1150,170 @@ const favoriteApi = {
         }
     }
 };
+const orderTrackingApi = {
+    /**
+     * Tra cứu thông tin đơn hàng
+     * @param {string} orderId - Mã đơn hàng
+     * @param {string} identifier - Email hoặc số điện thoại người đặt
+     * @returns {Promise<Object>} - Thông tin đơn hàng
+     */ trackOrder: async (orderId, identifier)=>{
+        try {
+            const response = await apiClient.get(`order-tracking/${orderId}`, {
+                params: {
+                    identifier
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tra cứu thông tin đơn hàng.';
+        }
+    }
+};
+const couponApi = {
+    // Tạo mã giảm giá mới (Admin)
+    createCoupon: async (couponData)=>{
+        try {
+            const response = await apiClient.post('coupons', couponData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo mã giảm giá.';
+        }
+    },
+    // Lấy danh sách mã giảm giá (Admin)
+    getAllCoupons: async (params = {})=>{
+        try {
+            const { page = 1, limit = 10, search, is_active, startDate, endDate, minAmount, maxAmount, sortBy = 'created_at', sortOrder = 'DESC' } = params;
+            // Xây dựng query parameters
+            const query = new URLSearchParams({
+                page: String(page),
+                limit: String(limit)
+            });
+            // Thêm các filter tùy chọn
+            if (search) {
+                query.append('search', search);
+            }
+            if (typeof is_active !== 'undefined') {
+                query.append('is_active', is_active);
+            }
+            if (startDate) {
+                query.append('startDate', startDate);
+            }
+            if (endDate) {
+                query.append('endDate', endDate);
+            }
+            if (minAmount) {
+                query.append('minAmount', minAmount);
+            }
+            if (maxAmount) {
+                query.append('maxAmount', maxAmount);
+            }
+            if (sortBy) {
+                query.append('sortBy', sortBy);
+            }
+            if (sortOrder) {
+                query.append('sortOrder', sortOrder);
+            }
+            const response = await apiClient.get(`coupons?${query}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách mã giảm giá.';
+        }
+    },
+    // Lấy chi tiết mã giảm giá (Admin)
+    getCouponById: async (id)=>{
+        try {
+            const response = await apiClient.get(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin mã giảm giá.';
+        }
+    },
+    // Kiểm tra mã giảm giá (Public)
+    validateCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/validate', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Mã giảm giá không hợp lệ.';
+        }
+    },
+    // Áp dụng mã giảm giá (Public)
+    applyCoupon: async (code)=>{
+        try {
+            const response = await apiClient.post('coupons/apply', {
+                code
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể áp dụng mã giảm giá.';
+        }
+    },
+    // Cập nhật mã giảm giá (Admin)
+    updateCoupon: async (id, updateData)=>{
+        try {
+            const response = await apiClient.put(`coupons/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật mã giảm giá.';
+        }
+    },
+    // Xóa mã giảm giá (Admin)
+    deleteCoupon: async (id)=>{
+        try {
+            const response = await apiClient.delete(`coupons/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa mã giảm giá.';
+        }
+    }
+};
+const revenueApi = {
+    // Lấy thống kê doanh thu
+    getRevenueStats: async (filters = {})=>{
+        try {
+            const queryParams = new URLSearchParams();
+            if (filters.startDate) {
+                queryParams.append('startDate', filters.startDate);
+            }
+            if (filters.endDate) {
+                queryParams.append('endDate', filters.endDate);
+            }
+            const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+        }
+    },
+    // Lấy doanh thu theo ngày
+    getDailyRevenue: async (date)=>{
+        try {
+            const response = await apiClient.get('revenue/daily', {
+                params: {
+                    date
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo ngày.';
+        }
+    },
+    // Lấy doanh thu theo tháng
+    getMonthlyRevenue: async (year, month)=>{
+        try {
+            const response = await apiClient.get('revenue/monthly', {
+                params: {
+                    year,
+                    month
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
+        }
+    }
+};
 ;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
@@ -1073,7 +1362,13 @@ const loginUser = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["userApi"].login(credentials);
         return response;
     } catch (error) {
-        return rejectWithValue(error.response?.data || error.message);
+        // Chuẩn hóa thông báo lỗi
+        return rejectWithValue({
+            status: 'error',
+            code: error.response?.data?.code || 400,
+            message: error.response?.data?.message === "User not found" || error.response?.data?.message === "Invalid password" ? "Tài khoản hoặc mật khẩu không đúng" : error.response?.data?.message || "Đã có lỗi xảy ra",
+            data: null
+        });
     }
 });
 const logoutUser = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('auth/logoutUser', async (_, { rejectWithValue })=>{
@@ -1157,7 +1452,7 @@ const userSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
         builder.addCase(loginUser.fulfilled, (state, action)=>{
             state.loading = false;
             state.user = action.payload.user;
-            state.token = action.payload.accessToken; // Đảm bảo tên thuộc tính đúng
+            state.token = action.payload.accessToken;
         });
         builder.addCase(loginUser.rejected, (state, action)=>{
             state.loading = false;
@@ -1251,10 +1546,12 @@ const fetchProducts = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         return rejectWithValue(error.response?.data || 'Failed to fetch products');
     }
 });
-const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async ({ page, limit }, { rejectWithValue })=>{
+const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('products/fetchProductsByPagination', async (params, { rejectWithValue })=>{
     try {
-        const paginatedProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(page, limit);
-        return paginatedProducts;
+        console.log('Calling fetchProductsByPagination with params:', params);
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(params);
+        console.log('API Response:', response);
+        return response;
     } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
     }
@@ -1351,8 +1648,25 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
                 pageSize: 10
             }
         },
+        pagination: {
+            items: [],
+            totalItems: 0,
+            totalPages: 0,
+            currentPage: 1,
+            pageSize: 10,
+            filters: {
+                name: '',
+                categories: null,
+                colors: null,
+                sizes: null,
+                priceRange: null,
+                sort: 'newest'
+            }
+        },
         visibleFeaturedProducts: [],
         loading: false,
+        fetchLoading: false,
+        submitLoading: false,
         error: null
     },
     reducers: {
@@ -1396,6 +1710,12 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
             state.visibleFeaturedProducts = [];
             state.loading = false;
             state.error = null;
+        },
+        updateFilters: (state, action)=>{
+            state.pagination.filters = {
+                ...state.pagination.filters,
+                ...action.payload
+            };
         }
     },
     extraReducers: (builder)=>{
@@ -1412,21 +1732,22 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Fetch products with pagination
         builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
+            state.fetchLoading = true;
             state.error = null;
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
             const { products, pagination } = action.payload.data;
             state.pagination = {
+                ...state.pagination,
                 items: products || [],
                 totalItems: pagination.totalItems || 0,
                 totalPages: pagination.totalPages || 0,
                 currentPage: pagination.currentPage || 1,
                 pageSize: pagination.pageSize || 10
             };
-            state.loading = false;
+            state.fetchLoading = false;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.fetchLoading = false;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
@@ -1501,35 +1822,51 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Create product
         builder.addCase(createProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(createProduct.fulfilled, (state, action)=>{
-            state.items.push(action.payload);
-            state.loading = false;
+            // Kiểm tra cấu trúc response và cập nhật state phù hợp
+            const newProduct = Array.isArray(action.payload.data) ? action.payload.data[0] : action.payload.data;
+            if (state.items) {
+                state.items.push(newProduct);
+            } else {
+                state.items = [
+                    newProduct
+                ];
+            }
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(createProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Update product
         builder.addCase(updateProduct.pending, (state)=>{
-            state.loading = true;
+            state.submitLoading = true;
             state.error = null;
         }).addCase(updateProduct.fulfilled, (state, action)=>{
-            const index = state.items.findIndex((item)=>item.slug === action.payload.slug);
-            if (index !== -1) {
-                state.items[index] = action.payload;
+            // Cập nhật sản phẩm trong danh sách
+            if (state.pagination && state.pagination.items) {
+                const index = state.pagination.items.findIndex((item)=>item.slug === action.payload.data.slug);
+                if (index !== -1) {
+                    state.pagination.items[index] = action.payload.data;
+                }
             }
-            state.loading = false;
+            state.submitLoading = false;
+            state.error = null;
         }).addCase(updateProduct.rejected, (state, action)=>{
             state.error = action.payload;
-            state.loading = false;
+            state.submitLoading = false;
         });
         // Delete product
         builder.addCase(deleteProduct.pending, (state)=>{
             state.loading = true;
             state.error = null;
         }).addCase(deleteProduct.fulfilled, (state, action)=>{
-            state.items = state.items.filter((item)=>item.slug !== action.meta.arg);
+            // Kiểm tra và cập nhật pagination.items thay vì items
+            if (state.pagination && state.pagination.items) {
+                state.pagination.items = state.pagination.items.filter((item)=>item.slug !== action.meta.arg);
+            }
             state.loading = false;
         }).addCase(deleteProduct.rejected, (state, action)=>{
             state.error = action.payload;

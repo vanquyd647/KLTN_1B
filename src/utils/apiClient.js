@@ -23,7 +23,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5551/v1/api/',
+    baseURL: 'https://59d8-1-52-90-166.ngrok-free.app/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -170,7 +170,7 @@ const userApi = {
                 setToken(accessToken);
                 setRefreshToken(refreshToken);
                 removeCartId(); // Xóa cart ID cũ nếu có
-                setCartId(cart_id); // Lưu cart ID mới
+                // setCartId(cart_id); // Lưu cart ID mới
             }
 
             // Kiểm tra và lưu session ID từ headers

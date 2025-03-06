@@ -115,19 +115,27 @@ export default function Profile() {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(null); // Reset error state
-    
+
         try {
-            const result = await dispatch(loginUser({ 
-                email: formData.email, 
-                password: formData.password 
+            const result = await dispatch(loginUser({
+                email: formData.email,
+                password: formData.password
             })).unwrap();
-            
+
             if (result.status === 'success') {
                 setIsAuthenticated(true);
                 await dispatch(getUserInfo());
                 const cartId = getCartId();
                 if (cartId) {
                     await dispatch(getCartItems(cartId));
+                } else {
+                    const cartResponse = await dispatch(
+                        !getToken() ? createCartForGuest() : createCartForUser()
+                    ).unwrap();
+
+                    if (cartResponse?.id) {
+                        await dispatch(getCartItems(cartResponse.id));
+                    }
                 }
             }
         } catch (err) {
@@ -135,7 +143,7 @@ export default function Profile() {
             console.error('Login error:', err);
         }
     };
-    
+
 
     // Thêm hàm xử lý quên mật khẩu
     const handleForgotPassword = async (e) => {
@@ -178,12 +186,12 @@ export default function Profile() {
     const handleRegister = async (e) => {
         e.preventDefault();
         setError(null); // Reset error state before attempting registration
-    
+
         if (formData.password !== formData.confirmPassword) {
             setError('Mật khẩu không khớp. Vui lòng thử lại.');
             return;
         }
-    
+
         try {
             const result = await dispatch(registerUser(formData)).unwrap();
             if (result.status === 'success') {
@@ -194,7 +202,7 @@ export default function Profile() {
             console.error('Registration error:', err);
         }
     };
-    
+
 
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
