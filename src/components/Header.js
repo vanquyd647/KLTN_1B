@@ -28,20 +28,20 @@ const Header = memo(function Header({ isCartPage }) {
     }, 0) || 0;
 
     const dispatch = useDispatch();
-    
+
     // Lấy trực tiếp total từ selector 
     const favoriteCount = useSelector(selectFavoriteTotal);
-    
+
     // Thêm effect để tự động cập nhật
     useEffect(() => {
         // Cập nhật ngay khi mount
         dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
-        
+
         // Cập nhật định kỳ mỗi 30s
         const interval = setInterval(() => {
             dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
         }, 30000);
-        
+
         return () => clearInterval(interval);
     }, [dispatch]);
     // Xử lý drawer sidebar
@@ -301,15 +301,27 @@ const Header = memo(function Header({ isCartPage }) {
                     </Link>
 
                     {/* Navigation Links */}
-                    <nav className="hidden md:flex space-x-6 ml-auto">
-                        <Link href="/store-locations" className="hover:underline">
+                    <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">
+                        <Link
+                            href="/user-guide"
+                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Sale
+                        </Link>
+                        <Link
+                            href="/warranty-policy"
+                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Khuyến mãi
+                        </Link>
+                        <Link
+                            href="/store-locations"
+                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
                             Hệ thống cửa hàng
-                        </Link>
-                        <Link href="/user-guide" className="hover:underline">
-                            Hướng dẫn sử dụng
-                        </Link>
-                        <Link href="/warranty-policy" className="hover:underline">
-                            Chính sách bảo hành
                         </Link>
                     </nav>
 

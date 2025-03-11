@@ -332,7 +332,7 @@ const userApi = {
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setToken"])(accessToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setRefreshToken"])(refreshToken);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["removeCartId"])(); // Xóa cart ID cũ nếu có
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["setCartId"])(cart_id); // Lưu cart ID mới
+            // setCartId(cart_id); // Lưu cart ID mới
             }
             // Kiểm tra và lưu session ID từ headers
             const sessionId = response.headers['x-session-id'];
@@ -2652,12 +2652,15 @@ __turbopack_esm__({
     "addToFavorite": (()=>addToFavorite),
     "checkFavoriteStatus": (()=>checkFavoriteStatus),
     "default": (()=>__TURBOPACK__default__export__),
+    "forceUpdateFavorites": (()=>forceUpdateFavorites),
     "getFavorites": (()=>getFavorites),
     "removeFromFavorite": (()=>removeFromFavorite),
     "resetFavoriteState": (()=>resetFavoriteState),
     "selectFavoriteCount": (()=>selectFavoriteCount),
     "selectFavoriteItems": (()=>selectFavoriteItems),
+    "selectFavoriteState": (()=>selectFavoriteState),
     "selectFavoriteStatuses": (()=>selectFavoriteStatuses),
+    "selectFavoriteTotal": (()=>selectFavoriteTotal),
     "transferFavorites": (()=>transferFavorites)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__ = __turbopack_import__("[externals]/@reduxjs/toolkit [external] (@reduxjs/toolkit, esm_import)");
@@ -2678,6 +2681,16 @@ const getFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         return rejectWithValue(error);
     }
 });
+const forceUpdateFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/forceUpdate', async ({ page = 1, limit = 10 }, { dispatch, rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].getFavorites(page, limit);
+        return response;
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+        return rejectWithValue(error);
+    }
+});
+const selectFavoriteState = (state)=>state.favorites;
 const checkFavoriteStatus = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/checkStatus', async (productId, { rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].checkFavoriteStatus(productId);
@@ -2689,9 +2702,13 @@ const checkFavoriteStatus = (0, __TURBOPACK__imported__module__$5b$externals$5d2
         return rejectWithValue(error);
     }
 });
-const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/add', async (productId, { rejectWithValue })=>{
+const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/add', async (productId, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].addToFavorite(productId);
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return {
             productId,
             ...response
@@ -2700,9 +2717,13 @@ const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         return rejectWithValue(error);
     }
 });
-const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/remove', async (productId, { rejectWithValue })=>{
+const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/remove', async (productId, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].removeFromFavorite(productId);
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return {
             productId,
             ...response
@@ -2711,15 +2732,18 @@ const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f
         return rejectWithValue(error);
     }
 });
-const transferFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/transfer', async (_, { rejectWithValue })=>{
+const transferFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/transfer', async (_, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].transferFavorites();
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return response;
     } catch (error) {
         return rejectWithValue(error);
     }
 });
-// Initial state
 const initialState = {
     items: [],
     pagination: {
@@ -2730,28 +2754,25 @@ const initialState = {
     },
     loading: false,
     error: null,
-    favoriteStatuses: {} // Lưu trạng thái yêu thích của từng sản phẩm
+    favoriteStatuses: {}
 };
 const selectFavoriteCount = (state)=>state.favorites.pagination.total || 0;
 const selectFavoriteItems = (state)=>state.favorites.items;
+const selectFavoriteTotal = (state)=>state.favorites.pagination.total || 0;
 const selectFavoriteStatuses = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSelector"])([
     selectFavoriteItems
 ], (items)=>items.reduce((acc, item)=>{
         acc[item.product_id] = true;
         return acc;
     }, {}));
-// Slice
 const favoriteSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'favorites',
     initialState,
     reducers: {
-        resetFavoriteState: (state)=>{
-            return initialState;
-        }
+        resetFavoriteState: ()=>initialState
     },
     extraReducers: (builder)=>{
-        builder// getFavorites
-        .addCase(getFavorites.pending, (state)=>{
+        builder.addCase(getFavorites.pending, (state)=>{
             state.loading = true;
             state.error = null;
         }).addCase(getFavorites.fulfilled, (state, action)=>{
@@ -2759,29 +2780,45 @@ const favoriteSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
             state.items = action.payload.data;
             state.pagination = action.payload.pagination;
             state.error = null;
+            // Cập nhật favoriteStatuses
+            state.favoriteStatuses = action.payload.data.reduce((acc, item)=>{
+                acc[item.product_id] = true;
+                return acc;
+            }, {});
         }).addCase(getFavorites.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload?.message || 'Có lỗi xảy ra';
-        })// checkFavoriteStatus
-        .addCase(checkFavoriteStatus.fulfilled, (state, action)=>{
+        }).addCase(forceUpdateFavorites.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(forceUpdateFavorites.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.items = action.payload.data;
+            state.pagination = action.payload.pagination;
+            state.error = null;
+            // Cập nhật favoriteStatuses
+            state.favoriteStatuses = action.payload.data.reduce((acc, item)=>{
+                acc[item.product_id] = true;
+                return acc;
+            }, {});
+        }).addCase(forceUpdateFavorites.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload?.message || 'Failed to update favorites';
+        }).addCase(checkFavoriteStatus.fulfilled, (state, action)=>{
             state.favoriteStatuses[action.payload.productId] = action.payload.data;
-        })// addToFavorite
-        .addCase(addToFavorite.fulfilled, (state, action)=>{
-            // Thêm item mới vào danh sách
-            state.items.push({
+        }).addCase(addToFavorite.fulfilled, (state, action)=>{
+            const newItem = {
                 product_id: action.payload.productId
-            });
-            state.favoriteStatuses[action.payload.productId] = true;
-            state.pagination.total += 1;
-        })// removeFromFavorite
-        .addCase(removeFromFavorite.fulfilled, (state, action)=>{
-            // Xóa khỏi items và cập nhật status
+            };
+            if (!state.items.find((item)=>item.product_id === newItem.product_id)) {
+                state.items.push(newItem);
+                state.favoriteStatuses[action.payload.productId] = true;
+                state.pagination.total += 1;
+            }
+        }).addCase(removeFromFavorite.fulfilled, (state, action)=>{
             state.items = state.items.filter((item)=>item.product_id !== action.payload.productId);
-            delete state.favoriteStatuses[action.payload.productId]; // Xóa status thay vì set false
+            delete state.favoriteStatuses[action.payload.productId];
             state.pagination.total = Math.max(0, state.pagination.total - 1);
-        })// transferFavorites
-        .addCase(transferFavorites.fulfilled, (state)=>{
-        // Có thể cập nhật state nếu cần
         });
     }
 });

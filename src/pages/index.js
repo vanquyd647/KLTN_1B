@@ -8,17 +8,17 @@ import Banner from '../components/Banner';
 import Link from 'next/link';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
-import { 
-    addToFavorite, 
+import {
+    addToFavorite,
     removeFromFavorite,
     getFavorites,
-    selectFavoriteStatuses 
+    selectFavoriteStatuses
 } from '../store/slices/favoriteSlice';
 
 export default function Index() {
     const router = useRouter();
     const dispatch = useDispatch();
-    
+
     const favorites = useSelector(selectFavoriteStatuses);
 
     const [newProducts, setNewProducts] = useState([]);
@@ -139,56 +139,58 @@ export default function Index() {
     return (
         <Layout>
             <Banner />
-            <div className="mt-6 px-6">
-                <div className="hidden md:flex justify-center gap-4">
-                    <Sidebar />
+            <div className="container mx-auto">
+                <div className="mt-6 px-6">
+                    <div className="hidden md:flex justify-center gap-4">
+                        <Sidebar />
+                    </div>
                 </div>
-            </div>
 
-            <div className="w-full px-4 py-6">
-                {loading ? (
-                    <div className="text-center text-gray-500">Đang tải...</div>
-                ) : error ? (
-                    <div className="text-center text-red-500">{error}</div>
-                ) : (
-                    <>
-                        <section>
-                            <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
-                            {newProducts.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                                    {newProducts.map(product => (
-                                        <ProductCard key={product.id} product={product} />
-                                    ))}
+                <div className="w-full px-4 py-6">
+                    {loading ? (
+                        <div className="text-center text-gray-500">Đang tải...</div>
+                    ) : error ? (
+                        <div className="text-center text-red-500">{error}</div>
+                    ) : (
+                        <>
+                            <section>
+                                <h3 className="text-lg font-bold mb-4">Sản phẩm mới</h3>
+                                {newProducts.length > 0 ? (
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                                        {newProducts.map(product => (
+                                            <ProductCard key={product.id} product={product} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-500">Không có sản phẩm mới.</p>
+                                )}
+                                <div className="flex justify-center mt-6">
+                                    <Link href="/new-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
+                                        Xem tất cả
+                                    </Link>
                                 </div>
-                            ) : (
-                                <p className="text-center text-gray-500">Không có sản phẩm mới.</p>
-                            )}
-                            <div className="flex justify-center mt-6">
-                                <Link href="/new-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
-                                    Xem tất cả
-                                </Link>
-                            </div>
-                        </section>
+                            </section>
 
-                        <section className="mt-12">
-                            <h3 className="text-lg font-bold mb-4">Sản phẩm nổi bật</h3>
-                            {featuredProducts.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                    {featuredProducts.map(product => (
-                                        <ProductCard key={product.id} product={product} />
-                                    ))}
+                            <section className="mt-12">
+                                <h3 className="text-lg font-bold mb-4">Sản phẩm nổi bật</h3>
+                                {featuredProducts.length > 0 ? (
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                        {featuredProducts.map(product => (
+                                            <ProductCard key={product.id} product={product} />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-500">Không có sản phẩm nổi bật.</p>
+                                )}
+                                <div className="flex justify-center mt-6">
+                                    <Link href="/featured-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
+                                        Xem tất cả
+                                    </Link>
                                 </div>
-                            ) : (
-                                <p className="text-center text-gray-500">Không có sản phẩm nổi bật.</p>
-                            )}
-                            <div className="flex justify-center mt-6">
-                                <Link href="/featured-products" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">
-                                    Xem tất cả
-                                </Link>
-                            </div>
-                        </section>
-                    </>
-                )}
+                            </section>
+                        </>
+                    )}
+                </div>
             </div>
         </Layout>
     );

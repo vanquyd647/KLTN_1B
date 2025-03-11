@@ -34,6 +34,7 @@ const CheckoutPage = () => {
     const [couponInfo, setCouponInfo] = useState(null);
     const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
     const [discountAmount, setDiscountAmount] = useState(0);
+    const [hasLoadedUserAddresses, setHasLoadedUserAddresses] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -49,61 +50,52 @@ const CheckoutPage = () => {
     useEffect(() => {
         const loadUserData = async () => {
             const token = getToken();
-            console.log("Token:", token);
+            if (!token || hasLoadedUserAddresses) return;
 
-            if (token) {
-                try {
-                    console.log("Fetching user info...");
-                    const userInfo = await dispatch(getUserInfo()).unwrap();
-                    console.log("User info received:", userInfo);
+            try {
+                const userInfo = await dispatch(getUserInfo()).unwrap();
+                if (userInfo) {
+                    const firstname = userInfo.firstname || '';
+                    const lastname = userInfo.lastname || '';
+                    const fullname = [firstname, lastname].filter(Boolean).join(' ');
 
-                    if (userInfo) {
-                        const firstname = userInfo.firstname || '';
-                        const lastname = userInfo.lastname || '';
-                        const fullname = [firstname, lastname].filter(Boolean).join(' ');
+                    setFormData(prev => ({
+                        ...prev,
+                        name: fullname || '',
+                        email: userInfo.email || '',
+                        phone: userInfo.phone?.toString() || ''
+                    }));
 
-                        setFormData(prev => ({
-                            ...prev,
-                            name: fullname || '',
-                            email: userInfo.email || '',
-                            phone: userInfo.phone?.toString() || ''
-                        }));
+                    // Fetch địa chỉ người dùng
+                    const addressResponse = await addressApi.getAddresses();
+                    if (addressResponse.status === "success" && addressResponse.data) {
+                        setAddresses(addressResponse.data);
 
-                        try {
-                            console.log("Fetching addresses...");
-                            const addressResponse = await addressApi.getAddresses();
-                            console.log("Address response:", addressResponse);
+                        // Tìm địa chỉ mặc định
+                        const defaultAddress = addressResponse.data.find(addr => addr.is_default);
+                        if (defaultAddress) {
+                            setSelectedAddress(defaultAddress);
+                            setFormData(prev => ({
+                                ...prev,
+                                street: defaultAddress.street || '',
+                                ward: defaultAddress.ward || '',
+                                district: defaultAddress.district || '',
+                                city: defaultAddress.city || '',
+                                country: defaultAddress.country || ''
+                            }));
 
-                            if (addressResponse.status === "success" && addressResponse.data) {
-                                setAddresses(addressResponse.data);
-
-                                const defaultAddress = addressResponse.data.find(addr => addr.is_default);
-                                if (defaultAddress) {
-                                    setSelectedAddress(defaultAddress);
-                                    setFormData(prev => ({
-                                        ...prev,
-                                        street: defaultAddress.street || '',
-                                        ward: defaultAddress.ward || '',
-                                        district: defaultAddress.district || '',
-                                        city: defaultAddress.city || '',
-                                        country: defaultAddress.country || ''
-                                    }));
-                                }
-                            }
-                        } catch (addressError) {
-                            console.error('Error fetching addresses:', addressError);
+                            // Đánh dấu là đã load địa chỉ người dùng
+                            setHasLoadedUserAddresses(true);
                         }
                     }
-                } catch (error) {
-                    console.error('Error loading user data:', error);
                 }
-            } else {
-                console.log("No token found");
+            } catch (error) {
+                console.error('Error loading user data:', error);
             }
         };
 
         loadUserData();
-    }, []);
+    }, [dispatch, hasLoadedUserAddresses]);
 
     useEffect(() => {
         const storedItems = localStorage.getItem('checkoutItems');
@@ -163,8 +155,8 @@ const CheckoutPage = () => {
                 const data = await response.json();
                 setProvinces(data);
 
-                // Nếu có sẵn địa chỉ, set up districts và wards
-                if (formData.city) {
+                // Chỉ set districts và wards nếu đã có sẵn địa chỉ và chưa load từ user addresses
+                if (formData.city && !hasLoadedUserAddresses) {
                     const selectedProvince = data.find(p => p.name === formData.city);
                     if (selectedProvince) {
                         setDistricts(selectedProvince.districts);
@@ -181,8 +173,9 @@ const CheckoutPage = () => {
                 console.error('Failed to fetch provinces:', error);
             }
         };
+
         fetchProvinces();
-    }, []);
+    }, [formData.city, hasLoadedUserAddresses]);
 
 
     const handleDistrictChange = (e) => {

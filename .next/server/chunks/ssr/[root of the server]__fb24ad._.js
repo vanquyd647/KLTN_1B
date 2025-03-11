@@ -2652,11 +2652,13 @@ __turbopack_esm__({
     "addToFavorite": (()=>addToFavorite),
     "checkFavoriteStatus": (()=>checkFavoriteStatus),
     "default": (()=>__TURBOPACK__default__export__),
+    "forceUpdateFavorites": (()=>forceUpdateFavorites),
     "getFavorites": (()=>getFavorites),
     "removeFromFavorite": (()=>removeFromFavorite),
     "resetFavoriteState": (()=>resetFavoriteState),
     "selectFavoriteCount": (()=>selectFavoriteCount),
     "selectFavoriteItems": (()=>selectFavoriteItems),
+    "selectFavoriteState": (()=>selectFavoriteState),
     "selectFavoriteStatuses": (()=>selectFavoriteStatuses),
     "selectFavoriteTotal": (()=>selectFavoriteTotal),
     "transferFavorites": (()=>transferFavorites)
@@ -2679,6 +2681,16 @@ const getFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         return rejectWithValue(error);
     }
 });
+const forceUpdateFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/forceUpdate', async ({ page = 1, limit = 10 }, { dispatch, rejectWithValue })=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].getFavorites(page, limit);
+        return response;
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+        return rejectWithValue(error);
+    }
+});
+const selectFavoriteState = (state)=>state.favorites;
 const checkFavoriteStatus = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/checkStatus', async (productId, { rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].checkFavoriteStatus(productId);
@@ -2690,9 +2702,13 @@ const checkFavoriteStatus = (0, __TURBOPACK__imported__module__$5b$externals$5d2
         return rejectWithValue(error);
     }
 });
-const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/add', async (productId, { rejectWithValue })=>{
+const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/add', async (productId, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].addToFavorite(productId);
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return {
             productId,
             ...response
@@ -2701,9 +2717,13 @@ const addToFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
         return rejectWithValue(error);
     }
 });
-const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/remove', async (productId, { rejectWithValue })=>{
+const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/remove', async (productId, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].removeFromFavorite(productId);
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return {
             productId,
             ...response
@@ -2712,15 +2732,18 @@ const removeFromFavorite = (0, __TURBOPACK__imported__module__$5b$externals$5d2f
         return rejectWithValue(error);
     }
 });
-const transferFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/transfer', async (_, { rejectWithValue })=>{
+const transferFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createAsyncThunk"])('favorites/transfer', async (_, { dispatch, rejectWithValue })=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["favoriteApi"].transferFavorites();
+        await dispatch(forceUpdateFavorites({
+            page: 1,
+            limit: 10
+        }));
         return response;
     } catch (error) {
         return rejectWithValue(error);
     }
 });
-// Initial state
 const initialState = {
     items: [],
     pagination: {
@@ -2731,31 +2754,25 @@ const initialState = {
     },
     loading: false,
     error: null,
-    favoriteStatuses: {} // Lưu trạng thái yêu thích của từng sản phẩm
+    favoriteStatuses: {}
 };
 const selectFavoriteCount = (state)=>state.favorites.pagination.total || 0;
 const selectFavoriteItems = (state)=>state.favorites.items;
-const selectFavoriteTotal = (state)=>{
-    return state.favorites.pagination.total || 0;
-};
+const selectFavoriteTotal = (state)=>state.favorites.pagination.total || 0;
 const selectFavoriteStatuses = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSelector"])([
     selectFavoriteItems
 ], (items)=>items.reduce((acc, item)=>{
         acc[item.product_id] = true;
         return acc;
     }, {}));
-// Slice
 const favoriteSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'favorites',
     initialState,
     reducers: {
-        resetFavoriteState: (state)=>{
-            return initialState;
-        }
+        resetFavoriteState: ()=>initialState
     },
     extraReducers: (builder)=>{
-        builder// getFavorites
-        .addCase(getFavorites.pending, (state)=>{
+        builder.addCase(getFavorites.pending, (state)=>{
             state.loading = true;
             state.error = null;
         }).addCase(getFavorites.fulfilled, (state, action)=>{
@@ -2763,29 +2780,45 @@ const favoriteSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$re
             state.items = action.payload.data;
             state.pagination = action.payload.pagination;
             state.error = null;
+            // Cập nhật favoriteStatuses
+            state.favoriteStatuses = action.payload.data.reduce((acc, item)=>{
+                acc[item.product_id] = true;
+                return acc;
+            }, {});
         }).addCase(getFavorites.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload?.message || 'Có lỗi xảy ra';
-        })// checkFavoriteStatus
-        .addCase(checkFavoriteStatus.fulfilled, (state, action)=>{
+        }).addCase(forceUpdateFavorites.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(forceUpdateFavorites.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.items = action.payload.data;
+            state.pagination = action.payload.pagination;
+            state.error = null;
+            // Cập nhật favoriteStatuses
+            state.favoriteStatuses = action.payload.data.reduce((acc, item)=>{
+                acc[item.product_id] = true;
+                return acc;
+            }, {});
+        }).addCase(forceUpdateFavorites.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.payload?.message || 'Failed to update favorites';
+        }).addCase(checkFavoriteStatus.fulfilled, (state, action)=>{
             state.favoriteStatuses[action.payload.productId] = action.payload.data;
-        })// addToFavorite
-        .addCase(addToFavorite.fulfilled, (state, action)=>{
-            // Thêm item mới vào danh sách
-            state.items.push({
+        }).addCase(addToFavorite.fulfilled, (state, action)=>{
+            const newItem = {
                 product_id: action.payload.productId
-            });
-            state.favoriteStatuses[action.payload.productId] = true;
-            state.pagination.total += 1;
-        })// removeFromFavorite
-        .addCase(removeFromFavorite.fulfilled, (state, action)=>{
-            // Xóa khỏi items và cập nhật status
+            };
+            if (!state.items.find((item)=>item.product_id === newItem.product_id)) {
+                state.items.push(newItem);
+                state.favoriteStatuses[action.payload.productId] = true;
+                state.pagination.total += 1;
+            }
+        }).addCase(removeFromFavorite.fulfilled, (state, action)=>{
             state.items = state.items.filter((item)=>item.product_id !== action.payload.productId);
-            delete state.favoriteStatuses[action.payload.productId]; // Xóa status thay vì set false
+            delete state.favoriteStatuses[action.payload.productId];
             state.pagination.total = Math.max(0, state.pagination.total - 1);
-        })// transferFavorites
-        .addCase(transferFavorites.fulfilled, (state)=>{
-        // Có thể cập nhật state nếu cần
         });
     }
 });
@@ -3139,12 +3172,15 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$extern
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/link.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/favoriteSlice.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar.js [ssr] (ecmascript)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
     __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
 ;
 ;
 ;
@@ -3170,8 +3206,27 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
         }
         return sum;
     }, 0) || 0;
-    const { pagination } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.favorites);
-    const favoriteCount = pagination?.total || 0;
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
+    // Lấy trực tiếp total từ selector 
+    const favoriteCount = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["selectFavoriteTotal"]);
+    // Thêm effect để tự động cập nhật
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        // Cập nhật ngay khi mount
+        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
+            page: 1,
+            limit: 10
+        }));
+        // Cập nhật định kỳ mỗi 30s
+        const interval = setInterval(()=>{
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
+                page: 1,
+                limit: 10
+            }));
+        }, 30000);
+        return ()=>clearInterval(interval);
+    }, [
+        dispatch
+    ]);
     // Xử lý drawer sidebar
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         const handleResize = ()=>{
@@ -3278,17 +3333,17 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                         d: "M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 141,
+                        lineNumber: 156,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/Header.js",
-                    lineNumber: 133,
+                    lineNumber: 148,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 127,
+                lineNumber: 142,
                 columnNumber: 13
             }, this),
             isSearchOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3304,7 +3359,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     children: "Tìm kiếm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 153,
+                                    lineNumber: 168,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3326,23 +3381,23 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                             d: "M6 18L18 6M6 6l12 12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 171,
+                                            lineNumber: 186,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 162,
+                                        lineNumber: 177,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 154,
+                                    lineNumber: 169,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 152,
+                            lineNumber: 167,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3358,12 +3413,12 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 autoComplete: "off"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 176,
+                                lineNumber: 191,
                                 columnNumber: 29
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 175,
+                            lineNumber: 190,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3384,7 +3439,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                 className: "w-12 h-12 object-cover rounded"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 200,
+                                                lineNumber: 215,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3394,7 +3449,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         children: product.product_name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 206,
+                                                        lineNumber: 221,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3409,7 +3464,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/Header.js",
-                                                                    lineNumber: 212,
+                                                                    lineNumber: 227,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3420,7 +3475,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/Header.js",
-                                                                    lineNumber: 215,
+                                                                    lineNumber: 230,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
@@ -3432,24 +3487,24 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/Header.js",
-                                                            lineNumber: 220,
+                                                            lineNumber: 235,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 209,
+                                                        lineNumber: 224,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 205,
+                                                lineNumber: 220,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, product.id, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 190,
+                                        lineNumber: 205,
                                         columnNumber: 33
                                     }, this)),
                                 searchResults.length > 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3466,7 +3521,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     children: "Xem thêm sản phẩm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 230,
+                                    lineNumber: 245,
                                     columnNumber: 33
                                 }, this),
                                 searchTerm.trim().length >= 2 && searchResults.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3474,30 +3529,30 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     children: "Không tìm thấy sản phẩm phù hợp"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 247,
+                                    lineNumber: 262,
                                     columnNumber: 33
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 188,
+                            lineNumber: 203,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.js",
-                    lineNumber: 151,
+                    lineNumber: 166,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 150,
+                lineNumber: 165,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Header.js",
-        lineNumber: 126,
+        lineNumber: 141,
         columnNumber: 9
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
@@ -3523,17 +3578,17 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                     d: "M4 6h16M4 12h16m-7 6h7"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 274,
+                                    lineNumber: 289,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 267,
+                                lineNumber: 282,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 263,
+                            lineNumber: 278,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3542,43 +3597,52 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                             children: "Fashion Store"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 284,
+                            lineNumber: 299,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("nav", {
-                            className: "hidden md:flex space-x-6 ml-auto",
+                            className: "hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/store-locations",
-                                    className: "hover:underline",
-                                    children: "Hệ thống cửa hàng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 290,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/user-guide",
-                                    className: "hover:underline",
-                                    children: "Hướng dẫn sử dụng"
+                                    className: "hover:underline hover:text-blue-600 transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Sale"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 293,
+                                    lineNumber: 305,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/warranty-policy",
-                                    className: "hover:underline",
-                                    children: "Chính sách bảo hành"
+                                    className: "hover:underline hover:text-blue-600 transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Khuyến mãi"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 296,
+                                    lineNumber: 312,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/store-locations",
+                                    className: "hover:underline hover:text-blue-600 transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Hệ thống cửa hàng"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 319,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 289,
+                            lineNumber: 304,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("nav", {
@@ -3604,22 +3668,22 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 317,
+                                                    lineNumber: 344,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 309,
+                                                lineNumber: 336,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 308,
+                                            lineNumber: 335,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 307,
+                                        lineNumber: 334,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -3641,12 +3705,12 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 337,
+                                                        lineNumber: 364,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 329,
+                                                    lineNumber: 356,
                                                     columnNumber: 37
                                                 }, this),
                                                 favoriteCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -3654,18 +3718,18 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     children: favoriteCount
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 344,
+                                                    lineNumber: 371,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 328,
+                                            lineNumber: 355,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 327,
+                                        lineNumber: 354,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -3687,12 +3751,12 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6m12.5-6l1.5 6m-10-1h8"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 362,
+                                                        lineNumber: 389,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 354,
+                                                    lineNumber: 381,
                                                     columnNumber: 37
                                                 }, this),
                                                 totalItems > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -3700,40 +3764,40 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     children: totalItems
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 369,
+                                                    lineNumber: 396,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 353,
+                                            lineNumber: 380,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 352,
+                                        lineNumber: 379,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 303,
+                                lineNumber: 330,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 302,
+                            lineNumber: 329,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.js",
-                    lineNumber: 261,
+                    lineNumber: 276,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 260,
+                lineNumber: 275,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3741,7 +3805,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 onClick: toggleDrawer
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 381,
+                lineNumber: 408,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3763,17 +3827,17 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 d: "M6 18L18 6M6 6l12 12"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 403,
+                                lineNumber: 430,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 395,
+                            lineNumber: 422,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 391,
+                        lineNumber: 418,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3783,7 +3847,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                 isMobile: true
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 413,
+                                lineNumber: 440,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("nav", {
@@ -3806,19 +3870,19 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 423,
+                                                    lineNumber: 450,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 422,
+                                                lineNumber: 449,
                                                 columnNumber: 29
                                             }, this),
                                             "Tra cứu đơn hàng"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 417,
+                                        lineNumber: 444,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3839,7 +3903,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 434,
+                                                        lineNumber: 461,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
@@ -3849,20 +3913,20 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                         d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 436,
+                                                        lineNumber: 463,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 433,
+                                                lineNumber: 460,
                                                 columnNumber: 29
                                             }, this),
                                             "Hệ thống cửa hàng"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 428,
+                                        lineNumber: 455,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3882,19 +3946,19 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 447,
+                                                    lineNumber: 474,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 446,
+                                                lineNumber: 473,
                                                 columnNumber: 29
                                             }, this),
                                             "Hướng dẫn sử dụng"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 441,
+                                        lineNumber: 468,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3914,37 +3978,37 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                                                     d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 458,
+                                                    lineNumber: 485,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 457,
+                                                lineNumber: 484,
                                                 columnNumber: 29
                                             }, this),
                                             "Chính sách bảo hành"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 452,
+                                        lineNumber: 479,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 416,
+                                lineNumber: 443,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 412,
+                        lineNumber: 439,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 386,
+                lineNumber: 413,
                 columnNumber: 13
             }, this)
         ]
@@ -4697,7 +4761,7 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_import__("[externals]/react-redux [external] (react-redux, esm_import)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/router.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/cartSlice.js [ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/favoriteSlice.js [ssr] (ecmascript)"); // Sửa getFavoriteItems thành getFavorites
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/favoriteSlice.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Header$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Header.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Footer.js [ssr] (ecmascript)");
@@ -4727,34 +4791,88 @@ function Layout({ children }) {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const isCartPage = router.pathname === '/cart';
     const hasFetchedCart = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useRef"])(false);
+    const hasFetchedFavorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useRef"])(false);
+    // Initial fetch favorites và transfer
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        const initializeData = async ()=>{
-            try {
-                // Luôn fetch favorites data khi route thay đổi
-                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getFavorites"])({
-                    page: 1,
-                    limit: 10
-                }));
-                // Fetch cart data nếu cần
-                const cartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
-                if (cartId && !isCartPage && !hasFetchedCart.current) {
-                    hasFetchedCart.current = true;
-                    await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(cartId));
+        const initializeFavorites = async ()=>{
+            if (!hasFetchedFavorites.current) {
+                try {
+                    // Đầu tiên thực hiện transfer favorites
+                    await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
+                    // Sau đó fetch dữ liệu mới
+                    await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
+                        page: 1,
+                        limit: 10
+                    })).unwrap();
+                    hasFetchedFavorites.current = true;
+                } catch (error) {
+                    console.error('Failed to initialize favorites:', error);
+                    hasFetchedFavorites.current = false;
                 }
-            } catch (error) {
-                console.error('Error initializing data:', error);
             }
         };
-        initializeData();
-        // Reset hasFetchedCart khi route thay đổi
+        initializeFavorites();
+    }, [
+        dispatch
+    ]);
+    // Route change với transfer và update
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        let timeoutId;
+        const handleRouteChange = async ()=>{
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(async ()=>{
+                try {
+                    // Transfer trước khi update
+                    await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
+                    await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
+                        page: 1,
+                        limit: 10
+                    })).unwrap();
+                } catch (error) {
+                    console.error('Failed to update favorites on route change:', error);
+                }
+            }, 300);
+        };
+        router.events.on('routeChangeComplete', handleRouteChange);
+        return ()=>{
+            router.events.off('routeChangeComplete', handleRouteChange);
+            clearTimeout(timeoutId);
+        };
+    }, [
+        dispatch,
+        router.events
+    ]);
+    // Cart logic giữ nguyên
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const cartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+        if (cartId && !isCartPage && !hasFetchedCart.current) {
+            hasFetchedCart.current = true;
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(cartId));
+        }
         return ()=>{
             hasFetchedCart.current = false;
         };
     }, [
         dispatch,
-        router.pathname
-    ]); // Thêm router.pathname vào dependencies
-    console.log("first");
+        isCartPage
+    ]);
+    // Thêm interval để tự động transfer và update
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const interval = setInterval(async ()=>{
+            try {
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
+                    page: 1,
+                    limit: 10
+                })).unwrap();
+            } catch (error) {
+                console.error('Failed to auto-update favorites:', error);
+            }
+        }, 30000); // 30 giây
+        return ()=>clearInterval(interval);
+    }, [
+        dispatch
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
         className: "min-h-screen flex flex-col",
         children: [
@@ -4762,36 +4880,36 @@ function Layout({ children }) {
                 isCartPage: isCartPage
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 47,
+                lineNumber: 92,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("main", {
-                className: "flex-grow container mx-auto px-4 py-6",
+                className: "flex-grow",
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 48,
+                lineNumber: 93,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BackToTop$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 51,
+                lineNumber: 96,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ServiceFeatures$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 52,
+                lineNumber: 97,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 53,
+                lineNumber: 98,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Layout.js",
-        lineNumber: 46,
+        lineNumber: 91,
         columnNumber: 9
     }, this);
 }

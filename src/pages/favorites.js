@@ -58,6 +58,7 @@ export default function Favorites() {
     return (
         <Layout>
             <Banner title="Sản phẩm yêu thích" />
+            
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold mb-6">
                     Sản phẩm yêu thích ({pagination.total || 0})
