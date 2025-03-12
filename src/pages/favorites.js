@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFavorites, removeFromFavorite } from '../store/slices/favoriteSlice';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 import Banner from '@/components/Banner';
+import Sidebar from '../components/Sidebar2';
 
 export default function Favorites() {
     const router = useRouter();
@@ -58,8 +59,13 @@ export default function Favorites() {
     return (
         <Layout>
             <Banner title="Sản phẩm yêu thích" />
-            
-            <div className="container mx-auto px-4 py-8">
+
+            <div className="container mx-auto">
+                <div className="mt-6 px-6">
+                    <div className="hidden md:flex justify-center gap-4">
+                        <Sidebar />
+                    </div>
+                </div>
                 <h1 className="text-2xl font-bold mb-6">
                     Sản phẩm yêu thích ({pagination.total || 0})
                 </h1>

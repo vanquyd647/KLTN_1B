@@ -5256,28 +5256,183 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$run
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_import__("[externals]/react [external] (react, cjs)");
 ;
 ;
-function ProductDescription({ description }) {
+function ProductDescription({ description, productType = 'clothing', material, careInstructions, features }) {
+    // Mô tả mặc định theo loại sản phẩm
+    const getDefaultDescription = ()=>{
+        const descriptions = {
+            clothing: `Sản phẩm thời trang cao cấp được thiết kế theo xu hướng mới nhất, mang đến vẻ ngoài hiện đại và phong cách. Được may từ chất liệu chọn lọc, tạo cảm giác thoải mái khi mặc và dễ dàng phối với nhiều trang phục khác nhau.`,
+            accessory: `Phụ kiện thời trang tinh tế, là điểm nhấn hoàn hảo cho trang phục của bạn. Thiết kế hiện đại, dễ dàng kết hợp với nhiều phong cách khác nhau, giúp tôn lên vẻ đẹp cá nhân và thể hiện gu thẩm mỹ độc đáo.`,
+            footwear: `Giày dép thời trang được thiết kế tỉ mỉ, kết hợp giữa phong cách hiện đại và sự thoải mái. Đế giày chắc chắn, hỗ trợ tốt cho bàn chân trong mọi hoạt động hàng ngày.`
+        };
+        return descriptions[productType] || descriptions.clothing;
+    };
+    // Hướng dẫn bảo quản mặc định
+    const getDefaultCareInstructions = ()=>{
+        const instructions = {
+            clothing: [
+                "Giặt máy ở nhiệt độ thấp hoặc giặt tay nhẹ nhàng",
+                "Không sử dụng chất tẩy mạnh",
+                "Phơi trong bóng râm để tránh phai màu",
+                "Ủi ở nhiệt độ thấp hoặc trung bình",
+                "Không vắt mạnh"
+            ],
+            accessory: [
+                "Tránh tiếp xúc với nước và hóa chất",
+                "Lau nhẹ nhàng bằng khăn mềm",
+                "Bảo quản trong hộp hoặc túi riêng",
+                "Tránh va đập mạnh",
+                "Không để dưới ánh nắng trực tiếp"
+            ],
+            footwear: [
+                "Làm sạch bằng bàn chải mềm",
+                "Để khô tự nhiên, tránh các nguồn nhiệt trực tiếp",
+                "Sử dụng xi đánh giày phù hợp với chất liệu",
+                "Không giặt máy",
+                "Bảo quản ở nơi khô ráo, thoáng mát"
+            ]
+        };
+        return instructions[productType] || instructions.clothing;
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "space-y-6",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-                className: "text-2xl font-bold mb-4",
-                children: "Mô tả sản phẩm"
-            }, void 0, false, {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("section", {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold mb-4",
+                        children: "Mô tả sản phẩm"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 57,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "prose prose-lg max-w-none text-gray-700",
+                        children: description || getDefaultDescription()
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 58,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/slugs/ProductDescription.js",
-                lineNumber: 6,
+                lineNumber: 56,
                 columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                children: description
-            }, void 0, false, {
+            material && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("section", {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-xl font-semibold mb-2",
+                        children: "Chất liệu"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 65,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                        className: "text-gray-700",
+                        children: material
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 66,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/slugs/ProductDescription.js",
-                lineNumber: 7,
+                lineNumber: 64,
+                columnNumber: 17
+            }, this),
+            features && features.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("section", {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-xl font-semibold mb-2",
+                        children: "Đặc điểm nổi bật"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 72,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
+                        className: "list-disc pl-5 text-gray-700 space-y-1",
+                        children: features.map((feature, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
+                                children: feature
+                            }, index, false, {
+                                fileName: "[project]/src/components/slugs/ProductDescription.js",
+                                lineNumber: 75,
+                                columnNumber: 29
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 73,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDescription.js",
+                lineNumber: 71,
+                columnNumber: 17
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("section", {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-xl font-semibold mb-2",
+                        children: "Hướng dẫn bảo quản"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 82,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
+                        className: "list-disc pl-5 text-gray-700 space-y-1",
+                        children: (careInstructions || getDefaultCareInstructions()).map((instruction, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
+                                children: instruction
+                            }, index, false, {
+                                fileName: "[project]/src/components/slugs/ProductDescription.js",
+                                lineNumber: 85,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 83,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDescription.js",
+                lineNumber: 81,
                 columnNumber: 13
+            }, this),
+            productType === 'clothing' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("section", {
+                className: "bg-gray-50 p-4 rounded-lg",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-2",
+                        children: "Lưu ý khi chọn size"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 92,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                        className: "text-gray-700",
+                        children: "Vui lòng tham khảo bảng size để chọn được sản phẩm phù hợp nhất. Nếu bạn đang cân nhắc giữa hai kích cỡ, nên chọn size lớn hơn để thoải mái hơn."
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/slugs/ProductDescription.js",
+                        lineNumber: 93,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/slugs/ProductDescription.js",
+                lineNumber: 91,
+                columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/slugs/ProductDescription.js",
-        lineNumber: 5,
+        lineNumber: 55,
         columnNumber: 9
     }, this);
 }

@@ -1,6 +1,11 @@
 const CHUNK_PUBLIC_PATH = "server/pages/favorites.js";
 const runtime = require("../chunks/ssr/[turbopack]_runtime.js");
-runtime.loadChunk("server/chunks/ssr/[root of the server]__93d0fb._.js");
-runtime.loadChunk("server/chunks/ssr/node_modules_92f262._.js");
+runtime.loadChunk("server/chunks/ssr/[root of the server]__0f5989._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_next_e50dab._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_fa_index_mjs_275a22._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_gi_index_mjs_adf351._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_io5_index_mjs_d99fb2._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_lib_6322da._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_3d6e4b._.js");
 runtime.loadChunk("server/chunks/ssr/src_styles_globals_070f83.css");
 module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/next/dist/esm/build/templates/pages.js { INNER_PAGE => \"[project]/src/pages/favorites.js [ssr] (ecmascript)\", INNER_DOCUMENT => \"[project]/node_modules/next/document.js [ssr] (ecmascript)\", INNER_APP => \"[project]/src/pages/_app.js [ssr] (ecmascript)\" } [ssr] (ecmascript)", CHUNK_PUBLIC_PATH).exports;

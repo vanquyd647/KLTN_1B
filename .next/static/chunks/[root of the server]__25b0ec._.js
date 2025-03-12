@@ -6495,7 +6495,7 @@ const OrderManagement = ()=>{
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
-                                        children: "Tổng tiền"
+                                        children: "Thành tiền"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/OrderManagement.js",
                                         lineNumber: 265,
@@ -6626,6 +6626,17 @@ const OrderManagement = ()=>{
                                                                 fileName: "[project]/src/components/OrderManagement.js",
                                                                 lineNumber: 292,
                                                                 columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-500",
+                                                                children: [
+                                                                    item.price.toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/OrderManagement.js",
+                                                                lineNumber: 295,
+                                                                columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, index, true, {
@@ -6651,12 +6662,37 @@ const OrderManagement = ()=>{
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "font-medium",
                                                         children: [
+                                                            "Tổng tiền ",
                                                             Number(order.pricing.final_price).toLocaleString('vi-VN'),
                                                             "đ"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 301,
+                                                        lineNumber: 304,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-gray-500",
+                                                        children: [
+                                                            "Tổng giá SP ",
+                                                            order.pricing.original_price.toLocaleString('vi-VN'),
+                                                            "đ"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/OrderManagement.js",
+                                                        lineNumber: 307,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-gray-500",
+                                                        children: [
+                                                            "Giá giảm ",
+                                                            order.pricing.discount_amount.toLocaleString('vi-VN'),
+                                                            "đ"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/OrderManagement.js",
+                                                        lineNumber: 310,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6668,18 +6704,18 @@ const OrderManagement = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 304,
+                                                        lineNumber: 313,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 300,
+                                                lineNumber: 303,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 299,
+                                            lineNumber: 302,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6696,12 +6732,12 @@ const OrderManagement = ()=>{
                                                                 children: label
                                                             }, value, false, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 322,
+                                                                lineNumber: 331,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 312,
+                                                        lineNumber: 321,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -6713,23 +6749,23 @@ const OrderManagement = ()=>{
                                                                 children: label
                                                             }, value, false, {
                                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                                lineNumber: 338,
+                                                                lineNumber: 347,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 327,
+                                                        lineNumber: 336,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 310,
+                                                lineNumber: 319,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 309,
+                                            lineNumber: 318,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6743,17 +6779,17 @@ const OrderManagement = ()=>{
                                                         children: label
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/OrderManagement.js",
-                                                        lineNumber: 350,
+                                                        lineNumber: 359,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/OrderManagement.js",
-                                                lineNumber: 344,
+                                                lineNumber: 353,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 343,
+                                            lineNumber: 352,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -6761,7 +6797,7 @@ const OrderManagement = ()=>{
                                             children: formatDate(order.dates.created_at)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/OrderManagement.js",
-                                            lineNumber: 354,
+                                            lineNumber: 363,
                                             columnNumber: 17
                                         }, this)
                                     ]
@@ -6798,7 +6834,7 @@ const OrderManagement = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 365,
+                        lineNumber: 374,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6811,7 +6847,7 @@ const OrderManagement = ()=>{
                                 children: "Trước"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 369,
+                                lineNumber: 378,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -6821,19 +6857,19 @@ const OrderManagement = ()=>{
                                 children: "Sau"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/OrderManagement.js",
-                                lineNumber: 378,
+                                lineNumber: 387,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/OrderManagement.js",
-                        lineNumber: 368,
+                        lineNumber: 377,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/OrderManagement.js",
-                lineNumber: 364,
+                lineNumber: 373,
                 columnNumber: 7
             }, this)
         ]

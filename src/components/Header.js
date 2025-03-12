@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { productApi } from '../utils/apiClient';
 import { selectFavoriteTotal, forceUpdateFavorites } from '../store/slices/favoriteSlice';
 import Sidebar from './Sidebar';
+import AnnouncementBar from './AnnouncementBar';
 
 const Header = memo(function Header({ isCartPage }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -272,6 +273,7 @@ const Header = memo(function Header({ isCartPage }) {
 
     return (
         <>
+            <AnnouncementBar />
             <header className="bg-gray-800 text-white p-4 shadow">
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Drawer Toggle Button for Sidebar */}
@@ -303,14 +305,21 @@ const Header = memo(function Header({ isCartPage }) {
                     {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">
                         <Link
-                            href="/user-guide"
+                            href="/voucher"
                             className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
-                            Sale
+                            Ưu đãi
                         </Link>
                         <Link
-                            href="/warranty-policy"
+                            href="/"
+                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Bán chạy
+                        </Link>
+                        <Link
+                            href="/Sale"
                             className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
@@ -322,6 +331,13 @@ const Header = memo(function Header({ isCartPage }) {
                             style={{ fontSize: '15px' }}
                         >
                             Hệ thống cửa hàng
+                        </Link>
+                        <Link
+                            href="/TrackOrder"
+                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Tra cứu đơn hàng
                         </Link>
                     </nav>
 

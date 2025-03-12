@@ -2,8 +2,17 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/admin": "pages/admin.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
+  "/cart": "pages/cart.js",
+  "/account/login": "pages/account/login.js",
   "/new-products": "pages/new-products.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js"
+  "/featured-products": "pages/featured-products.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/favorites": "pages/favorites.js",
+  "/account/profile": "pages/account/profile.js",
+  "/checkout": "pages/checkout.js",
+  "/payment": "pages/payment.js",
+  "/payment/success": "pages/payment/success.js",
+  "/admin": "pages/admin.js",
+  "/TrackOrder": "pages/TrackOrder.js"
 }

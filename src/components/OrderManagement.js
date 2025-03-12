@@ -262,7 +262,7 @@ const OrderManagement = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mã đơn</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thông tin khách hàng</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sản phẩm</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tổng tiền</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thành tiền</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thanh toán</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày đặt</th>
@@ -292,6 +292,9 @@ const OrderManagement = () => {
                         <p className="text-gray-500">
                           {item.variant.color.name} - {item.variant.size} x {item.quantity}
                         </p>
+                        <p className="text-gray-500">
+                          {item.price.toLocaleString('vi-VN')}đ
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -299,7 +302,13 @@ const OrderManagement = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm">
                     <p className="font-medium">
-                      {Number(order.pricing.final_price).toLocaleString('vi-VN')}đ
+                      Tổng tiền {Number(order.pricing.final_price).toLocaleString('vi-VN')}đ
+                    </p>
+                    <p className="text-gray-500">
+                      Tổng giá SP {order.pricing.original_price.toLocaleString('vi-VN')}đ
+                    </p>
+                    <p className="text-gray-500">
+                      Giá giảm {order.pricing.discount_amount.toLocaleString('vi-VN')}đ
                     </p>
                     <p className="text-gray-500">
                       Phí ship: {order.shipping.shipping_fee.toLocaleString('vi-VN')}đ

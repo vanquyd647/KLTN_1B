@@ -30,6 +30,7 @@ const CheckoutPage = () => {
 
     // States cho mã giảm giá
     const [couponCode, setCouponCode] = useState('');
+    const [couponId, setCouponId] = useState(null);
     const [couponError, setCouponError] = useState('');
     const [couponInfo, setCouponInfo] = useState(null);
     const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
@@ -46,6 +47,42 @@ const CheckoutPage = () => {
         city: '',
         country: 'Viet Nam',
     });
+
+    const normalizeLocationName = (name) => {
+        if (!name) return '';
+
+        // Loại bỏ các tiền tố như "Tỉnh", "Thành phố", "Quận", "Huyện", "Phường", "Xã", v.v.
+        const prefixes = [
+            'Tỉnh ', 'Thành phố ', 'TP. ', 'TP ', 'T.P ',
+            'Quận ', 'Huyện ', 'TX. ', 'Thị xã ',
+            'Phường ', 'Xã ', 'Thị trấn '
+        ];
+
+        let normalizedName = name;
+        for (const prefix of prefixes) {
+            if (normalizedName.startsWith(prefix)) {
+                normalizedName = normalizedName.slice(prefix.length);
+                break;
+            }
+        }
+
+        return normalizedName;
+    };
+
+    const findLocationInList = (locationList, fullName) => {
+        if (!locationList || !fullName) return null;
+
+        // Tìm theo tên đầy đủ
+        const exactMatch = locationList.find(loc => loc.name === fullName);
+        if (exactMatch) return exactMatch;
+
+        // Nếu không tìm thấy, thử tìm theo tên đã chuẩn hóa
+        const normalizedName = normalizeLocationName(fullName);
+        return locationList.find(loc =>
+            loc.name === normalizedName ||
+            normalizeLocationName(loc.name) === normalizedName
+        );
+    };
 
     useEffect(() => {
         const loadUserData = async () => {
@@ -155,15 +192,20 @@ const CheckoutPage = () => {
                 const data = await response.json();
                 setProvinces(data);
 
-                // Chỉ set districts và wards nếu đã có sẵn địa chỉ và chưa load từ user addresses
-                if (formData.city && !hasLoadedUserAddresses) {
-                    const selectedProvince = data.find(p => p.name === formData.city);
+                // Chỉ set districts và wards nếu đã có sẵn địa chỉ
+                if (formData.city) {
+                    // Sử dụng hàm helper để tìm tỉnh/thành phố phù hợp
+                    const selectedProvince = findLocationInList(data, formData.city);
+
                     if (selectedProvince) {
                         setDistricts(selectedProvince.districts);
 
-                        const selectedDistrict = selectedProvince.districts.find(
-                            d => d.name === formData.district
+                        // Tương tự cho quận/huyện
+                        const selectedDistrict = findLocationInList(
+                            selectedProvince.districts,
+                            formData.district
                         );
+
                         if (selectedDistrict) {
                             setWards(selectedDistrict.wards);
                         }
@@ -175,7 +217,8 @@ const CheckoutPage = () => {
         };
 
         fetchProvinces();
-    }, [formData.city, hasLoadedUserAddresses]);
+    }, [formData.city, formData.district]);
+
 
 
     const handleDistrictChange = (e) => {
@@ -254,6 +297,11 @@ const CheckoutPage = () => {
                     ...couponInfo,
                     discount_amount: discountAmt
                 });
+
+                setCouponId(couponInfo.id);
+                console.log('couponID:', couponId );
+                console.log('discountAmount:', discountAmount);
+
                 setDiscountAmount(discountAmt);
                 setCouponError('');
             }
@@ -395,7 +443,7 @@ const CheckoutPage = () => {
             const orderData = {
                 cart_id: getCartId(),
                 carrier_id: selectedCarrier.id,
-                coupon_code: couponInfo ? couponCode : null,
+                coupon_id: couponId,
                 discount_amount: discountAmount,
                 original_price: calculateTotal(),
                 discounted_price: calculateTotal() - discountAmount,
@@ -550,19 +598,20 @@ const CheckoutPage = () => {
                         </label>
                         <select
                             name="city"
-                            value={provinces.find(p => p.name === formData.city)?.code || ''}
+                            value={findLocationInList(provinces, formData.city)?.code || ''}
                             onChange={handleProvinceChange}
-                            className="border p-2 w-full rounded-md"
+                            className="border p-2 w-full bg-white"
                             required
                         >
                             <option value="">Chọn Tỉnh/Thành phố</option>
-                            {provinces.map(province => (
+                            {provinces.map((province) => (
                                 <option key={province.code} value={province.code}>
                                     {province.name}
                                 </option>
                             ))}
                         </select>
                     </div>
+
                     {/* Quận/Huyện */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">
@@ -570,14 +619,14 @@ const CheckoutPage = () => {
                         </label>
                         <select
                             name="district"
-                            value={districts.find(d => d.name === formData.district)?.code || ''}
+                            value={findLocationInList(districts, formData.district)?.code || ''}
                             onChange={handleDistrictChange}
-                            className="border p-2 w-full rounded-md"
+                            className="border p-2 w-full bg-white"
                             required
-                            disabled={!formData.city}
+                            disabled={districts.length === 0}
                         >
                             <option value="">Chọn Quận/Huyện</option>
-                            {districts.map(district => (
+                            {districts.map((district) => (
                                 <option key={district.code} value={district.code}>
                                     {district.name}
                                 </option>
