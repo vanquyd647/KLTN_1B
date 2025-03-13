@@ -5508,14 +5508,25 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$extern
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/favoriteSlice.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Banner.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/Sidebar2.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/apiClient.js [ssr] (ecmascript)"); // Thêm import stockApi
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/utils/storage.js [ssr] (ecmascript)"); // Thêm import getToken và getCartId
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/slices/cartSlice.js [ssr] (ecmascript)"); // Thêm import từ cartSlice
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_import__("[project]/node_modules/@heroicons/react/24/solid/esm/HeartIcon.js [ssr] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__ = __turbopack_import__("[project]/node_modules/@heroicons/react/24/outline/esm/ShoppingBagIcon.js [ssr] (ecmascript) <export default as ShoppingBagIcon>"); // Thêm icon giỏ hàng
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
     __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
     __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
     __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+;
+;
+;
+;
 ;
 ;
 ;
@@ -5529,8 +5540,22 @@ function Favorites() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
     const { items, loading, error, pagination } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.favorites);
+    const { items: cartItems } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.cart); // Thêm cartItems
+    // Thêm states cho chức năng thêm vào giỏ hàng
+    const [stocks, setStocks] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
+    const [productModal, setProductModal] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    const [stocksLoading, setStocksLoading] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         loadFavorites();
+        loadStocks();
+        // Tải thông tin giỏ hàng nếu có
+        const cartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+        if (cartId) {
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(cartId));
+        }
     }, []);
     const loadFavorites = async ()=>{
         try {
@@ -5540,6 +5565,22 @@ function Favorites() {
             })).unwrap();
         } catch (error) {
             console.error('Error loading favorites:', error);
+        }
+    };
+    // Thêm hàm fetch stocks
+    const loadStocks = async ()=>{
+        setStocksLoading(true);
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["stockApi"].getProductStocks();
+            if (response.success) {
+                setStocks(response.data);
+            } else {
+                console.error('Lỗi khi tải dữ liệu tồn kho');
+            }
+        } catch (err) {
+            console.error('Error fetching stocks:', err);
+        } finally{
+            setStocksLoading(false);
         }
     };
     const handleRemoveFavorite = async (productId)=>{
@@ -5552,7 +5593,372 @@ function Favorites() {
     const handleProductClick = (slug)=>{
         router.push(`/productdetail/${slug}`);
     };
-    if (loading) {
+    // Thêm các hàm quản lý stock
+    const getStockQuantity = (productId, colorId, sizeId)=>{
+        const stock = stocks.find((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId);
+        return stock ? stock.quantity : 0;
+    };
+    const getCartItemQuantity = (productId, colorId, sizeId)=>{
+        const existingItem = cartItems?.find((item)=>item.product_id === productId && item.color_id === colorId && item.size_id === sizeId);
+        return existingItem?.quantity || 0;
+    };
+    const isColorAvailable = (productId, colorId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.quantity > 0);
+    };
+    const isSizeAvailable = (productId, colorId, sizeId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId && stock.quantity > 0);
+    };
+    const getMaxAvailableQuantity = (productId)=>{
+        if (!selectedColor || !selectedSize) return 0;
+        const stockQuantity = getStockQuantity(productId, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productId, selectedColor.id, selectedSize.id);
+        return Math.max(0, stockQuantity - cartQuantity);
+    };
+    // Cập nhật trạng thái khi chọn sản phẩm
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (productModal && stocks.length > 0) {
+            const firstAvailableColor = productModal.productColors.find((color)=>isColorAvailable(productModal.id, color.id));
+            setSelectedColor(firstAvailableColor || null);
+            setSelectedSize(null);
+            setQuantity(1);
+        }
+    }, [
+        productModal,
+        stocks
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (selectedColor && productModal?.productSizes && stocks.length > 0) {
+            const firstAvailableSize = productModal.productSizes.find((size)=>isSizeAvailable(productModal.id, selectedColor.id, size.id));
+            setSelectedSize(firstAvailableSize || null);
+            setQuantity(1);
+        }
+    }, [
+        selectedColor,
+        productModal,
+        stocks
+    ]);
+    // Mở modal khi muốn thêm vào giỏ hàng
+    const openProductModal = (product)=>{
+        setProductModal(product);
+    };
+    // Các hàm xử lý thêm giỏ hàng và mua ngay
+    const handleAddToCart = async (showAlert = true)=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Vui lòng chọn màu và kích thước.');
+            return;
+        }
+        const stockQuantity = getStockQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        if (cartQuantity + quantity > stockQuantity) {
+            const remainingQuantity = stockQuantity - cartQuantity;
+            if (remainingQuantity <= 0) {
+                alert('Sản phẩm đã hết hàng hoặc đã có trong giỏ hàng với số lượng tối đa.');
+                return;
+            }
+            alert(`Chỉ còn ${remainingQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["createCartForUser"])()).unwrap() : await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["createCartForGuest"])()).unwrap();
+                activeCartId = cartResponse?.id;
+            }
+            await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["addItemToCart"])({
+                cartId: activeCartId,
+                itemData: {
+                    product_id: productModal.id,
+                    color_id: selectedColor.id,
+                    size_id: selectedSize.id,
+                    quantity
+                }
+            })).unwrap();
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(activeCartId));
+            localStorage.setItem('cartId', activeCartId);
+            setProductModal(null); // Đóng modal
+            if (showAlert) {
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+            console.error(error);
+        }
+    };
+    const handleBuyNow = async ()=>{
+        try {
+            await handleAddToCart(false);
+            router.push('/cart');
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+        }
+    };
+    const increaseQuantity = ()=>{
+        const availableQuantity = getMaxAvailableQuantity(productModal?.id);
+        if (quantity >= availableQuantity) {
+            alert(`Chỉ còn ${availableQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        setQuantity((prev)=>prev + 1);
+    };
+    const decreaseQuantity = ()=>setQuantity((prev)=>prev > 1 ? prev - 1 : 1);
+    // Modal để chọn màu, kích thước và số lượng
+    const ProductModal = ()=>{
+        if (!productModal) return null;
+        // Tìm đối tượng màu đang được chọn hoặc sử dụng màu đầu tiên nếu chưa chọn màu nào
+        const currentColorObject = selectedColor ? productModal.productColors.find((c)=>c.id === selectedColor.id) : productModal.productColors[0];
+        // Lấy ảnh từ productColor
+        const currentImage = currentColorObject?.ProductColor?.image || 'https://via.placeholder.com/150';
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-bold",
+                                children: productModal.product_name
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 252,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setProductModal(null),
+                                className: "text-gray-500 hover:text-gray-700",
+                                children: "×"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 253,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 251,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                            src: currentImage,
+                            alt: `${productModal.product_name} - ${currentColorObject?.color || 'Màu mặc định'}`,
+                            className: "w-full h-64 object-contain rounded mb-4 border"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/favorites.js",
+                            lineNumber: 263,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 262,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn màu:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 271,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productColors.map((color)=>{
+                                    const hasStock = isColorAvailable(productModal.id, color.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: `
+                                            w-8 h-8 rounded-full border relative
+                                            ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500' : ''}
+                                            ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
+                                        `,
+                                        style: {
+                                            backgroundColor: color.hex_code
+                                        },
+                                        title: `${color.color}${!hasStock ? ' (Hết hàng)' : ''}`,
+                                        onClick: ()=>hasStock && setSelectedColor(color),
+                                        children: !hasStock && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                            className: "absolute inset-0 flex items-center justify-center",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                className: "w-full h-0.5 bg-gray-400 transform rotate-45"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/favorites.js",
+                                                lineNumber: 289,
+                                                columnNumber: 49
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/favorites.js",
+                                            lineNumber: 288,
+                                            columnNumber: 45
+                                        }, this)
+                                    }, color.id, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 276,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 272,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 270,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn kích thước:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 299,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productSizes.map((size)=>{
+                                    const isAvailable = selectedColor && isSizeAvailable(productModal.id, selectedColor.id, size.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: `
+                                            px-4 py-1 border rounded relative
+                                            ${selectedSize?.id === size.id ? 'bg-gray-100' : ''}
+                                            ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}
+                                        `,
+                                        onClick: ()=>isAvailable && setSelectedSize(size),
+                                        disabled: !isAvailable,
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                            children: size.size
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/favorites.js",
+                                            lineNumber: 314,
+                                            columnNumber: 41
+                                        }, this)
+                                    }, size.id, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 304,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 300,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 298,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Số lượng:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 322,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex items-center gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: decreaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "-"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 324,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "number",
+                                        className: "w-16 px-2 py-1 border rounded text-center",
+                                        min: "1",
+                                        max: getMaxAvailableQuantity(productModal.id),
+                                        value: quantity,
+                                        readOnly: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 331,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: increaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "+"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 339,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 323,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 321,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-2 mt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full sm:w-auto",
+                                onClick: ()=>handleAddToCart(),
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Thêm vào giỏ hàng"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 350,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition w-full sm:w-auto",
+                                onClick: handleBuyNow,
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Mua ngay"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/favorites.js",
+                                lineNumber: 357,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/favorites.js",
+                        lineNumber: 349,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/favorites.js",
+                lineNumber: 250,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/pages/favorites.js",
+            lineNumber: 249,
+            columnNumber: 13
+        }, this);
+    };
+    if (loading || stocksLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                 className: "container mx-auto px-4 py-8",
@@ -5561,17 +5967,17 @@ function Favorites() {
                     children: "Đang tải..."
                 }, void 0, false, {
                     fileName: "[project]/src/pages/favorites.js",
-                    lineNumber: 43,
+                    lineNumber: 374,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 42,
+                lineNumber: 373,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/favorites.js",
-            lineNumber: 41,
+            lineNumber: 372,
             columnNumber: 13
         }, this);
     }
@@ -5584,17 +5990,17 @@ function Favorites() {
                     children: error
                 }, void 0, false, {
                     fileName: "[project]/src/pages/favorites.js",
-                    lineNumber: 53,
+                    lineNumber: 384,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 52,
+                lineNumber: 383,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/favorites.js",
-            lineNumber: 51,
+            lineNumber: 382,
             columnNumber: 13
         }, this);
     }
@@ -5604,7 +6010,7 @@ function Favorites() {
                 title: "Sản phẩm yêu thích"
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 61,
+                lineNumber: 392,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5616,21 +6022,21 @@ function Favorites() {
                             className: "hidden md:flex justify-center gap-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 66,
+                                lineNumber: 397,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/favorites.js",
-                            lineNumber: 65,
+                            lineNumber: 396,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 64,
+                        lineNumber: 395,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold mb-6",
+                        className: "text-2xl font-bold mb-6 px-4",
                         children: [
                             "Sản phẩm yêu thích (",
                             pagination.total || 0,
@@ -5638,7 +6044,7 @@ function Favorites() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 69,
+                        lineNumber: 400,
                         columnNumber: 17
                     }, this),
                     items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5646,15 +6052,15 @@ function Favorites() {
                         children: "Bạn chưa có sản phẩm yêu thích nào"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 74,
+                        lineNumber: 405,
                         columnNumber: 21
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
+                        className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 px-4",
                         children: items.map((item)=>{
                             // Kiểm tra item và item.product tồn tại
                             if (!item || !item.product) return null;
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative",
+                                className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group",
                                 onClick: ()=>handleProductClick(item.product.slug),
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5666,141 +6072,180 @@ function Favorites() {
                                                 className: "w-full h-40 object-cover rounded sm:h-60 md:h-72"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 90,
+                                                lineNumber: 421,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                                 onClick: (e)=>{
                                                     e.stopPropagation();
-                                                    handleRemoveFavorite(item.product_id);
+                                                    handleRemoveFavorite(item.product.id);
                                                 },
                                                 className: "absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:bg-gray-100",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
                                                     className: "h-6 w-6 text-red-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/favorites.js",
-                                                    lineNumber: 105,
+                                                    lineNumber: 436,
                                                     columnNumber: 45
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 98,
+                                                lineNumber: 429,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 89,
+                                        lineNumber: 420,
+                                        columnNumber: 37
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                                        className: "text-lg font-semibold mt-2",
+                                        children: item.product.product_name
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 439,
+                                        columnNumber: 37
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-600 line-clamp-2 mt-1",
+                                        children: item.product.description
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 440,
                                         columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                        className: "p-4",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
-                                                className: "text-lg font-semibold mb-2",
-                                                children: item.product.product_name
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 110,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600 text-sm mb-2 line-clamp-2",
-                                                children: item.product.description
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 113,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                className: "mt-2",
-                                                children: item.product.discount_price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                            className: "text-red-500 font-bold",
-                                                            children: [
-                                                                item.product.discount_price.toLocaleString('vi-VN'),
-                                                                " đ"
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 119,
-                                                            columnNumber: 53
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                            className: "text-gray-500 line-through",
-                                                            children: [
-                                                                item.product.price.toLocaleString('vi-VN'),
-                                                                " đ"
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 122,
-                                                            columnNumber: 53
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                                    className: "text-gray-700 font-bold",
-                                                    children: [
-                                                        item.product.price.toLocaleString('vi-VN'),
-                                                        " đ"
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/pages/favorites.js",
-                                                    lineNumber: 127,
-                                                    columnNumber: 49
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 116,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                className: "flex gap-2 mt-3",
-                                                children: item.product.productColors?.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                                        className: "w-4 h-4 rounded-full border border-gray-300",
-                                                        style: {
-                                                            backgroundColor: color.hex_code
-                                                        },
-                                                        title: color.color
-                                                    }, color.id, false, {
+                                        className: "mt-auto pt-2",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                            className: "flex justify-between items-center",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                    children: item.product.discount_price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                                                className: "text-red-500 font-bold",
+                                                                children: [
+                                                                    item.product.discount_price.toLocaleString('vi-VN'),
+                                                                    " đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/favorites.js",
+                                                                lineNumber: 446,
+                                                                columnNumber: 57
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-500 line-through",
+                                                                children: [
+                                                                    item.product.price.toLocaleString('vi-VN'),
+                                                                    " đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/favorites.js",
+                                                                lineNumber: 449,
+                                                                columnNumber: 57
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                                        className: "text-gray-700 font-bold",
+                                                        children: [
+                                                            item.product.price.toLocaleString('vi-VN'),
+                                                            " đ"
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/pages/favorites.js",
-                                                        lineNumber: 135,
-                                                        columnNumber: 49
-                                                    }, this))
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 133,
-                                                columnNumber: 41
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
+                                                        lineNumber: 454,
+                                                        columnNumber: 53
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/favorites.js",
+                                                    lineNumber: 443,
+                                                    columnNumber: 45
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                    className: "flex gap-1",
+                                                    children: item.product.productColors?.map((color)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                            className: "w-4 h-4 rounded-full border border-gray-300",
+                                                            style: {
+                                                                backgroundColor: color.hex_code
+                                                            },
+                                                            title: color.color
+                                                        }, color.id, false, {
+                                                            fileName: "[project]/src/pages/favorites.js",
+                                                            lineNumber: 461,
+                                                            columnNumber: 53
+                                                        }, this))
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/favorites.js",
+                                                    lineNumber: 459,
+                                                    columnNumber: 45
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/pages/favorites.js",
+                                            lineNumber: 442,
+                                            columnNumber: 41
+                                        }, this)
+                                    }, void 0, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 109,
+                                        lineNumber: 441,
+                                        columnNumber: 37
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: "mt-auto pt-4 w-full absolute left-0 bottom-4 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                            className: "bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 flex items-center w-full justify-center",
+                                            onClick: (e)=>{
+                                                e.stopPropagation();
+                                                openProductModal(item.product);
+                                            },
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__["ShoppingBagIcon"], {
+                                                    className: "h-4 w-4 mr-1"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/pages/favorites.js",
+                                                    lineNumber: 481,
+                                                    columnNumber: 45
+                                                }, this),
+                                                " Thêm vào giỏ"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/pages/favorites.js",
+                                            lineNumber: 474,
+                                            columnNumber: 41
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/favorites.js",
+                                        lineNumber: 473,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, item.id, true, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 84,
+                                lineNumber: 415,
                                 columnNumber: 33
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 78,
+                        lineNumber: 409,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 63,
+                lineNumber: 394,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
+                fileName: "[project]/src/pages/favorites.js",
+                lineNumber: 491,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/favorites.js",
-        lineNumber: 60,
+        lineNumber: 391,
         columnNumber: 9
     }, this);
 }

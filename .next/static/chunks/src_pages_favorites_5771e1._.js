@@ -13,7 +13,7 @@
     "static/chunks/node_modules_react-icons_gi_index_mjs_e0b001._.js",
     "static/chunks/node_modules_react-icons_io5_index_mjs_e31071._.js",
     "static/chunks/node_modules_react-icons_lib_75a63d._.js",
-    "static/chunks/node_modules_413947._.js"
+    "static/chunks/node_modules_fdef28._.js"
   ],
   "source": "entry"
 });

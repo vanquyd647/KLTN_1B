@@ -6,6 +6,6 @@ runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_fa_index_mjs_275a2
 runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_gi_index_mjs_adf351._.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_io5_index_mjs_d99fb2._.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_react-icons_lib_6322da._.js");
-runtime.loadChunk("server/chunks/ssr/node_modules_3d6e4b._.js");
+runtime.loadChunk("server/chunks/ssr/node_modules_394eed._.js");
 runtime.loadChunk("server/chunks/ssr/src_styles_globals_070f83.css");
 module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/next/dist/esm/build/templates/pages.js { INNER_PAGE => \"[project]/src/pages/favorites.js [ssr] (ecmascript)\", INNER_DOCUMENT => \"[project]/node_modules/next/document.js [ssr] (ecmascript)\", INNER_APP => \"[project]/src/pages/_app.js [ssr] (ecmascript)\" } [ssr] (ecmascript)", CHUNK_PUBLIC_PATH).exports;

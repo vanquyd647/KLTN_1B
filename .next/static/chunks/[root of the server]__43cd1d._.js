@@ -4498,7 +4498,7 @@ function VouchersPage() {
             {
                 "id": 1,
                 "code": "SALE50",
-                "description": "giảm 50000",
+                "description": "giảm 50,000 đơn từ 250,000",
                 "discount_amount": 50000.00,
                 "expiry_date": "2026-01-01 07:00:00",
                 "total_quantity": 0,
@@ -4510,7 +4510,7 @@ function VouchersPage() {
             {
                 "id": 2,
                 "code": "SALE20",
-                "description": "giảm 20000",
+                "description": "giảm 20000 đơn từ 100,000",
                 "discount_amount": 20000.00,
                 "expiry_date": "2026-01-01 07:00:00",
                 "total_quantity": 0,
@@ -4522,7 +4522,7 @@ function VouchersPage() {
             {
                 "id": 3,
                 "code": "SALE5",
-                "description": "giảm 5000",
+                "description": "giảm 5000 đơn từ 50,000",
                 "discount_amount": 5000.00,
                 "expiry_date": "2025-12-31 07:00:00",
                 "total_quantity": 0,

@@ -1,17 +1,9 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/vouchers": "pages/vouchers.js",
   "/admin": "pages/admin.js",
   "/": "pages/index.js",
-  "/account/profile": "pages/account/profile.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/cart": "pages/cart.js",
-  "/checkout": "pages/checkout.js",
-  "/payment": "pages/payment.js",
-  "/payment/success": "pages/payment/success.js",
-  "/favorites": "pages/favorites.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/new-products": "pages/new-products.js",
-  "/payment/cancel": "pages/payment/cancel.js"
+  "/store-locations": "pages/store-locations.js",
+  "/TrackOrder": "pages/TrackOrder.js",
+  "/vouchers": "pages/vouchers.js"
 }
