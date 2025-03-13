@@ -1682,10 +1682,11 @@ const couponApi = {
         }
     },
     // Kiểm tra mã giảm giá (Public)
-    validateCoupon: async (code)=>{
+    validateCoupon: async (code, orderAmount)=>{
         try {
             const response = await apiClient.post('coupons/validate', {
-                code
+                code,
+                orderAmount
             });
             return response.data;
         } catch (error) {
@@ -1693,10 +1694,11 @@ const couponApi = {
         }
     },
     // Áp dụng mã giảm giá (Public)
-    applyCoupon: async (code)=>{
+    applyCoupon: async (code, orderAmount)=>{
         try {
             const response = await apiClient.post('coupons/apply', {
-                code
+                code,
+                orderAmount
             });
             return response.data;
         } catch (error) {

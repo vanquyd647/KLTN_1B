@@ -287,7 +287,7 @@ const CheckoutPage = () => {
         setCouponError('');
 
         try {
-            const response = await couponApi.validateCoupon(couponCode);
+            const response = await couponApi.validateCoupon(couponCode, calculateTotal());
             if (response.success && response.data.status === 'valid') {
                 const { couponInfo } = response.data;
                 // Convert string to number for discount_amount
@@ -437,7 +437,7 @@ const CheckoutPage = () => {
         try {
             // Nếu có mã giảm giá hợp lệ, áp dụng trước khi tạo order
             if (couponInfo) {
-                await couponApi.applyCoupon(couponCode);
+                await couponApi.applyCoupon(couponCode, calculateTotal);
             }
 
             const orderData = {

@@ -1196,9 +1196,9 @@ const couponApi = {
     },
 
     // Kiểm tra mã giảm giá (Public)
-    validateCoupon: async (code) => {
+    validateCoupon: async (code, orderAmount) => {
         try {
-            const response = await apiClient.post('coupons/validate', { code });
+            const response = await apiClient.post('coupons/validate', { code, orderAmount });
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Mã giảm giá không hợp lệ.';
@@ -1206,9 +1206,9 @@ const couponApi = {
     },
 
     // Áp dụng mã giảm giá (Public)
-    applyCoupon: async (code) => {
+    applyCoupon: async (code, orderAmount) => {
         try {
-            const response = await apiClient.post('coupons/apply', { code });
+            const response = await apiClient.post('coupons/apply', { code, orderAmount });
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Không thể áp dụng mã giảm giá.';

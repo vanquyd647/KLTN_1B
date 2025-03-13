@@ -859,7 +859,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://59d8-1-52-90-166.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1871,10 +1871,11 @@ const couponApi = {
         }
     },
     // Kiểm tra mã giảm giá (Public)
-    validateCoupon: async (code)=>{
+    validateCoupon: async (code, orderAmount)=>{
         try {
             const response = await apiClient.post('coupons/validate', {
-                code
+                code,
+                orderAmount
             });
             return response.data;
         } catch (error) {
@@ -1882,10 +1883,11 @@ const couponApi = {
         }
     },
     // Áp dụng mã giảm giá (Public)
-    applyCoupon: async (code)=>{
+    applyCoupon: async (code, orderAmount)=>{
         try {
             const response = await apiClient.post('coupons/apply', {
-                code
+                code,
+                orderAmount
             });
             return response.data;
         } catch (error) {

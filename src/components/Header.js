@@ -305,7 +305,7 @@ const Header = memo(function Header({ isCartPage }) {
                     {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">
                         <Link
-                            href="/voucher"
+                            href="/vouchers"
                             className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >

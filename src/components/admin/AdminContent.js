@@ -6,7 +6,8 @@ import Statistics from '../Statistics';
 import ShippingManagement from '../ShippingManagement';
 import UserManagement from '../UserManagement';
 import BlogManagement from '../BlogManagement';
-import CouponManagement from '../CouponManagement'; // Thêm import
+import CouponManagement from '../CouponManagement'; 
+import SettingsManagement from '../SettingsManagement';
 
 const AdminContent = ({ activeTab, loading }) => {
     const renderContent = () => {
@@ -29,6 +30,8 @@ const AdminContent = ({ activeTab, loading }) => {
                 return <BlogManagement />;
             case 'coupons': // Thêm case mới
                 return <CouponManagement />;
+            case 'settings': // Thêm case mới
+                return <SettingsManagement />;
             default:
                 return <ProductManagement />;
         }

@@ -1,18 +1,17 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
+  "/vouchers": "pages/vouchers.js",
+  "/admin": "pages/admin.js",
   "/": "pages/index.js",
+  "/account/profile": "pages/account/profile.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js",
   "/cart": "pages/cart.js",
-  "/account/login": "pages/account/login.js",
-  "/new-products": "pages/new-products.js",
-  "/featured-products": "pages/featured-products.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/favorites": "pages/favorites.js",
-  "/account/profile": "pages/account/profile.js",
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
   "/payment/success": "pages/payment/success.js",
-  "/admin": "pages/admin.js",
-  "/TrackOrder": "pages/TrackOrder.js"
+  "/favorites": "pages/favorites.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/new-products": "pages/new-products.js",
+  "/payment/cancel": "pages/payment/cancel.js"
 }

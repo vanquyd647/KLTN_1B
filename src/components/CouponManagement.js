@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { couponApi } from '../utils/apiClient';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
+import { min } from 'lodash';
 
 const CouponManagement = () => {
     const [coupons, setCoupons] = useState([]);
@@ -16,6 +17,7 @@ const CouponManagement = () => {
         code: '',
         description: '',
         discount_amount: '',
+        min_order_amount: '',
         expiry_date: '',
         total_quantity: 0,
         is_active: true
@@ -103,6 +105,7 @@ const CouponManagement = () => {
                             code: '',
                             description: '',
                             discount_amount: '',
+                            min_order_amount: '',
                             expiry_date: '',
                             total_quantity: 0,
                             is_active: true
@@ -257,6 +260,7 @@ const CouponManagement = () => {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mã</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mô tả</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Áp dụng cho đơn từ</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Giảm giá</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Số lượng</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày hết hạn</th>
@@ -269,6 +273,9 @@ const CouponManagement = () => {
                             <tr key={coupon.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{coupon.code}</td>
                                 <td className="px-6 py-4">{coupon.description}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {Number(coupon.min_order_amount).toLocaleString()}đ
+                                </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     {Number(coupon.discount_amount).toLocaleString()}đ
                                 </td>
@@ -296,6 +303,7 @@ const CouponManagement = () => {
                                                     code: coupon.code,
                                                     description: coupon.description,
                                                     discount_amount: coupon.discount_amount,
+                                                    min_order_amount: coupon.min_order_amount,
                                                     expiry_date: format(new Date(coupon.expiry_date), 'yyyy-MM-dd'),
                                                     total_quantity: coupon.total_quantity,
                                                     is_active: coupon.is_active
@@ -390,6 +398,16 @@ const CouponManagement = () => {
                                     type="number"
                                     value={formData.discount_amount}
                                     onChange={(e) => setFormData({ ...formData, discount_amount: e.target.value })}
+                                    className="w-full border rounded px-3 py-2"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Áp dụng cho đơn hàng từ</label>
+                                <input
+                                    type="number"
+                                    value={formData.min_order_amount}
+                                    onChange={(e) => setFormData({ ...formData, min_order_amount: e.target.value })}
                                     className="w-full border rounded px-3 py-2"
                                     required
                                 />
