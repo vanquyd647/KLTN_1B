@@ -1,9 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/admin": "pages/admin.js",
-  "/": "pages/index.js",
-  "/store-locations": "pages/store-locations.js",
-  "/TrackOrder": "pages/TrackOrder.js",
-  "/vouchers": "pages/vouchers.js"
+  "/": "pages/index.js"
 }
