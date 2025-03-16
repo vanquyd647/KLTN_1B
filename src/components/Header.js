@@ -8,6 +8,12 @@ import { productApi } from '../utils/apiClient';
 import { selectFavoriteTotal, forceUpdateFavorites } from '../store/slices/favoriteSlice';
 import Sidebar from './Sidebar';
 import AnnouncementBar from './AnnouncementBar';
+import {
+    UserIcon,
+    HeartIcon,
+    ShoppingBagIcon,
+    MagnifyingGlassIcon
+} from '@heroicons/react/24/outline';
 
 const Header = memo(function Header({ isCartPage }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -146,20 +152,7 @@ const Header = memo(function Header({ isCartPage }) {
                 className="hover:underline focus:outline-none"
                 aria-label="Search"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
-                    />
-                </svg>
+                <MagnifyingGlassIcon className="h-6 w-6 text-black" />
             </button>
 
             {isSearchOpen && (
@@ -274,7 +267,7 @@ const Header = memo(function Header({ isCartPage }) {
     return (
         <>
             <AnnouncementBar />
-            <header className="bg-gray-800 text-white p-4 shadow">
+            <header className="bg-white-800 text-black p-4 shadow">
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Drawer Toggle Button for Sidebar */}
                     <button
@@ -298,7 +291,7 @@ const Header = memo(function Header({ isCartPage }) {
                     </button>
 
                     {/* Logo */}
-                    <Link href="/" className="text-2xl font-bold flex-shrink-0">
+                    <Link href="/" className="text-2xl font-bold flex-shrink-0 text-black">
                         Fashion Store
                     </Link>
 
@@ -306,35 +299,35 @@ const Header = memo(function Header({ isCartPage }) {
                     <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">
                         <Link
                             href="/vouchers"
-                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
                             Ưu đãi
                         </Link>
                         <Link
-                            href="/"
-                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            href="/onsale"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
-                            Bán chạy
+                            Sale
                         </Link>
                         <Link
                             href="/Sale"
-                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
                             Khuyến mãi
                         </Link>
                         <Link
                             href="/store-locations"
-                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
                             Hệ thống cửa hàng
                         </Link>
                         <Link
                             href="/TrackOrder"
-                            className="hover:underline hover:text-blue-600 transition-colors duration-200 font-sans"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
                             Tra cứu đơn hàng
@@ -346,43 +339,18 @@ const Header = memo(function Header({ isCartPage }) {
                         <ul className="flex space-x-4 items-center">
                             {/* Search Icon */}
                             {searchSection}
+
                             {/* User Icon */}
                             <li>
                                 <Link href="/account/profile" className="hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                        />
-                                    </svg>
+                                    <UserIcon className="h-6 w-6 text-black" />
                                 </Link>
                             </li>
 
                             {/* Favorites Icon with Counter */}
                             <li className="relative">
                                 <Link href="/favorites" className="hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                        />
-                                    </svg>
+                                    <HeartIcon className="h-6 w-6 text-black" />
                                     {favoriteCount > 0 && (
                                         <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                                             {favoriteCount}
@@ -394,20 +362,7 @@ const Header = memo(function Header({ isCartPage }) {
                             {/* Cart Icon with Counter */}
                             <li className="relative">
                                 <Link href="/cart" className="hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6m12.5-6l1.5 6m-10-1h8"
-                                        />
-                                    </svg>
+                                    <ShoppingBagIcon className="h-6 w-6 text-black" />
                                     {totalItems > 0 && (
                                         <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                                             {totalItems}

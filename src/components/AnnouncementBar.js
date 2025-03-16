@@ -19,7 +19,7 @@ export default function AnnouncementBar() {
     if (!isVisible) return null;
 
     return (
-        <div className="bg-blue-600 text-white relative">
+        <div className="bg-gray-800 text-white relative">
             <div className="flex items-center justify-center py-2 px-4">
                 <span className="mr-2">🚚</span>
                 <p className="text-sm font-medium text-center">MIỄN PHÍ VẬN CHUYỂN CHO ĐƠN HÀNG TỪ 200K</p>

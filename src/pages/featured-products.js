@@ -4,20 +4,17 @@ import { fetchFeaturedProductsByPagination } from '../store/slices/productSlice'
 import { fetchColors } from '../store/slices/colorsSlice';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import Sidebar from '../components/Sidebar2';
-import Banner from '../components/Banner';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline'; // Thêm icon giỏ hàng
-import { getToken, getCartId } from '../utils/storage'; // Thêm import này
-import { stockApi } from '../utils/apiClient'; // Thêm import stockApi
+import { ShoppingBagIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { getToken, getCartId } from '../utils/storage';
+import { stockApi } from '../utils/apiClient';
 import {
     addToFavorite,
     removeFromFavorite,
     getFavorites,
     selectFavoriteStatuses
 } from '../store/slices/favoriteSlice';
-// Thêm import từ cartSlice
 import {
     createCartForGuest,
     createCartForUser,
@@ -25,22 +22,40 @@ import {
     getCartItems
 } from '../store/slices/cartSlice';
 
-export default function FeaturedProducts() {
+export default function NewProducts() {
     const dispatch = useDispatch();
     const router = useRouter();
     const { featuredProducts, loading, error } = useSelector((state) => state.products);
     const { data: colors, loading: colorsLoading, error: colorsError } = useSelector((state) => state.colors);
-    const { items: cartItems } = useSelector((state) => state.cart); // Thêm cartItems
+    const { items: cartItems } = useSelector((state) => state.cart);
+    const [allProducts, setAllProducts] = useState([]);
 
     const favorites = useSelector(selectFavoriteStatuses);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState('newest');
-    const [priceRange, setPriceRange] = useState('');
+    const [priceRange, setPriceRange] = useState('0-3000000');
+    const [priceValue, setPriceValue] = useState(3000000);
     const [selectedColors, setSelectedColors] = useState([]);
+    const [selectedSizes, setSelectedSizes] = useState([]);
     const pageSize = 10;
 
-    // Thêm state mới
+    // Trạng thái mở/đóng cho các danh mục
+    const [expandedCategories, setExpandedCategories] = useState({
+        aoNam: false,
+        quanNam: false,
+        boSuuTap: false
+    });
+
+    // Trạng thái hiển thị/ẩn các bộ lọc
+    const [showFilters, setShowFilters] = useState({
+        category: true,
+        price: true,
+        color: true,
+        size: true
+    });
+
+    // State cho modal sản phẩm
     const [stocks, setStocks] = useState([]);
     const [productModal, setProductModal] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
@@ -60,7 +75,7 @@ export default function FeaturedProducts() {
         fetchStocks();
     }, [dispatch]);
 
-    // Thêm hàm fetch stocks
+    // Hàm fetch stocks
     const fetchStocks = async () => {
         try {
             const response = await stockApi.getProductStocks();
@@ -76,14 +91,6 @@ export default function FeaturedProducts() {
 
     // Fetch dữ liệu khi thay đổi trang, sắp xếp, khoảng giá hoặc màu sắc
     useEffect(() => {
-        console.log('Dispatching fetchFeaturedProductsByPagination with:', {
-            page: currentPage,
-            limit: pageSize,
-            sort,
-            priceRange,
-            colorIds: selectedColors,
-        });
-
         dispatch(
             fetchFeaturedProductsByPagination({
                 page: currentPage,
@@ -91,9 +98,26 @@ export default function FeaturedProducts() {
                 sort,
                 priceRange,
                 colorIds: selectedColors,
+                sizes: selectedSizes,
             })
         );
-    }, [dispatch, currentPage, sort, priceRange, selectedColors]);
+    }, [dispatch, currentPage, sort, priceRange, selectedColors, selectedSizes]);
+
+    // Thêm effect để cập nhật danh sách sản phẩm khi có dữ liệu mới
+    useEffect(() => {
+        if (featuredProducts?.items && featuredProducts.items.length > 0) {
+            if (currentPage === 1) {
+                // Nếu là trang đầu, thay thế hoàn toàn danh sách
+                setAllProducts(featuredProducts.items);
+            } else {
+                // Nếu không, chỉ thêm các sản phẩm mới (tránh trùng lặp)
+                const newProducts = featuredProducts.items.filter(
+                    (item) => !allProducts.some((existing) => existing.id === item.id)
+                );
+                setAllProducts((prev) => [...prev, ...newProducts]);
+            }
+        }
+    }, [featuredProducts.items, currentPage]);
 
     // Fetch dữ liệu màu sắc khi component mount
     useEffect(() => {
@@ -103,15 +127,18 @@ export default function FeaturedProducts() {
     // Reset về trang đầu tiên khi thay đổi bộ lọc
     const resetFilters = () => {
         setCurrentPage(1);
+        setAllProducts([]); // Thêm dòng này để xóa danh sách sản phẩm khi filter thay đổi
     };
+
 
     const handleSortChange = (e) => {
         setSort(e.target.value);
         resetFilters();
     };
 
-    const handlePriceRangeChange = (e) => {
-        setPriceRange(e.target.value);
+    const handlePriceRangeChange = (value) => {
+        setPriceValue(value);
+        setPriceRange(`0-${value}`);
         resetFilters();
     };
 
@@ -122,6 +149,29 @@ export default function FeaturedProducts() {
                 : [...prevColors, colorId]
         );
         resetFilters();
+    };
+
+    const handleSizeChange = (size) => {
+        setSelectedSizes((prevSizes) =>
+            prevSizes.includes(size)
+                ? prevSizes.filter((s) => s !== size)
+                : [...prevSizes, size]
+        );
+        resetFilters();
+    };
+
+    const toggleCategory = (category) => {
+        setExpandedCategories(prev => ({
+            ...prev,
+            [category]: !prev[category]
+        }));
+    };
+
+    const toggleFilter = (filterName) => {
+        setShowFilters(prev => ({
+            ...prev,
+            [filterName]: !prev[filterName]
+        }));
     };
 
     const handleProductClick = (slug) => {
@@ -146,12 +196,12 @@ export default function FeaturedProducts() {
         }
     };
 
-    // Thêm hàm để mở modal
+    // Hàm để mở modal
     const openProductModal = (product) => {
         setProductModal(product);
     };
 
-    // Thêm các hàm quản lý stock từ [slug].js
+    // Các hàm quản lý stock
     const getStockQuantity = (productId, colorId, sizeId) => {
         const stock = stocks.find(
             stock => stock.product_id === productId &&
@@ -326,7 +376,6 @@ export default function FeaturedProducts() {
                         </button>
                     </div>
 
-                    {/* Hiển thị ảnh theo màu được chọn */}
                     <div className="mb-4">
                         <img
                             src={currentImage}
@@ -437,168 +486,355 @@ export default function FeaturedProducts() {
 
     return (
         <Layout>
-            <Banner />
-            <div className="container mx-auto">
-                <div className="mt-6 px-6">
-                    <div className="hidden md:flex justify-center gap-4">
-                        <Sidebar />
-                    </div>
+            <div className="container mx-auto px-4 py-6">
+                {/* Breadcrumb */}
+                <div className="mb-4 text-sm mt-4">
+                    <span className="text-gray-500">Trang chủ</span> /
+                    <span className="font-medium"> Sản phẩm nổi bật</span>
                 </div>
-                <div className="w-full px-4 py-6">
-                    <h1 className="text-2xl font-bold mb-6">Sản phẩm nổi bật</h1>
 
-                    {error && <div className="text-red-500 text-center">{error}</div>}
+                <div className="flex flex-col md:flex-row gap-6">
+                    {/* Bộ lọc bên trái */}
+                    <div className="w-full md:w-1/4">
+                        <div className="sticky top-6">
+                            <h2 className="text-xl font-bold mb-4">Bộ lọc</h2>
 
-                    {/* Bộ lọc sắp xếp */}
-                    <div className="mb-6 flex items-center gap-2">
-                        <label htmlFor="sortFilter" className="text-gray-700 font-semibold">
-                            Sắp xếp theo:
-                        </label>
-                        <select
-                            id="sortFilter"
-                            value={sort}
-                            onChange={handleSortChange}
-                            className="border rounded p-2"
-                        >
-                            <option value="featured">Sản phẩm nổi bật</option>
-                            <option value="price_asc">Giá: Tăng dần</option>
-                            <option value="price_desc">Giá: Giảm dần</option>
-                            <option value="name_asc">Tên: A-Z</option>
-                            <option value="name_desc">Tên: Z-A</option>
-                            <option value="oldest">Cũ nhất</option>
-                            <option value="newest">Mới nhất</option>
-                        </select>
-                    </div>
+                            {/* Danh mục sản phẩm */}
+                            <div className="mb-6 border-b pb-4">
+                                <div
+                                    className="flex justify-between items-center cursor-pointer"
+                                    onClick={() => toggleFilter('category')}
+                                >
+                                    <h3 className="font-semibold mb-2">Danh mục sản phẩm</h3>
+                                    {showFilters.category ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+                                </div>
 
-                    {/* Bộ lọc giá */}
-                    <div className="mb-6 flex items-center gap-2">
-                        <label htmlFor="priceRangeFilter" className="text-gray-700 font-semibold">
-                            Khoảng giá:
-                        </label>
-                        <select
-                            id="priceRangeFilter"
-                            value={priceRange}
-                            onChange={handlePriceRangeChange}
-                            className="border rounded p-2"
-                        >
-                            <option value="">Tất cả</option>
-                            <option value="0-100000">Dưới 100.000 VND</option>
-                            <option value="100000-500000">100.000 - 500.000 VND</option>
-                            <option value="500000-1000000">500.000 - 1.000.000 VND</option>
-                            <option value="1000000-">Trên 1.000.000 VND</option>
-                        </select>
-                    </div>
-
-                    {/* Bộ lọc màu sắc */}
-                    <div className="mb-6">
-                        <h3 className="text-lg font-bold mb-2">Màu sắc</h3>
-                        <div className="flex flex-wrap gap-4">
-                            {colors && colors.length > 0 && [...new Set(colors.map((color) => color.color))].map((colorName, index) => {
-                                const color = colors.find((c) => c.color === colorName);
-                                return (
-                                    <div key={index} className="flex items-center gap-2">
-                                        <input
-                                            type="checkbox"
-                                            id={`color-${color.id}`}
-                                            value={color.id}
-                                            onChange={() => handleColorChange(color.id)}
-                                            className="cursor-pointer"
-                                        />
-                                        <label
-                                            htmlFor={`color-${color.id}`}
-                                            className="flex items-center gap-2 cursor-pointer"
-                                        >
-                                            <span
-                                                className="block w-6 h-6 rounded border border-black"
-                                                style={{ backgroundColor: color.hex_code }}
-                                            ></span>
-                                            {color.color}
-                                        </label>
+                                {showFilters.category && (
+                                    <div className="mt-2">
+                                        <ul className="space-y-2">
+                                            <li><a href="#" className="text-gray-600 hover:text-black">Sản phẩm nổi bật</a></li>
+                                            <li><a href="#" className="text-gray-600 hover:text-black">Sale</a></li>
+                                            <li>
+                                                <div
+                                                    className="flex items-center justify-between cursor-pointer"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        toggleCategory('aoNam');
+                                                    }}
+                                                >
+                                                    <a href="#" className="text-gray-600 hover:text-black">Áo nam</a>
+                                                    {expandedCategories.aoNam ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
+                                                </div>
+                                                {expandedCategories.aoNam && (
+                                                    <ul className="pl-4 mt-1 space-y-1">
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo thun</a></li>
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo polo</a></li>
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo sơ mi</a></li>
+                                                    </ul>
+                                                )}
+                                            </li>
+                                            <li>
+                                                <div
+                                                    className="flex items-center justify-between cursor-pointer"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        toggleCategory('quanNam');
+                                                    }}
+                                                >
+                                                    <a href="#" className="text-gray-600 hover:text-black">Quần nam</a>
+                                                    {expandedCategories.quanNam ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
+                                                </div>
+                                                {expandedCategories.quanNam && (
+                                                    <ul className="pl-4 mt-1 space-y-1">
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần jean</a></li>
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần kaki</a></li>
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần short</a></li>
+                                                    </ul>
+                                                )}
+                                            </li>
+                                            <li>
+                                                <div
+                                                    className="flex items-center justify-between cursor-pointer"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        toggleCategory('boSuuTap');
+                                                    }}
+                                                >
+                                                    <a href="#" className="text-gray-600 hover:text-black">Bộ sưu tập</a>
+                                                    {expandedCategories.boSuuTap ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
+                                                </div>
+                                                {expandedCategories.boSuuTap && (
+                                                    <ul className="pl-4 mt-1 space-y-1">
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Xuân Hè 2023</a></li>
+                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Thu Đông 2022</a></li>
+                                                    </ul>
+                                                )}
+                                            </li>
+                                            <li><a href="#" className="text-gray-600 hover:text-black">Hệ thống cửa hàng</a></li>
+                                            <li><a href="#" className="text-gray-600 hover:text-black">Ưu đãi</a></li>
+                                        </ul>
                                     </div>
-                                );
-                            })}
+                                )}
+                            </div>
+
+                            {/* Khoảng giá */}
+                            <div className="mb-6 border-b pb-4">
+                                <div
+                                    className="flex justify-between items-center cursor-pointer"
+                                    onClick={() => toggleFilter('price')}
+                                >
+                                    <h3 className="font-semibold mb-2">Khoảng giá</h3>
+                                    {showFilters.price ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+                                </div>
+
+                                {showFilters.price && (
+                                    <div className="mt-2">
+                                        <div className="flex justify-between mb-2 text-sm">
+                                            <span>0đ</span>
+                                            <span>{new Intl.NumberFormat('vi-VN').format(priceValue)}đ</span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="100000"
+                                            max="3000000"
+                                            step="100000"
+                                            className="w-full"
+                                            value={priceValue}
+                                            onChange={(e) => handlePriceRangeChange(parseInt(e.target.value))}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Màu sắc */}
+                            <div className="mb-6 border-b pb-4">
+                                <div
+                                    className="flex justify-between items-center cursor-pointer"
+                                    onClick={() => toggleFilter('color')}
+                                >
+                                    <h3 className="font-semibold mb-2">Màu sắc</h3>
+                                    {showFilters.color ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+                                </div>
+
+                                {showFilters.color && (
+                                    <div className="mt-2 flex flex-wrap gap-3">
+                                        {colors && colors.length > 0 && [...new Set(colors.map((color) => color.color))].map((colorName, index) => {
+                                            const color = colors.find((c) => c.color === colorName);
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={`w-8 h-8 rounded-full border cursor-pointer ${selectedColors.includes(color.id) ? 'ring-2 ring-black' : ''}`}
+                                                    style={{ backgroundColor: color.hex_code }}
+                                                    onClick={() => handleColorChange(color.id)}
+                                                    title={color.color}
+                                                ></div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Size */}
+                            <div className="mb-6">
+                                <div
+                                    className="flex justify-between items-center cursor-pointer"
+                                    onClick={() => toggleFilter('size')}
+                                >
+                                    <h3 className="font-semibold mb-2">Size</h3>
+                                    {showFilters.size ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+                                </div>
+
+                                {showFilters.size && (
+                                    <div className="mt-2">
+                                        <div className="grid grid-cols-4 gap-2">
+                                            {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                                                <button
+                                                    key={size}
+                                                    className={`border py-1 px-2 text-center hover:bg-gray-100 ${selectedSizes.includes(size) ? 'bg-gray-200' : ''}`}
+                                                    onClick={() => handleSizeChange(size)}
+                                                >
+                                                    {size}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Danh sách sản phẩm */}
-                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                        {featuredProducts && featuredProducts.items && featuredProducts.items.map((product) => (
-                            <div
-                                key={product.id}
-                                className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group"
-                                onClick={() => handleProductClick(product.slug)}
-                            >
-                                <button
-                                    onClick={(e) => handleFavoriteClick(e, product.id)}
-                                    className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
-                                >
-                                    {favorites[product.id] ? (
-                                        <HeartSolid className="h-6 w-6 text-red-500" />
-                                    ) : (
-                                        <HeartOutline className="h-6 w-6 text-gray-400" />
-                                    )}
-                                </button>
-                                <img
-                                    src={
-                                        product.productColors[0]?.ProductColor?.image ||
-                                        'https://via.placeholder.com/150'
-                                    }
-                                    alt={product.product_name}
-                                    className="w-full h-60 sm:h-72 md:h-80 object-cover rounded"
-                                />
-                                <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
-                                <p className="text-gray-600">{product.description}</p>
-                                <p className="text-red-500 font-bold">
-                                    {product.discount_price.toLocaleString('vi-VN')} VND
-                                </p>
-                                <p className="text-gray-500 line-through">
-                                    {product.price.toLocaleString('vi-VN')} VND
-                                </p>
-                                <div className="flex gap-1 mt-2">
-                                    {product.productColors.map((color) => (
-                                        <div
-                                            key={color.id}
-                                            className="w-4 h-4 rounded-full border border-gray-300"
-                                            style={{ backgroundColor: color.hex_code }}
-                                            title={color.color}
-                                        />
-                                    ))}
-                                </div>
+                    {/* Phần danh sách sản phẩm */}
+                    <div className="w-full md:w-3/4">
+                        <div className="mb-4">
+                            <h1 className="text-xl font-bold mb-2">
+                                Sản phẩm nổi bật
+                                {/* {featuredProducts?.items?.length > 0 && <span className="text-sm font-normal ml-2">({featuredProducts.items.length} sản phẩm)</span>} */}
+                            </h1>
+                        </div>
 
-                                {/* Thêm nút thêm vào giỏ hàng */}
-                                <div className="mt-auto pt-4 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <button
-                                        className="bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 flex items-center w-full justify-center"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            openProductModal(product);
-                                        }}
+                        <div className="mb-6">
+                            <div className="flex flex-wrap items-center justify-between gap-4">
+                                <div className="text-sm text-gray-600">
+                                    {featuredProducts?.pagination?.totalItems || 0} sản phẩm
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <label htmlFor="sortOrder" className="text-sm">Sắp xếp theo:</label>
+                                    <select
+                                        id="sortOrder"
+                                        className="border px-3 py-1 text-sm rounded"
+                                        value={sort}
+                                        onChange={handleSortChange}
                                     >
-                                        <ShoppingBagIcon className="h-4 w-4 mr-1" /> Thêm vào giỏ
-                                    </button>
+                                        <option value="price_asc">Giá: Tăng dần</option>
+                                        <option value="price_desc">Giá: Giảm dần</option>
+                                        <option value="name_asc">Tên: A-Z</option>
+                                        <option value="name_desc">Tên: Z-A</option>
+                                        <option value="newest">Mới nhất</option>
+                                    </select>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </div>
 
-                    {/* Nút tải thêm */}
-                    <div className="flex justify-center mt-6">
-                        {featuredProducts && featuredProducts.pagination &&
-                            currentPage < featuredProducts.pagination.totalPages && (
+                        {/* Danh sách sản phẩm */}
+                        {loading ? (
+                            <div className="text-center py-10">
+                                <div className="spinner"></div>
+                                <p className="mt-2">Đang tải sản phẩm...</p>
+                            </div>
+                        ) : error ? (
+                            <div className="text-center py-10 text-red-500">
+                                <p>Có lỗi xảy ra khi tải sản phẩm. Vui lòng thử lại sau.</p>
+                            </div>
+                        ) : featuredProducts && allProducts.length > 0 ? (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {allProducts.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow relative"
+                                    >
+                                        <div className="relative overflow-hidden aspect-[3/4]" onClick={() => handleProductClick(product.slug)}>
+                                            {product ? (
+                                                <img
+                                                    src={product.productColors[0]?.ProductColor?.image}
+                                                    alt={product.product_name}
+                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                            ) : (
+                                                <div className="bg-gray-200 w-full h-full flex items-center justify-center">
+                                                    <span className="text-gray-400">No image</span>
+                                                </div>
+                                            )}
+
+                                            {/* Badge giảm giá nếu có */}
+                                            {product.discount_price < product.price ? (
+                                                <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold">
+                                                    -{Math.round(((product.price - product.discount_price) / product.price) * 100)}%
+                                                </div>
+                                            ) : product.is_new ? (
+                                                <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold">
+                                                    NEW
+                                                </div>
+                                            ) : null}
+                                        </div>
+
+                                        <div className="p-3">
+                                            <div className="flex justify-between items-start">
+                                                <h3
+                                                    className="text-sm md:text-base font-medium mb-1 line-clamp-1 hover:text-red-500 cursor-pointer"
+                                                    onClick={() => handleProductClick(product.slug)}
+                                                >
+                                                    {product.product_name}
+                                                </h3>
+                                                {/* Yêu thích */}
+                                                <button
+                                                    className="text-gray-700 hover:text-red-500 transition"
+                                                    onClick={(e) => handleFavoriteClick(e, product.id)}
+                                                >
+                                                    {favorites[product.id] ? (
+                                                        <HeartSolid className="h-5 w-5 text-red-500" />
+                                                    ) : (
+                                                        <HeartOutline className="h-5 w-5" />
+                                                    )}
+                                                </button>
+                                            </div>
+
+                                            <div className="flex items-center gap-2 mb-2">
+                                                {/* Hiển thị màu sắc có sẵn */}
+                                                <div className="flex gap-1 overflow-hidden">
+                                                    {product.productColors && product.productColors.length > 0 ? (
+                                                        product.productColors.slice(0, 3).map((color, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className="w-4 h-4 rounded-full border"
+                                                                style={{ backgroundColor: color.hex_code }}
+                                                                title={color.color}
+                                                            ></div>
+                                                        ))
+                                                    ) : (
+                                                        <span className="text-xs text-gray-500">No colors available</span>
+                                                    )}
+                                                    {product.productColors && product.productColors.length > 3 && (
+                                                        <span className="text-xs">+{product.productColors.length - 3}</span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-end justify-between">
+                                                <div>
+                                                    {/* Giá sản phẩm */}
+                                                    <div className="flex flex-col">
+                                                        <p className="text-red-500 font-bold text-sm md:text-base">
+                                                            {product.discount_price.toLocaleString('vi-VN')} đ
+                                                        </p>
+                                                        <p className="text-gray-500 line-through text-xs">
+                                                            {product.price.toLocaleString('vi-VN')} đ
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {/* Nút thêm vào giỏ */}
+                                                <button
+                                                    className="text-gray-700 hover:text-red-500 transition"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        openProductModal(product);
+                                                    }}
+                                                >
+                                                    <ShoppingBagIcon className="h-5 w-5" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-10">
+                                <p>Không tìm thấy sản phẩm phù hợp với bộ lọc đã chọn.</p>
+                            </div>
+                        )}
+
+                        {/* Nút tải thêm */}
+                        {!loading && allProducts?.length > 0 && currentPage < featuredProducts?.pagination?.totalPages && (
+                            <div className="flex justify-center mt-8">
                                 <button
+                                    className="px-6 py-2.5 rounded-md
+                                    bg-white text-gray-600 
+                                    border border-gray-600
+                                    hover:bg-gray-50 
+                                    transition duration-300 
+                                    font-medium"
                                     onClick={handleLoadMore}
-                                    className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700"
                                 >
-                                    Xem thêm
+                                    Xem thêm sản phẩm
+                                    {/* <span className="ml-1">{`(${products.length}/${totalPages * pageSize})`}</span> */}
                                 </button>
-                            )}
+                            </div>
+                        )}
                     </div>
-
-                    {loading && <div className="text-center mt-4">Đang tải...</div>}
                 </div>
             </div>
-            {/* Thêm modal */}
+            {/* Modal sản phẩm */}
             <ProductModal />
         </Layout>
     );
 }
+

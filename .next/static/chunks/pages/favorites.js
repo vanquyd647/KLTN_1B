@@ -7,7 +7,7 @@ __turbopack_load_page_chunks__("/favorites", [
   "static/chunks/node_modules_react-icons_gi_index_mjs_e0b001._.js",
   "static/chunks/node_modules_react-icons_io5_index_mjs_e31071._.js",
   "static/chunks/node_modules_react-icons_lib_75a63d._.js",
-  "static/chunks/node_modules_fdef28._.js",
+  "static/chunks/node_modules_e11aef._.js",
   "static/chunks/src_pages_favorites_5771e1._.js",
-  "static/chunks/src_pages_favorites_454bbd._.js"
+  "static/chunks/src_pages_favorites_61677a._.js"
 ])

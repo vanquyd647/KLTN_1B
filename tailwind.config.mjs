@@ -21,11 +21,16 @@ export default {
                 'fade-in': {
                     '0%': { opacity: '0' },
                     '100%': { opacity: '1' }
+                },
+                'blink': {
+                    '0%, 100%': { opacity: '1' },
+                    '50%': { opacity: '0.3' },
                 }
             },
             animation: {
                 'slide-in-top': 'slide-in-top 0.3s ease-out',
-                'fade-in': 'fade-in 0.2s ease-out'
+                'fade-in': 'fade-in 0.2s ease-out',
+                'blink': 'blink 1.5s infinite',
             }
         },
     },

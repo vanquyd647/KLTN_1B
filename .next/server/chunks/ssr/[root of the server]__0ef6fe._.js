@@ -1622,6 +1622,7 @@ const searchProductsByNameAndColor = (0, __TURBOPACK__imported__module__$5b$exte
 const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'products',
     initialState: {
+        items: [],
         newProducts: {
             items: [],
             pagination: {
@@ -1734,22 +1735,26 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Fetch products with pagination
         builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.fetchLoading = true;
-            state.error = null;
+            state.loading = true;
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
-            const { products, pagination } = action.payload.data;
+            state.loading = false;
+            // Nối thêm sản phẩm mới vào mảng cũ nếu không phải trang đầu
+            if (action.payload.currentPage === 1) {
+                state.items = action.payload.data;
+            } else {
+                state.items = [
+                    ...state.items,
+                    ...action.payload.data
+                ];
+            }
             state.pagination = {
-                ...state.pagination,
-                items: products || [],
-                totalItems: pagination.totalItems || 0,
-                totalPages: pagination.totalPages || 0,
-                currentPage: pagination.currentPage || 1,
-                pageSize: pagination.pageSize || 10
+                currentPage: action.payload.currentPage,
+                totalPages: action.payload.totalPages,
+                totalItems: action.payload.totalItems
             };
-            state.fetchLoading = false;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
+            state.loading = false;
             state.error = action.payload;
-            state.fetchLoading = false;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{

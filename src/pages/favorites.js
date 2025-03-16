@@ -20,8 +20,10 @@ export default function Favorites() {
     const router = useRouter();
     const dispatch = useDispatch();
     const { items, loading, error, pagination } = useSelector((state) => state.favorites);
-    const { items: cartItems } = useSelector((state) => state.cart); // Thêm cartItems
-
+    const { items: cartItems } = useSelector((state) => state.cart);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [allFavorites, setAllFavorites] = useState([]);
     // Thêm states cho chức năng thêm vào giỏ hàng
     const [stocks, setStocks] = useState([]);
     const [productModal, setProductModal] = useState(null);
@@ -33,7 +35,7 @@ export default function Favorites() {
     useEffect(() => {
         loadFavorites();
         loadStocks();
-        
+
         // Tải thông tin giỏ hàng nếu có
         const cartId = getCartId();
         if (cartId) {
@@ -41,9 +43,22 @@ export default function Favorites() {
         }
     }, []);
 
-    const loadFavorites = async () => {
+    const loadFavorites = async (page = 1) => {
         try {
-            await dispatch(getFavorites({ page: 1, limit: 10 })).unwrap();
+            const result = await dispatch(getFavorites({
+                page: page,
+                limit: 10
+            })).unwrap();
+
+            if (page === 1) {
+                setAllFavorites(result.data);
+            } else {
+                setAllFavorites(prev => [...prev, ...result.data]);
+            }
+
+            // Kiểm tra xem còn sản phẩm để tải không
+            setHasMore(result.pagination.currentPage < result.pagination.totalPages);
+            setCurrentPage(result.pagination.currentPage);
         } catch (error) {
             console.error('Error loading favorites:', error);
         }
@@ -233,31 +248,38 @@ export default function Favorites() {
 
     const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
+    const handleLoadMore = () => {
+        if (!loading && hasMore) {
+            loadFavorites(currentPage + 1);
+        }
+    };
+
+
     // Modal để chọn màu, kích thước và số lượng
     const ProductModal = () => {
         if (!productModal) return null;
-        
+
         // Tìm đối tượng màu đang được chọn hoặc sử dụng màu đầu tiên nếu chưa chọn màu nào
-        const currentColorObject = selectedColor 
-            ? productModal.productColors.find(c => c.id === selectedColor.id) 
+        const currentColorObject = selectedColor
+            ? productModal.productColors.find(c => c.id === selectedColor.id)
             : productModal.productColors[0];
-        
+
         // Lấy ảnh từ productColor
         const currentImage = currentColorObject?.ProductColor?.image || 'https://via.placeholder.com/150';
-    
+
         return (
             <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-bold">{productModal.product_name}</h3>
-                        <button 
+                        <button
                             onClick={() => setProductModal(null)}
                             className="text-gray-500 hover:text-gray-700"
                         >
                             &times;
                         </button>
                     </div>
-                    
+
                     {/* Hiển thị ảnh theo màu được chọn */}
                     <div className="mb-4">
                         <img
@@ -266,7 +288,7 @@ export default function Favorites() {
                             className="w-full h-64 object-contain rounded mb-4 border"
                         />
                     </div>
-                    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Chọn màu:</h4>
                         <div className="flex flex-wrap gap-2">
@@ -294,7 +316,7 @@ export default function Favorites() {
                             })}
                         </div>
                     </div>
-    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Chọn kích thước:</h4>
                         <div className="flex flex-wrap gap-2">
@@ -317,7 +339,7 @@ export default function Favorites() {
                             })}
                         </div>
                     </div>
-    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Số lượng:</h4>
                         <div className="flex items-center gap-2">
@@ -345,7 +367,7 @@ export default function Favorites() {
                             </button>
                         </div>
                     </div>
-    
+
                     <div className="flex flex-wrap gap-2 mt-4">
                         <button
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full sm:w-auto"
@@ -397,7 +419,9 @@ export default function Favorites() {
                         <Sidebar />
                     </div>
                 </div>
-                <h1 className="text-2xl font-bold mb-6 px-4">
+
+                <h1 className="text-2xl font-bold mb-6 uppercase flex items-center mt-4 ml-4">
+                    <span className="w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"></span>
                     Sản phẩm yêu thích ({pagination.total || 0})
                 </h1>
 
@@ -407,7 +431,7 @@ export default function Favorites() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 px-4">
-                        {items.map((item) => {
+                        {allFavorites.map((item) => {
                             // Kiểm tra item và item.product tồn tại
                             if (!item || !item.product) return null;
 
@@ -426,6 +450,15 @@ export default function Favorites() {
                                             alt={item.product.product_name}
                                             className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
                                         />
+                                        {item.product.discount_price < item.product.price ? (
+                                            <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold">
+                                                -{Math.round(((item.product.price - item.product.discount_price) / item.product.price) * 100)}%
+                                            </div>
+                                        ) : item.product.is_new ? (
+                                            <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold">
+                                                NEW
+                                            </div>
+                                        ) : null}
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -437,10 +470,20 @@ export default function Favorites() {
                                         </button>
                                     </div>
                                     <h3 className="text-lg font-semibold mt-2">{item.product.product_name}</h3>
-                                    <p className="text-gray-600 line-clamp-2 mt-1">{item.product.description}</p>
+
                                     <div className="mt-auto pt-2">
+                                        <div className="flex gap-1 overflow-hidden">
+                                            {item.product.productColors?.map((color) => (
+                                                <div
+                                                    key={color.id}
+                                                    className="w-4 h-4 rounded-full border border-gray-300"
+                                                    style={{ backgroundColor: color.hex_code }}
+                                                    title={color.color}
+                                                />
+                                            ))}
+                                        </div>
                                         <div className="flex justify-between items-center">
-                                            <div>
+                                            <div className="flex flex-col">
                                                 {item.product.discount_price ? (
                                                     <>
                                                         <p className="text-red-500 font-bold">
@@ -455,35 +498,41 @@ export default function Favorites() {
                                                         {item.product.price.toLocaleString('vi-VN')} đ
                                                     </p>
                                                 )}
+
                                             </div>
-                                            <div className="flex gap-1">
-                                                {item.product.productColors?.map((color) => (
-                                                    <div
-                                                        key={color.id}
-                                                        className="w-4 h-4 rounded-full border border-gray-300"
-                                                        style={{ backgroundColor: color.hex_code }}
-                                                        title={color.color}
-                                                    />
-                                                ))}
-                                            </div>
+
+                                            <button
+                                                className="text-gray-700 hover:text-red-500 transition"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    openProductModal(item.product);
+                                                }}
+                                            >
+                                                <ShoppingBagIcon className="h-5 w-5" />
+                                            </button>
                                         </div>
-                                    </div>
-                                    
-                                    {/* Nút "Thêm vào giỏ" chỉ hiện khi hover */}
-                                    <div className="mt-auto pt-4 w-full absolute left-0 bottom-4 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <button 
-                                            className="bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 flex items-center w-full justify-center"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                openProductModal(item.product);
-                                            }}
-                                        >
-                                            <ShoppingBagIcon className="h-4 w-4 mr-1" /> Thêm vào giỏ
-                                        </button>
                                     </div>
                                 </div>
                             );
                         })}
+                    </div>
+                )}
+
+                {/* Nút tải thêm sản phẩm yêu thích */}
+                {items.length > 0 && hasMore && (
+                    <div className="flex justify-center mt-6 mb-10 px-4">
+                        <button
+                            onClick={handleLoadMore}
+                            className="px-6 py-2.5 rounded-md
+                                                bg-white text-gray-600 
+                                                border border-gray-600
+                                                hover:bg-gray-50 
+                                                transition duration-300 
+                                                font-medium"
+                            disabled={loading}
+                        >
+                            {loading ? "Đang tải..." : "Xem thêm sản phẩm"}
+                        </button>
                     </div>
                 )}
             </div>

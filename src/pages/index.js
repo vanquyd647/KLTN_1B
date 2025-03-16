@@ -87,7 +87,7 @@ export default function Index() {
                     fetchStocks(), // Thêm fetch stocks
                     dispatch(getFavorites({ page: 1, limit: 100 })).unwrap()
                 ]);
-                
+
                 // Tải thông tin giỏ hàng nếu có
                 const cartId = getCartId();
                 if (cartId) {
@@ -279,91 +279,123 @@ export default function Index() {
             className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group" // Thêm class group
             onClick={() => handleProductClick(product.slug)}
         >
-            <button
-                onClick={(e) => handleFavoriteClick(e, product.id)}
-                className="absolute top-2 right-2 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
-            >
-                {favorites[product.id] ? (
-                    <HeartSolid className="h-6 w-6 text-red-500" />
+
+            <div className="relative overflow-hidden aspect-[3/4]" onClick={() => handleProductClick(product.slug)}>
+                {product ? (
+                    <img
+                        src={product.productColors[0]?.ProductColor?.image}
+                        alt={product.product_name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                 ) : (
-                    <HeartOutline className="h-6 w-6 text-gray-400" />
+                    <div className="bg-gray-200 w-full h-full flex items-center justify-center">
+                        <span className="text-gray-400">No image</span>
+                    </div>
                 )}
-            </button>
-    
-            <img
-                src={product.productColors[0]?.ProductColor?.image || 'https://via.placeholder.com/150'}
-                alt={product.product_name}
-                className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
-            />
-            <h3 className="text-lg font-semibold mt-2">{product.product_name}</h3>
-            <p className="text-gray-600 line-clamp-2">{product.description}</p>
-            <div className="mt-2">
-                {product.discount_price ? (
-                    <>
-                        <p className="text-red-500 font-bold">
+
+                {/* Badge giảm giá nếu có */}
+                {product.discount_price < product.price ? (
+                    <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold">
+                        -{Math.round(((product.price - product.discount_price) / product.price) * 100)}%
+                    </div>
+                ) : product.is_new ? (
+                    <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold">
+                        NEW
+                    </div>
+                ) : null}
+            </div>
+            <div className="flex justify-between items-start">
+                <h3
+                    className="text-sm md:text-base font-medium mb-1 line-clamp-1 hover:text-red-500 cursor-pointer"
+                    onClick={() => handleProductClick(product.slug)}
+                >
+                    {product.product_name}
+                </h3>
+                {/* Yêu thích */}
+                <button
+                    className="text-gray-700 hover:text-red-500 transition"
+                    onClick={(e) => handleFavoriteClick(e, product.id)}
+                >
+                    {favorites[product.id] ? (
+                        <HeartSolid className="h-5 w-5 text-red-500" />
+                    ) : (
+                        <HeartOutline className="h-5 w-5" />
+                    )}
+                </button>
+            </div>
+            <div className="flex items-center gap-2 mb-2">
+                {/* Hiển thị màu sắc có sẵn */}
+                <div className="flex gap-1 overflow-hidden">
+                    {product.productColors && product.productColors.length > 0 ? (
+                        product.productColors.slice(0, 3).map((color, index) => (
+                            <div
+                                key={index}
+                                className="w-4 h-4 rounded-full border"
+                                style={{ backgroundColor: color.hex_code }}
+                                title={color.color}
+                            ></div>
+                        ))
+                    ) : (
+                        <span className="text-xs text-gray-500">No colors available</span>
+                    )}
+                    {product.productColors && product.productColors.length > 3 && (
+                        <span className="text-xs">+{product.productColors.length - 3}</span>
+                    )}
+                </div>
+            </div>
+            <div className="flex items-end justify-between">
+                <div>
+                    {/* Giá sản phẩm */}
+                    <div className="flex flex-col">
+                        <p className="text-red-500 font-bold text-sm md:text-base">
                             {product.discount_price.toLocaleString('vi-VN')} đ
                         </p>
-                        <p className="text-gray-500 line-through">
+                        <p className="text-gray-500 line-through text-xs">
                             {product.price.toLocaleString('vi-VN')} đ
                         </p>
-                    </>
-                ) : (
-                    <p className="text-gray-700 font-bold">
-                        {product.price.toLocaleString('vi-VN')} đ
-                    </p>
-                )}
-            </div>
-            <div className="flex gap-1 mt-2">
-                {product.productColors.map((color) => (
-                    <div
-                        key={color.id}
-                        className="w-4 h-4 rounded-full border border-gray-300"
-                        style={{ backgroundColor: color.hex_code }}
-                        title={color.color}
-                    />
-                ))}
-            </div>
-            
-            {/* Nút "Thêm vào giỏ" chỉ hiện khi hover */}
-            <div className="mt-auto pt-4 w-full absolute left-0 bottom-4 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button 
-                    className="bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 flex items-center w-full justify-center"
+                    </div>
+                </div>
+
+
+                {/* Nút thêm vào giỏ */}
+                <button
+                    className="text-gray-700 hover:text-red-500 transition"
                     onClick={(e) => {
                         e.stopPropagation();
                         openProductModal(product);
                     }}
                 >
-                    <ShoppingBagIcon className="h-4 w-4 mr-1" /> Thêm vào giỏ
+                    <ShoppingBagIcon className="h-5 w-5" />
                 </button>
             </div>
         </div>
     );
-    
+
     // Modal để chọn màu, kích thước và số lượng
     const ProductModal = () => {
         if (!productModal) return null;
-        
+
         // Tìm đối tượng màu đang được chọn hoặc sử dụng màu đầu tiên nếu chưa chọn màu nào
-        const currentColorObject = selectedColor 
-            ? productModal.productColors.find(c => c.id === selectedColor.id) 
+        const currentColorObject = selectedColor
+            ? productModal.productColors.find(c => c.id === selectedColor.id)
             : productModal.productColors[0];
-        
+
         // Lấy ảnh từ productColor
         const currentImage = currentColorObject?.ProductColor?.image || 'https://via.placeholder.com/150';
-    
+
         return (
             <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-bold">{productModal.product_name}</h3>
-                        <button 
+                        <button
                             onClick={() => setProductModal(null)}
                             className="text-gray-500 hover:text-gray-700"
                         >
                             &times;
                         </button>
                     </div>
-                    
+
                     {/* Hiển thị ảnh theo màu được chọn */}
                     <div className="mb-4">
                         <img
@@ -372,7 +404,7 @@ export default function Index() {
                             className="w-full h-64 object-contain rounded mb-4 border"
                         />
                     </div>
-                    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Chọn màu:</h4>
                         <div className="flex flex-wrap gap-2">
@@ -400,7 +432,7 @@ export default function Index() {
                             })}
                         </div>
                     </div>
-    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Chọn kích thước:</h4>
                         <div className="flex flex-wrap gap-2">
@@ -423,7 +455,7 @@ export default function Index() {
                             })}
                         </div>
                     </div>
-    
+
                     <div className="mb-4">
                         <h4 className="font-semibold mb-2">Số lượng:</h4>
                         <div className="flex items-center gap-2">
@@ -451,7 +483,7 @@ export default function Index() {
                             </button>
                         </div>
                     </div>
-    
+
                     <div className="flex flex-wrap gap-2 mt-4">
                         <button
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full sm:w-auto"
@@ -471,7 +503,7 @@ export default function Index() {
                 </div>
             </div>
         );
-    };    
+    };
 
     return (
         <Layout>
@@ -491,7 +523,10 @@ export default function Index() {
                     ) : (
                         <>
                             <section>
-                                <h3 className="text-2xl font-playfair font-bold mb-6">Sản phẩm mới</h3>
+                                <h3 className="text-2xl font-bold mb-6 uppercase flex items-center">
+                                    <span className="w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"></span>
+                                    Sản phẩm mới
+                                </h3>
                                 {newProducts.length > 0 ? (
                                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                                         {newProducts.map(product => (
@@ -514,7 +549,10 @@ export default function Index() {
                             </section>
 
                             <section className="mt-12">
-                                <h3 className="text-2xl font-playfair font-bold mb-6">Sản phẩm nổi bật</h3>
+                                <h3 className="text-2xl font-bold mb-6 uppercase flex items-center">
+                                    <span className="w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"></span>
+                                    Sản phẩm nổi bật
+                                </h3>
                                 {featuredProducts.length > 0 ? (
                                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                         {featuredProducts.map(product => (
