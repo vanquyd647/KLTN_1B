@@ -444,6 +444,7 @@ const CheckoutPage = () => {
                 cart_id: getCartId(),
                 carrier_id: selectedCarrier.id,
                 coupon_id: couponId,
+                shipping_fee : selectedCarrier?.price || 0,
                 discount_amount: discountAmount,
                 original_price: calculateTotal(),
                 discounted_price: calculateTotal() - discountAmount,

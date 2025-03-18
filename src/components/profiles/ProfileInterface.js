@@ -253,7 +253,7 @@ const OrderDetail = ({ order, onClose }) => {
                         <div className="bg-gray-50 p-4 rounded-lg">
                             <h4 className="font-medium mb-3">Thông tin vận chuyển</h4>
                             <p className="text-sm text-gray-600">Đơn vị vận chuyển</p>
-                            <p className="font-medium mb-2">{order.shipping.carrier}</p>
+                            <p className="font-medium mb-2">{order.shipping.description}</p>
                             <p className="text-sm text-gray-600">Phí vận chuyển</p>
                             <p className="font-medium">{formatPrice(order.shipping.shipping_fee)}</p>
                         </div>
