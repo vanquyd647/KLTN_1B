@@ -1280,6 +1280,36 @@ const revenueApi = {
     }
 };
 
+const invoiceApi = {
+    // Tạo hóa đơn mới từ đơn hàng đã hoàn thành
+    // POST /api/invoices/create
+    createInvoice: (orderData) => apiClient.post('/invoices/create', orderData),
+
+    // Lấy chi tiết hóa đơn theo ID
+    // GET /api/invoices/:id
+    getInvoiceById: (id) => apiClient.get(`/invoices/${id}`),
+
+    // Lấy tất cả hóa đơn với phân trang
+    // GET /api/invoices?page=1&limit=10
+    getAllInvoices: (params) => apiClient.get('/invoices', { params }),
+
+    // Tìm kiếm hóa đơn
+    // GET /api/invoices/search?invoiceNumber=IV&page=1&limit=10
+    searchInvoices: (params) => apiClient.get('/invoices/search', { params }),
+
+    // Tạo và tải file PDF cho hóa đơn
+    // GET /api/invoices/:id/pdf
+    generateInvoicePDF: async (id, orderId) => {
+        try {
+            const response = await apiClient.get(`/invoices/${id}/pdf/${orderId}`, {
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
 
 // export { apiClient, userApi, productApi, cartApi, reviewApi, productsByCategoryApi, colorsApi, indexApi, adminApi, orderApi, paymentApi, stockApi, carrierApi, addressApi, favoriteApi, orderTrackingApi, couponApi };
 export {
@@ -1301,5 +1331,6 @@ export {
     orderTrackingApi,
     couponApi,
     revenueApi,
+    invoiceApi,
 };
 

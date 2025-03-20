@@ -193,6 +193,7 @@ __turbopack_esm__({
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
+    "invoiceApi": (()=>invoiceApi),
     "orderApi": (()=>orderApi),
     "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
@@ -1313,6 +1314,36 @@ const revenueApi = {
             return response;
         } catch (error) {
             throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
+        }
+    }
+};
+const invoiceApi = {
+    // Tạo hóa đơn mới từ đơn hàng đã hoàn thành
+    // POST /api/invoices/create
+    createInvoice: (orderData)=>apiClient.post('/invoices/create', orderData),
+    // Lấy chi tiết hóa đơn theo ID
+    // GET /api/invoices/:id
+    getInvoiceById: (id)=>apiClient.get(`/invoices/${id}`),
+    // Lấy tất cả hóa đơn với phân trang
+    // GET /api/invoices?page=1&limit=10
+    getAllInvoices: (params)=>apiClient.get('/invoices', {
+            params
+        }),
+    // Tìm kiếm hóa đơn
+    // GET /api/invoices/search?invoiceNumber=IV&page=1&limit=10
+    searchInvoices: (params)=>apiClient.get('/invoices/search', {
+            params
+        }),
+    // Tạo và tải file PDF cho hóa đơn
+    // GET /api/invoices/:id/pdf
+    generateInvoicePDF: async (id, orderId)=>{
+        try {
+            const response = await apiClient.get(`/invoices/${id}/pdf/${orderId}`, {
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
         }
     }
 };

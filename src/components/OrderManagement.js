@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { orderApi, paymentApi } from '../utils/apiClient';
+import { orderApi, paymentApi, invoiceApi } from '../utils/apiClient';
 import debounce from 'lodash/debounce';
 
 const OrderManagement = () => {
@@ -160,6 +160,32 @@ const OrderManagement = () => {
     }
   };
 
+  const downloadInvoicePDF = async (orderId) => {
+    try {
+      setLoading(true);
+      const blob = await invoiceApi.generateInvoicePDF(null, orderId);
+
+      // Tạo URL từ blob để download
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `hoa-don-${orderId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+
+      // Dọn dẹp
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      setLoading(false);
+    } catch (error) {
+      setError(`Không thể tải hóa đơn: ${error}`);
+      setLoading(false);
+      console.error('Lỗi khi tải hóa đơn:', error);
+    }
+  };
+
+
   const formatAddress = (address) => {
     return `${address.street}, ${address.ward}, ${address.district}, ${address.city}`;
   };
@@ -266,6 +292,7 @@ const OrderManagement = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thanh toán</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày đặt</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hành động</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -362,6 +389,21 @@ const OrderManagement = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {formatDate(order.dates.created_at)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    onClick={() => downloadInvoicePDF(order.id)}
+                    disabled={order.status !== 'completed'}
+                    className={`px-3 py-1 rounded-md text-sm font-medium 
+            ${order.status === 'completed'
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                    title={order.status !== 'completed'
+                      ? 'Chỉ xuất được hóa đơn cho đơn hàng đã hoàn thành'
+                      : 'Xuất hóa đơn PDF'}
+                  >
+                    Xuất hóa đơn
+                  </button>
                 </td>
               </tr>
             ))}
