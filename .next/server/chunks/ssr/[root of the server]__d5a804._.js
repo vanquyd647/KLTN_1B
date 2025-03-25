@@ -193,6 +193,7 @@ __turbopack_esm__({
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
+    "invoiceApi": (()=>invoiceApi),
     "orderApi": (()=>orderApi),
     "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
@@ -1316,6 +1317,36 @@ const revenueApi = {
         }
     }
 };
+const invoiceApi = {
+    // Tạo hóa đơn mới từ đơn hàng đã hoàn thành
+    // POST /api/invoices/create
+    createInvoice: (orderData)=>apiClient.post('/invoices/create', orderData),
+    // Lấy chi tiết hóa đơn theo ID
+    // GET /api/invoices/:id
+    getInvoiceById: (id)=>apiClient.get(`/invoices/${id}`),
+    // Lấy tất cả hóa đơn với phân trang
+    // GET /api/invoices?page=1&limit=10
+    getAllInvoices: (params)=>apiClient.get('/invoices', {
+            params
+        }),
+    // Tìm kiếm hóa đơn
+    // GET /api/invoices/search?invoiceNumber=IV&page=1&limit=10
+    searchInvoices: (params)=>apiClient.get('/invoices/search', {
+            params
+        }),
+    // Tạo và tải file PDF cho hóa đơn
+    // GET /api/invoices/:id/pdf
+    generateInvoicePDF: async (id, orderId)=>{
+        try {
+            const response = await apiClient.get(`/invoices/${id}/pdf/${orderId}`, {
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
 ;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
@@ -2269,6 +2300,7 @@ const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$externals
 const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'productsByCategory',
     initialState: {
+        total: 0,
         products: [],
         totalPages: 0,
         loading: false,
@@ -2281,7 +2313,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
             state.error = null;
         }).addCase(fetchProductsByCategory.fulfilled, (state, action)=>{
             state.loading = false;
-            const { products, totalPages } = action.payload.data;
+            const { products, totalPages, total } = action.payload.data;
             if (action.meta.arg.page > 1) {
                 // Nối sản phẩm nếu không phải trang đầu tiên
                 state.products = [
@@ -2293,6 +2325,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
                 state.products = products;
             }
             state.totalPages = totalPages;
+            state.total = total;
         }).addCase(fetchProductsByCategory.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch products by category';

@@ -2300,6 +2300,7 @@ const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$externals
 const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'productsByCategory',
     initialState: {
+        total: 0,
         products: [],
         totalPages: 0,
         loading: false,
@@ -2312,7 +2313,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
             state.error = null;
         }).addCase(fetchProductsByCategory.fulfilled, (state, action)=>{
             state.loading = false;
-            const { products, totalPages } = action.payload.data;
+            const { products, totalPages, total } = action.payload.data;
             if (action.meta.arg.page > 1) {
                 // Nối sản phẩm nếu không phải trang đầu tiên
                 state.products = [
@@ -2324,6 +2325,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
                 state.products = products;
             }
             state.totalPages = totalPages;
+            state.total = total;
         }).addCase(fetchProductsByCategory.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch products by category';
@@ -5216,150 +5218,166 @@ function Sidebar() {
             }, this),
             subCategories: [
                 {
-                    id: 101,
+                    id: 2,
                     name: 'Áo Thun'
                 },
                 {
-                    id: 102,
+                    id: 13,
                     name: 'Áo Sơ Mi'
                 },
                 {
-                    id: 103,
+                    id: 10,
                     name: 'Áo Polo'
+                },
+                {
+                    id: 32,
+                    name: 'Áo Nam'
+                },
+                {
+                    id: 33,
+                    name: 'Áo Nữ'
                 }
             ]
         },
         {
-            id: 2,
+            id: 15,
             name: 'Quần',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["GiTrousers"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 23,
+                lineNumber: 25,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 201,
+                    id: 18,
                     name: 'Quần Jeans'
                 },
                 {
-                    id: 202,
+                    id: 20,
                     name: 'Quần Shorts'
                 },
                 {
-                    id: 203,
+                    id: 28,
                     name: 'Quần Tây'
+                },
+                {
+                    id: 39,
+                    name: 'Quần Nam'
+                },
+                {
+                    id: 30,
+                    name: 'Quần Nữ'
                 }
             ]
         },
         {
-            id: 3,
+            id: 2,
             name: 'Áo Thun',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["GiTShirt"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 33,
+                lineNumber: 37,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 301,
+                    id: 4,
                     name: 'Áo Thun Nam'
                 },
                 {
-                    id: 302,
+                    id: 6,
                     name: 'Áo Thun Nữ'
                 }
             ]
         },
         {
-            id: 4,
+            id: 24,
             name: 'Áo Khoác',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["GiMonclerJacket"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 42,
+                lineNumber: 46,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 401,
+                    id: 34,
                     name: 'Áo Khoác Nam'
                 },
                 {
-                    id: 402,
+                    id: 25,
                     name: 'Áo Khoác Nữ'
                 }
             ]
         },
         {
-            id: 5,
+            id: 38,
             name: 'Phụ Kiện',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["FaRedhat"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 51,
+                lineNumber: 55,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 501,
+                    id: 35,
                     name: 'Mũ'
                 },
                 {
-                    id: 502,
+                    id: 36,
                     name: 'Thắt Lưng'
                 },
                 {
-                    id: 503,
+                    id: 37,
                     name: 'Ví'
                 }
             ]
         },
         {
-            id: 6,
+            id: 10,
             name: 'Áo Polo',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["GiPoloShirt"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 61,
+                lineNumber: 65,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 601,
-                    name: 'Polo Nam'
+                    id: 11,
+                    name: 'Áo Polo Nam'
                 },
                 {
-                    id: 602,
-                    name: 'Polo Nữ'
+                    id: 12,
+                    name: 'Áo Polo Nữ'
                 }
             ]
         },
         {
-            id: 7,
+            id: 13,
             name: 'Áo Sơ Mi',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$io5$2f$index$2e$mjs__$5b$ssr$5d$__$28$ecmascript$29$__["IoShirtOutline"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 70,
+                lineNumber: 74,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 701,
-                    name: 'Sơ Mi Nam'
+                    id: 14,
+                    name: 'Áo Sơ Mi Nam'
                 },
                 {
-                    id: 702,
-                    name: 'Sơ Mi Nữ'
+                    id: 26,
+                    name: 'Áo Sơ Mi Nữ'
                 }
             ]
         }
@@ -5393,12 +5411,12 @@ function Sidebar() {
                                         children: category.icon
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Sidebar2.js",
-                                        lineNumber: 111,
+                                        lineNumber: 115,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Sidebar2.js",
-                                    lineNumber: 104,
+                                    lineNumber: 108,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -5406,23 +5424,23 @@ function Sidebar() {
                                     children: category.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Sidebar2.js",
-                                    lineNumber: 115,
+                                    lineNumber: 119,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, category.id, true, {
                             fileName: "[project]/src/components/Sidebar2.js",
-                            lineNumber: 99,
+                            lineNumber: 103,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/components/Sidebar2.js",
-                    lineNumber: 97,
+                    lineNumber: 101,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 96,
+                lineNumber: 100,
                 columnNumber: 13
             }, this),
             currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5438,7 +5456,7 @@ function Sidebar() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 126,
+                        lineNumber: 130,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5449,24 +5467,24 @@ function Sidebar() {
                                 children: subCategory.name
                             }, subCategory.id, false, {
                                 fileName: "[project]/src/components/Sidebar2.js",
-                                lineNumber: 142,
+                                lineNumber: 146,
                                 columnNumber: 33
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 138,
+                        lineNumber: 142,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 125,
+                lineNumber: 129,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 94,
+        lineNumber: 98,
         columnNumber: 9
     }, this);
 }
@@ -6075,7 +6093,7 @@ function Favorites() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
                                                 src: item.product.productColors?.[0]?.ProductColor?.image || 'https://via.placeholder.com/300',
                                                 alt: item.product.product_name,
-                                                className: "w-full h-40 object-cover rounded sm:h-60 md:h-72"
+                                                className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
                                                 lineNumber: 445,

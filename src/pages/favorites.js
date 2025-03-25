@@ -448,7 +448,7 @@ export default function Favorites() {
                                                 'https://via.placeholder.com/300'
                                             }
                                             alt={item.product.product_name}
-                                            className="w-full h-40 object-cover rounded sm:h-60 md:h-72"
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         />
                                         {item.product.discount_price < item.product.price ? (
                                             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold">

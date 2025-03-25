@@ -193,6 +193,7 @@ __turbopack_esm__({
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
     "indexApi": (()=>indexApi),
+    "invoiceApi": (()=>invoiceApi),
     "orderApi": (()=>orderApi),
     "orderTrackingApi": (()=>orderTrackingApi),
     "paymentApi": (()=>paymentApi),
@@ -1316,6 +1317,36 @@ const revenueApi = {
         }
     }
 };
+const invoiceApi = {
+    // Tạo hóa đơn mới từ đơn hàng đã hoàn thành
+    // POST /api/invoices/create
+    createInvoice: (orderData)=>apiClient.post('/invoices/create', orderData),
+    // Lấy chi tiết hóa đơn theo ID
+    // GET /api/invoices/:id
+    getInvoiceById: (id)=>apiClient.get(`/invoices/${id}`),
+    // Lấy tất cả hóa đơn với phân trang
+    // GET /api/invoices?page=1&limit=10
+    getAllInvoices: (params)=>apiClient.get('/invoices', {
+            params
+        }),
+    // Tìm kiếm hóa đơn
+    // GET /api/invoices/search?invoiceNumber=IV&page=1&limit=10
+    searchInvoices: (params)=>apiClient.get('/invoices/search', {
+            params
+        }),
+    // Tạo và tải file PDF cho hóa đơn
+    // GET /api/invoices/:id/pdf
+    generateInvoicePDF: async (id, orderId)=>{
+        try {
+            const response = await apiClient.get(`/invoices/${id}/pdf/${orderId}`, {
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
 ;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
@@ -1622,7 +1653,6 @@ const searchProductsByNameAndColor = (0, __TURBOPACK__imported__module__$5b$exte
 const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'products',
     initialState: {
-        items: [],
         newProducts: {
             items: [],
             pagination: {
@@ -1735,26 +1765,22 @@ const productSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$red
         });
         // Fetch products with pagination
         builder.addCase(fetchProductsByPagination.pending, (state)=>{
-            state.loading = true;
+            state.fetchLoading = true;
+            state.error = null;
         }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
-            state.loading = false;
-            // Nối thêm sản phẩm mới vào mảng cũ nếu không phải trang đầu
-            if (action.payload.currentPage === 1) {
-                state.items = action.payload.data;
-            } else {
-                state.items = [
-                    ...state.items,
-                    ...action.payload.data
-                ];
-            }
+            const { products, pagination } = action.payload.data;
             state.pagination = {
-                currentPage: action.payload.currentPage,
-                totalPages: action.payload.totalPages,
-                totalItems: action.payload.totalItems
+                ...state.pagination,
+                items: products || [],
+                totalItems: pagination.totalItems || 0,
+                totalPages: pagination.totalPages || 0,
+                currentPage: pagination.currentPage || 1,
+                pageSize: pagination.pageSize || 10
             };
+            state.fetchLoading = false;
         }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
-            state.loading = false;
             state.error = action.payload;
+            state.fetchLoading = false;
         });
         // Fetch new products with pagination
         builder.addCase(fetchNewProductsByPagination.pending, (state)=>{

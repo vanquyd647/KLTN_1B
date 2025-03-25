@@ -2300,6 +2300,7 @@ const fetchProductsByCategory = (0, __TURBOPACK__imported__module__$5b$externals
 const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__["createSlice"])({
     name: 'productsByCategory',
     initialState: {
+        total: 0,
         products: [],
         totalPages: 0,
         loading: false,
@@ -2312,7 +2313,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
             state.error = null;
         }).addCase(fetchProductsByCategory.fulfilled, (state, action)=>{
             state.loading = false;
-            const { products, totalPages } = action.payload.data;
+            const { products, totalPages, total } = action.payload.data;
             if (action.meta.arg.page > 1) {
                 // Nối sản phẩm nếu không phải trang đầu tiên
                 state.products = [
@@ -2324,6 +2325,7 @@ const productsByCategorySlice = (0, __TURBOPACK__imported__module__$5b$externals
                 state.products = products;
             }
             state.totalPages = totalPages;
+            state.total = total;
         }).addCase(fetchProductsByCategory.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.payload || 'Failed to fetch products by category';

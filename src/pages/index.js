@@ -348,14 +348,17 @@ export default function Index() {
                     {/* Giá sản phẩm */}
                     <div className="flex flex-col">
                         <p className="text-red-500 font-bold text-sm md:text-base">
-                            {product.discount_price.toLocaleString('vi-VN')} đ
+                            {product.discount_price != null
+                                ? product.discount_price.toLocaleString('vi-VN')
+                                : 0} đ
                         </p>
                         <p className="text-gray-500 line-through text-xs">
-                            {product.price.toLocaleString('vi-VN')} đ
+                            {product.price != null
+                                ? product.price.toLocaleString('vi-VN')
+                                : 0} đ
                         </p>
                     </div>
                 </div>
-
 
                 {/* Nút thêm vào giỏ */}
                 <button

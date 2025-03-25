@@ -24,6 +24,7 @@ export const fetchProductsByCategory = createAsyncThunk(
 const productsByCategorySlice = createSlice({
     name: 'productsByCategory',
     initialState: {
+        total: 0, // Tổng số sản phẩm
         products: [], // Danh sách sản phẩm
         totalPages: 0,
         loading: false,
@@ -38,7 +39,7 @@ const productsByCategorySlice = createSlice({
             })
             .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
                 state.loading = false;
-                const { products, totalPages } = action.payload.data;
+                const { products, totalPages, total } = action.payload.data;
 
                 if (action.meta.arg.page > 1) {
                     // Nối sản phẩm nếu không phải trang đầu tiên
@@ -49,6 +50,7 @@ const productsByCategorySlice = createSlice({
                 }
 
                 state.totalPages = totalPages;
+                state.total = total;
             })
             .addCase(fetchProductsByCategory.rejected, (state, action) => {
                 state.loading = false;

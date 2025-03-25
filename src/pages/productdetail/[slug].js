@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { getToken, getCartId } from '../../utils/storage';
 import { stockApi } from '../../utils/apiClient';
 import { fetchProductDetail } from '../../store/slices/productSlice';
@@ -17,6 +18,21 @@ import ProductReviews from '../../components/slugs/ProductReviews';
 import ProductDescription from '../../components/slugs/ProductDescription';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
+import {
+    FaFacebook,
+    FaPinterest,
+    FaTruck,
+    FaExchangeAlt,
+    FaCheckCircle,
+    FaMoneyBillWave,
+    FaHeadset,
+    FaStore
+} from "react-icons/fa";
+import {
+    BsMessenger,
+    BsTwitterX,
+    BsLink45Deg
+} from "react-icons/bs";
 import {
     addToFavorite,
     removeFromFavorite,
@@ -330,10 +346,26 @@ export default function Slug() {
     return (
         <Layout>
             <div className="container mx-auto px-4 py-6">
+                {/* Breadcrumb Navigation */}
+                <div className="flex items-center text-sm text-gray-600 mb-6">
+                    <Link href="/" className="hover:text-gray-900">
+                        Trang chủ
+                    </Link>
+                    {/* <span className="mx-2">/</span>
+                    <Link
+                        href="/category/productsByCategory?categoryId=1&categoryName=Áo"
+                        className="hover:text-gray-900"
+                    >
+                        Áo
+                    </Link> */}
+                    <span className="mx-2">/</span>
+                    <span className="text-gray-900">{currentProduct.product_name}</span>
+                </div>
+
                 <div className="flex flex-col md:flex-row gap-6">
                     {/* Product Image */}
                     <div className="md:w-1/2 flex flex-col items-center">
-                        <div className="w-full max-h-96 overflow-hidden">
+                        <div className="relative w-full lg:h-[700px] md:h-[600px] sm:h-[500px]">
                             <img
                                 src={
                                     // Nếu có màu được chọn thì hiển thị ảnh của màu đó
@@ -380,7 +412,7 @@ export default function Slug() {
                     <div className="hidden md:block border-l border-gray-300"></div>
                     {/* Product Details */}
                     <div className="md:w-1/2">
-                        <h1 className="text-2xl font-bold mb-4">{currentProduct.product_name}</h1>
+                        <h1 className="text-4xl font-bold mb-4">{currentProduct.product_name}</h1>
                         <button
                             onClick={handleFavoriteClick}
                             disabled={isUpdatingFavorite}
@@ -432,11 +464,6 @@ export default function Slug() {
                                             disabled={!isAvailable}
                                         >
                                             <span>{size.size}</span>
-                                            {/* {isAvailable && (
-                                                <span className="absolute -top-2 -right-2 text-xs bg-gray-200 px-1 rounded">
-                                                    {stockQuantity}
-                                                </span>
-                                            )} */}
                                         </button>
                                     );
                                 })}
@@ -518,6 +545,112 @@ export default function Slug() {
                             >
                                 MUA NGAY
                             </button>
+                        </div>
+                        {/* Social Share Buttons */}
+                        {/* Social Share Buttons */}
+                        <div className="flex items-center gap-2 mb-4 mt-8">
+                            <span className="text-gray-600">Chia sẻ:</span>
+                            <div className="flex gap-2">
+                                {/* Facebook */}
+                                <a
+                                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-full hover:bg-blue-700 transition-colors"
+                                >
+                                    <FaFacebook className="w-4 h-4 text-white" />
+                                </a>
+
+                                {/* Messenger */}
+                                <a
+                                    href={`fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 flex items-center justify-center bg-blue-500 rounded-full hover:bg-blue-600 transition-colors"
+                                >
+                                    <BsMessenger className="w-4 h-4 text-white" />
+                                </a>
+
+                                {/* Twitter/X */}
+                                <a
+                                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 flex items-center justify-center bg-black rounded-full hover:bg-gray-800 transition-colors"
+                                >
+                                    <BsTwitterX className="w-4 h-4 text-white" />
+                                </a>
+
+                                {/* Pinterest */}
+                                <a
+                                    href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 flex items-center justify-center bg-red-600 rounded-full hover:bg-red-700 transition-colors"
+                                >
+                                    <FaPinterest className="w-4 h-4 text-white" />
+                                </a>
+
+                                {/* Copy Link */}
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        toast.success('Đã sao chép liên kết!');
+                                    }}
+                                    className="w-8 h-8 flex items-center justify-center bg-gray-500 rounded-full hover:bg-gray-600 transition-colors"
+                                >
+                                    <BsLink45Deg className="w-4 h-4 text-white" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Store Policies */}
+                        <div className="mt-8 border-t pt-6">
+                            <h3 className="text-lg font-medium mb-4">Chính sách cửa hàng</h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                {[
+                                    {
+                                        icon: <FaTruck />,
+                                        title: "Miễn phí giao hàng",
+                                        desc: "Cho đơn hàng từ 200K"
+                                    },
+                                    {
+                                        icon: <FaExchangeAlt />,
+                                        title: "Đổi sản phẩm dễ dàng",
+                                        desc: "Trong vòng 7 ngày khi còn nguyên tem mác"
+                                    },
+                                    {
+                                        icon: <FaCheckCircle />,
+                                        title: "Hàng chính hãng",
+                                        desc: "Hàng phân phối chính hãng 100%"
+                                    },
+                                    {
+                                        icon: <FaMoneyBillWave />,
+                                        title: "Thanh toán COD",
+                                        desc: "Kiểm tra, thanh toán khi nhận hàng"
+                                    },
+                                    {
+                                        icon: <FaHeadset />,
+                                        title: "Tổng đài hỗ trợ 24/7",
+                                        desc: "0999999999"
+                                    },
+                                    {
+                                        icon: <FaStore />,
+                                        title: "Hỗ trợ đổi trả",
+                                        desc: "Tại tất cả store"
+                                    }
+                                ].map((policy, index) => (
+                                    <div key={index} className="flex items-start gap-2 p-3 border rounded-lg">
+                                        <div className="text-blue-600 text-xl">
+                                            {policy.icon}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-medium text-sm">{policy.title}</h4>
+                                            <p className="text-gray-600 text-xs">{policy.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

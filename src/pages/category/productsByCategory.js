@@ -4,8 +4,7 @@ import { fetchProductsByCategory } from '../../store/slices/productsByCategorySl
 import { fetchColors } from '../../store/slices/colorsSlice';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
-import Banner from '../../components/Banner';
-import Sidebar from '../../components/Sidebar2';
+import Link from 'next/link';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 import { ShoppingBagIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
@@ -28,7 +27,7 @@ export default function ProductsByCategory() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { products, totalPages, loading, error } = useSelector((state) => state.productsByCategory);
+    const { products, totalPages, loading, error, total } = useSelector((state) => state.productsByCategory);
     const { data: colors, loading: colorsLoading, error: colorsError } = useSelector((state) => state.colors);
     const { items: cartItems } = useSelector((state) => state.cart);
 
@@ -473,11 +472,11 @@ export default function ProductsByCategory() {
 
 
     return (
-        <Layout>         
+        <Layout>
             <div className="container mx-auto px-4 py-6">
                 {/* Breadcrumb */}
                 <div className="mb-4 text-sm mt-4" >
-                    <span className="text-gray-500">Trang chủ</span> / 
+                    <span className="text-gray-500">Trang chủ</span> /
                     <span className="font-medium"> {categoryName}</span>
                 </div>
 
@@ -500,8 +499,22 @@ export default function ProductsByCategory() {
                                 {showFilters.category && (
                                     <div className="mt-2">
                                         <ul className="space-y-2">
-                                            <li><a href="#" className="text-gray-600 hover:text-black">Sản phẩm mới</a></li>
-                                            <li><a href="#" className="text-gray-600 hover:text-black">Sale</a></li>
+                                            <li>
+                                                <Link
+                                                    href="/new-products"
+                                                    className="text-gray-600 hover:text-black"
+                                                >
+                                                    Sản phẩm mới
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    href="/onsale"
+                                                    className="text-gray-600 hover:text-black"
+                                                >
+                                                    Sale
+                                                </Link>
+                                            </li>
                                             <li>
                                                 <div
                                                     className="flex items-center justify-between cursor-pointer"
@@ -510,14 +523,88 @@ export default function ProductsByCategory() {
                                                         toggleCategory('aoNam');
                                                     }}
                                                 >
-                                                    <a href="#" className="text-gray-600 hover:text-black">Áo nam</a>
+                                                    <Link
+                                                        href="/category/productsByCategory?categoryId=1&categoryName=Áo"
+                                                        className="text-gray-600 hover:text-black"
+                                                    >
+                                                        Áo
+                                                    </Link>
                                                     {expandedCategories.aoNam ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
                                                 </div>
                                                 {expandedCategories.aoNam && (
                                                     <ul className="pl-4 mt-1 space-y-1">
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo thun</a></li>
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo polo</a></li>
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Áo sơ mi</a></li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=2&categoryName=Áo%20Thun"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo thun
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=4&categoryName=Áo%20Thun%20Nam"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo thun nam
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=6&categoryName=Áo%20Thun%20Nữ"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo thun nữ
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=10&categoryName=Áo%20Polo"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo polo
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=13&categoryName=Áo%20Sơ%20Mi"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo sơ mi
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=14&categoryName=Áo%20Sơ%20Mi%20Nam"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo sơ mi nam
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=26&categoryName=Áo%20Sơ%20Mi%20Nữ"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo sơ mi nữ
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=32&categoryName=Áo%20Nam"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo Nam
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=33&categoryName=Áo%20Nữ"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Áo Nữ
+                                                            </Link>
+                                                        </li>
                                                     </ul>
                                                 )}
                                             </li>
@@ -529,14 +616,56 @@ export default function ProductsByCategory() {
                                                         toggleCategory('quanNam');
                                                     }}
                                                 >
-                                                    <a href="#" className="text-gray-600 hover:text-black">Quần nam</a>
+                                                    <Link
+                                                        href="/category/productsByCategory?categoryId=15&categoryName=Quần"
+                                                        className="text-gray-600 hover:text-black"
+                                                    >
+                                                        Quần
+                                                    </Link>
                                                     {expandedCategories.quanNam ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
                                                 </div>
                                                 {expandedCategories.quanNam && (
                                                     <ul className="pl-4 mt-1 space-y-1">
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần jean</a></li>
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần kaki</a></li>
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Quần short</a></li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=18&categoryName=Quần%20Jeans"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Quần jeans
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=20&categoryName=Quần%20Shorts"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Quần shorts
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=28&categoryName=Quần%20Tây"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Quần tây
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=39&categoryName=Quần%20Nam"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Quần nam
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=30&categoryName=Quần%20Nữ"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Quần nữ
+                                                            </Link>
+                                                        </li>
                                                     </ul>
                                                 )}
                                             </li>
@@ -548,13 +677,32 @@ export default function ProductsByCategory() {
                                                         toggleCategory('boSuuTap');
                                                     }}
                                                 >
-                                                    <a href="#" className="text-gray-600 hover:text-black">Bộ sưu tập</a>
+                                                    <Link
+                                                        href="#"
+                                                        className="text-gray-600 hover:text-black"
+                                                    >
+                                                        Bộ sưu tập
+                                                    </Link>
                                                     {expandedCategories.boSuuTap ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
                                                 </div>
                                                 {expandedCategories.boSuuTap && (
                                                     <ul className="pl-4 mt-1 space-y-1">
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Xuân Hè 2023</a></li>
-                                                        <li><a href="#" className="text-gray-500 hover:text-black text-sm">Thu Đông 2022</a></li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=8&categoryName=Thời%20Trang%20Nam"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Thời trang nam
+                                                            </Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link
+                                                                href="/category/productsByCategory?categoryId=9&categoryName=Thời%20Trang%20Nữ"
+                                                                className="text-gray-500 hover:text-black text-sm"
+                                                            >
+                                                                Thời trang Nữ
+                                                            </Link>
+                                                        </li>
                                                     </ul>
                                                 )}
                                             </li>
@@ -678,7 +826,7 @@ export default function ProductsByCategory() {
                         <div className="mb-6">
                             <div className="flex flex-wrap items-center justify-between gap-4">
                                 <div className="text-sm text-gray-600">
-                                    {products?.length || 0} sản phẩm
+                                    {total || 0} sản phẩm
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <label htmlFor="sortOrder" className="text-sm">Sắp xếp theo:</label>

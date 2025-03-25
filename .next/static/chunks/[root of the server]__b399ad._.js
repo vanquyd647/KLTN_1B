@@ -4530,150 +4530,166 @@ function Sidebar() {
             }, this),
             subCategories: [
                 {
-                    id: 101,
+                    id: 2,
                     name: 'Áo Thun'
                 },
                 {
-                    id: 102,
+                    id: 13,
                     name: 'Áo Sơ Mi'
                 },
                 {
-                    id: 103,
+                    id: 10,
                     name: 'Áo Polo'
+                },
+                {
+                    id: 32,
+                    name: 'Áo Nam'
+                },
+                {
+                    id: 33,
+                    name: 'Áo Nữ'
                 }
             ]
         },
         {
-            id: 2,
+            id: 15,
             name: 'Quần',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["GiTrousers"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 23,
+                lineNumber: 25,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 201,
+                    id: 18,
                     name: 'Quần Jeans'
                 },
                 {
-                    id: 202,
+                    id: 20,
                     name: 'Quần Shorts'
                 },
                 {
-                    id: 203,
+                    id: 28,
                     name: 'Quần Tây'
+                },
+                {
+                    id: 39,
+                    name: 'Quần Nam'
+                },
+                {
+                    id: 30,
+                    name: 'Quần Nữ'
                 }
             ]
         },
         {
-            id: 3,
+            id: 2,
             name: 'Áo Thun',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["GiTShirt"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 33,
+                lineNumber: 37,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 301,
+                    id: 4,
                     name: 'Áo Thun Nam'
                 },
                 {
-                    id: 302,
+                    id: 6,
                     name: 'Áo Thun Nữ'
                 }
             ]
         },
         {
-            id: 4,
+            id: 24,
             name: 'Áo Khoác',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["GiMonclerJacket"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 42,
+                lineNumber: 46,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 401,
+                    id: 34,
                     name: 'Áo Khoác Nam'
                 },
                 {
-                    id: 402,
+                    id: 25,
                     name: 'Áo Khoác Nữ'
                 }
             ]
         },
         {
-            id: 5,
+            id: 38,
             name: 'Phụ Kiện',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["FaRedhat"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 51,
+                lineNumber: 55,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 501,
+                    id: 35,
                     name: 'Mũ'
                 },
                 {
-                    id: 502,
+                    id: 36,
                     name: 'Thắt Lưng'
                 },
                 {
-                    id: 503,
+                    id: 37,
                     name: 'Ví'
                 }
             ]
         },
         {
-            id: 6,
+            id: 10,
             name: 'Áo Polo',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$gi$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["GiPoloShirt"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 61,
+                lineNumber: 65,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 601,
-                    name: 'Polo Nam'
+                    id: 11,
+                    name: 'Áo Polo Nam'
                 },
                 {
-                    id: 602,
-                    name: 'Polo Nữ'
+                    id: 12,
+                    name: 'Áo Polo Nữ'
                 }
             ]
         },
         {
-            id: 7,
+            id: 13,
             name: 'Áo Sơ Mi',
             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$io5$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["IoShirtOutline"], {
                 className: "w-full h-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 70,
+                lineNumber: 74,
                 columnNumber: 19
             }, this),
             subCategories: [
                 {
-                    id: 701,
-                    name: 'Sơ Mi Nam'
+                    id: 14,
+                    name: 'Áo Sơ Mi Nam'
                 },
                 {
-                    id: 702,
-                    name: 'Sơ Mi Nữ'
+                    id: 26,
+                    name: 'Áo Sơ Mi Nữ'
                 }
             ]
         }
@@ -4709,12 +4725,12 @@ function Sidebar() {
                                         children: category.icon
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Sidebar2.js",
-                                        lineNumber: 111,
+                                        lineNumber: 115,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Sidebar2.js",
-                                    lineNumber: 104,
+                                    lineNumber: 108,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4722,23 +4738,23 @@ function Sidebar() {
                                     children: category.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Sidebar2.js",
-                                    lineNumber: 115,
+                                    lineNumber: 119,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, category.id, true, {
                             fileName: "[project]/src/components/Sidebar2.js",
-                            lineNumber: 99,
+                            lineNumber: 103,
                             columnNumber: 25
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/components/Sidebar2.js",
-                    lineNumber: 97,
+                    lineNumber: 101,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 96,
+                lineNumber: 100,
                 columnNumber: 13
             }, this),
             currentCategoryId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4754,7 +4770,7 @@ function Sidebar() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 126,
+                        lineNumber: 130,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4765,24 +4781,24 @@ function Sidebar() {
                                 children: subCategory.name
                             }, subCategory.id, false, {
                                 fileName: "[project]/src/components/Sidebar2.js",
-                                lineNumber: 142,
+                                lineNumber: 146,
                                 columnNumber: 33
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/Sidebar2.js",
-                        lineNumber: 138,
+                        lineNumber: 142,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Sidebar2.js",
-                lineNumber: 125,
+                lineNumber: 129,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar2.js",
-        lineNumber: 94,
+        lineNumber: 98,
         columnNumber: 9
     }, this);
 }
@@ -5287,7 +5303,7 @@ function Index() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-red-500 font-bold text-sm md:text-base",
                                         children: [
-                                            product.discount_price.toLocaleString('vi-VN'),
+                                            product.discount_price != null ? product.discount_price.toLocaleString('vi-VN') : 0,
                                             " đ"
                                         ]
                                     }, void 0, true, {
@@ -5298,12 +5314,12 @@ function Index() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-gray-500 line-through text-xs",
                                         children: [
-                                            product.price.toLocaleString('vi-VN'),
+                                            product.price != null ? product.price.toLocaleString('vi-VN') : 0,
                                             " đ"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 353,
+                                        lineNumber: 355,
                                         columnNumber: 25
                                     }, this)
                                 ]
@@ -5327,12 +5343,12 @@ function Index() {
                                 className: "h-5 w-5"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 368,
+                                lineNumber: 371,
                                 columnNumber: 21
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 361,
+                            lineNumber: 364,
                             columnNumber: 17
                         }, this)
                     ]
@@ -5367,7 +5383,7 @@ function Index() {
                                 children: productModal.product_name
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 390,
+                                lineNumber: 393,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5376,13 +5392,13 @@ function Index() {
                                 children: "×"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 391,
+                                lineNumber: 394,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 389,
+                        lineNumber: 392,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5393,12 +5409,12 @@ function Index() {
                             className: "w-full h-64 object-contain rounded mb-4 border"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 401,
+                            lineNumber: 404,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 400,
+                        lineNumber: 403,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5409,7 +5425,7 @@ function Index() {
                                 children: "Chọn màu:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 409,
+                                lineNumber: 412,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5433,29 +5449,29 @@ function Index() {
                                                 className: "w-full h-0.5 bg-gray-400 transform rotate-45"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/index.js",
-                                                lineNumber: 427,
+                                                lineNumber: 430,
                                                 columnNumber: 49
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 426,
+                                            lineNumber: 429,
                                             columnNumber: 45
                                         }, this)
                                     }, color.id, false, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 414,
+                                        lineNumber: 417,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 410,
+                                lineNumber: 413,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 408,
+                        lineNumber: 411,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5466,7 +5482,7 @@ function Index() {
                                 children: "Chọn kích thước:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 437,
+                                lineNumber: 440,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5485,24 +5501,24 @@ function Index() {
                                             children: size.size
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 452,
+                                            lineNumber: 455,
                                             columnNumber: 41
                                         }, this)
                                     }, size.id, false, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 442,
+                                        lineNumber: 445,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 438,
+                                lineNumber: 441,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 436,
+                        lineNumber: 439,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5513,7 +5529,7 @@ function Index() {
                                 children: "Số lượng:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 460,
+                                lineNumber: 463,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5526,7 +5542,7 @@ function Index() {
                                         children: "-"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 462,
+                                        lineNumber: 465,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5538,7 +5554,7 @@ function Index() {
                                         readOnly: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 469,
+                                        lineNumber: 472,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5548,19 +5564,19 @@ function Index() {
                                         children: "+"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/index.js",
-                                        lineNumber: 477,
+                                        lineNumber: 480,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 461,
+                                lineNumber: 464,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 459,
+                        lineNumber: 462,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5573,7 +5589,7 @@ function Index() {
                                 children: "Thêm vào giỏ hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 488,
+                                lineNumber: 491,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5583,24 +5599,24 @@ function Index() {
                                 children: "Mua ngay"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 495,
+                                lineNumber: 498,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 487,
+                        lineNumber: 490,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 388,
+                lineNumber: 391,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/index.js",
-            lineNumber: 387,
+            lineNumber: 390,
             columnNumber: 13
         }, this);
     };
@@ -5608,7 +5624,7 @@ function Index() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 510,
+                lineNumber: 513,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5620,17 +5636,17 @@ function Index() {
                             className: "hidden md:flex justify-center gap-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                 fileName: "[project]/src/pages/index.js",
-                                lineNumber: 514,
+                                lineNumber: 517,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 513,
+                            lineNumber: 516,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 512,
+                        lineNumber: 515,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5640,14 +5656,14 @@ function Index() {
                             children: "Đang tải..."
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 520,
+                            lineNumber: 523,
                             columnNumber: 25
                         }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-center text-red-500",
                             children: error
                         }, void 0, false, {
                             fileName: "[project]/src/pages/index.js",
-                            lineNumber: 522,
+                            lineNumber: 525,
                             columnNumber: 25
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
@@ -5660,14 +5676,14 @@ function Index() {
                                                     className: "w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 527,
+                                                    lineNumber: 530,
                                                     columnNumber: 37
                                                 }, this),
                                                 "Sản phẩm mới"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 526,
+                                            lineNumber: 529,
                                             columnNumber: 33
                                         }, this),
                                         newProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5676,19 +5692,19 @@ function Index() {
                                                     product: product
                                                 }, product.id, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 533,
+                                                    lineNumber: 536,
                                                     columnNumber: 45
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 531,
+                                            lineNumber: 534,
                                             columnNumber: 37
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-center text-gray-500",
                                             children: "Không có sản phẩm mới."
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 537,
+                                            lineNumber: 540,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5699,18 +5715,18 @@ function Index() {
                                                 children: "Xem thêm sản phẩm mới"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/index.js",
-                                                lineNumber: 540,
+                                                lineNumber: 543,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 539,
+                                            lineNumber: 542,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 525,
+                                    lineNumber: 528,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -5723,14 +5739,14 @@ function Index() {
                                                     className: "w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 553,
+                                                    lineNumber: 556,
                                                     columnNumber: 37
                                                 }, this),
                                                 "Sản phẩm nổi bật"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 552,
+                                            lineNumber: 555,
                                             columnNumber: 33
                                         }, this),
                                         featuredProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5739,19 +5755,19 @@ function Index() {
                                                     product: product
                                                 }, product.id, false, {
                                                     fileName: "[project]/src/pages/index.js",
-                                                    lineNumber: 559,
+                                                    lineNumber: 562,
                                                     columnNumber: 45
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 557,
+                                            lineNumber: 560,
                                             columnNumber: 37
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-center text-gray-500",
                                             children: "Không có sản phẩm nổi bật."
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 563,
+                                            lineNumber: 566,
                                             columnNumber: 37
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5762,42 +5778,42 @@ function Index() {
                                                 children: "Xem thêm sản phẩm nổi bật"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/index.js",
-                                                lineNumber: 566,
+                                                lineNumber: 569,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/index.js",
-                                            lineNumber: 565,
+                                            lineNumber: 568,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/index.js",
-                                    lineNumber: 551,
+                                    lineNumber: 554,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/index.js",
-                        lineNumber: 518,
+                        lineNumber: 521,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 511,
+                lineNumber: 514,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
                 fileName: "[project]/src/pages/index.js",
-                lineNumber: 581,
+                lineNumber: 584,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/index.js",
-        lineNumber: 509,
+        lineNumber: 512,
         columnNumber: 9
     }, this);
 }
