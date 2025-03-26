@@ -405,7 +405,7 @@ const productApi = {
                 limit = 20,
                 name,
                 categories,
-                colors,
+                colorIds,
                 sizes,
                 priceRange,
                 sort = 'newest'
@@ -420,7 +420,7 @@ const productApi = {
             // Thêm các filter tùy chọn
             if (name) queryParams.append('name', name);
             if (categories) queryParams.append('categories', categories);
-            if (colors) queryParams.append('colors', colors);
+            if (colorIds) queryParams.append('colors', colorIds);
             if (sizes) queryParams.append('sizes', sizes);
             if (priceRange) queryParams.append('priceRange', priceRange);
             if (sort) queryParams.append('sort', sort);

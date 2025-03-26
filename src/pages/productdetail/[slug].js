@@ -102,10 +102,6 @@ export default function Slug() {
 
     const handleFavoriteClick = async (e) => {
         e.stopPropagation();
-        if (!getToken()) {
-            router.push('/login');
-            return;
-        }
 
         if (isUpdatingFavorite) return;
         setIsUpdatingFavorite(true);
@@ -351,13 +347,6 @@ export default function Slug() {
                     <Link href="/" className="hover:text-gray-900">
                         Trang chủ
                     </Link>
-                    {/* <span className="mx-2">/</span>
-                    <Link
-                        href="/category/productsByCategory?categoryId=1&categoryName=Áo"
-                        className="hover:text-gray-900"
-                    >
-                        Áo
-                    </Link> */}
                     <span className="mx-2">/</span>
                     <span className="text-gray-900">{currentProduct.product_name}</span>
                 </div>

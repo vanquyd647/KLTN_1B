@@ -476,7 +476,9 @@ export default function ProductsByCategory() {
             <div className="container mx-auto px-4 py-6">
                 {/* Breadcrumb */}
                 <div className="mb-4 text-sm mt-4" >
-                    <span className="text-gray-500">Trang chủ</span> /
+                    <Link href="/" className="hover:text-gray-900">
+                        Trang chủ
+                    </Link> /
                     <span className="font-medium"> {categoryName}</span>
                 </div>
 
@@ -505,6 +507,14 @@ export default function ProductsByCategory() {
                                                     className="text-gray-600 hover:text-black"
                                                 >
                                                     Sản phẩm mới
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    href="/featured-products"
+                                                    className="text-gray-600 hover:text-black"
+                                                >
+                                                    Sản phẩm nổi bật
                                                 </Link>
                                             </li>
                                             <li>
@@ -706,8 +716,14 @@ export default function ProductsByCategory() {
                                                     </ul>
                                                 )}
                                             </li>
-                                            <li><a href="#" className="text-gray-600 hover:text-black">Hệ thống cửa hàng</a></li>
-                                            <li><a href="#" className="text-gray-600 hover:text-black">Ưu đãi</a></li>
+                                            <li>
+                                                <Link
+                                                    href="#"
+                                                    className="text-gray-600 hover:text-black"
+                                                >
+                                                    Ưu đãi
+                                                </Link>
+                                            </li>
                                         </ul>
                                     </div>
                                 )}
@@ -784,7 +800,7 @@ export default function ProductsByCategory() {
                                 {showFilters.size && (
                                     <div className="mt-2">
                                         <div className="grid grid-cols-4 gap-2">
-                                            {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                                            {['S', 'M', 'L', 'XL'].map((size) => (
                                                 <button
                                                     key={size}
                                                     className={`border py-1 px-2 text-center hover:bg-gray-100 ${selectedSizes.includes(size) ? 'bg-gray-200' : ''
@@ -795,7 +811,7 @@ export default function ProductsByCategory() {
                                                 </button>
                                             ))}
                                         </div>
-                                        <div className="grid grid-cols-4 gap-2 mt-2">
+                                        {/* <div className="grid grid-cols-4 gap-2 mt-2">
                                             {['36', '37', '38', '39'].map((size) => (
                                                 <button
                                                     key={size}
@@ -806,7 +822,7 @@ export default function ProductsByCategory() {
                                                     {size}
                                                 </button>
                                             ))}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 )}
                             </div>

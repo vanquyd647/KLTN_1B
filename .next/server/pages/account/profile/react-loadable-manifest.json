@@ -1,10 +1,10 @@
 {
-  "src/pages/account/profile.js -> ../../components/Layout": {
-    "id": "src/pages/account/profile.js -> ../../components/Layout",
+  "[project]/src/components/Layout.js [client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/Layout.js [client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/src_cb5145._.js",
-      "static/chunks/node_modules_cd64bb._.js",
-      "static/chunks/src_components_Layout_bd64ad.js"
+      "static/chunks/src_8f069b8e._.js",
+      "static/chunks/node_modules_9c07462b._.js",
+      "static/chunks/src_components_Layout_73d753c8.js"
     ]
   }
 }

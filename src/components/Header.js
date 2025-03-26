@@ -312,11 +312,18 @@ const Header = memo(function Header({ isCartPage }) {
                             Sale
                         </Link>
                         <Link
-                            href="/Sale"
+                            href="/category/productsByCategory?categoryId=8&categoryName=Thời%20Trang%20Nam"
                             className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
                         >
-                            Khuyến mãi
+                            Thời trang nam
+                        </Link>
+                        <Link
+                            href="/category/productsByCategory?categoryId=9&categoryName=Thời%20Trang%20Nữ"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Thời trang nữ
                         </Link>
                         <Link
                             href="/store-locations"
@@ -411,7 +418,7 @@ const Header = memo(function Header({ isCartPage }) {
                     <Sidebar isMobile={true} />
 
                     {/* Additional Links */}
-                    <nav className="py-2">
+                    {/* <nav className="py-2">
                         <Link
                             href="/TrackOrder"
                             className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600"
@@ -458,7 +465,7 @@ const Header = memo(function Header({ isCartPage }) {
                             </svg>
                             Chính sách bảo hành
                         </Link>
-                    </nav>
+                    </nav> */}
                 </div>
             </div>
         </>

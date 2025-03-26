@@ -441,7 +441,7 @@ export default function Favorites() {
                                     className="bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group"
                                     onClick={() => handleProductClick(item.product.slug)}
                                 >
-                                    <div className="relative">
+                                    <div className="relative overflow-hidden aspect-[3/4]">
                                         <img
                                             src={
                                                 item.product.productColors?.[0]?.ProductColor?.image ||

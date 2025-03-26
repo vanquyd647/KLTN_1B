@@ -50,16 +50,6 @@ export default function Sidebar() {
             ],
         },
         {
-            id: 38,
-            name: 'Phụ Kiện',
-            icon: <FaRedhat className="w-full h-full" />,
-            subCategories: [
-                { id: 35, name: 'Mũ' },
-                { id: 36, name: 'Thắt Lưng' },
-                { id: 37, name: 'Ví' },
-            ],
-        },
-        {
             id: 10,
             name: 'Áo Polo',
             icon: <GiPoloShirt className="w-full h-full" />,
@@ -75,6 +65,16 @@ export default function Sidebar() {
             subCategories: [
                 { id: 14, name: 'Áo Sơ Mi Nam' },
                 { id: 26, name: 'Áo Sơ Mi Nữ' },
+            ],
+        },
+        {
+            id: 38,
+            name: 'Phụ Kiện',
+            icon: <FaRedhat className="w-full h-full" />,
+            subCategories: [
+                { id: 35, name: 'Mũ' },
+                { id: 36, name: 'Thắt Lưng' },
+                { id: 37, name: 'Ví' },
             ],
         },
     ];
