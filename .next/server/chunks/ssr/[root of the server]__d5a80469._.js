@@ -538,7 +538,7 @@ const productApi = {
     // Get products with pagination
     getProductsByPagination: async (params = {})=>{
         try {
-            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            const { page = 1, limit = 20, name, categories, colorIds, sizes, priceRange, sort = 'newest' } = params;
             // Xây dựng query parameters
             const queryParams = new URLSearchParams({
                 page: String(page),
@@ -547,7 +547,7 @@ const productApi = {
             // Thêm các filter tùy chọn
             if (name) queryParams.append('name', name);
             if (categories) queryParams.append('categories', categories);
-            if (colors) queryParams.append('colors', colors);
+            if (colorIds) queryParams.append('colors', colorIds);
             if (sizes) queryParams.append('sizes', sizes);
             if (priceRange) queryParams.append('priceRange', priceRange);
             if (sort) queryParams.append('sort', sort);

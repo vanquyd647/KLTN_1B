@@ -6,8 +6,10 @@ import Statistics from '../Statistics';
 import ShippingManagement from '../ShippingManagement';
 import UserManagement from '../UserManagement';
 import BlogManagement from '../BlogManagement';
-import CouponManagement from '../CouponManagement'; 
+import CouponManagement from '../CouponManagement';
 import SettingsManagement from '../SettingsManagement';
+import Dashboard from '../Dashboard';
+
 
 const AdminContent = ({ activeTab, loading }) => {
     const renderContent = () => {
@@ -16,6 +18,8 @@ const AdminContent = ({ activeTab, loading }) => {
         }
 
         switch (activeTab) {
+            case 'dashboard':
+                return <Dashboard />;
             case 'products':
                 return <ProductManagement />;
             case 'orders':
@@ -28,9 +32,9 @@ const AdminContent = ({ activeTab, loading }) => {
                 return <UserManagement />;
             case 'blogs':
                 return <BlogManagement />;
-            case 'coupons': // Thêm case mới
+            case 'coupons':
                 return <CouponManagement />;
-            case 'settings': // Thêm case mới
+            case 'settings':
                 return <SettingsManagement />;
             default:
                 return <ProductManagement />;

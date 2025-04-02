@@ -101,12 +101,6 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
             // Chuyển đổi sang số và kiểm tra
             const numValue = Number(value);
 
-            // Kiểm tra nếu giá trị không hợp lệ
-            if (numValue < 2000) {
-                alert(`${name === 'price' ? 'Giá' : 'Giá khuyến mãi'} phải lớn hơn hoặc bằng 2.000đ`);
-                return;
-            }
-
             // Kiểm tra nếu discount_price lớn hơn price
             if (name === 'discount_price' && numValue > formData.price) {
                 alert('Giá khuyến mãi không được lớn hơn giá gốc');
@@ -222,7 +216,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                     alert('Giá khuyến mãi phải lớn hơn hoặc bằng 2.000đ!');
                     return;
                 }
-                if (discountPrice >= Number(formData.price)) {
+                if (discountPrice > Number(formData.price)) {
                     alert('Giá khuyến mãi phải nhỏ hơn giá gốc!');
                     return;
                 }

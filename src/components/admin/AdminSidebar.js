@@ -5,7 +5,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, role }) => {
     return (
         <div className="w-64 bg-white shadow-md h-screen fixed">
             <div className="p-4 border-b">
-                <h1 className="text-xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-xl font-bold">Fashion Store</h1>
             </div>
             <nav className="p-4">
                 {menuItems.map((item) => (

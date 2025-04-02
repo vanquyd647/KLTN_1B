@@ -5,7 +5,6 @@ const AdminHeader = ({ user, role, handleLogout }) => {
     // Function để format tên người dùng
     const getFullName = () => {
         if (user?.firstname && user?.lastname) {
-            // Capitalize first letter của firstname và lastname
             const formattedFirstName = user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1).toLowerCase();
             const formattedLastName = user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase();
             return `${formattedFirstName} ${formattedLastName}`;
@@ -13,10 +12,22 @@ const AdminHeader = ({ user, role, handleLogout }) => {
         return 'Loading...';
     };
 
+    // Function để hiển thị role phù hợp
+    const displayRole = () => {
+        switch(role?.toLowerCase()) {
+            case 'superadmin':
+                return 'MANAGER';
+            case 'admin':
+                return 'STAFF';
+            default:
+                return role?.toUpperCase() || '';
+        }
+    };
+
     return (
         <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
             <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-500">{role?.toUpperCase()}</span>
+                <span className="text-sm text-gray-500">{displayRole()}</span>
             </div>
             <div className="flex items-center space-x-4">
                 <div className="flex items-center">
