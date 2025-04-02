@@ -37,7 +37,7 @@ const AdminContent = ({ activeTab, loading }) => {
             case 'settings':
                 return <SettingsManagement />;
             default:
-                return <ProductManagement />;
+                return <Dashboard />;
         }
     };
 

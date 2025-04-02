@@ -1831,6 +1831,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1839,9 +1840,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -11451,431 +11455,1004 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [client] (ecmascript)");
+// Import Chart.js
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/chart.js/dist/chart.js [client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-chartjs-2/dist/index.js [client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
 ;
 ;
+;
+;
+;
+// Đăng ký các components cho Chart.js
+__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Chart"].register(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["CategoryScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LinearScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["BarElement"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Title"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Tooltip"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Legend"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["ArcElement"]);
 const Dashboard = ()=>{
+    _s();
+    const [orders, setOrders] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [users, setUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [revenue, setRevenue] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        totalRevenue: 0,
+        count: 0
+    });
+    const [products, setProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
+        total: 0,
+        newCount: 0
+    });
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Dashboard.useEffect": ()=>{
+            fetchOrders();
+            fetchUsers();
+            fetchRevenue();
+            fetchProducts();
+        }
+    }["Dashboard.useEffect"], []);
+    const fetchOrders = async ()=>{
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["orderApi"].getAllOrders({
+                page: 1,
+                limit: 5
+            });
+            if (response.code === 200) {
+                setOrders(response.data.orders);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally{
+            setLoading(false);
+        }
+    };
+    const fetchUsers = async ()=>{
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["adminApi"].getAllUsers({
+                page: 1,
+                limit: 10
+            });
+            if (response.code === 200) {
+                setUsers(response.data.users);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const fetchRevenue = async ()=>{
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["revenueApi"].getRevenueStats();
+            console.log('Full response:', response);
+            if (response?.data?.code === 200) {
+                const totalRevenue = response.data.data.totalRevenue || 0;
+                const count = response.data.data.count || 0;
+                console.log('Fetched revenue:', {
+                    totalRevenue,
+                    count
+                });
+                setRevenue({
+                    totalRevenue: totalRevenue,
+                    count: count
+                });
+            } else {
+                console.warn('Invalid response format:', response);
+            }
+        } catch (err) {
+            console.error('Error in fetchRevenue:', err);
+        }
+    };
+    const fetchProducts = async ()=>{
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination();
+            if (response?.code === 200) {
+                const totalProducts = response.data.pagination.totalItems;
+                const newProducts = response.data.products.filter((p)=>p.is_new).length;
+                setProducts({
+                    total: totalProducts,
+                    newCount: newProducts
+                });
+            }
+        } catch (err) {
+            console.error('Error fetching products:', err);
+        }
+    };
+    // Function để chuyển đổi trạng thái đơn hàng sang tiếng Việt
+    const getOrderStatusText = (status)=>{
+        switch(status){
+            case 'completed':
+                return 'Hoàn thành';
+            case 'shipping':
+                return 'Đang giao';
+            case 'cancelled':
+                return 'Đã hủy';
+            default:
+                return 'Chờ xác nhận';
+        }
+    };
+    // Function để lấy màu cho trạng thái
+    const getOrderStatusColor = (status)=>{
+        switch(status){
+            case 'completed':
+                return 'bg-green-100 text-green-800';
+            case 'shipping':
+                return 'bg-blue-100 text-blue-800';
+            case 'cancelled':
+                return 'bg-red-100 text-red-800';
+            default:
+                return 'bg-yellow-100 text-yellow-800';
+        }
+    };
+    // Function xử lý dữ liệu cho biểu đồ tròn phân bổ đơn hàng
+    const getOrderStatusDistribution = (orders)=>{
+        const statusCounts = {
+            completed: 0,
+            shipping: 0,
+            cancelled: 0,
+            pending: 0
+        };
+        orders.forEach((order)=>{
+            if (statusCounts.hasOwnProperty(order.status)) {
+                statusCounts[order.status]++;
+            } else {
+                // Nếu là trạng thái khác mặc định
+                statusCounts.pending++;
+            }
+        });
+        return {
+            labels: [
+                'Hoàn thành',
+                'Đang giao',
+                'Đã hủy',
+                'Chờ xác nhận'
+            ],
+            datasets: [
+                {
+                    data: [
+                        statusCounts.completed,
+                        statusCounts.shipping,
+                        statusCounts.cancelled,
+                        statusCounts.pending
+                    ],
+                    backgroundColor: [
+                        'rgba(75, 192, 92, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 206, 86, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 92, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        };
+    };
+    // Component biểu đồ cột doanh thu
+    const getRevenueChartData = (orders)=>{
+        const months = [
+            'T1',
+            'T2',
+            'T3',
+            'T4',
+            'T5',
+            'T6',
+            'T7',
+            'T8',
+            'T9',
+            'T10',
+            'T11',
+            'T12'
+        ];
+        // Tính tổng doanh thu cho tháng hiện tại (từ đơn hàng có status là completed)
+        const completedOrders = orders.filter((order)=>order.status === 'completed');
+        const revenueData = Array(12).fill(0);
+        // Xử lý dữ liệu doanh thu theo tháng
+        completedOrders.forEach((order)=>{
+            const orderDate = new Date(order.dates.created_at);
+            const orderMonth = orderDate.getMonth();
+            revenueData[orderMonth] += parseFloat(order.pricing.final_price);
+        });
+        return {
+            labels: months,
+            datasets: [
+                {
+                    label: 'Doanh thu (VND)',
+                    data: revenueData,
+                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                    borderColor: 'rgba(53, 162, 235, 1)',
+                    borderWidth: 1
+                }
+            ]
+        };
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "p-6",
+        className: "p-6 bg-gray-50 min-h-screen",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
-                        title: "Tổng doanh thu",
-                        value: "120.500.000đ",
-                        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CurrencyIcon, {}, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 12,
-                            columnNumber: 27
-                        }, void 0),
-                        trend: "+15%",
-                        color: "bg-blue-500"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 9,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
-                        title: "Đơn hàng mới",
-                        value: "48",
-                        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderIcon, {}, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 20,
-                            columnNumber: 27
-                        }, void 0),
-                        trend: "+12",
-                        color: "bg-green-500"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 17,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
-                        title: "Khách hàng mới",
-                        value: "156",
-                        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserIcon, {}, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 28,
-                            columnNumber: 27
-                        }, void 0),
-                        trend: "+24",
-                        color: "bg-purple-500"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 25,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
-                        title: "Sản phẩm",
-                        value: "1,240",
-                        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductIcon, {}, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 36,
-                            columnNumber: 27
-                        }, void 0),
-                        trend: "+8",
-                        color: "bg-orange-500"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 33,
-                        columnNumber: 17
-                    }, this)
-                ]
-            }, void 0, true, {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-bold text-gray-800 mb-6",
+                children: "Tổng quan hệ thống"
+            }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 8,
+                lineNumber: 219,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 lg:grid-cols-2 gap-6",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-white p-6 rounded-lg shadow",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-semibold mb-4",
-                            children: "Doanh thu theo tháng"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 45,
-                            columnNumber: 21
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 44,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-white p-6 rounded-lg shadow",
+                className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
+                children: loading ? // Skeleton loading
+                Array(4).fill().map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bg-white p-6 rounded-xl shadow-sm border border-gray-100 animate-pulse",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "text-lg font-semibold mb-4",
-                                children: "Top sản phẩm bán chạy"
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between mb-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "h-4 bg-gray-200 rounded w-1/3"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 228,
+                                        columnNumber: 33
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "w-10 h-10 bg-gray-200 rounded-full"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 229,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 50,
-                                columnNumber: 21
+                                lineNumber: 227,
+                                columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-4",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TopProductItem, {
-                                    name: "Áo thun nam",
-                                    sold: 124,
-                                    revenue: "12.400.000đ"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 53,
-                                    columnNumber: 25
-                                }, this)
+                                className: "h-8 bg-gray-200 rounded w-1/2 mb-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 51,
-                                columnNumber: 21
+                                lineNumber: 231,
+                                columnNumber: 29
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "h-3 bg-gray-200 rounded w-1/4"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 232,
+                                columnNumber: 29
                             }, this)
                         ]
-                    }, void 0, true, {
+                    }, index, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 49,
-                        columnNumber: 17
-                    }, this)
-                ]
-            }, void 0, true, {
+                        lineNumber: 226,
+                        columnNumber: 25
+                    }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
+                            title: "Tổng doanh thu",
+                            value: new Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            }).format(revenue.totalRevenue),
+                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CurrencyIcon, {}, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 243,
+                                columnNumber: 35
+                            }, void 0),
+                            trend: `${revenue.count} đơn thành công`,
+                            color: "bg-gradient-to-r from-blue-500 to-blue-600"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Dashboard.js",
+                            lineNumber: 237,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
+                            title: "Tổng đơn hàng",
+                            value: orders.length.toString(),
+                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderIcon, {}, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 251,
+                                columnNumber: 35
+                            }, void 0),
+                            trend: `${orders.filter((o)=>o.status === 'completed').length} hoàn thành`,
+                            color: "bg-gradient-to-r from-green-500 to-green-600"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Dashboard.js",
+                            lineNumber: 248,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
+                            title: "Người dùng",
+                            value: users.length.toString(),
+                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserIcon, {}, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 259,
+                                columnNumber: 35
+                            }, void 0),
+                            trend: `${users.filter((u)=>u.roles.includes('customer')).length} khách hàng`,
+                            color: "bg-gradient-to-r from-purple-500 to-purple-600"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Dashboard.js",
+                            lineNumber: 256,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
+                            title: "Sản phẩm",
+                            value: products.total.toString(),
+                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductIcon, {}, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 267,
+                                columnNumber: 35
+                            }, void 0),
+                            trend: `${products.newCount} sản phẩm mới`,
+                            color: "bg-gradient-to-r from-orange-500 to-orange-600"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Dashboard.js",
+                            lineNumber: 264,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true)
+            }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 43,
+                lineNumber: 222,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-6 bg-white rounded-lg shadow",
+                className: "bg-white rounded-xl shadow-sm border border-gray-100 mb-8",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "p-6",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-lg font-semibold mb-4",
-                            children: "Đơn hàng gần đây"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 66,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                            className: "w-full",
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-between items-center mb-6",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                        className: "text-left border-b",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "pb-3",
-                                                children: "Mã đơn"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 70,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "pb-3",
-                                                children: "Khách hàng"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 71,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "pb-3",
-                                                children: "Trạng thái"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 72,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "pb-3",
-                                                children: "Tổng tiền"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 73,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "pb-3",
-                                                children: "Thời gian"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 74,
-                                                columnNumber: 33
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 69,
-                                        columnNumber: 29
-                                    }, this)
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                    className: "text-xl font-bold text-gray-800",
+                                    children: "Đơn hàng gần đây"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 68,
+                                    lineNumber: 279,
                                     columnNumber: 25
                                 }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {}, void 0, false, {
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    className: "text-sm text-blue-600 hover:text-blue-800 transition-colors flex items-center",
+                                    children: [
+                                        "Xem tất cả",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                            xmlns: "http://www.w3.org/2000/svg",
+                                            className: "h-4 w-4 ml-1",
+                                            fill: "none",
+                                            viewBox: "0 0 24 24",
+                                            stroke: "currentColor",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                strokeLinecap: "round",
+                                                strokeLinejoin: "round",
+                                                strokeWidth: 2,
+                                                d: "M9 5l7 7-7 7"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Dashboard.js",
+                                                lineNumber: 283,
+                                                columnNumber: 33
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Dashboard.js",
+                                            lineNumber: 282,
+                                            columnNumber: 29
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 77,
+                                    lineNumber: 280,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 67,
+                            lineNumber: 278,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "overflow-x-auto",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                                className: "min-w-full",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                            className: "bg-gray-50 border-b border-gray-200",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Mã ĐH"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 291,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Khách hàng"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 292,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Tổng tiền"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 293,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Trạng thái"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 294,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Ngày đặt"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 295,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                    className: "px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    children: "Thao tác"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 296,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/Dashboard.js",
+                                            lineNumber: 290,
+                                            columnNumber: 33
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 289,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                        className: "divide-y divide-gray-200",
+                                        children: loading ? // Skeleton loading cho bảng
+                                        Array(5).fill().map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                    colSpan: "6",
+                                                    className: "px-6 py-4",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "h-4 bg-gray-200 rounded animate-pulse"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 305,
+                                                        columnNumber: 49
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                    lineNumber: 304,
+                                                    columnNumber: 45
+                                                }, this)
+                                            }, index, false, {
+                                                fileName: "[project]/src/components/Dashboard.js",
+                                                lineNumber: 303,
+                                                columnNumber: 41
+                                            }, this)) : orders.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                colSpan: "6",
+                                                className: "px-6 py-4 text-center text-gray-500",
+                                                children: "Không có đơn hàng nào"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Dashboard.js",
+                                                lineNumber: 311,
+                                                columnNumber: 41
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Dashboard.js",
+                                            lineNumber: 310,
+                                            columnNumber: 37
+                                        }, this) : orders.map((order)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].tr, {
+                                                className: "hover:bg-gray-50 transition-colors",
+                                                initial: {
+                                                    opacity: 0
+                                                },
+                                                animate: {
+                                                    opacity: 1
+                                                },
+                                                transition: {
+                                                    duration: 0.3
+                                                },
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap font-medium",
+                                                        children: [
+                                                            "#",
+                                                            order.id
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 324,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "flex items-center",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 mr-2",
+                                                                    children: order.shipping.recipient.name.charAt(0)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                                    lineNumber: 327,
+                                                                    columnNumber: 53
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                    children: order.shipping.recipient.name
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/Dashboard.js",
+                                                                    lineNumber: 330,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/Dashboard.js",
+                                                            lineNumber: 326,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 325,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap font-medium text-gray-800",
+                                                        children: new Intl.NumberFormat('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND'
+                                                        }).format(order.pricing.final_price)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 333,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: `px-3 py-1 rounded-full text-xs font-medium ${getOrderStatusColor(order.status)}`,
+                                                            children: getOrderStatusText(order.status)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/Dashboard.js",
+                                                            lineNumber: 340,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 339,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap text-gray-600",
+                                                        children: new Date(order.dates.created_at).toLocaleDateString('vi-VN')
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 344,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                        className: "px-6 py-4 whitespace-nowrap text-right",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            className: "text-blue-600 hover:text-blue-900 font-medium",
+                                                            children: "Chi tiết"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/Dashboard.js",
+                                                            lineNumber: 348,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Dashboard.js",
+                                                        lineNumber: 347,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                ]
+                                            }, order.id, true, {
+                                                fileName: "[project]/src/components/Dashboard.js",
+                                                lineNumber: 317,
+                                                columnNumber: 41
+                                            }, this))
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 299,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 288,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Dashboard.js",
+                            lineNumber: 287,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Dashboard.js",
-                    lineNumber: 65,
+                    lineNumber: 277,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 64,
+                lineNumber: 276,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bg-white p-6 rounded-xl shadow-sm border border-gray-100",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-semibold mb-4",
+                                children: "Doanh thu theo tháng"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 364,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "h-80",
+                                children: loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "h-full flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 368,
+                                        columnNumber: 33
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 367,
+                                    columnNumber: 29
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Bar"], {
+                                    data: getRevenueChartData(orders),
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                position: 'top'
+                                            },
+                                            title: {
+                                                display: false
+                                            }
+                                        },
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    callback: function(value) {
+                                                        return new Intl.NumberFormat('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                            maximumFractionDigits: 0
+                                                        }).format(value);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 371,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 365,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Dashboard.js",
+                        lineNumber: 363,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bg-white p-6 rounded-xl shadow-sm border border-gray-100",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-semibold mb-4",
+                                children: "Phân bổ đơn hàng"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 405,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "h-80",
+                                children: loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "h-full flex items-center justify-center",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 409,
+                                        columnNumber: 33
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 408,
+                                    columnNumber: 29
+                                }, this) : orders.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Doughnut"], {
+                                    data: getOrderStatusDistribution(orders),
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                position: 'right',
+                                                labels: {
+                                                    font: {
+                                                        family: 'Inter, system-ui, sans-serif',
+                                                        size: 12
+                                                    },
+                                                    padding: 20,
+                                                    usePointStyle: true,
+                                                    pointStyle: 'circle'
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        const label = context.label || '';
+                                                        const value = context.raw || 0;
+                                                        const total = context.dataset.data.reduce((acc, val)=>acc + val, 0);
+                                                        const percentage = Math.round(value / total * 100);
+                                                        return `${label}: ${value} đơn (${percentage}%)`;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 412,
+                                    columnNumber: 29
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "h-full flex items-center justify-center text-gray-500",
+                                    children: "Không có dữ liệu"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 445,
+                                    columnNumber: 29
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 406,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Dashboard.js",
+                        lineNumber: 404,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Dashboard.js",
+                lineNumber: 362,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 6,
+        lineNumber: 218,
         columnNumber: 9
     }, this);
 };
+_s(Dashboard, "8G8CuAO3xbfpHZ4dhjqWWUTVgU8=");
 _c = Dashboard;
-// Component Card thống kê
-const DashboardCard = ({ title, value, icon, trend, color })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-white p-6 rounded-lg shadow",
+// Components
+const DashboardCard = ({ title, value, icon, trend, color })=>{
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].div, {
+        className: "bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100",
+        whileHover: {
+            y: -5
+        },
+        transition: {
+            type: "spring",
+            stiffness: 300
+        },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between mb-4",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: `p-3 rounded-full ${color}`,
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-gray-600 text-sm font-medium",
+                        children: title
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Dashboard.js",
+                        lineNumber: 465,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: `p-3 rounded-full ${color} text-white`,
                         children: icon
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 91,
-                        columnNumber: 13
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: `text-sm ${trend.startsWith('+') ? 'text-green-500' : 'text-red-500'}`,
-                        children: trend
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 94,
-                        columnNumber: 13
+                        lineNumber: 466,
+                        columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 90,
-                columnNumber: 9
+                lineNumber: 464,
+                columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                className: "text-gray-500 text-sm",
-                children: title
-            }, void 0, false, {
-                fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 98,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-2xl font-bold",
-                children: value
-            }, void 0, false, {
-                fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 99,
-                columnNumber: 9
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 89,
-        columnNumber: 5
-    }, this);
-_c1 = DashboardCard;
-// Component hiển thị sản phẩm bán chạy
-const TopProductItem = ({ name, sold, revenue })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "flex items-center justify-between py-2",
-        children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex flex-col",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                        className: "font-medium",
-                        children: name
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-3xl font-bold mb-2 text-gray-800",
+                        children: value
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 107,
-                        columnNumber: 13
+                        lineNumber: 471,
+                        columnNumber: 17
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-sm text-gray-500",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-xs text-gray-500 flex items-center",
                         children: [
-                            sold,
-                            " đã bán"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "mr-1",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    className: "h-3 w-3",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                        strokeWidth: 2,
+                                        d: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Dashboard.js",
+                                        lineNumber: 475,
+                                        columnNumber: 29
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Dashboard.js",
+                                    lineNumber: 474,
+                                    columnNumber: 25
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Dashboard.js",
+                                lineNumber: 473,
+                                columnNumber: 21
+                            }, this),
+                            trend
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 108,
-                        columnNumber: 13
+                        lineNumber: 472,
+                        columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 106,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                className: "font-medium",
-                children: revenue
-            }, void 0, false, {
-                fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 110,
-                columnNumber: 9
+                lineNumber: 470,
+                columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 105,
-        columnNumber: 5
+        lineNumber: 459,
+        columnNumber: 9
     }, this);
-_c2 = TopProductItem;
+};
+_c1 = DashboardCard;
 // Icons
 const CurrencyIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-        className: "w-6 h-6 text-white",
+        className: "w-6 h-6",
         fill: "none",
         stroke: "currentColor",
         viewBox: "0 0 24 24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            strokeWidth: 2,
+            strokeWidth: "2",
             d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 117,
+            lineNumber: 488,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 116,
+        lineNumber: 487,
         columnNumber: 5
     }, this);
-_c3 = CurrencyIcon;
+_c2 = CurrencyIcon;
 const OrderIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-        className: "w-6 h-6 text-white",
+        className: "w-6 h-6",
         fill: "none",
         stroke: "currentColor",
         viewBox: "0 0 24 24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            strokeWidth: 2,
-            d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+            strokeWidth: "2",
+            d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 123,
+            lineNumber: 494,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 122,
+        lineNumber: 493,
         columnNumber: 5
     }, this);
-_c4 = OrderIcon;
+_c3 = OrderIcon;
 const UserIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-        className: "w-6 h-6 text-white",
+        className: "w-6 h-6",
         fill: "none",
         stroke: "currentColor",
         viewBox: "0 0 24 24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            strokeWidth: 2,
-            d: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+            strokeWidth: "2",
+            d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 129,
+            lineNumber: 500,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 128,
+        lineNumber: 499,
         columnNumber: 5
     }, this);
-_c5 = UserIcon;
+_c4 = UserIcon;
 const ProductIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-        className: "w-6 h-6 text-white",
+        className: "w-6 h-6",
         fill: "none",
         stroke: "currentColor",
         viewBox: "0 0 24 24",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            strokeWidth: 2,
+            strokeWidth: "2",
             d: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 135,
+            lineNumber: 506,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 134,
+        lineNumber: 505,
         columnNumber: 5
     }, this);
-_c6 = ProductIcon;
+_c5 = ProductIcon;
 const __TURBOPACK__default__export__ = Dashboard;
-var _c, _c1, _c2, _c3, _c4, _c5, _c6;
+var _c, _c1, _c2, _c3, _c4, _c5;
 __turbopack_context__.k.register(_c, "Dashboard");
 __turbopack_context__.k.register(_c1, "DashboardCard");
-__turbopack_context__.k.register(_c2, "TopProductItem");
-__turbopack_context__.k.register(_c3, "CurrencyIcon");
-__turbopack_context__.k.register(_c4, "OrderIcon");
-__turbopack_context__.k.register(_c5, "UserIcon");
-__turbopack_context__.k.register(_c6, "ProductIcon");
+__turbopack_context__.k.register(_c2, "CurrencyIcon");
+__turbopack_context__.k.register(_c3, "OrderIcon");
+__turbopack_context__.k.register(_c4, "UserIcon");
+__turbopack_context__.k.register(_c5, "ProductIcon");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -11979,7 +12556,7 @@ const AdminContent = ({ activeTab, loading })=>{
                     columnNumber: 24
                 }, this);
             default:
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ProductManagement$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Dashboard$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
                     lineNumber: 40,
                     columnNumber: 24
@@ -12145,7 +12722,7 @@ const AdminDashboard = ()=>{
     }["AdminDashboard.useSelector"]);
     const [showLoginModal, setShowLoginModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [role, setRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('products');
+    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('dashboard');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminDashboard.useEffect": ()=>{
             const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])();
@@ -12250,7 +12827,7 @@ const AdminDashboard = ()=>{
         columnNumber: 9
     }, this);
 };
-_s(AdminDashboard, "DhzpUs3qIExz1fP6Rlc+YsaHOrE=", false, function() {
+_s(AdminDashboard, "MTdd3TCkdE2TW97TJWsBY+9gImo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],

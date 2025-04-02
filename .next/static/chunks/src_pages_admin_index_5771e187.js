@@ -13,7 +13,9 @@
     "static/chunks/node_modules_@firebase_auth_dist_esm2017_f0a06e8d._.js",
     "static/chunks/node_modules_@firebase_firestore_dist_index_esm2017_06c08cb5.js",
     "static/chunks/node_modules_chart_js_dist_555c57b6._.js",
-    "static/chunks/node_modules_9ff96dce._.js"
+    "static/chunks/node_modules_framer-motion_dist_es_1ea75a66._.js",
+    "static/chunks/node_modules_motion-dom_dist_es_09841a35._.js",
+    "static/chunks/node_modules_f974870b._.js"
   ],
   "source": "entry"
 });

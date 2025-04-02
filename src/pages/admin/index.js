@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     const { user, loading } = useSelector((state) => state.auth);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [role, setRole] = useState(null);
-    const [activeTab, setActiveTab] = useState('products');
+    const [activeTab, setActiveTab] = useState('dashboard');
 
     useEffect(() => {
         const token = getToken();

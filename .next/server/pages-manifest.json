@@ -1,14 +1,11 @@
 {
   "/": "pages/index.js",
-  "/TrackOrder": "pages/TrackOrder.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/admin": "pages/admin.js",
   "/cart": "pages/cart.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
   "/checkout": "pages/checkout.js",
   "/payment": "pages/payment.js",
   "/payment/success": "pages/payment/success.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js",
-  "/vouchers": "pages/vouchers.js"
+  "/productdetail/[slug]": "pages/productdetail/[slug].js"
 }
