@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Layout from '../components/Layout';
+import Link from 'next/link';
 import { getCartId } from '@/utils/storage';
 import { createOrder } from '../store/slices/orderSlice';
 import { carrierApi, couponApi } from '@/utils/apiClient';
@@ -299,7 +299,7 @@ const CheckoutPage = () => {
                 });
 
                 setCouponId(couponInfo.id);
-                console.log('couponID:', couponId );
+                console.log('couponID:', couponId);
                 console.log('discountAmount:', discountAmount);
 
                 setDiscountAmount(discountAmt);
@@ -444,7 +444,7 @@ const CheckoutPage = () => {
                 cart_id: getCartId(),
                 carrier_id: selectedCarrier.id,
                 coupon_id: couponId,
-                shipping_fee : selectedCarrier?.price || 0,
+                shipping_fee: selectedCarrier?.price || 0,
                 discount_amount: discountAmount,
                 original_price: calculateTotal(),
                 discounted_price: calculateTotal() - discountAmount,
@@ -550,7 +550,36 @@ const CheckoutPage = () => {
                 <StockErrorAlert />
             </div>
 
-            <div className="bg-white p-6 rounded shadow-md">
+            <div className="bg-white p-6 rounded">
+                <div className="flex justify-start mb-2">
+                    <div className="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 text-gray-600 mr-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            />
+                        </svg>
+                        <h2 className="text-lg font-medium">
+                            <span className="text-gray-800">Fashion</span>
+                            <span className="text-gray-800">Store</span>
+                        </h2>
+                    </div>
+                </div>
+                <div className="flex items-center text-sm text-gray-600 mb-6">
+                    <Link href="/cart" className="hover:text-gray-900">
+                        Giỏ hàng
+                    </Link>
+                    <span className="mx-2">/</span>
+                    <span className="text-gray-900">Đặt hàng</span>
+                </div>
                 <h1 className="text-2xl font-bold mb-4">Thông tin đặt hàng</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -667,7 +696,7 @@ const CheckoutPage = () => {
 
                     <button
                         type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+                        className="bg-red-600 text-white px-4 py-2 rounded w-full"
                         disabled={loading}
                     >
                         {loading ? 'Đang xử lý...' : 'Tiếp tục đến phương thức thanh toán'}
@@ -675,7 +704,7 @@ const CheckoutPage = () => {
                 </form>
             </div>
 
-            <div className="bg-gray-100 p-6 rounded shadow-md">
+            <div className="bg-gray-100 p-6 rounded">
                 <h2 className="text-xl font-bold mb-4">Thông tin đơn hàng</h2>
                 <ul className="mb-4">
                     {items.map(item => (

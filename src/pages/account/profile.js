@@ -189,6 +189,70 @@ export default function Profile() {
         e.preventDefault();
         setError(null); // Reset error state before attempting registration
 
+        if (!formData.email || !formData.password || !formData.firstname || !formData.lastname) {
+            setError('Vui lòng điền đầy đủ thông tin.');
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            setError('Mật khẩu phải có ít nhất 6 ký tự.');
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            setError('Email không hợp lệ. Vui lòng nhập lại.');
+            return;
+        }
+
+        if (!/^\d{10}$/.test(formData.phone)) {
+            setError('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
+            return;
+        }
+        if (!/^[a-zA-Z]+$/.test(formData.firstname) || !/^[a-zA-Z]+$/.test(formData.lastname)) {
+            setError('Tên và họ chỉ được chứa chữ cái.');
+            return;
+        }
+
+        if (formData.firstname.length < 2 || formData.lastname.length < 2) {
+            setError('Tên và họ phải có ít nhất 2 ký tự.');
+            return;
+        }
+        
+        if (formData.firstname.length > 20 || formData.lastname.length > 20) {
+            setError('Tên và họ không được vượt quá 20 ký tự.');
+            return;
+        }
+
+        if (formData.password.length > 20) {
+            setError('Mật khẩu không được vượt quá 20 ký tự.');
+            return;
+        }
+
+        if (formData.password.includes(' ')) {
+            setError('Mật khẩu không được chứa khoảng trắng.');
+            return;
+        }
+
+        if (!/[A-Z]/.test(formData.password)) {
+            setError('Mật khẩu phải chứa ít nhất một chữ cái viết hoa.');
+            return;
+        }
+
+        if (!/[a-z]/.test(formData.password)) {
+            setError('Mật khẩu phải chứa ít nhất một chữ cái viết thường.');
+            return;
+        }
+
+        if (!/[0-9]/.test(formData.password)) {
+            setError('Mật khẩu phải chứa ít nhất một chữ số.');
+            return;
+        }
+
+        if (!/[!@#$%^&*]/.test(formData.password)) {
+            setError('Mật khẩu phải chứa ít nhất một ký tự đặc biệt.');
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
             setError('Mật khẩu không khớp. Vui lòng thử lại.');
             return;

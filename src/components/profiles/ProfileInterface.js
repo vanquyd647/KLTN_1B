@@ -76,7 +76,7 @@ const PaymentStatusBadge = ({ status }) => {
             case 'failed':
                 return 'Thanh toán thất bại';
             default:
-                return 'Không xác định';
+                return 'Thanh toán thất bại';
         }
     };
 
@@ -131,7 +131,7 @@ const OrderCard = ({ order, onViewDetail }) => {
                                 {item.product.name}
                             </p>
                             <p className="text-xs lg:text-sm text-gray-600 truncate">
-                            Màu: {item.variant.color.name} | Size: {item.variant.size}
+                                Màu: {item.variant.color.name} | Size: {item.variant.size}
                             </p>
                             <p className="text-xs lg:text-sm text-gray-600">
                                 {item.quantity} x {formatPrice(item.price)}
@@ -335,6 +335,14 @@ export default function ProfileInterface({
         gender: ''
     });
     const [updateLoading, setUpdateLoading] = useState(false);
+
+    // Thêm state để quản lý lỗi validation
+    const [validationErrors, setValidationErrors] = useState({
+        firstname: '',
+        lastname: '',
+        phone: ''
+    });
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -354,11 +362,72 @@ export default function ProfileInterface({
             ...prev,
             [name]: value
         }));
+
+        // Xóa lỗi validation khi người dùng nhập lại
+        if (validationErrors[name]) {
+            setValidationErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+    };
+
+    // Hàm validate dữ liệu thông tin cá nhân
+    const validateProfileData = () => {
+        const errors = {};
+        let isValid = true;
+
+        // Kiểm tra họ
+        if (!profileData.firstname) {
+            errors.firstname = 'Vui lòng nhập họ';
+            isValid = false;
+        } else if (!/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/.test(profileData.firstname)) {
+            errors.firstname = 'Họ chỉ được chứa chữ cái';
+            isValid = false;
+        } else if (profileData.firstname.length < 2) {
+            errors.firstname = 'Họ phải có ít nhất 2 ký tự';
+            isValid = false;
+        } else if (profileData.firstname.length > 20) {
+            errors.firstname = 'Họ không được vượt quá 20 ký tự';
+            isValid = false;
+        }
+
+        // Kiểm tra tên
+        if (!profileData.lastname) {
+            errors.lastname = 'Vui lòng nhập tên';
+            isValid = false;
+        } else if (!/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/.test(profileData.lastname)) {
+            errors.lastname = 'Tên chỉ được chứa chữ cái';
+            isValid = false;
+        } else if (profileData.lastname.length < 2) {
+            errors.lastname = 'Tên phải có ít nhất 2 ký tự';
+            isValid = false;
+        } else if (profileData.lastname.length > 20) {
+            errors.lastname = 'Tên không được vượt quá 20 ký tự';
+            isValid = false;
+        }
+
+        // Kiểm tra số điện thoại
+        if (profileData.phone && !/^\d{10}$/.test(profileData.phone)) {
+            errors.phone = 'Số điện thoại không hợp lệ (cần đúng 10 chữ số)';
+            isValid = false;
+        }
+
+        setValidationErrors(errors);
+        return isValid;
     };
 
     // Thêm handler cho submit
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
+
+        // Kiểm tra validation trước khi gửi dữ liệu
+        if (!validateProfileData()) {
+            // Hiển thị thông báo lỗi chung nếu cần
+            toast.error('Vui lòng điền đầy đủ thông tin hợp lệ.');
+            return;
+        }
+
         setUpdateLoading(true);
         try {
             // Tạo object data thay vì FormData
@@ -387,8 +456,6 @@ export default function ProfileInterface({
             setUpdateLoading(false);
         }
     };
-
-
 
     // Fetch addresses
     const fetchAddresses = async () => {
@@ -584,7 +651,7 @@ export default function ProfileInterface({
                                 </div>
                             ) : user ? (
                                 isEditing ? (
-                                    // Form cập nhật
+                                    // Form cập nhật với validation
                                     <form onSubmit={handleUpdateProfile} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* Họ */}
                                         <div className="space-y-2">
@@ -596,9 +663,13 @@ export default function ProfileInterface({
                                                 name="firstname"
                                                 value={profileData.firstname}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200 
+                                                ${validationErrors.firstname ? 'border-red-500' : ''}`}
                                                 required
                                             />
+                                            {validationErrors.firstname && (
+                                                <p className="text-red-500 text-xs mt-1">{validationErrors.firstname}</p>
+                                            )}
                                         </div>
 
                                         {/* Tên */}
@@ -611,9 +682,13 @@ export default function ProfileInterface({
                                                 name="lastname"
                                                 value={profileData.lastname}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200
+                                                ${validationErrors.lastname ? 'border-red-500' : ''}`}
                                                 required
                                             />
+                                            {validationErrors.lastname && (
+                                                <p className="text-red-500 text-xs mt-1">{validationErrors.lastname}</p>
+                                            )}
                                         </div>
 
                                         {/* Email - readonly */}
@@ -627,7 +702,7 @@ export default function ProfileInterface({
                                             />
                                         </div>
 
-                                        {/* Số điện thoại */}
+                                        {/* Số điện thoại với validation */}
                                         <div className="space-y-2">
                                             <label className="block text-sm font-medium text-gray-700">Số điện thoại</label>
                                             <input
@@ -635,8 +710,13 @@ export default function ProfileInterface({
                                                 name="phone"
                                                 value={profileData.phone}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200
+                                                ${validationErrors.phone ? 'border-red-500' : ''}`}
+                                                placeholder="Nhập 10 chữ số"
                                             />
+                                            {validationErrors.phone && (
+                                                <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
+                                            )}
                                         </div>
 
                                         {/* Giới tính */}
@@ -663,6 +743,7 @@ export default function ProfileInterface({
                                                 type="button"
                                                 onClick={() => {
                                                     setIsEditing(false);
+                                                    setValidationErrors({});
                                                     setProfileData({
                                                         firstname: user.firstname || '',
                                                         lastname: user.lastname || '',
@@ -678,14 +759,14 @@ export default function ProfileInterface({
                                                 type="submit"
                                                 disabled={updateLoading}
                                                 className={`px-6 py-2 rounded-lg text-white
-                                ${updateLoading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}
+                                                ${updateLoading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}
                                             >
                                                 {updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'}
                                             </button>
                                         </div>
                                     </form>
                                 ) : (
-                                    // Hiển thị thông tin
+                                    // Giữ nguyên phần hiển thị thông tin
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <p className="text-sm font-medium text-gray-700">Họ</p>

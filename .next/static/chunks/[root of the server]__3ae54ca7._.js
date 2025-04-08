@@ -1831,6 +1831,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1839,9 +1840,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -3273,7 +3277,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                         limit: 10
                     }));
                 }
-            }["Header.Header.useEffect.interval"], 30000);
+            }["Header.Header.useEffect.interval"], 300000);
             return ({
                 "Header.Header.useEffect": ()=>clearInterval(interval)
             })["Header.Header.useEffect"];
@@ -4782,7 +4786,7 @@ function Layout({ children }) {
                                 console.error('Failed to update favorites on route change:', error);
                             }
                         }
-                    }["Layout.useEffect.handleRouteChange"], 300);
+                    }["Layout.useEffect.handleRouteChange"], 300000);
                 }
             }["Layout.useEffect.handleRouteChange"];
             router.events.on('routeChangeComplete', handleRouteChange);
@@ -4830,7 +4834,7 @@ function Layout({ children }) {
                         console.error('Failed to auto-update favorites:', error);
                     }
                 }
-            }["Layout.useEffect.interval"], 30000); // 30 giây
+            }["Layout.useEffect.interval"], 300000); // 30 giây
             return ({
                 "Layout.useEffect": ()=>clearInterval(interval)
             })["Layout.useEffect"];

@@ -1276,6 +1276,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1284,9 +1285,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -3668,7 +3672,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 page: 1,
                 limit: 10
             }));
-        }, 30000);
+        }, 300000);
         return ()=>clearInterval(interval);
     }, [
         dispatch
@@ -5111,7 +5115,7 @@ function Layout({ children }) {
                 } catch (error) {
                     console.error('Failed to update favorites on route change:', error);
                 }
-            }, 300);
+            }, 300000);
         };
         router.events.on('routeChangeComplete', handleRouteChange);
         return ()=>{
@@ -5148,7 +5152,7 @@ function Layout({ children }) {
             } catch (error) {
                 console.error('Failed to auto-update favorites:', error);
             }
-        }, 30000); // 30 giây
+        }, 300000); // 30 giây
         return ()=>clearInterval(interval);
     }, [
         dispatch
@@ -5295,6 +5299,7 @@ function NewProducts() {
     }, [
         dispatch
     ]);
+    console.log('All products:', allProducts);
     // Hàm fetch stocks
     const fetchStocks = async ()=>{
         try {
@@ -5372,10 +5377,10 @@ function NewProducts() {
             ]);
         resetFilters();
     };
-    const handleSizeChange = (size)=>{
-        setSelectedSizes((prevSizes)=>prevSizes.includes(size) ? prevSizes.filter((s)=>s !== size) : [
+    const handleSizeChange = (sizeId)=>{
+        setSelectedSizes((prevSizes)=>prevSizes.includes(sizeId) ? prevSizes.filter((id)=>id !== sizeId) : [
                 ...prevSizes,
-                size
+                sizeId
             ]);
         resetFilters();
     };
@@ -5541,7 +5546,7 @@ function NewProducts() {
                                 children: productModal.product_name
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 372,
+                                lineNumber: 374,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5550,13 +5555,13 @@ function NewProducts() {
                                 children: "×"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 373,
+                                lineNumber: 375,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 371,
+                        lineNumber: 373,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5567,12 +5572,12 @@ function NewProducts() {
                             className: "w-full h-64 object-contain rounded mb-4 border"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/onsale.js",
-                            lineNumber: 382,
+                            lineNumber: 384,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 381,
+                        lineNumber: 383,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5583,7 +5588,7 @@ function NewProducts() {
                                 children: "Chọn màu:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 390,
+                                lineNumber: 392,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5607,29 +5612,29 @@ function NewProducts() {
                                                 className: "w-full h-0.5 bg-gray-400 transform rotate-45"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/onsale.js",
-                                                lineNumber: 408,
+                                                lineNumber: 410,
                                                 columnNumber: 49
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 407,
+                                            lineNumber: 409,
                                             columnNumber: 45
                                         }, this)
                                     }, color.id, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 395,
+                                        lineNumber: 397,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 391,
+                                lineNumber: 393,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 389,
+                        lineNumber: 391,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5640,7 +5645,7 @@ function NewProducts() {
                                 children: "Chọn kích thước:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 418,
+                                lineNumber: 420,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5659,24 +5664,24 @@ function NewProducts() {
                                             children: size.size
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 433,
+                                            lineNumber: 435,
                                             columnNumber: 41
                                         }, this)
                                     }, size.id, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 423,
+                                        lineNumber: 425,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 419,
+                                lineNumber: 421,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 417,
+                        lineNumber: 419,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5687,7 +5692,7 @@ function NewProducts() {
                                 children: "Số lượng:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 441,
+                                lineNumber: 443,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5700,7 +5705,7 @@ function NewProducts() {
                                         children: "-"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 443,
+                                        lineNumber: 445,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -5712,7 +5717,7 @@ function NewProducts() {
                                         readOnly: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 450,
+                                        lineNumber: 452,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5722,19 +5727,19 @@ function NewProducts() {
                                         children: "+"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 458,
+                                        lineNumber: 460,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 442,
+                                lineNumber: 444,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 440,
+                        lineNumber: 442,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5747,7 +5752,7 @@ function NewProducts() {
                                 children: "Thêm vào giỏ hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 469,
+                                lineNumber: 471,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5757,24 +5762,24 @@ function NewProducts() {
                                 children: "Mua ngay"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 476,
+                                lineNumber: 478,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 468,
+                        lineNumber: 470,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/onsale.js",
-                lineNumber: 370,
+                lineNumber: 372,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/onsale.js",
-            lineNumber: 369,
+            lineNumber: 371,
             columnNumber: 13
         }, this);
     };
@@ -5792,7 +5797,7 @@ function NewProducts() {
                                 children: "Trang chủ"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 494,
+                                lineNumber: 496,
                                 columnNumber: 21
                             }, this),
                             " /",
@@ -5801,13 +5806,13 @@ function NewProducts() {
                                 children: " Tất cả sản phẩm"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 497,
+                                lineNumber: 499,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 493,
+                        lineNumber: 495,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5823,7 +5828,7 @@ function NewProducts() {
                                             children: "Bộ lọc"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 504,
+                                            lineNumber: 506,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5838,26 +5843,26 @@ function NewProducts() {
                                                             children: "Danh mục sản phẩm"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 512,
+                                                            lineNumber: 514,
                                                             columnNumber: 37
                                                         }, this),
                                                         showFilters.category ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 513,
+                                                            lineNumber: 515,
                                                             columnNumber: 61
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 513,
+                                                            lineNumber: 515,
                                                             columnNumber: 101
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 508,
+                                                    lineNumber: 510,
                                                     columnNumber: 33
                                                 }, this),
                                                 showFilters.category && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5872,12 +5877,12 @@ function NewProducts() {
                                                                     children: "Sản phẩm mới"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 520,
+                                                                    lineNumber: 522,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 519,
+                                                                lineNumber: 521,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -5887,12 +5892,12 @@ function NewProducts() {
                                                                     children: "Sản phẩm nổi bật"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 528,
+                                                                    lineNumber: 530,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 527,
+                                                                lineNumber: 529,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -5902,12 +5907,12 @@ function NewProducts() {
                                                                     children: "Sale"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 536,
+                                                                    lineNumber: 538,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 535,
+                                                                lineNumber: 537,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -5925,26 +5930,26 @@ function NewProducts() {
                                                                                 children: "Áo"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 551,
+                                                                                lineNumber: 553,
                                                                                 columnNumber: 53
                                                                             }, this),
                                                                             expandedCategories.aoNam ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 557,
+                                                                                lineNumber: 559,
                                                                                 columnNumber: 81
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 557,
+                                                                                lineNumber: 559,
                                                                                 columnNumber: 121
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 544,
+                                                                        lineNumber: 546,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     expandedCategories.aoNam && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
@@ -5957,12 +5962,12 @@ function NewProducts() {
                                                                                     children: "Áo thun"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 562,
+                                                                                    lineNumber: 564,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 561,
+                                                                                lineNumber: 563,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -5972,12 +5977,12 @@ function NewProducts() {
                                                                                     children: "Áo thun nam"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 570,
+                                                                                    lineNumber: 572,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 569,
+                                                                                lineNumber: 571,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -5987,12 +5992,12 @@ function NewProducts() {
                                                                                     children: "Áo thun nữ"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 578,
+                                                                                    lineNumber: 580,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 577,
+                                                                                lineNumber: 579,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6002,12 +6007,12 @@ function NewProducts() {
                                                                                     children: "Áo polo"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 586,
+                                                                                    lineNumber: 588,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 585,
+                                                                                lineNumber: 587,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6017,12 +6022,12 @@ function NewProducts() {
                                                                                     children: "Áo sơ mi"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 594,
+                                                                                    lineNumber: 596,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 593,
+                                                                                lineNumber: 595,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6032,12 +6037,12 @@ function NewProducts() {
                                                                                     children: "Áo sơ mi nam"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 602,
+                                                                                    lineNumber: 604,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 601,
+                                                                                lineNumber: 603,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6047,12 +6052,12 @@ function NewProducts() {
                                                                                     children: "Áo sơ mi nữ"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 610,
+                                                                                    lineNumber: 612,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 609,
+                                                                                lineNumber: 611,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6062,12 +6067,12 @@ function NewProducts() {
                                                                                     children: "Áo Nam"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 618,
+                                                                                    lineNumber: 620,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 617,
+                                                                                lineNumber: 619,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6077,24 +6082,24 @@ function NewProducts() {
                                                                                     children: "Áo Nữ"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 626,
+                                                                                    lineNumber: 628,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 625,
+                                                                                lineNumber: 627,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 560,
+                                                                        lineNumber: 562,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 543,
+                                                                lineNumber: 545,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6112,26 +6117,26 @@ function NewProducts() {
                                                                                 children: "Quần"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 644,
+                                                                                lineNumber: 646,
                                                                                 columnNumber: 53
                                                                             }, this),
                                                                             expandedCategories.quanNam ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 650,
+                                                                                lineNumber: 652,
                                                                                 columnNumber: 83
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 650,
+                                                                                lineNumber: 652,
                                                                                 columnNumber: 123
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 637,
+                                                                        lineNumber: 639,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     expandedCategories.quanNam && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
@@ -6144,12 +6149,12 @@ function NewProducts() {
                                                                                     children: "Quần jeans"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 655,
+                                                                                    lineNumber: 657,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 654,
+                                                                                lineNumber: 656,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6159,12 +6164,12 @@ function NewProducts() {
                                                                                     children: "Quần shorts"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 663,
+                                                                                    lineNumber: 665,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 662,
+                                                                                lineNumber: 664,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6174,12 +6179,12 @@ function NewProducts() {
                                                                                     children: "Quần tây"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 671,
+                                                                                    lineNumber: 673,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 670,
+                                                                                lineNumber: 672,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6189,12 +6194,12 @@ function NewProducts() {
                                                                                     children: "Quần nam"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 679,
+                                                                                    lineNumber: 681,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 678,
+                                                                                lineNumber: 680,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6204,24 +6209,24 @@ function NewProducts() {
                                                                                     children: "Quần nữ"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 687,
+                                                                                    lineNumber: 689,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 686,
+                                                                                lineNumber: 688,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 653,
+                                                                        lineNumber: 655,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 636,
+                                                                lineNumber: 638,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6239,26 +6244,26 @@ function NewProducts() {
                                                                                 children: "Bộ sưu tập"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 705,
+                                                                                lineNumber: 707,
                                                                                 columnNumber: 53
                                                                             }, this),
                                                                             expandedCategories.boSuuTap ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 711,
+                                                                                lineNumber: 713,
                                                                                 columnNumber: 84
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                                                 className: "h-4 w-4"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 711,
+                                                                                lineNumber: 713,
                                                                                 columnNumber: 124
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 698,
+                                                                        lineNumber: 700,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     expandedCategories.boSuuTap && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
@@ -6271,12 +6276,12 @@ function NewProducts() {
                                                                                     children: "Thời trang nam"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 716,
+                                                                                    lineNumber: 718,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 715,
+                                                                                lineNumber: 717,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6286,24 +6291,24 @@ function NewProducts() {
                                                                                     children: "Thời trang Nữ"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 724,
+                                                                                    lineNumber: 726,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 723,
+                                                                                lineNumber: 725,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 714,
+                                                                        lineNumber: 716,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 697,
+                                                                lineNumber: 699,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
@@ -6313,29 +6318,29 @@ function NewProducts() {
                                                                     children: "Ưu đãi"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 735,
+                                                                    lineNumber: 737,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 734,
+                                                                lineNumber: 736,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/onsale.js",
-                                                        lineNumber: 518,
+                                                        lineNumber: 520,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 517,
+                                                    lineNumber: 519,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 507,
+                                            lineNumber: 509,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6350,26 +6355,26 @@ function NewProducts() {
                                                             children: "Khoảng giá"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 753,
+                                                            lineNumber: 755,
                                                             columnNumber: 37
                                                         }, this),
                                                         showFilters.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 754,
+                                                            lineNumber: 756,
                                                             columnNumber: 58
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 754,
+                                                            lineNumber: 756,
                                                             columnNumber: 98
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 749,
+                                                    lineNumber: 751,
                                                     columnNumber: 33
                                                 }, this),
                                                 showFilters.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6382,7 +6387,7 @@ function NewProducts() {
                                                                     children: "0đ"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 760,
+                                                                    lineNumber: 762,
                                                                     columnNumber: 45
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6392,13 +6397,13 @@ function NewProducts() {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 761,
+                                                                    lineNumber: 763,
                                                                     columnNumber: 45
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 759,
+                                                            lineNumber: 761,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -6411,19 +6416,19 @@ function NewProducts() {
                                                             onChange: (e)=>handlePriceRangeChange(parseInt(e.target.value))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 763,
+                                                            lineNumber: 765,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 758,
+                                                    lineNumber: 760,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 748,
+                                            lineNumber: 750,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6438,26 +6443,26 @@ function NewProducts() {
                                                             children: "Màu sắc"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 782,
+                                                            lineNumber: 784,
                                                             columnNumber: 37
                                                         }, this),
                                                         showFilters.color ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 783,
+                                                            lineNumber: 785,
                                                             columnNumber: 58
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 783,
+                                                            lineNumber: 785,
                                                             columnNumber: 98
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 778,
+                                                    lineNumber: 780,
                                                     columnNumber: 33
                                                 }, this),
                                                 showFilters.color && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6475,19 +6480,19 @@ function NewProducts() {
                                                             title: color.color
                                                         }, index, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 791,
+                                                            lineNumber: 793,
                                                             columnNumber: 49
                                                         }, this);
                                                     })
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 787,
+                                                    lineNumber: 789,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 777,
+                                            lineNumber: 779,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6502,26 +6507,26 @@ function NewProducts() {
                                                             children: "Size"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 810,
+                                                            lineNumber: 812,
                                                             columnNumber: 37
                                                         }, this),
                                                         showFilters.size ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronUpIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 811,
+                                                            lineNumber: 813,
                                                             columnNumber: 57
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ChevronDownIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 811,
+                                                            lineNumber: 813,
                                                             columnNumber: 97
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 806,
+                                                    lineNumber: 808,
                                                     columnNumber: 33
                                                 }, this),
                                                 showFilters.size && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6529,44 +6534,57 @@ function NewProducts() {
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                         className: "grid grid-cols-4 gap-2",
                                                         children: [
-                                                            'S',
-                                                            'M',
-                                                            'L',
-                                                            'XL'
-                                                        ].map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
-                                                                className: `border py-1 px-2 text-center hover:bg-gray-100 ${selectedSizes.includes(size) ? 'bg-gray-200' : ''}`,
-                                                                onClick: ()=>handleSizeChange(size),
-                                                                children: size
-                                                            }, size, false, {
+                                                            {
+                                                                id: 1,
+                                                                size: 'S'
+                                                            },
+                                                            {
+                                                                id: 2,
+                                                                size: 'M'
+                                                            },
+                                                            {
+                                                                id: 3,
+                                                                size: 'L'
+                                                            },
+                                                            {
+                                                                id: 4,
+                                                                size: 'XL'
+                                                            }
+                                                        ].map((sizeObj)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                                                className: `border py-1 px-2 text-center hover:bg-gray-100 
+                            ${selectedSizes.includes(sizeObj.id) ? 'bg-gray-200' : ''}`,
+                                                                onClick: ()=>handleSizeChange(sizeObj.id),
+                                                                children: sizeObj.size
+                                                            }, sizeObj.id, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 818,
+                                                                lineNumber: 825,
                                                                 columnNumber: 49
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/onsale.js",
-                                                        lineNumber: 816,
+                                                        lineNumber: 818,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 815,
+                                                    lineNumber: 817,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 805,
+                                            lineNumber: 807,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/onsale.js",
-                                    lineNumber: 503,
+                                    lineNumber: 505,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 502,
+                                lineNumber: 504,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6579,12 +6597,12 @@ function NewProducts() {
                                             children: "Sản phẩm mới"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 836,
+                                            lineNumber: 844,
                                             columnNumber: 29
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 835,
+                                        lineNumber: 843,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6600,7 +6618,7 @@ function NewProducts() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 844,
+                                                    lineNumber: 852,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6612,7 +6630,7 @@ function NewProducts() {
                                                             children: "Sắp xếp theo:"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 848,
+                                                            lineNumber: 856,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -6626,7 +6644,7 @@ function NewProducts() {
                                                                     children: "Giá: Tăng dần"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 855,
+                                                                    lineNumber: 863,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6634,7 +6652,7 @@ function NewProducts() {
                                                                     children: "Giá: Giảm dần"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 856,
+                                                                    lineNumber: 864,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6642,7 +6660,7 @@ function NewProducts() {
                                                                     children: "Tên: A-Z"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 857,
+                                                                    lineNumber: 865,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6650,7 +6668,7 @@ function NewProducts() {
                                                                     children: "Tên: Z-A"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 858,
+                                                                    lineNumber: 866,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6658,30 +6676,30 @@ function NewProducts() {
                                                                     children: "Mới nhất"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 859,
+                                                                    lineNumber: 867,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/onsale.js",
-                                                            lineNumber: 849,
+                                                            lineNumber: 857,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/onsale.js",
-                                                    lineNumber: 847,
+                                                    lineNumber: 855,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 843,
+                                            lineNumber: 851,
                                             columnNumber: 29
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 842,
+                                        lineNumber: 850,
                                         columnNumber: 25
                                     }, this),
                                     loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6691,7 +6709,7 @@ function NewProducts() {
                                                 className: "spinner"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/onsale.js",
-                                                lineNumber: 868,
+                                                lineNumber: 876,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -6699,13 +6717,13 @@ function NewProducts() {
                                                 children: "Đang tải sản phẩm..."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/onsale.js",
-                                                lineNumber: 869,
+                                                lineNumber: 877,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 867,
+                                        lineNumber: 875,
                                         columnNumber: 29
                                     }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "text-center py-10 text-red-500",
@@ -6713,12 +6731,12 @@ function NewProducts() {
                                             children: "Có lỗi xảy ra khi tải sản phẩm. Vui lòng thử lại sau."
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 873,
+                                            lineNumber: 881,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 872,
+                                        lineNumber: 880,
                                         columnNumber: 29
                                     }, this) : pagination && allProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4",
@@ -6735,7 +6753,7 @@ function NewProducts() {
                                                                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 884,
+                                                                lineNumber: 892,
                                                                 columnNumber: 49
                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                 className: "bg-gray-200 w-full h-full flex items-center justify-center",
@@ -6744,12 +6762,12 @@ function NewProducts() {
                                                                     children: "No image"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 891,
+                                                                    lineNumber: 899,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 890,
+                                                                lineNumber: 898,
                                                                 columnNumber: 49
                                                             }, this),
                                                             product.discount_price < product.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6761,20 +6779,20 @@ function NewProducts() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 897,
+                                                                lineNumber: 905,
                                                                 columnNumber: 49
                                                             }, this) : product.is_new ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                                                 className: "absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold",
                                                                 children: "NEW"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 901,
+                                                                lineNumber: 909,
                                                                 columnNumber: 49
                                                             }, this) : null
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/onsale.js",
-                                                        lineNumber: 882,
+                                                        lineNumber: 890,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6789,7 +6807,7 @@ function NewProducts() {
                                                                         children: product.product_name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 909,
+                                                                        lineNumber: 917,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6799,24 +6817,24 @@ function NewProducts() {
                                                                             className: "h-5 w-5 text-red-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 921,
+                                                                            lineNumber: 929,
                                                                             columnNumber: 57
                                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
                                                                             className: "h-5 w-5"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 923,
+                                                                            lineNumber: 931,
                                                                             columnNumber: 57
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 916,
+                                                                        lineNumber: 924,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 908,
+                                                                lineNumber: 916,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6832,14 +6850,14 @@ function NewProducts() {
                                                                                 title: color.color
                                                                             }, index, false, {
                                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                                lineNumber: 933,
+                                                                                lineNumber: 941,
                                                                                 columnNumber: 61
                                                                             }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                                                             className: "text-xs text-gray-500",
                                                                             children: "No colors available"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 941,
+                                                                            lineNumber: 949,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         product.productColors && product.productColors.length > 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6850,18 +6868,18 @@ function NewProducts() {
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 944,
+                                                                            lineNumber: 952,
                                                                             columnNumber: 57
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                    lineNumber: 930,
+                                                                    lineNumber: 938,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 928,
+                                                                lineNumber: 936,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6879,7 +6897,7 @@ function NewProducts() {
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 953,
+                                                                                    lineNumber: 961,
                                                                                     columnNumber: 57
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -6890,18 +6908,18 @@ function NewProducts() {
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/pages/onsale.js",
-                                                                                    lineNumber: 956,
+                                                                                    lineNumber: 964,
                                                                                     columnNumber: 57
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 952,
+                                                                            lineNumber: 960,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 950,
+                                                                        lineNumber: 958,
                                                                         columnNumber: 49
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6914,35 +6932,35 @@ function NewProducts() {
                                                                             className: "h-5 w-5"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/pages/onsale.js",
-                                                                            lineNumber: 969,
+                                                                            lineNumber: 977,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/onsale.js",
-                                                                        lineNumber: 962,
+                                                                        lineNumber: 970,
                                                                         columnNumber: 49
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/onsale.js",
-                                                                lineNumber: 949,
+                                                                lineNumber: 957,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/onsale.js",
-                                                        lineNumber: 907,
+                                                        lineNumber: 915,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, product.id, true, {
                                                 fileName: "[project]/src/pages/onsale.js",
-                                                lineNumber: 878,
+                                                lineNumber: 886,
                                                 columnNumber: 37
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 876,
+                                        lineNumber: 884,
                                         columnNumber: 29
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "text-center py-10",
@@ -6950,12 +6968,12 @@ function NewProducts() {
                                             children: "Không tìm thấy sản phẩm phù hợp với bộ lọc đã chọn."
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 978,
+                                            lineNumber: 986,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 977,
+                                        lineNumber: 985,
                                         columnNumber: 29
                                     }, this),
                                     !loading && allProducts?.length > 0 && currentPage < pagination?.totalPages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6966,41 +6984,41 @@ function NewProducts() {
                                             children: "Xem thêm sản phẩm"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/onsale.js",
-                                            lineNumber: 985,
+                                            lineNumber: 993,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/onsale.js",
-                                        lineNumber: 984,
+                                        lineNumber: 992,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/onsale.js",
-                                lineNumber: 834,
+                                lineNumber: 842,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/onsale.js",
-                        lineNumber: 500,
+                        lineNumber: 502,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/onsale.js",
-                lineNumber: 491,
+                lineNumber: 493,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
                 fileName: "[project]/src/pages/onsale.js",
-                lineNumber: 1003,
+                lineNumber: 1011,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/onsale.js",
-        lineNumber: 490,
+        lineNumber: 492,
         columnNumber: 9
     }, this);
 }

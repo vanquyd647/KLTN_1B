@@ -47,7 +47,7 @@ const Header = memo(function Header({ isCartPage }) {
         // Cập nhật định kỳ mỗi 30s
         const interval = setInterval(() => {
             dispatch(forceUpdateFavorites({ page: 1, limit: 10 }));
-        }, 30000);
+        }, 300000);
 
         return () => clearInterval(interval);
     }, [dispatch]);

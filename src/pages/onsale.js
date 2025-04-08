@@ -76,6 +76,8 @@ export default function NewProducts() {
         fetchStocks();
     }, [dispatch]);
 
+    console.log('All products:', allProducts);
+
     // Hàm fetch stocks
     const fetchStocks = async () => {
         try {
@@ -153,11 +155,11 @@ export default function NewProducts() {
         resetFilters();
     };
 
-    const handleSizeChange = (size) => {
+    const handleSizeChange = (sizeId) => {
         setSelectedSizes((prevSizes) =>
-            prevSizes.includes(size)
-                ? prevSizes.filter((s) => s !== size)
-                : [...prevSizes, size]
+            prevSizes.includes(sizeId)
+                ? prevSizes.filter((id) => id !== sizeId)
+                : [...prevSizes, sizeId]
         );
         resetFilters();
     };
@@ -814,13 +816,19 @@ export default function NewProducts() {
                                 {showFilters.size && (
                                     <div className="mt-2">
                                         <div className="grid grid-cols-4 gap-2">
-                                            {['S', 'M', 'L', 'XL'].map((size) => (
+                                            {[
+                                                { id: 1, size: 'S' },
+                                                { id: 2, size: 'M' },
+                                                { id: 3, size: 'L' },
+                                                { id: 4, size: 'XL' }
+                                            ].map((sizeObj) => (
                                                 <button
-                                                    key={size}
-                                                    className={`border py-1 px-2 text-center hover:bg-gray-100 ${selectedSizes.includes(size) ? 'bg-gray-200' : ''}`}
-                                                    onClick={() => handleSizeChange(size)}
+                                                    key={sizeObj.id}
+                                                    className={`border py-1 px-2 text-center hover:bg-gray-100 
+                            ${selectedSizes.includes(sizeObj.id) ? 'bg-gray-200' : ''}`}
+                                                    onClick={() => handleSizeChange(sizeObj.id)}
                                                 >
-                                                    {size}
+                                                    {sizeObj.size}
                                                 </button>
                                             ))}
                                         </div>

@@ -1093,7 +1093,7 @@ const productApi = {
     // Get products with pagination
     getProductsByPagination: async (params = {})=>{
         try {
-            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            const { page = 1, limit = 20, name, categories, colorIds, sizes, priceRange, sort = 'newest' } = params;
             // Xây dựng query parameters
             const queryParams = new URLSearchParams({
                 page: String(page),
@@ -1102,7 +1102,7 @@ const productApi = {
             // Thêm các filter tùy chọn
             if (name) queryParams.append('name', name);
             if (categories) queryParams.append('categories', categories);
-            if (colors) queryParams.append('colors', colors);
+            if (colorIds) queryParams.append('colors', colorIds);
             if (sizes) queryParams.append('sizes', sizes);
             if (priceRange) queryParams.append('priceRange', priceRange);
             if (sort) queryParams.append('sort', sort);
@@ -1831,6 +1831,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1839,9 +1840,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -2673,150 +2677,374 @@ __turbopack_context__.s({
     "default": (()=>Sidebar)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/link.js [client] (ecmascript)");
+;
+;
 ;
 function Sidebar({ isMobile }) {
     const categories = [
+        {
+            id: 8,
+            name: 'Thời Trang Nam',
+            subCategories: []
+        },
+        {
+            id: 9,
+            name: 'Thời Trang Nữ',
+            subCategories: []
+        },
         {
             id: 1,
             name: 'Áo',
             subCategories: [
                 {
-                    id: 101,
+                    id: 2,
                     name: 'Áo Thun'
                 },
                 {
-                    id: 102,
+                    id: 13,
                     name: 'Áo Sơ Mi'
                 },
                 {
-                    id: 103,
+                    id: 10,
                     name: 'Áo Polo'
+                },
+                {
+                    id: 32,
+                    name: 'Áo Nam'
+                },
+                {
+                    id: 33,
+                    name: 'Áo Nữ'
+                }
+            ]
+        },
+        {
+            id: 15,
+            name: 'Quần',
+            subCategories: [
+                {
+                    id: 18,
+                    name: 'Quần Jeans'
+                },
+                {
+                    id: 20,
+                    name: 'Quần Shorts'
+                },
+                {
+                    id: 28,
+                    name: 'Quần Tây'
+                },
+                {
+                    id: 39,
+                    name: 'Quần Nam'
+                },
+                {
+                    id: 30,
+                    name: 'Quần Nữ'
                 }
             ]
         },
         {
             id: 2,
-            name: 'Quần',
+            name: 'Áo Thun',
             subCategories: [
                 {
-                    id: 201,
-                    name: 'Quần Jeans'
+                    id: 4,
+                    name: 'Áo Thun Nam'
                 },
                 {
-                    id: 202,
-                    name: 'Quần Shorts'
-                },
-                {
-                    id: 203,
-                    name: 'Quần Tây'
+                    id: 6,
+                    name: 'Áo Thun Nữ'
                 }
             ]
         },
         {
-            id: 3,
-            name: 'Giày Dép',
+            id: 10,
+            name: 'Áo Polo',
             subCategories: [
                 {
-                    id: 301,
-                    name: 'Giày Thể Thao'
+                    id: 11,
+                    name: 'Áo Polo Nam'
                 },
                 {
-                    id: 302,
-                    name: 'Giày Lười'
-                },
-                {
-                    id: 303,
-                    name: 'Dép Sandals'
+                    id: 12,
+                    name: 'Áo Polo Nữ'
                 }
             ]
         },
         {
-            id: 4,
+            id: 24,
+            name: 'Áo Khoác',
+            subCategories: [
+                {
+                    id: 34,
+                    name: 'Áo Khoác Nam'
+                },
+                {
+                    id: 25,
+                    name: 'Áo Khoác Nữ'
+                }
+            ]
+        },
+        {
+            id: 13,
+            name: 'Áo Sơ Mi',
+            subCategories: [
+                {
+                    id: 14,
+                    name: 'Áo Sơ Mi Nam'
+                },
+                {
+                    id: 26,
+                    name: 'Áo Sơ Mi Nữ'
+                }
+            ]
+        },
+        {
+            id: 38,
             name: 'Phụ Kiện',
             subCategories: [
                 {
-                    id: 401,
+                    id: 35,
                     name: 'Mũ'
                 },
                 {
-                    id: 402,
+                    id: 36,
                     name: 'Thắt Lưng'
                 },
                 {
-                    id: 403,
-                    name: 'Balo'
+                    id: 37,
+                    name: 'Ví'
                 }
             ]
         }
     ];
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-        className: `${isMobile ? 'py-2' : 'p-6'}`,
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: `
+            ${isMobile ? 'fixed inset-0 z-50 bg-white overflow-y-auto h-screen pt-16' : 'hidden md:block w-64'}
+        `,
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                className: "text-lg font-semibold text-gray-800 mb-4 px-4",
-                children: "Danh mục sản phẩm"
-            }, void 0, false, {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
+                className: `${isMobile ? 'py-2' : 'p-6'}`,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold text-gray-800 mb-4 px-4",
+                        children: "Danh mục sản phẩm"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Sidebar.js",
+                        lineNumber: 93,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                        className: "space-y-1",
+                        children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                className: "group",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                        href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
+                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50    transition-colors duration-200 font-medium group-hover:text-gray-600",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            children: category.name
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Sidebar.js",
+                                            lineNumber: 103,
+                                            columnNumber: 33
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 98,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                        className: "",
+                                        children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                    href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
+                                                    className: "block px-8 py-2 text-sm text-gray-600 hover:bg-gray-50    hover:text-gray-600 transition-colors duration-200",
+                                                    children: subCategory.name
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Sidebar.js",
+                                                    lineNumber: 109,
+                                                    columnNumber: 41
+                                                }, this)
+                                            }, subCategory.id, false, {
+                                                fileName: "[project]/src/components/Sidebar.js",
+                                                lineNumber: 108,
+                                                columnNumber: 37
+                                            }, this))
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 106,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, category.id, true, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 96,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Sidebar.js",
+                        lineNumber: 94,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 43,
+                lineNumber: 92,
                 columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                className: "space-y-1",
-                children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "group",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                className: "py-2",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/TrackOrder",
+                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                href: `/category/productsByCategory?categoryId=${category.id}&categoryName=${category.name}`,
-                                className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50    transition-colors duration-200 font-medium group-hover:text-gray-600",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    children: category.name
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                className: "w-5 h-5 mr-3",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                    strokeLinecap: "round",
+                                    strokeLinejoin: "round",
+                                    strokeWidth: 2,
+                                    d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Sidebar.js",
-                                    lineNumber: 53,
-                                    columnNumber: 29
+                                    lineNumber: 130,
+                                    columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Sidebar.js",
-                                lineNumber: 48,
-                                columnNumber: 25
+                                lineNumber: 129,
+                                columnNumber: 21
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                className: "",
-                                children: category.subCategories.map((subCategory)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                            href: `/category/productsByCategory?categoryId=${subCategory.id}&categoryName=${subCategory.name}`,
-                                            className: "block px-8 py-2 text-sm text-gray-600 hover:bg-gray-50    hover:text-gray-600 transition-colors duration-200",
-                                            children: subCategory.name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Sidebar.js",
-                                            lineNumber: 59,
-                                            columnNumber: 37
-                                        }, this)
-                                    }, subCategory.id, false, {
+                            "Tra cứu đơn hàng"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Sidebar.js",
+                        lineNumber: 124,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/store-locations",
+                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                className: "w-5 h-5 mr-3",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                        strokeWidth: 2,
+                                        d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                    }, void 0, false, {
                                         fileName: "[project]/src/components/Sidebar.js",
-                                        lineNumber: 58,
-                                        columnNumber: 33
-                                    }, this))
+                                        lineNumber: 141,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                        strokeWidth: 2,
+                                        d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Sidebar.js",
+                                        lineNumber: 143,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 140,
+                                columnNumber: 21
+                            }, this),
+                            "Hệ thống cửa hàng"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Sidebar.js",
+                        lineNumber: 135,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/user-guide",
+                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                className: "w-5 h-5 mr-3",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                    strokeLinecap: "round",
+                                    strokeLinejoin: "round",
+                                    strokeWidth: 2,
+                                    d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Sidebar.js",
+                                    lineNumber: 154,
+                                    columnNumber: 25
+                                }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Sidebar.js",
-                                lineNumber: 56,
-                                columnNumber: 25
-                            }, this)
+                                lineNumber: 153,
+                                columnNumber: 21
+                            }, this),
+                            "Hướng dẫn sử dụng"
                         ]
-                    }, category.id, true, {
+                    }, void 0, true, {
                         fileName: "[project]/src/components/Sidebar.js",
-                        lineNumber: 46,
-                        columnNumber: 21
-                    }, this))
-            }, void 0, false, {
+                        lineNumber: 148,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/warranty-policy",
+                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                className: "w-5 h-5 mr-3",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                    strokeLinecap: "round",
+                                    strokeLinejoin: "round",
+                                    strokeWidth: 2,
+                                    d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Sidebar.js",
+                                    lineNumber: 165,
+                                    columnNumber: 25
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Sidebar.js",
+                                lineNumber: 164,
+                                columnNumber: 21
+                            }, this),
+                            "Chính sách bảo hành"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/Sidebar.js",
+                        lineNumber: 159,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/Sidebar.js",
-                lineNumber: 44,
+                lineNumber: 123,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Sidebar.js",
-        lineNumber: 42,
+        lineNumber: 86,
         columnNumber: 9
     }, this);
 }
@@ -3417,15 +3645,27 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/Sale",
+                                    href: "/category/productsByCategory?categoryId=8&categoryName=Thời%20Trang%20Nam",
                                     className: "text-black hover:underline transition-colors duration-200 font-sans",
                                     style: {
                                         fontSize: '15px'
                                     },
-                                    children: "Khuyến mãi"
+                                    children: "Thời trang nam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
                                     lineNumber: 314,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/category/productsByCategory?categoryId=9&categoryName=Thời%20Trang%20Nữ",
+                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Thời trang nữ"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 321,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3437,7 +3677,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Hệ thống cửa hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 321,
+                                    lineNumber: 328,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3449,7 +3689,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Tra cứu đơn hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 328,
+                                    lineNumber: 335,
                                     columnNumber: 25
                                 }, this)
                             ]
@@ -3472,42 +3712,10 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                 className: "h-6 w-6 text-black"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 346,
+                                                lineNumber: 353,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
-                                            fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 345,
-                                            columnNumber: 33
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 344,
-                                        columnNumber: 29
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "relative",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                            href: "/favorites",
-                                            className: "hover:underline",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
-                                                    className: "h-6 w-6 text-black"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 353,
-                                                    columnNumber: 37
-                                                }, this),
-                                                favoriteCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold",
-                                                    children: favoriteCount
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 355,
-                                                    columnNumber: 41
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
                                             lineNumber: 352,
                                             columnNumber: 33
@@ -3520,6 +3728,38 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                         className: "relative",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                            href: "/favorites",
+                                            className: "hover:underline",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                                    className: "h-6 w-6 text-black"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Header.js",
+                                                    lineNumber: 360,
+                                                    columnNumber: 37
+                                                }, this),
+                                                favoriteCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold",
+                                                    children: favoriteCount
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Header.js",
+                                                    lineNumber: 362,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/Header.js",
+                                            lineNumber: 359,
+                                            columnNumber: 33
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/Header.js",
+                                        lineNumber: 358,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                        className: "relative",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/cart",
                                             className: "hover:underline",
                                             children: [
@@ -3527,7 +3767,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     className: "h-6 w-6 text-black"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 365,
+                                                    lineNumber: 372,
                                                     columnNumber: 37
                                                 }, this),
                                                 totalItems > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3535,29 +3775,29 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     children: totalItems
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 367,
+                                                    lineNumber: 374,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 364,
+                                            lineNumber: 371,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 363,
+                                        lineNumber: 370,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 339,
+                                lineNumber: 346,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 338,
+                            lineNumber: 345,
                             columnNumber: 21
                         }, this)
                     ]
@@ -3576,7 +3816,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                 onClick: toggleDrawer
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 379,
+                lineNumber: 386,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3598,188 +3838,37 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 d: "M6 18L18 6M6 6l12 12"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 401,
+                                lineNumber: 408,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 393,
+                            lineNumber: 400,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 389,
+                        lineNumber: 396,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "divide-y divide-gray-200",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                isMobile: true
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/Header.js",
-                                lineNumber: 411,
-                                columnNumber: 21
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                                className: "py-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/TrackOrder",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
-                                        onClick: toggleDrawer,
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                className: "w-5 h-5 mr-3",
-                                                fill: "none",
-                                                viewBox: "0 0 24 24",
-                                                stroke: "currentColor",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                    strokeLinecap: "round",
-                                                    strokeLinejoin: "round",
-                                                    strokeWidth: 2,
-                                                    d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 421,
-                                                    columnNumber: 33
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 420,
-                                                columnNumber: 29
-                                            }, this),
-                                            "Tra cứu đơn hàng"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 415,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/store-locations",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
-                                        onClick: toggleDrawer,
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                className: "w-5 h-5 mr-3",
-                                                fill: "none",
-                                                viewBox: "0 0 24 24",
-                                                stroke: "currentColor",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                        strokeLinecap: "round",
-                                                        strokeLinejoin: "round",
-                                                        strokeWidth: 2,
-                                                        d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 432,
-                                                        columnNumber: 33
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                        strokeLinecap: "round",
-                                                        strokeLinejoin: "round",
-                                                        strokeWidth: 2,
-                                                        d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/Header.js",
-                                                        lineNumber: 434,
-                                                        columnNumber: 33
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 431,
-                                                columnNumber: 29
-                                            }, this),
-                                            "Hệ thống cửa hàng"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 426,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/user-guide",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
-                                        onClick: toggleDrawer,
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                className: "w-5 h-5 mr-3",
-                                                fill: "none",
-                                                viewBox: "0 0 24 24",
-                                                stroke: "currentColor",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                    strokeLinecap: "round",
-                                                    strokeLinejoin: "round",
-                                                    strokeWidth: 2,
-                                                    d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 445,
-                                                    columnNumber: 33
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 444,
-                                                columnNumber: 29
-                                            }, this),
-                                            "Hướng dẫn sử dụng"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 439,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/warranty-policy",
-                                        className: "flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-gray-600",
-                                        onClick: toggleDrawer,
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                className: "w-5 h-5 mr-3",
-                                                fill: "none",
-                                                viewBox: "0 0 24 24",
-                                                stroke: "currentColor",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                    strokeLinecap: "round",
-                                                    strokeLinejoin: "round",
-                                                    strokeWidth: 2,
-                                                    d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 456,
-                                                    columnNumber: 33
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 455,
-                                                columnNumber: 29
-                                            }, this),
-                                            "Chính sách bảo hành"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 450,
-                                        columnNumber: 25
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/Header.js",
-                                lineNumber: 414,
-                                columnNumber: 21
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                            isMobile: true
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Header.js",
+                            lineNumber: 418,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 410,
+                        lineNumber: 417,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 384,
+                lineNumber: 391,
                 columnNumber: 13
             }, this)
         ]

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { paymentApi } from '../utils/apiClient';
+import {
+    CurrencyDollarIcon,
+    QrCodeIcon
+} from '@heroicons/react/24/outline'
 
 
 const PaymentPage = () => {
@@ -187,147 +192,188 @@ const PaymentPage = () => {
     }
 
     return (
-            <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Phần bên trái - Thông tin đơn hàng và phương thức thanh toán */}
-                <div className="bg-white p-6 rounded shadow-md">
-                    <h1 className="text-2xl font-bold mb-6">Thanh toán đơn hàng</h1>
-
-                    {error && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                            <p>{error}</p>
-                        </div>
-                    )}
-
-                    {order && (
-                        <div className=" p-4 rounded mb-6">
-                            <h2 className="font-semibold mb-2">Thông tin đơn hàng:</h2>
-                            <p className="mb-1">Mã đơn hàng: {order.id}</p>
-
-                            <div className="border-t border-gray-300 my-3"></div>
-
-                            <h3 className="font-semibold mb-2">Thông tin người nhận:</h3>
-                            <p className="mb-1">Họ tên: {order.formData.name}</p>
-                            <p className="mb-1">Email: {order.formData.email}</p>
-                            <p className="mb-1">Số điện thoại: {order.formData.phone}</p>
-
-                            <div className="border-t border-gray-300 my-3"></div>
-
-                            <h3 className="font-semibold mb-2">Địa chỉ giao hàng:</h3>
-                            <p className="mb-1">Đường: {order.formData.street}</p>
-                            <p className="mb-1">Phường/Xã: {order.formData.ward}</p>
-                            <p className="mb-1">Quận/Huyện: {order.formData.district}</p>
-                            <p className="mb-1">Tỉnh/Thành phố: {order.formData.city}</p>
-                            <p className="mb-1">Quốc gia: {order.formData.country}</p>
-
-                            {/* Bộ đếm ngược */}
-                            {timeLeft && (
-                                <div className="mt-3 pt-3 border-t border-gray-300">
-                                    <p className="text-red-600 font-semibold">
-                                        Thời gian còn lại để thanh toán: {timeLeft.minutes}:{timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-
-                    <div className="space-y-4">
-                        <h2 className="text-xl font-semibold">Chọn phương thức thanh toán:</h2>
-
-                        <div className="space-y-3">
-                            <div
-                                className={`p-4 border rounded cursor-pointer ${paymentMethod === 'cod' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-                                    }`}
-                                onClick={() => handlePaymentMethodSelect('cod')}
-                            >
-                                <h3 className="font-semibold">Thanh toán khi nhận hàng (COD)</h3>
-                                <p className="text-sm text-gray-600">Thanh toán bằng tiền mặt khi nhận hàng</p>
-                            </div>
-
-                            <div
-                                className={`p-4 border rounded cursor-pointer ${paymentMethod === 'vietqr' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-                                    }`}
-                                onClick={() => handlePaymentMethodSelect('vietqr')}
-                            >
-                                <h3 className="font-semibold">Chuyển khoản qua VietQR</h3>
-                                <p className="text-sm text-gray-600">Thanh toán bằng mã QR qua ứng dụng ngân hàng</p>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={handleCompletePayment}
-                            className={`w-full px-4 py-2 rounded transition duration-200 ${loading || !paymentMethod
-                                ? 'bg-red-600 cursor-not-allowed'
-                                : 'bg-green-600 hover:bg-green-700 text-white'
-                                }`}
-                            disabled={loading || !paymentMethod}
+        <div className="container mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Phần bên trái - Thông tin đơn hàng và phương thức thanh toán */}
+            <div className="bg-white p-6 rounded">
+                <div className="flex justify-start mb-2">
+                    <div className="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 text-gray-600 mr-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
-                            {loading ? (
-                                <div className="flex items-center justify-center">
-                                    <span className="mr-2">Đang xử lý...</span>
-                                </div>
-                            ) : (
-                                "Hoàn tất đơn hàng"
-                            )}
-                        </button>
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            />
+                        </svg>
+                        <h2 className="text-lg font-medium">
+                            <span className="text-gray-800">Fashion</span>
+                            <span className="text-gray-800">Store</span>
+                        </h2>
                     </div>
                 </div>
+                <div className="flex items-center text-sm text-gray-600 mb-6">
+                    <Link href="/cart" className="hover:text-gray-900">
+                        Giỏ hàng
+                    </Link>
+                    <span className="mx-2">/</span>
+                    <Link href="/checkout" className="hover:text-gray-900">
+                        Thông tin giao hàng
+                    </Link>
+                    <span className="mx-2">/</span>
+                    <span className="text-gray-900">Đặt hàng</span>
+                </div>
+                <h1 className="text-2xl font-bold mb-6">Thanh toán đơn hàng</h1>
 
-                {/* Phần bên phải - Chi tiết sản phẩm */}
-                <div className="bg-gray-100 p-6 rounded shadow-md">
-                    <h2 className="text-xl font-bold mb-4">Chi tiết đơn hàng</h2>
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        <p>{error}</p>
+                    </div>
+                )}
 
-                    {order && (
-                        <>
-                            <div className="mb-4">
-                                {/* Lấy items từ localStorage */}
-                                {JSON.parse(localStorage.getItem('checkoutItems'))?.map(item => (
-                                    <div key={item.id} className="flex items-center gap-4 border-b pb-4 mb-4">
-                                        <div className="relative">
-                                            <img
-                                                src={item.color.image_url}
-                                                alt={item.product.product_name}
-                                                className="w-20 h-20 object-cover rounded"
-                                            />
-                                            <span className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
-                                                {item.quantity}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <p className="font-bold">{item.product.product_name}</p>
-                                            <p>Màu sắc: <span className="text-gray-700">{item.color.name}</span></p>
-                                            <p>Kích thước: <span className="text-gray-700">{item.size.name}</span></p>
-                                            <p>{(item.product.discount_price || item.product.price).toLocaleString()} VND</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                {order && (
+                    <div className=" p-4 rounded mb-6">
+                        <h2 className="font-semibold mb-2">Thông tin đơn hàng:</h2>
+                        <p className="mb-1">Mã đơn hàng: {order.id}</p>
 
-                            <div className="border-t pt-4">
-                                <p className="flex justify-between mb-2">
-                                    <span>Tạm tính:</span>
-                                    <span>{order.subtotal?.toLocaleString()} VND</span>
-                                </p>
-                                <p className="flex justify-between mb-2">
-                                    <span>Phí vận chuyển:</span>
-                                    <span>{order.shipping_fee?.toLocaleString()} VND</span>
-                                </p>
-                                <p className="flex justify-between mb-2">
-                                    <span>Giảm giá:</span>
-                                    <span>-{order.discount_amount?.toLocaleString()} VND</span>
-                                </p>
-                                <p className="flex justify-between font-bold text-xl mt-4">
-                                    <span>Tổng cộng:</span>
-                                    <span className="text-red-500">
-                                        {order.final_price?.toLocaleString()} VND
-                                    </span>
+                        <div className="border-t border-gray-300 my-3"></div>
+
+                        <h3 className="font-semibold mb-2">Thông tin người nhận:</h3>
+                        <p className="mb-1">Họ tên: {order.formData.name}</p>
+                        <p className="mb-1">Email: {order.formData.email}</p>
+                        <p className="mb-1">Số điện thoại: {order.formData.phone}</p>
+
+                        <div className="border-t border-gray-300 my-3"></div>
+
+                        <h3 className="font-semibold mb-2">Địa chỉ giao hàng:</h3>
+                        <p className="mb-1">Đường: {order.formData.street}</p>
+                        <p className="mb-1">Phường/Xã: {order.formData.ward}</p>
+                        <p className="mb-1">Quận/Huyện: {order.formData.district}</p>
+                        <p className="mb-1">Tỉnh/Thành phố: {order.formData.city}</p>
+                        <p className="mb-1">Quốc gia: {order.formData.country}</p>
+
+                        {/* Bộ đếm ngược */}
+                        {timeLeft && (
+                            <div className="mt-3 pt-3 border-t border-gray-300">
+                                <p className="text-red-600 font-semibold">
+                                    Thời gian còn lại để thanh toán: {timeLeft.minutes}:{timeLeft.seconds < 10 ? `0${timeLeft.seconds}` : timeLeft.seconds}
                                 </p>
                             </div>
+                        )}
+                    </div>
+                )}
 
-                        </>
-                    )}
+
+                <div className="space-y-4">
+                    <h2 className="text-xl font-semibold">Chọn phương thức thanh toán:</h2>
+
+                    <div className="space-y-3">
+                        <div
+                            className={`p-4 border rounded cursor-pointer ${paymentMethod === 'cod' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}
+                            onClick={() => handlePaymentMethodSelect('cod')}
+                        >
+                            <div className="flex items-center gap-3">
+                                <CurrencyDollarIcon className="h-6 w-6 text-gray-600" />
+                                <div>
+                                    <h3 className="font-semibold">Thanh toán khi nhận hàng (COD)</h3>
+                                    <p className="text-sm text-gray-600">Thanh toán bằng tiền mặt khi nhận hàng</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            className={`p-4 border rounded cursor-pointer ${paymentMethod === 'vietqr' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}
+                            onClick={() => handlePaymentMethodSelect('vietqr')}
+                        >
+                            <div className="flex items-center gap-3">
+                                <QrCodeIcon className="h-6 w-6 text-gray-600" />
+                                <div>
+                                    <h3 className="font-semibold">Chuyển khoản qua VietQR</h3>
+                                    <p className="text-sm text-gray-600">Thanh toán bằng mã QR qua ứng dụng ngân hàng</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={handleCompletePayment}
+                        className={`w-full px-4 py-2 rounded transition duration-200 ${loading || !paymentMethod
+                            ? 'bg-red-600 cursor-not-allowed'
+                            : 'bg-green-600 hover:bg-green-700 text-white'
+                            }`}
+                        disabled={loading || !paymentMethod}
+                    >
+                        {loading ? (
+                            <div className="flex items-center justify-center">
+                                <span className="mr-2">Đang xử lý...</span>
+                            </div>
+                        ) : (
+                            "Hoàn tất đơn hàng"
+                        )}
+                    </button>
                 </div>
             </div>
+
+            {/* Phần bên phải - Chi tiết sản phẩm */}
+            <div className="bg-gray-100 p-6 rounded">
+                <h2 className="text-xl font-bold mb-4">Chi tiết đơn hàng</h2>
+
+                {order && (
+                    <>
+                        <div className="mb-4">
+                            {/* Lấy items từ localStorage */}
+                            {JSON.parse(localStorage.getItem('checkoutItems'))?.map(item => (
+                                <div key={item.id} className="flex items-center gap-4 border-b pb-4 mb-4">
+                                    <div className="relative">
+                                        <img
+                                            src={item.color.image_url}
+                                            alt={item.product.product_name}
+                                            className="w-20 h-20 object-cover rounded"
+                                        />
+                                        <span className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center translate-x-1/2 -translate-y-1/2">
+                                            {item.quantity}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold">{item.product.product_name}</p>
+                                        <p>Màu sắc: <span className="text-gray-700">{item.color.name}</span></p>
+                                        <p>Kích thước: <span className="text-gray-700">{item.size.name}</span></p>
+                                        <p>{(item.product.discount_price || item.product.price).toLocaleString()} VND</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="border-t pt-4">
+                            <p className="flex justify-between mb-2">
+                                <span>Tạm tính:</span>
+                                <span>{order.subtotal?.toLocaleString()} VND</span>
+                            </p>
+                            <p className="flex justify-between mb-2">
+                                <span>Phí vận chuyển:</span>
+                                <span>{order.shipping_fee?.toLocaleString()} VND</span>
+                            </p>
+                            <p className="flex justify-between mb-2">
+                                <span>Giảm giá:</span>
+                                <span>-{order.discount_amount?.toLocaleString()} VND</span>
+                            </p>
+                            <p className="flex justify-between font-bold text-xl mt-4">
+                                <span>Tổng cộng:</span>
+                                <span className="text-red-500">
+                                    {order.final_price?.toLocaleString()} VND
+                                </span>
+                            </p>
+                        </div>
+
+                    </>
+                )}
+            </div>
+        </div>
     );
 };
 

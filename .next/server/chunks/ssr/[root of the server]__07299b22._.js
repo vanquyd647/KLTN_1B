@@ -3357,44 +3357,18 @@ const menuItems = [
             }
         ]
     },
-    {
-        id: 'blogs',
-        label: 'Quản lý bài viết',
-        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
-            className: "w-5 h-5 mr-2",
-            fill: "none",
-            viewBox: "0 0 24 24",
-            stroke: "currentColor",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: 2,
-                d: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-            }, void 0, false, {
-                fileName: "[project]/src/utils/adminMenuItems.js",
-                lineNumber: 89,
-                columnNumber: 13
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/src/utils/adminMenuItems.js",
-            lineNumber: 88,
-            columnNumber: 15
-        }, this),
-        subItems: [
-            {
-                id: 'post-list',
-                label: 'Danh sách bài viết'
-            },
-            {
-                id: 'add-post',
-                label: 'Thêm bài viết'
-            },
-            {
-                id: 'post-categories',
-                label: 'Danh mục bài viết'
-            }
-        ]
-    },
+    // {
+    //     id: 'blogs',
+    //     label: 'Quản lý bài viết',
+    //     icon: <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+    //     </svg>,
+    //     subItems: [
+    //         { id: 'post-list', label: 'Danh sách bài viết' },
+    //         { id: 'add-post', label: 'Thêm bài viết' },
+    //         { id: 'post-categories', label: 'Danh mục bài viết' }
+    //     ]
+    // },
     {
         id: 'settings',
         label: 'Cài đặt',
@@ -3976,7 +3950,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                     return;
                 }
             }
-            if (!formData.product_name || !formData.description || formData.price <= 0) {
+            if (!formData.product_name || formData.price <= 0) {
                 alert('Vui lòng điền đầy đủ thông tin sản phẩm!');
                 return;
             }
@@ -13037,7 +13011,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 ;
 ;
-const AdminContent = ({ activeTab, loading })=>{
+const AdminContent = ({ activeTab, loading, role })=>{
     const renderContent = ()=>{
         if (loading) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -13069,45 +13043,77 @@ const AdminContent = ({ activeTab, loading })=>{
                     columnNumber: 24
                 }, this);
             case 'statistics':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Statistics$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return role === 'superadmin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Statistics$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 28,
-                    columnNumber: 24
+                    lineNumber: 29,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "p-4 text-red-500",
+                    children: "Bạn không có quyền truy cập !"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/admin/AdminContent.js",
+                    lineNumber: 31,
+                    columnNumber: 21
                 }, this);
             case 'shipping':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return role === 'superadmin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ShippingManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 30,
-                    columnNumber: 24
+                    lineNumber: 37,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "p-4 text-red-500",
+                    children: "Bạn không có quyền truy cập !"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/admin/AdminContent.js",
+                    lineNumber: 39,
+                    columnNumber: 21
                 }, this);
             case 'users':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                // Chỉ hiển thị UserManagement khi role là superadmin
+                return role === 'superadmin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 32,
-                    columnNumber: 24
-                }, this);
-            case 'blogs':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BlogManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                    lineNumber: 46,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "p-4 text-red-500",
+                    children: "Bạn không có quyền truy cập !"
+                }, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 34,
-                    columnNumber: 24
+                    lineNumber: 48,
+                    columnNumber: 21
                 }, this);
+            // case 'blogs':
+            //     return <BlogManagement />;
             case 'coupons':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$CouponManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return role === 'superadmin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$CouponManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 36,
-                    columnNumber: 24
+                    lineNumber: 56,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "p-4 text-red-500",
+                    children: "Bạn không có quyền truy cập !"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/admin/AdminContent.js",
+                    lineNumber: 58,
+                    columnNumber: 21
                 }, this);
             case 'settings':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$SettingsManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return role === 'superadmin' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$SettingsManagement$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 38,
-                    columnNumber: 24
+                    lineNumber: 64,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "p-4 text-red-500",
+                    children: "Bạn không có quyền truy cập !"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/admin/AdminContent.js",
+                    lineNumber: 66,
+                    columnNumber: 21
                 }, this);
             default:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Dashboard$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
-                    lineNumber: 40,
+                    lineNumber: 71,
                     columnNumber: 24
                 }, this);
         }
@@ -13115,16 +13121,16 @@ const AdminContent = ({ activeTab, loading })=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("main", {
         className: "flex-1 p-8",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-            className: "bg-white rounded-lg shadow-md",
+            className: "bg-white rounded-lg shadow",
             children: renderContent()
         }, void 0, false, {
             fileName: "[project]/src/components/admin/AdminContent.js",
-            lineNumber: 46,
+            lineNumber: 77,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/admin/AdminContent.js",
-        lineNumber: 45,
+        lineNumber: 76,
         columnNumber: 9
     }, this);
 };
@@ -13346,7 +13352,8 @@ const AdminDashboard = ()=>{
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2f$AdminContent$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
                         activeTab: activeTab,
-                        loading: loading
+                        loading: loading,
+                        role: role
                     }, void 0, false, {
                         fileName: "[project]/src/pages/admin/index.js",
                         lineNumber: 81,

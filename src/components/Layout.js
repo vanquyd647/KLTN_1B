@@ -51,7 +51,7 @@ export default function Layout({ children }) {
                 } catch (error) {
                     console.error('Failed to update favorites on route change:', error);
                 }
-            }, 300);
+            }, 300000);
         };
 
         router.events.on('routeChangeComplete', handleRouteChange);
@@ -82,7 +82,7 @@ export default function Layout({ children }) {
             } catch (error) {
                 console.error('Failed to auto-update favorites:', error);
             }
-        }, 30000); // 30 giây
+        }, 300000); // 30 giây
 
         return () => clearInterval(interval);
     }, [dispatch]);

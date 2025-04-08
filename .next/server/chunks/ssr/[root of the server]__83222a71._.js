@@ -1276,6 +1276,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1284,9 +1285,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -3668,7 +3672,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 page: 1,
                 limit: 10
             }));
-        }, 30000);
+        }, 300000);
         return ()=>clearInterval(interval);
     }, [
         dispatch

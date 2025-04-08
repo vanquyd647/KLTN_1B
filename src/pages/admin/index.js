@@ -81,6 +81,7 @@ const AdminDashboard = () => {
                 <AdminContent 
                     activeTab={activeTab}
                     loading={loading}
+                    role={role}
                 />
             </div>
         </div>

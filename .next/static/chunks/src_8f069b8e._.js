@@ -742,7 +742,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                         limit: 10
                     }));
                 }
-            }["Header.Header.useEffect.interval"], 30000);
+            }["Header.Header.useEffect.interval"], 300000);
             return ({
                 "Header.Header.useEffect": ()=>clearInterval(interval)
             })["Header.Header.useEffect"];
@@ -2251,7 +2251,7 @@ function Layout({ children }) {
                                 console.error('Failed to update favorites on route change:', error);
                             }
                         }
-                    }["Layout.useEffect.handleRouteChange"], 300);
+                    }["Layout.useEffect.handleRouteChange"], 300000);
                 }
             }["Layout.useEffect.handleRouteChange"];
             router.events.on('routeChangeComplete', handleRouteChange);
@@ -2299,7 +2299,7 @@ function Layout({ children }) {
                         console.error('Failed to auto-update favorites:', error);
                     }
                 }
-            }["Layout.useEffect.interval"], 30000); // 30 giây
+            }["Layout.useEffect.interval"], 300000); // 30 giây
             return ({
                 "Layout.useEffect": ()=>clearInterval(interval)
             })["Layout.useEffect"];

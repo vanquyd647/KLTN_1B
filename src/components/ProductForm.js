@@ -221,7 +221,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                     return;
                 }
             }
-            if (!formData.product_name || !formData.description || formData.price <= 0) {
+            if (!formData.product_name  || formData.price <= 0) {
                 alert('Vui lòng điền đầy đủ thông tin sản phẩm!');
                 return;
             }

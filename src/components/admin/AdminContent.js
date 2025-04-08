@@ -11,7 +11,7 @@ import SettingsManagement from '../SettingsManagement';
 import Dashboard from '../Dashboard';
 
 
-const AdminContent = ({ activeTab, loading }) => {
+const AdminContent = ({ activeTab, loading, role }) => {  // Thêm role vào props
     const renderContent = () => {
         if (loading) {
             return <div className="p-4">Loading...</div>;
@@ -25,17 +25,48 @@ const AdminContent = ({ activeTab, loading }) => {
             case 'orders':
                 return <OrderManagement />;
             case 'statistics':
-                return <Statistics />;
+                return role === 'superadmin' ? (
+                    <Statistics />
+                ) : (
+                    <div className="p-4 text-red-500">
+                        Bạn không có quyền truy cập !
+                    </div>
+                );
             case 'shipping':
-                return <ShippingManagement />;
+                return role === 'superadmin' ? (
+                    <ShippingManagement />
+                ) : (
+                    <div className="p-4 text-red-500">
+                        Bạn không có quyền truy cập !
+                    </div>
+                );
             case 'users':
-                return <UserManagement />;
-            case 'blogs':
-                return <BlogManagement />;
+                // Chỉ hiển thị UserManagement khi role là superadmin
+                return role === 'superadmin' ? (
+                    <UserManagement />
+                ) : (
+                    <div className="p-4 text-red-500">
+                        Bạn không có quyền truy cập !
+                    </div>
+                );
+            // case 'blogs':
+            //     return <BlogManagement />;
             case 'coupons':
-                return <CouponManagement />;
+                return role === 'superadmin' ? (
+                    <CouponManagement />
+                ) : (
+                    <div className="p-4 text-red-500">
+                        Bạn không có quyền truy cập !
+                    </div>
+                );
             case 'settings':
-                return <SettingsManagement />;
+                return role === 'superadmin' ? (
+                    <SettingsManagement />
+                ) : (
+                    <div className="p-4 text-red-500">
+                        Bạn không có quyền truy cập !
+                    </div>
+                );
             default:
                 return <Dashboard />;
         }
@@ -43,7 +74,7 @@ const AdminContent = ({ activeTab, loading }) => {
 
     return (
         <main className="flex-1 p-8">
-            <div className="bg-white rounded-lg shadow-md">
+            <div className="bg-white rounded-lg shadow">
                 {renderContent()}
             </div>
         </main>

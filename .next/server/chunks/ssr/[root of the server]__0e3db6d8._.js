@@ -538,7 +538,7 @@ const productApi = {
     // Get products with pagination
     getProductsByPagination: async (params = {})=>{
         try {
-            const { page = 1, limit = 20, name, categories, colors, sizes, priceRange, sort = 'newest' } = params;
+            const { page = 1, limit = 20, name, categories, colorIds, sizes, priceRange, sort = 'newest' } = params;
             // Xây dựng query parameters
             const queryParams = new URLSearchParams({
                 page: String(page),
@@ -547,7 +547,7 @@ const productApi = {
             // Thêm các filter tùy chọn
             if (name) queryParams.append('name', name);
             if (categories) queryParams.append('categories', categories);
-            if (colors) queryParams.append('colors', colors);
+            if (colorIds) queryParams.append('colors', colorIds);
             if (sizes) queryParams.append('sizes', sizes);
             if (priceRange) queryParams.append('priceRange', priceRange);
             if (sort) queryParams.append('sort', sort);
@@ -1276,6 +1276,7 @@ const revenueApi = {
     // Lấy thống kê doanh thu
     getRevenueStats: async (filters = {})=>{
         try {
+            console.log('Calling getRevenueStats API...');
             const queryParams = new URLSearchParams();
             if (filters.startDate) {
                 queryParams.append('startDate', filters.startDate);
@@ -1284,9 +1285,12 @@ const revenueApi = {
                 queryParams.append('endDate', filters.endDate);
             }
             const response = await apiClient.get(`revenue/stats?${queryParams}`);
+            console.log('Raw API response:', response);
             return response;
         } catch (error) {
-            throw error.response?.data || 'Không thể lấy thống kê doanh thu.';
+            console.error('Error in getRevenueStats:', error);
+            // Ném ra error object đầy đủ thay vì chỉ message
+            throw error;
         }
     },
     // Lấy doanh thu theo ngày
@@ -3668,7 +3672,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 page: 1,
                 limit: 10
             }));
-        }, 30000);
+        }, 300000);
         return ()=>clearInterval(interval);
     }, [
         dispatch
@@ -5111,7 +5115,7 @@ function Layout({ children }) {
                 } catch (error) {
                     console.error('Failed to update favorites on route change:', error);
                 }
-            }, 300);
+            }, 300000);
         };
         router.events.on('routeChangeComplete', handleRouteChange);
         return ()=>{
@@ -5148,7 +5152,7 @@ function Layout({ children }) {
             } catch (error) {
                 console.error('Failed to auto-update favorites:', error);
             }
-        }, 30000); // 30 giây
+        }, 300000); // 30 giây
         return ()=>clearInterval(interval);
     }, [
         dispatch

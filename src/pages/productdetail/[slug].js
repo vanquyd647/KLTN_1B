@@ -401,7 +401,9 @@ export default function Slug() {
                     <div className="hidden md:block border-l border-gray-300"></div>
                     {/* Product Details */}
                     <div className="md:w-1/2">
-                        <h1 className="text-4xl font-bold mb-4">{currentProduct.product_name}</h1>
+                        <h1 className="text-2xl font-bold mb-4 font-sans uppercase tracking-wide">
+                            {currentProduct.product_name}
+                        </h1>
                         <button
                             onClick={handleFavoriteClick}
                             disabled={isUpdatingFavorite}
@@ -432,6 +434,10 @@ export default function Slug() {
                             <p className="text-gray-500 line-through">
                                 {currentProduct.price.toLocaleString('vi-VN')} VND
                             </p>
+                            {/* Thêm phần trăm giảm giá */}
+                            <span className="bg-red-500 text-white px-2 py-1 rounded-md text-sm">
+                                -{Math.round(((currentProduct.price - currentProduct.discount_price) / currentProduct.price) * 100)}%
+                            </span>
                         </div>
                         {/* Sizes */}
                         <div className="mb-4">

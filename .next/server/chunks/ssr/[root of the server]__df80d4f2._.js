@@ -3672,7 +3672,7 @@ const Header = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d
                 page: 1,
                 limit: 10
             }));
-        }, 30000);
+        }, 300000);
         return ()=>clearInterval(interval);
     }, [
         dispatch
@@ -5115,7 +5115,7 @@ function Layout({ children }) {
                 } catch (error) {
                     console.error('Failed to update favorites on route change:', error);
                 }
-            }, 300);
+            }, 300000);
         };
         router.events.on('routeChangeComplete', handleRouteChange);
         return ()=>{
@@ -5152,7 +5152,7 @@ function Layout({ children }) {
             } catch (error) {
                 console.error('Failed to auto-update favorites:', error);
             }
-        }, 30000); // 30 giây
+        }, 300000); // 30 giây
         return ()=>clearInterval(interval);
     }, [
         dispatch

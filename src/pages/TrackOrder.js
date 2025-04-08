@@ -14,6 +14,7 @@ const OrderStatus = {
     shipping: 'Đang giao hàng'
 };
 
+
 const StatusBadge = ({ status }) => {
     const getStatusColor = (status) => {
         switch (status) {
@@ -48,9 +49,47 @@ const TrackOrder = () => {
     const [identifier, setIdentifier] = useState('');
     const [orderData, setOrderData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({
+        orderId: '',
+        identifier: ''
+    });
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {
+            orderId: '',
+            identifier: ''
+        };
+
+        // Validate mã đơn hàng
+        if (!orderId.trim()) {
+            newErrors.orderId = 'Vui lòng nhập mã đơn hàng';
+            isValid = false;
+        }
+
+        // Validate email hoặc số điện thoại
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+        if (!identifier.trim()) {
+            newErrors.identifier = 'Vui lòng nhập email hoặc số điện thoại';
+            isValid = false;
+        } else if (!emailRegex.test(identifier) && !phoneRegex.test(identifier)) {
+            newErrors.identifier = 'Email hoặc số điện thoại không hợp lệ';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         setLoading(true);
         try {
             const response = await orderTrackingApi.trackOrder(orderId, identifier);
@@ -79,10 +118,16 @@ const TrackOrder = () => {
                         <input
                             type="text"
                             value={orderId}
-                            onChange={(e) => setOrderId(e.target.value)}
-                            className="w-full px-3 py-2 border rounded"
+                            onChange={(e) => {
+                                setOrderId(e.target.value);
+                                if (errors.orderId) setErrors({ ...errors, orderId: '' });
+                            }}
+                            className={`w-full px-3 py-2 border rounded ${errors.orderId ? 'border-red-500' : ''}`}
                             required
                         />
+                        {errors.orderId && (
+                            <p className="text-red-500 text-sm mt-1">{errors.orderId}</p>
+                        )}
                     </div>
 
                     <div className="mb-4">
@@ -90,10 +135,16 @@ const TrackOrder = () => {
                         <input
                             type="text"
                             value={identifier}
-                            onChange={(e) => setIdentifier(e.target.value)}
-                            className="w-full px-3 py-2 border rounded"
+                            onChange={(e) => {
+                                setIdentifier(e.target.value);
+                                if (errors.identifier) setErrors({ ...errors, identifier: '' });
+                            }}
+                            className={`w-full px-3 py-2 border rounded ${errors.identifier ? 'border-red-500' : ''}`}
                             required
                         />
+                        {errors.identifier && (
+                            <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>
+                        )}
                     </div>
 
                     <button
@@ -127,6 +178,12 @@ const TrackOrder = () => {
                                                 {new Date(orderData.orderInfo.orderDate).toLocaleDateString('vi-VN')}
                                             </p>
                                         </div>
+                                        <div>
+                                            <p className="text-gray-600 mb-1">Gía sản phẩm:</p>
+                                            <p className="font-medium">
+                                                {Number(orderData.orderInfo.originalPrice).toLocaleString('vi-VN')}đ
+                                            </p>
+                                        </div>
                                         {orderData.orderInfo.discountAmount > 0 && (
                                             <div>
                                                 <p className="text-gray-600 mb-1">Giảm giá:</p>
@@ -136,6 +193,12 @@ const TrackOrder = () => {
                                                 </p>
                                             </div>
                                         )}
+                                        <div>
+                                            <p className="text-gray-600 mb-1">Phí giao hàng:</p>
+                                            <p className="font-medium">
+                                                {Number(orderData.orderInfo.shippingFee).toLocaleString('vi-VN')}đ
+                                            </p>
+                                        </div>
                                         <div>
                                             <p className="text-gray-600 mb-1">Tổng thanh toán:</p>
                                             <p className="font-medium text-red-600">
