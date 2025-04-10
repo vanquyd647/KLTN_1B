@@ -291,9 +291,15 @@ const Header = memo(function Header({ isCartPage }) {
                     </button>
 
                     {/* Logo */}
-                    <Link href="/" className="text-2xl font-bold flex-shrink-0 text-black">
-                        Fashion Store
+                    <Link href="/" className="flex items-center space-x-2 font-bold flex-shrink-0">
+                        <img
+                            src="https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FDALL%C2%B7E%202025-01-20%2014.48.34%20-%20A%20minimalistic%20logo%20for%20a%20Fashion%20Store%2C%20designed%20for%20use%20as%20a%20website%20favicon.%20The%20logo%20features%20a%20sleek%20and%20modern%20design%20with%20an%20abstract%20represent.webp?alt=media&token=da1ff9d9-3a6e-44ca-ba4c-6de1a45b80fc"
+                            alt="Fashion Store Logo"
+                            className="h-8 w-8 object-contain"
+                        />
+                        <span className="text-2xl text-black">Fashion Store</span>
                     </Link>
+
 
                     {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">

@@ -618,7 +618,7 @@ export default function NewProducts() {
                                                         </li>
                                                         <li>
                                                             <Link
-                                                                href="/category/productsByCategory?categoryId=32&categoryName=Áo%20Nam"
+                                                                href="/category/productsByCategory?categoryId=33&categoryName=Áo%20Nam"
                                                                 className="text-gray-500 hover:text-black text-sm"
                                                             >
                                                                 Áo Nam
@@ -626,7 +626,7 @@ export default function NewProducts() {
                                                         </li>
                                                         <li>
                                                             <Link
-                                                                href="/category/productsByCategory?categoryId=33&categoryName=Áo%20Nữ"
+                                                                href="/category/productsByCategory?categoryId=32&categoryName=Áo%20Nữ"
                                                                 className="text-gray-500 hover:text-black text-sm"
                                                             >
                                                                 Áo Nữ

@@ -15,8 +15,8 @@ export default function Sidebar() {
                 { id: 2, name: 'Áo Thun' },
                 { id: 13, name: 'Áo Sơ Mi' },
                 { id: 10, name: 'Áo Polo' },
-                { id: 32, name: 'Áo Nam' },
-                { id: 33, name: 'Áo Nữ' },
+                { id: 33, name: 'Áo Nam' },
+                { id: 32, name: 'Áo Nữ' },
             ],
         },
         {
@@ -95,7 +95,10 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="w-full p-8 bg-white border border-gray-300">
+        <div className="w-full p-8 bg-white">
+            <h2 className="text-3xl font-bold text-center mb-8 uppercase relative w-fit mx-auto">
+                Danh mục sản phẩm
+            </h2>
             {/* Danh mục cha với icon */}
             <div className="flex justify-center">
                 <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-x-12 gap-y-8 max-w-7xl w-full">
@@ -105,13 +108,12 @@ export default function Sidebar() {
                             onClick={() => handleCategoryClick(category.id)}
                             className="flex flex-col items-center gap-4 transition-all"
                         >
-                            <div className={`p-6 rounded-full border-2 ${
-                                currentCategoryId === category.id || 
+                            <div className={`p-6 rounded-full border-2 ${currentCategoryId === category.id ||
                                 selectedCategoryId === category.id ||
                                 category.subCategories.some((sub) => sub.id === selectedCategoryId)
                                 ? 'bg-gray-100 border-gray-400'
                                 : 'border-gray-300 hover:border-gray-400'
-                            }`}>
+                                }`}>
                                 <div className="w-12 h-12">
                                     {category.icon}
                                 </div>
@@ -146,11 +148,10 @@ export default function Sidebar() {
                                 <button
                                     key={subCategory.id}
                                     onClick={() => navigateToCategory(subCategory.id, subCategory.name)}
-                                    className={`block px-6 py-4 text-left text-base text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-500 transition ${
-                                        selectedCategoryId === subCategory.id
+                                    className={`block px-6 py-4 text-left text-base text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-500 transition ${selectedCategoryId === subCategory.id
                                         ? 'bg-gray-100 text-gray-500'
                                         : ''
-                                    }`}
+                                        }`}
                                 >
                                     {subCategory.name}
                                 </button>
