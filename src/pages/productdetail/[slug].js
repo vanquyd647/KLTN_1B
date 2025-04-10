@@ -39,6 +39,10 @@ import {
     getFavorites,
     selectFavoriteStatuses
 } from '../../store/slices/favoriteSlice';
+import RecentlyViewed from '@/components/RecentlyViewed';
+
+const RECENTLY_VIEWED_KEY = 'recently_viewed_products';
+const MAX_RECENT_PRODUCTS = 10;
 
 
 export default function Slug() {
@@ -295,6 +299,65 @@ export default function Slug() {
             dispatch(fetchAverageRating(currentProduct.id));
         }
     }, [dispatch, currentProduct]);
+
+    const addToRecentlyViewed = (product) => {
+        try {
+            const recentProducts = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY) || '[]');
+
+            // Chuẩn bị thông tin màu sắc
+            const colors = product.productColors.map(color => ({
+                id: color.id,
+                color: color.color,
+                hex_code: color.hex_code,
+                image: color.ProductColor?.image,
+            }));
+
+            // Chuẩn bị thông tin size
+            const sizes = product.productSizes.map(size => ({
+                id: size.id,
+                size: size.size,
+            }));
+
+            // Tạo object chứa thông tin đầy đủ của sản phẩm
+            const productToSave = {
+                id: product.id,
+                product_name: product.product_name,
+                price: product.price,
+                discount_price: product.discount_price,
+                description: product.description,
+                slug: product.slug,
+                productColors: colors,
+                productSizes: sizes,
+                mainImage: product.productColors[0]?.ProductColor?.image,
+                timestamp: new Date().getTime(),
+            };
+
+            // Kiểm tra sản phẩm đã tồn tại
+            const existingIndex = recentProducts.findIndex(p => p.id === product.id);
+            if (existingIndex > -1) {
+                recentProducts.splice(existingIndex, 1);
+            }
+
+            // Thêm vào đầu danh sách
+            recentProducts.unshift(productToSave);
+
+            // Giới hạn số lượng
+            if (recentProducts.length > MAX_RECENT_PRODUCTS) {
+                recentProducts.pop();
+            }
+
+            localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(recentProducts));
+        } catch (error) {
+            console.error('Error saving recently viewed product:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (currentProduct) {
+            addToRecentlyViewed(currentProduct);
+        }
+    }, [currentProduct]);
+
 
     const handleSubmitReview = async () => {
         if (!reviewText.trim()) {
@@ -693,6 +756,7 @@ export default function Slug() {
                     </div>
                 </div>
             </div>
+            <RecentlyViewed />
         </Layout>
     );
 }

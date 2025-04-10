@@ -423,6 +423,7 @@ const CartPage = () => {
                     </button>
                 </div>
             </div>
+            
         </Layout>
     );
 };

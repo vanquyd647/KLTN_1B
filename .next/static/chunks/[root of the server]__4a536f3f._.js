@@ -561,6 +561,7 @@ __turbopack_context__.s({
     "apiClient": (()=>apiClient),
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
+    "categoriesApi": (()=>categoriesApi),
     "colorsApi": (()=>colorsApi),
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
@@ -584,7 +585,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$us
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'https://9f43-113-161-54-208.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1107,6 +1108,37 @@ const productsByCategoryApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    },
+    // Cập nhật danh mục cho sản phẩm
+    updateProductCategories: async (productId, categoryIds)=>{
+        try {
+            // Validate input
+            if (!Array.isArray(categoryIds)) {
+                throw new Error('categoryIds phải là một mảng');
+            }
+            if (categoryIds.length === 0) {
+                throw new Error('Phải có ít nhất một danh mục');
+            }
+            const response = await apiClient.put(`products-by-category/product/${productId}/categories`, {
+                categoryIds
+            });
+            return response.data;
+        } catch (error) {
+            // Xử lý các loại lỗi cụ thể
+            if (error.response) {
+                switch(error.response.status){
+                    case 400:
+                        throw new Error(error.response.data.message || 'Dữ liệu đầu vào không hợp lệ');
+                    case 404:
+                        throw new Error(error.response.data.message || 'Không tìm thấy sản phẩm hoặc danh mục');
+                    case 500:
+                        throw new Error(error.response.data.message || 'Lỗi máy chủ khi cập nhật danh mục sản phẩm');
+                    default:
+                        throw new Error(error.response.data.message || 'Lỗi không xác định');
+                }
+            }
+            throw error;
         }
     }
 };
@@ -1714,6 +1746,53 @@ const invoiceApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
+        }
+    }
+};
+const categoriesApi = {
+    // Lấy tất cả danh mục
+    getAllCategories: async ()=>{
+        try {
+            const response = await apiClient.get('categories');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách danh mục.';
+        }
+    },
+    // Lấy danh mục theo ID
+    getCategoryById: async (id)=>{
+        try {
+            const response = await apiClient.get(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin danh mục.';
+        }
+    },
+    // Tạo danh mục mới (Admin only)
+    createCategory: async (categoryData)=>{
+        try {
+            const response = await apiClient.post('categories', categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo danh mục mới.';
+        }
+    },
+    // Cập nhật danh mục (Admin only)
+    updateCategory: async (id, categoryData)=>{
+        try {
+            const response = await apiClient.put(`categories/${id}`, categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật danh mục.';
+        }
+    },
+    // Xóa danh mục (Admin only) 
+    deleteCategory: async (id)=>{
+        try {
+            const response = await apiClient.delete(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa danh mục.';
         }
     }
 };

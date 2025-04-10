@@ -11,6 +11,7 @@ const Layout = dynamic(() => import('../../components/Layout'), {
 });
 import AuthInterface from '../../components/profiles/AuthInterface';
 import ProfileInterface from '../../components/profiles/ProfileInterface';
+import RecentlyViewed from '../../components/RecentlyViewed';
 import {
     createCartForGuest,
     createCartForUser,
@@ -328,6 +329,7 @@ export default function Profile() {
                 orderLoading={orderLoading}
                 userLoading={loading}
             />
+            <RecentlyViewed />
         </Layout>
     );
 }

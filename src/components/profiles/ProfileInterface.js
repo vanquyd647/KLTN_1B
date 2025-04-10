@@ -579,7 +579,7 @@ export default function ProfileInterface({
 
     return (
         <div className="container mx-auto px-4 py-6">
-            <h1 className="text-2xl font-bold mb-4">Hồ sơ của tôi</h1>
+            <h1 className="text-2xl font-bold mb-4">Thông tin tài khoản</h1>
             <div className="flex flex-col md:flex-row gap-6">
                 {/* Sidebar */}
                 <div className="w-full lg:w-1/4 bg-white p-4 rounded shadow-md">

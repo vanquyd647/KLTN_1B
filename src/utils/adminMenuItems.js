@@ -18,7 +18,17 @@ export const menuItems = [
         subItems: [
             { id: 'product-list', label: 'Danh sách sản phẩm' },
             { id: 'add-product', label: 'Thêm sản phẩm' },
-            { id: 'categories', label: 'Danh mục' }
+        ]
+    },
+    {
+        id: 'categories',
+        label: 'Quản lý danh mục',
+        icon: <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>,
+        subItems: [
+            { id: 'category-list', label: 'Danh sách danh mục' },
+            { id: 'add-category', label: 'Thêm danh mục' },
         ]
     },
     {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, updateProduct } from '../store/slices/productSlice';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../configs/firebaseConfig';
+import { categoriesApi } from '../utils/apiClient';
 
 const ProductForm = ({ product, onSuccess, onCancel }) => {
     const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
 
     console.log('formData:', formData);
 
+    const [availableCategories, setAvailableCategories] = useState([]);
+    const [loadingCategories, setLoadingCategories] = useState(false);
     const [tempCategory, setTempCategory] = useState('');
     const [tempColor, setTempColor] = useState({ color: '', hex_code: '', image: '' });
     const [tempSize, setTempSize] = useState('');
@@ -32,6 +35,30 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
     // Thêm states mới
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+
+    // Thêm useEffect để tải danh sách danh mục khi component mount
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    // Hàm lấy danh sách danh mục từ API
+    const fetchCategories = async () => {
+        try {
+            setLoadingCategories(true);
+            const result = await categoriesApi.getAllCategories();
+
+            if (result.success) {
+                setAvailableCategories(result.data || []);
+            } else {
+                alert('Không thể tải danh sách danh mục');
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy danh mục:', error);
+            alert(error.message || 'Không thể tải danh sách danh mục');
+        } finally {
+            setLoadingCategories(false);
+        }
+    };
 
     // Thêm hàm xử lý upload
     const handleImageUpload = async (file) => {
@@ -123,6 +150,10 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 categories: [...prev.categories, tempCategory]
             }));
             setTempCategory('');
+        } else if (!tempCategory) {
+            alert('Vui lòng chọn danh mục!');
+        } else {
+            alert('Danh mục này đã được thêm!');
         }
     };
 
@@ -221,7 +252,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                     return;
                 }
             }
-            if (!formData.product_name  || formData.price <= 0) {
+            if (!formData.product_name || formData.price <= 0) {
                 alert('Vui lòng điền đầy đủ thông tin sản phẩm!');
                 return;
             }
@@ -413,20 +444,32 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
             <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Danh mục</h3>
                 <div className="flex gap-2">
-                    <input
-                        type="text"
-                        value={tempCategory}
-                        onChange={(e) => setTempCategory(e.target.value)}
-                        placeholder="Thêm danh mục"
-                        className="border rounded-lg p-2"
-                    />
-                    <button
-                        type="button"
-                        onClick={handleAddCategory}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                    >
-                        Thêm
-                    </button>
+                    <div className="flex gap-2">
+                        <select
+                            value={tempCategory}
+                            onChange={(e) => setTempCategory(e.target.value)}
+                            className="border rounded-lg p-2 flex-1"
+                            disabled={loadingCategories}
+                        >
+                            <option value="">-- Chọn danh mục --</option>
+                            {availableCategories.map(category => (
+                                <option
+                                    key={category.id}
+                                    value={category.name}
+                                >
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                        <button
+                            type="button"
+                            onClick={handleAddCategory}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            disabled={loadingCategories || !tempCategory}
+                        >
+                            Thêm
+                        </button>
+                    </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                     {formData.categories.map((category, index) => (

@@ -2,9 +2,9 @@
   "[project]/src/components/Layout.js [client] (ecmascript, next/dynamic entry)": {
     "id": "[project]/src/components/Layout.js [client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/src_8f069b8e._.js",
-      "static/chunks/node_modules_9c07462b._.js",
-      "static/chunks/src_components_Layout_73d753c8.js"
+      "static/chunks/src_components_8044fc86._.js",
+      "static/chunks/node_modules_c19a667b._.js",
+      "static/chunks/src_components_Layout_9ea30b83.js"
     ]
   }
 }

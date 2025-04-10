@@ -9,6 +9,7 @@ import BlogManagement from '../BlogManagement';
 import CouponManagement from '../CouponManagement';
 import SettingsManagement from '../SettingsManagement';
 import Dashboard from '../Dashboard';
+import CategoryManagement from '../CategoryManagement'
 
 
 const AdminContent = ({ activeTab, loading, role }) => {  // Thêm role vào props
@@ -22,6 +23,8 @@ const AdminContent = ({ activeTab, loading, role }) => {  // Thêm role vào pro
                 return <Dashboard />;
             case 'products':
                 return <ProductManagement />;
+            case 'categories':  // Thêm case này
+                return <CategoryManagement />;
             case 'orders':
                 return <OrderManagement />;
             case 'statistics':

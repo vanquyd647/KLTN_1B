@@ -1,9 +1,9 @@
 __turbopack_load_page_chunks__("/payment/cancel", [
-  "static/chunks/node_modules_next_2791c6._.js",
-  "static/chunks/node_modules_react-dom_82bb97._.js",
-  "static/chunks/node_modules_axios_lib_9a6fdf._.js",
-  "static/chunks/node_modules_8b3ed2._.js",
-  "static/chunks/[root of the server]__cd0819._.js",
-  "static/chunks/src_pages_payment_cancel_5771e1.js",
-  "static/chunks/src_pages_payment_cancel_aa9976.js"
+  "static/chunks/node_modules_next_ce022631._.js",
+  "static/chunks/node_modules_react-dom_82bb97c6._.js",
+  "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+  "static/chunks/node_modules_1093a444._.js",
+  "static/chunks/[root of the server]__2ccfc1e4._.js",
+  "static/chunks/src_pages_payment_cancel_5771e187.js",
+  "static/chunks/src_pages_payment_cancel_fc797836.js"
 ])
