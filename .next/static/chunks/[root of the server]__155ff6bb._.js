@@ -750,6 +750,7 @@ __turbopack_context__.s({
     "apiClient": (()=>apiClient),
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
+    "categoriesApi": (()=>categoriesApi),
     "colorsApi": (()=>colorsApi),
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
@@ -1296,6 +1297,37 @@ const productsByCategoryApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    },
+    // Cập nhật danh mục cho sản phẩm
+    updateProductCategories: async (productId, categoryIds)=>{
+        try {
+            // Validate input
+            if (!Array.isArray(categoryIds)) {
+                throw new Error('categoryIds phải là một mảng');
+            }
+            if (categoryIds.length === 0) {
+                throw new Error('Phải có ít nhất một danh mục');
+            }
+            const response = await apiClient.put(`products-by-category/product/${productId}/categories`, {
+                categoryIds
+            });
+            return response.data;
+        } catch (error) {
+            // Xử lý các loại lỗi cụ thể
+            if (error.response) {
+                switch(error.response.status){
+                    case 400:
+                        throw new Error(error.response.data.message || 'Dữ liệu đầu vào không hợp lệ');
+                    case 404:
+                        throw new Error(error.response.data.message || 'Không tìm thấy sản phẩm hoặc danh mục');
+                    case 500:
+                        throw new Error(error.response.data.message || 'Lỗi máy chủ khi cập nhật danh mục sản phẩm');
+                    default:
+                        throw new Error(error.response.data.message || 'Lỗi không xác định');
+                }
+            }
+            throw error;
         }
     }
 };
@@ -1903,6 +1935,53 @@ const invoiceApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
+        }
+    }
+};
+const categoriesApi = {
+    // Lấy tất cả danh mục
+    getAllCategories: async ()=>{
+        try {
+            const response = await apiClient.get('categories');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách danh mục.';
+        }
+    },
+    // Lấy danh mục theo ID
+    getCategoryById: async (id)=>{
+        try {
+            const response = await apiClient.get(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin danh mục.';
+        }
+    },
+    // Tạo danh mục mới (Admin only)
+    createCategory: async (categoryData)=>{
+        try {
+            const response = await apiClient.post('categories', categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo danh mục mới.';
+        }
+    },
+    // Cập nhật danh mục (Admin only)
+    updateCategory: async (id, categoryData)=>{
+        try {
+            const response = await apiClient.put(`categories/${id}`, categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật danh mục.';
+        }
+    },
+    // Xóa danh mục (Admin only) 
+    deleteCategory: async (id)=>{
+        try {
+            const response = await apiClient.delete(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa danh mục.';
         }
     }
 };

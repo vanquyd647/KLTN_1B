@@ -82,6 +82,7 @@ const AdminDashboard = () => {
                     activeTab={activeTab}
                     loading={loading}
                     role={role}
+                    setActiveTab={setActiveTab}
                 />
             </div>
         </div>

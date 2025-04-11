@@ -713,6 +713,7 @@ export default function ProfileInterface({
                                                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200
                                                 ${validationErrors.phone ? 'border-red-500' : ''}`}
                                                 placeholder="Nhập 10 chữ số"
+                                                required
                                             />
                                             {validationErrors.phone && (
                                                 <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>

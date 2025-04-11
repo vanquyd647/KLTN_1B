@@ -30,6 +30,7 @@ export default function AuthInterface({
         phone: '',
         gender: '',
     });
+    
 
     // Validate từng trường khi người dùng thay đổi giá trị
     useEffect(() => {
@@ -53,7 +54,7 @@ export default function AuthInterface({
                     error = 'Họ phải có ít nhất 2 ký tự';
                 } else if (value && value.length > 20) {
                     error = 'Họ không được vượt quá 20 ký tự';
-                } else if (value && !/^[a-zA-ZÀ-ỹ\s]+$/.test(value)) {
+                } else if (value && !/^[\p{L}\s]+$/u.test(value)) {
                     error = 'Họ chỉ được chứa chữ cái';
                 }
                 break;

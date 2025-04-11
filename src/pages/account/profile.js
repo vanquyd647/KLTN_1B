@@ -47,8 +47,6 @@ export default function Profile() {
         confirmNewPassword: '',
     });
     const [error, setError] = useState(null);
-    const controller = new AbortController();
-    const [mounted, setMounted] = useState(false);
 
     // Mounted effect
     useEffect(() => {
@@ -209,10 +207,6 @@ export default function Profile() {
             setError('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
             return;
         }
-        if (!/^[a-zA-Z]+$/.test(formData.firstname) || !/^[a-zA-Z]+$/.test(formData.lastname)) {
-            setError('Tên và họ chỉ được chứa chữ cái.');
-            return;
-        }
 
         if (formData.firstname.length < 2 || formData.lastname.length < 2) {
             setError('Tên và họ phải có ít nhất 2 ký tự.');
@@ -275,10 +269,10 @@ export default function Profile() {
         e.preventDefault();
         const result = await dispatch(verifyOtp({ email: formData.email, otp }));
         if (result.meta.requestStatus === 'fulfilled') {
-            alert('Verification successful! You can now log in.');
+            alert('Xác minh OTP thành công! Bây giờ bạn có thể đăng nhập.');
             setAuthStep('login');
         } else {
-            alert('Invalid OTP. Please try again.');
+            alert('Xác minh OTP thất bại. Vui lòng thử lại.');
         }
     };
 

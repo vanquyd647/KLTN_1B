@@ -9190,7 +9190,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                         children: modalMode === 'create' ? 'Thêm người dùng mới' : 'Cập nhật người dùng'
                     }, void 0, false, {
                         fileName: "[project]/src/components/UserFormModal.js",
-                        lineNumber: 21,
+                        lineNumber: 22,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -9202,7 +9202,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 26,
+                                lineNumber: 27,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9215,7 +9215,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Tên"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 33,
+                                                lineNumber: 34,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -9226,13 +9226,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 34,
+                                                lineNumber: 35,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 32,
+                                        lineNumber: 33,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9242,7 +9242,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Họ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 44,
+                                                lineNumber: 45,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -9253,13 +9253,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 45,
+                                                lineNumber: 46,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 43,
+                                        lineNumber: 44,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9269,7 +9269,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 55,
+                                                lineNumber: 56,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -9281,13 +9281,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 56,
+                                                lineNumber: 57,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 54,
+                                        lineNumber: 55,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9297,7 +9297,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Số điện thoại"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 67,
+                                                lineNumber: 68,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -9308,13 +9308,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 68,
+                                                lineNumber: 69,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 66,
+                                        lineNumber: 67,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9324,7 +9324,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Giới tính"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 78,
+                                                lineNumber: 79,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -9337,28 +9337,28 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                         children: label
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 86,
+                                                        lineNumber: 87,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 79,
+                                                lineNumber: 80,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 77,
+                                        lineNumber: 78,
                                         columnNumber: 29
                                     }, this),
-                                    modalMode === 'create' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
                                                 className: "block text-sm font-medium text-gray-700",
                                                 children: "Mật khẩu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 93,
+                                                lineNumber: 94,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -9371,13 +9371,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 minLength: "6"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 94,
+                                                lineNumber: 95,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 92,
+                                        lineNumber: 93,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9387,7 +9387,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                 children: "Vai trò"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 107,
+                                                lineNumber: 108,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9402,37 +9402,37 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 111,
+                                                                lineNumber: 112,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                                                 children: label
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 117,
+                                                                lineNumber: 118,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, role, true, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 110,
+                                                        lineNumber: 111,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 108,
+                                                lineNumber: 109,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 106,
+                                        lineNumber: 107,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 31,
+                                lineNumber: 32,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -9448,7 +9448,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                         children: "Hủy"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 125,
+                                        lineNumber: 126,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -9458,35 +9458,35 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$exter
                                         children: loading ? 'Đang xử lý...' : modalMode === 'create' ? 'Thêm' : 'Cập nhật'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 135,
+                                        lineNumber: 136,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 124,
+                                lineNumber: 125,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserFormModal.js",
-                        lineNumber: 24,
+                        lineNumber: 25,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/UserFormModal.js",
-                lineNumber: 20,
+                lineNumber: 21,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/UserFormModal.js",
-            lineNumber: 19,
+            lineNumber: 20,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/UserFormModal.js",
-        lineNumber: 18,
+        lineNumber: 19,
         columnNumber: 9
     }, this);
 });

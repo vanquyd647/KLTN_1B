@@ -8479,9 +8479,18 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@fortawesome/react-fontawesome/index.es.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@fortawesome/free-solid-svg-icons/index.mjs [client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
 ;
 ;
-const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["memo"])(_c = ({ modalMode, formData, error, loading, handleInputChange, handleRoleChange, handleSubmit, setShowModal, setError, roleLabels, genderLabels })=>{
+;
+const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["memo"])(_c = _s(({ modalMode, formData, error, loading, handleInputChange, handleRoleChange, handleSubmit, setShowModal, setError, roleLabels, genderLabels })=>{
+    _s();
+    const [passwordVisibility, setPasswordVisibility] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"].useState({
+        password: false
+    });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8494,7 +8503,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                         children: modalMode === 'create' ? 'Thêm người dùng mới' : 'Cập nhật người dùng'
                     }, void 0, false, {
                         fileName: "[project]/src/components/UserFormModal.js",
-                        lineNumber: 21,
+                        lineNumber: 28,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -8506,7 +8515,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 26,
+                                lineNumber: 33,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8519,7 +8528,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Tên"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 33,
+                                                lineNumber: 40,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8530,13 +8539,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 34,
+                                                lineNumber: 41,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 32,
+                                        lineNumber: 39,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8546,7 +8555,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Họ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 44,
+                                                lineNumber: 51,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8557,13 +8566,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 45,
+                                                lineNumber: 52,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 43,
+                                        lineNumber: 50,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8573,7 +8582,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 55,
+                                                lineNumber: 62,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8585,13 +8594,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 56,
+                                                lineNumber: 63,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 54,
+                                        lineNumber: 61,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8601,7 +8610,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Số điện thoại"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 67,
+                                                lineNumber: 74,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8612,13 +8621,13 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 68,
+                                                lineNumber: 75,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 66,
+                                        lineNumber: 73,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8628,7 +8637,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Giới tính"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 78,
+                                                lineNumber: 85,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -8641,48 +8650,77 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                         children: label
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 86,
+                                                        lineNumber: 93,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 79,
+                                                lineNumber: 86,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 77,
+                                        lineNumber: 84,
                                         columnNumber: 29
                                     }, this),
-                                    modalMode === 'create' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                 className: "block text-sm font-medium text-gray-700",
                                                 children: "Mật khẩu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 93,
-                                                columnNumber: 37
+                                                lineNumber: 100,
+                                                columnNumber: 33
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "password",
-                                                name: "password",
-                                                value: formData.password,
-                                                onChange: handleInputChange,
-                                                className: "mt-1 block w-full border rounded-md shadow-sm p-2",
-                                                required: modalMode === 'create',
-                                                minLength: "6"
-                                            }, void 0, false, {
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: passwordVisibility.password ? "text" : "password",
+                                                        name: "password",
+                                                        value: formData.password,
+                                                        onChange: handleInputChange,
+                                                        className: "mt-1 block w-full border rounded-md shadow-sm p-2 pr-10",
+                                                        required: modalMode === 'create',
+                                                        minLength: "6"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/UserFormModal.js",
+                                                        lineNumber: 102,
+                                                        columnNumber: 37
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        type: "button",
+                                                        className: "absolute inset-y-0 right-0 px-3 flex items-center",
+                                                        onClick: ()=>setPasswordVisibility((prev)=>({
+                                                                    ...prev,
+                                                                    password: !prev.password
+                                                                })),
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__["FontAwesomeIcon"], {
+                                                            icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"],
+                                                            className: "text-gray-500 hover:text-gray-700 cursor-pointer"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/UserFormModal.js",
+                                                            lineNumber: 119,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/UserFormModal.js",
+                                                        lineNumber: 111,
+                                                        columnNumber: 37
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 94,
-                                                columnNumber: 37
+                                                lineNumber: 101,
+                                                columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 92,
-                                        columnNumber: 33
+                                        lineNumber: 99,
+                                        columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         children: [
@@ -8691,7 +8729,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                 children: "Vai trò"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 107,
+                                                lineNumber: 130,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8706,37 +8744,37 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 111,
+                                                                lineNumber: 134,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: label
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 117,
+                                                                lineNumber: 140,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, role, true, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 110,
+                                                        lineNumber: 133,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 108,
+                                                lineNumber: 131,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 106,
+                                        lineNumber: 129,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 31,
+                                lineNumber: 38,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8752,7 +8790,7 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                         children: "Hủy"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 125,
+                                        lineNumber: 148,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8762,38 +8800,38 @@ const UserFormModal = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
                                         children: loading ? 'Đang xử lý...' : modalMode === 'create' ? 'Thêm' : 'Cập nhật'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 135,
+                                        lineNumber: 158,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 124,
+                                lineNumber: 147,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserFormModal.js",
-                        lineNumber: 24,
+                        lineNumber: 31,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/UserFormModal.js",
-                lineNumber: 20,
+                lineNumber: 27,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/UserFormModal.js",
-            lineNumber: 19,
+            lineNumber: 26,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/UserFormModal.js",
-        lineNumber: 18,
+        lineNumber: 25,
         columnNumber: 9
     }, this);
-});
+}, "S6rO5nl72BeggsfEyNMKE4PMzG0=")), "S6rO5nl72BeggsfEyNMKE4PMzG0=");
 _c1 = UserFormModal;
 UserFormModal.displayName = 'UserFormModal';
 const __TURBOPACK__default__export__ = UserFormModal;
@@ -11608,7 +11646,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 // Đăng ký các components cho Chart.js
 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Chart"].register(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["CategoryScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["LinearScale"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["BarElement"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Title"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Tooltip"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Legend"], __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$chart$2e$js$2f$dist$2f$chart$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["ArcElement"]);
-const Dashboard = ()=>{
+const Dashboard = ({ setActiveTab })=>{
     _s();
     const [orders, setOrders] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [users, setUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -11693,6 +11731,9 @@ const Dashboard = ()=>{
         } catch (err) {
             console.error('Error fetching products:', err);
         }
+    };
+    const handleViewAllOrders = ()=>{
+        setActiveTab('orders');
     };
     // Function để chuyển đổi trạng thái đơn hàng sang tiếng Việt
     const getOrderStatusText = (status)=>{
@@ -11814,7 +11855,7 @@ const Dashboard = ()=>{
                 children: "Tổng quan hệ thống"
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 219,
+                lineNumber: 223,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11830,40 +11871,40 @@ const Dashboard = ()=>{
                                         className: "h-4 bg-gray-200 rounded w-1/3"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 228,
+                                        lineNumber: 232,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-10 h-10 bg-gray-200 rounded-full"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 229,
+                                        lineNumber: 233,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 227,
+                                lineNumber: 231,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-8 bg-gray-200 rounded w-1/2 mb-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 231,
+                                lineNumber: 235,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-3 bg-gray-200 rounded w-1/4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 232,
+                                lineNumber: 236,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, index, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 226,
+                        lineNumber: 230,
                         columnNumber: 25
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
                     children: [
@@ -11875,14 +11916,14 @@ const Dashboard = ()=>{
                             }).format(revenue.totalRevenue),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CurrencyIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 243,
+                                lineNumber: 247,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${revenue.count} đơn thành công`,
                             color: "bg-gradient-to-r from-blue-500 to-blue-600"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 237,
+                            lineNumber: 241,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -11890,14 +11931,14 @@ const Dashboard = ()=>{
                             value: orders.length.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 251,
+                                lineNumber: 255,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${orders.filter((o)=>o.status === 'completed').length} hoàn thành`,
                             color: "bg-gradient-to-r from-green-500 to-green-600"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 248,
+                            lineNumber: 252,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -11905,14 +11946,14 @@ const Dashboard = ()=>{
                             value: users.length.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 259,
+                                lineNumber: 263,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${users.filter((u)=>u.roles.includes('customer')).length} khách hàng`,
                             color: "bg-gradient-to-r from-purple-500 to-purple-600"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 256,
+                            lineNumber: 260,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -11920,21 +11961,21 @@ const Dashboard = ()=>{
                             value: products.total.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 267,
+                                lineNumber: 271,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${products.newCount} sản phẩm mới`,
                             color: "bg-gradient-to-r from-orange-500 to-orange-600"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 264,
+                            lineNumber: 268,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true)
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 222,
+                lineNumber: 226,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11950,11 +11991,12 @@ const Dashboard = ()=>{
                                     children: "Đơn hàng gần đây"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 279,
+                                    lineNumber: 283,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     className: "text-sm text-blue-600 hover:text-blue-800 transition-colors flex items-center",
+                                    onClick: handleViewAllOrders,
                                     children: [
                                         "Xem tất cả",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -11970,24 +12012,24 @@ const Dashboard = ()=>{
                                                 d: "M9 5l7 7-7 7"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 283,
+                                                lineNumber: 288,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 282,
+                                            lineNumber: 287,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 280,
+                                    lineNumber: 284,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 278,
+                            lineNumber: 282,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12004,7 +12046,7 @@ const Dashboard = ()=>{
                                                     children: "Mã ĐH"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 291,
+                                                    lineNumber: 296,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12012,7 +12054,7 @@ const Dashboard = ()=>{
                                                     children: "Khách hàng"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 292,
+                                                    lineNumber: 297,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12020,7 +12062,7 @@ const Dashboard = ()=>{
                                                     children: "Tổng tiền"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 293,
+                                                    lineNumber: 298,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12028,7 +12070,7 @@ const Dashboard = ()=>{
                                                     children: "Trạng thái"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 294,
+                                                    lineNumber: 299,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12036,26 +12078,18 @@ const Dashboard = ()=>{
                                                     children: "Ngày đặt"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 295,
-                                                    columnNumber: 37
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                    className: "px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                                    children: "Thao tác"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 296,
+                                                    lineNumber: 300,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 290,
+                                            lineNumber: 295,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 289,
+                                        lineNumber: 294,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -12069,17 +12103,17 @@ const Dashboard = ()=>{
                                                         className: "h-4 bg-gray-200 rounded animate-pulse"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 305,
+                                                        lineNumber: 309,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 304,
+                                                    lineNumber: 308,
                                                     columnNumber: 45
                                                 }, this)
                                             }, index, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 303,
+                                                lineNumber: 307,
                                                 columnNumber: 41
                                             }, this)) : orders.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12088,12 +12122,12 @@ const Dashboard = ()=>{
                                                 children: "Không có đơn hàng nào"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 311,
+                                                lineNumber: 315,
                                                 columnNumber: 41
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 310,
+                                            lineNumber: 314,
                                             columnNumber: 37
                                         }, this) : orders.map((order)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].tr, {
                                                 className: "hover:bg-gray-50 transition-colors",
@@ -12115,7 +12149,7 @@ const Dashboard = ()=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 324,
+                                                        lineNumber: 328,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12128,25 +12162,25 @@ const Dashboard = ()=>{
                                                                     children: order.shipping.recipient.name.charAt(0)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                                    lineNumber: 327,
+                                                                    lineNumber: 331,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: order.shipping.recipient.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                                    lineNumber: 330,
+                                                                    lineNumber: 334,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/Dashboard.js",
-                                                            lineNumber: 326,
+                                                            lineNumber: 330,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 325,
+                                                        lineNumber: 329,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12157,7 +12191,7 @@ const Dashboard = ()=>{
                                                         }).format(order.pricing.final_price)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 333,
+                                                        lineNumber: 337,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12167,12 +12201,12 @@ const Dashboard = ()=>{
                                                             children: getOrderStatusText(order.status)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/Dashboard.js",
-                                                            lineNumber: 340,
+                                                            lineNumber: 344,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 339,
+                                                        lineNumber: 343,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12180,55 +12214,40 @@ const Dashboard = ()=>{
                                                         children: new Date(order.dates.created_at).toLocaleDateString('vi-VN')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 344,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                        className: "px-6 py-4 whitespace-nowrap text-right",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            className: "text-blue-600 hover:text-blue-900 font-medium",
-                                                            children: "Chi tiết"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/Dashboard.js",
-                                                            lineNumber: 348,
-                                                            columnNumber: 49
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 347,
+                                                        lineNumber: 348,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, order.id, true, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 317,
+                                                lineNumber: 321,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 299,
+                                        lineNumber: 303,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 288,
+                                lineNumber: 293,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 287,
+                            lineNumber: 292,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Dashboard.js",
-                    lineNumber: 277,
+                    lineNumber: 281,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 276,
+                lineNumber: 280,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12242,7 +12261,7 @@ const Dashboard = ()=>{
                                 children: "Doanh thu theo tháng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 364,
+                                lineNumber: 363,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12253,12 +12272,12 @@ const Dashboard = ()=>{
                                         className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 368,
+                                        lineNumber: 367,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 367,
+                                    lineNumber: 366,
                                     columnNumber: 29
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Bar"], {
                                     data: getRevenueChartData(orders),
@@ -12290,18 +12309,18 @@ const Dashboard = ()=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 371,
+                                    lineNumber: 370,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 365,
+                                lineNumber: 364,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 363,
+                        lineNumber: 362,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12312,7 +12331,7 @@ const Dashboard = ()=>{
                                 children: "Phân bổ đơn hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 405,
+                                lineNumber: 404,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12323,12 +12342,12 @@ const Dashboard = ()=>{
                                         className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 409,
+                                        lineNumber: 408,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 408,
+                                    lineNumber: 407,
                                     columnNumber: 29
                                 }, this) : orders.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Doughnut"], {
                                     data: getOrderStatusDistribution(orders),
@@ -12363,37 +12382,37 @@ const Dashboard = ()=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 412,
+                                    lineNumber: 411,
                                     columnNumber: 29
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "h-full flex items-center justify-center text-gray-500",
                                     children: "Không có dữ liệu"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 445,
+                                    lineNumber: 444,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 406,
+                                lineNumber: 405,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 404,
+                        lineNumber: 403,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 362,
+                lineNumber: 361,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 218,
+        lineNumber: 222,
         columnNumber: 9
     }, this);
 };
@@ -12419,7 +12438,7 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: title
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 465,
+                        lineNumber: 464,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12427,13 +12446,13 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: icon
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 466,
+                        lineNumber: 465,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 464,
+                lineNumber: 463,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12444,7 +12463,7 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: value
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 471,
+                        lineNumber: 470,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12465,36 +12484,36 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                                         d: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 475,
+                                        lineNumber: 474,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 474,
+                                    lineNumber: 473,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 473,
+                                lineNumber: 472,
                                 columnNumber: 21
                             }, this),
                             trend
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 472,
+                        lineNumber: 471,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 470,
+                lineNumber: 469,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 459,
+        lineNumber: 458,
         columnNumber: 9
     }, this);
 };
@@ -12512,12 +12531,12 @@ const CurrencyIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$pr
             d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 488,
+            lineNumber: 487,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 487,
+        lineNumber: 486,
         columnNumber: 5
     }, this);
 _c2 = CurrencyIcon;
@@ -12533,12 +12552,12 @@ const OrderIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
             d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 494,
+            lineNumber: 493,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 493,
+        lineNumber: 492,
         columnNumber: 5
     }, this);
 _c3 = OrderIcon;
@@ -12554,12 +12573,12 @@ const UserIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
             d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 500,
+            lineNumber: 499,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 499,
+        lineNumber: 498,
         columnNumber: 5
     }, this);
 _c4 = UserIcon;
@@ -12575,12 +12594,12 @@ const ProductIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$pro
             d: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 506,
+            lineNumber: 505,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 505,
+        lineNumber: 504,
         columnNumber: 5
     }, this);
 _c5 = ProductIcon;
@@ -13077,7 +13096,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Categor
 ;
 ;
 ;
-const AdminContent = ({ activeTab, loading, role })=>{
+const AdminContent = ({ activeTab, loading, role, setActiveTab })=>{
     const renderContent = ()=>{
         if (loading) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -13091,7 +13110,9 @@ const AdminContent = ({ activeTab, loading, role })=>{
         }
         switch(activeTab){
             case 'dashboard':
-                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Dashboard$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Dashboard$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                    setActiveTab: setActiveTab
+                }, void 0, false, {
                     fileName: "[project]/src/components/admin/AdminContent.js",
                     lineNumber: 23,
                     columnNumber: 24
@@ -13436,7 +13457,8 @@ const AdminDashboard = ()=>{
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2f$AdminContent$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                         activeTab: activeTab,
                         loading: loading,
-                        role: role
+                        role: role,
+                        setActiveTab: setActiveTab
                     }, void 0, false, {
                         fileName: "[project]/src/pages/admin/index.js",
                         lineNumber: 81,

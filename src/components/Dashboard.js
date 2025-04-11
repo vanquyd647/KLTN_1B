@@ -27,7 +27,7 @@ ChartJS.register(
     ArcElement
 );
 
-const Dashboard = () => {
+const Dashboard = ({ setActiveTab }) => {
     const [orders, setOrders] = useState([]);
     const [users, setUsers] = useState([]);
     const [revenue, setRevenue] = useState({
@@ -116,6 +116,10 @@ const Dashboard = () => {
         } catch (err) {
             console.error('Error fetching products:', err);
         }
+    };
+
+    const handleViewAllOrders = () => {
+        setActiveTab('orders');
     };
 
     // Function để chuyển đổi trạng thái đơn hàng sang tiếng Việt
@@ -277,7 +281,8 @@ const Dashboard = () => {
                 <div className="p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-bold text-gray-800">Đơn hàng gần đây</h2>
-                        <button className="text-sm text-blue-600 hover:text-blue-800 transition-colors flex items-center">
+                        <button className="text-sm text-blue-600 hover:text-blue-800 transition-colors flex items-center"
+                            onClick={handleViewAllOrders}>
                             Xem tất cả
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -293,7 +298,6 @@ const Dashboard = () => {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tổng tiền</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày đặt</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
@@ -343,12 +347,7 @@ const Dashboard = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-600">
                                                 {new Date(order.dates.created_at).toLocaleDateString('vi-VN')}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-right">
-                                                <button className="text-blue-600 hover:text-blue-900 font-medium">
-                                                    Chi tiết
-                                                </button>
-                                            </td>
+                                            </td> 
                                         </motion.tr>
                                     ))
                                 )}

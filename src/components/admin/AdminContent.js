@@ -12,7 +12,7 @@ import Dashboard from '../Dashboard';
 import CategoryManagement from '../CategoryManagement'
 
 
-const AdminContent = ({ activeTab, loading, role }) => {  // Thêm role vào props
+const AdminContent = ({ activeTab, loading, role, setActiveTab }) => {  // Thêm role vào props
     const renderContent = () => {
         if (loading) {
             return <div className="p-4">Loading...</div>;
@@ -20,7 +20,7 @@ const AdminContent = ({ activeTab, loading, role }) => {  // Thêm role vào pro
 
         switch (activeTab) {
             case 'dashboard':
-                return <Dashboard />;
+                return <Dashboard setActiveTab={setActiveTab} />;
             case 'products':
                 return <ProductManagement />;
             case 'categories':  // Thêm case này

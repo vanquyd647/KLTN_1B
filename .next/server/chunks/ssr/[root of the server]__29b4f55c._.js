@@ -3272,7 +3272,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                     error = 'Họ phải có ít nhất 2 ký tự';
                 } else if (value && value.length > 20) {
                     error = 'Họ không được vượt quá 20 ký tự';
-                } else if (value && !/^[a-zA-ZÀ-ỹ\s]+$/.test(value)) {
+                } else if (value && !/^[\p{L}\s]+$/u.test(value)) {
                     error = 'Họ chỉ được chứa chữ cái';
                 }
                 break;
@@ -3392,7 +3392,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đăng nhập"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 182,
+                        lineNumber: 183,
                         columnNumber: 21
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3400,7 +3400,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: error.message === "User not found" || error.message === "Invalid password" ? "Tài khoản hoặc mật khẩu không đúng" : error.message
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 184,
+                        lineNumber: 185,
                         columnNumber: 25
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -3413,7 +3413,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 192,
+                                        lineNumber: 193,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3425,13 +3425,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 193,
+                                        lineNumber: 194,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 191,
+                                lineNumber: 192,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3441,7 +3441,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 203,
+                                        lineNumber: 204,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3456,7 +3456,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 205,
+                                                lineNumber: 206,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3467,24 +3467,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 218,
+                                                    lineNumber: 219,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 213,
+                                                lineNumber: 214,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 204,
+                                        lineNumber: 205,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 202,
+                                lineNumber: 203,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3494,13 +3494,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang đăng nhập...' : 'Đăng nhập'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 222,
+                                lineNumber: 223,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 190,
+                        lineNumber: 191,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3514,7 +3514,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: "Đăng ký"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 232,
+                                lineNumber: 233,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3524,24 +3524,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                     children: "Quên mật khẩu?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                    lineNumber: 239,
+                                    lineNumber: 240,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 238,
+                                lineNumber: 239,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 230,
+                        lineNumber: 231,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 181,
+                lineNumber: 182,
                 columnNumber: 17
             }, this),
             authStep === 'forgot-password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3552,7 +3552,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Quên mật khẩu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 252,
+                        lineNumber: 253,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -3565,7 +3565,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 255,
+                                        lineNumber: 256,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3577,13 +3577,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 256,
+                                        lineNumber: 257,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 254,
+                                lineNumber: 255,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3593,13 +3593,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang gửi...' : 'Gửi mã OTP'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 265,
+                                lineNumber: 266,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 253,
+                        lineNumber: 254,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3610,18 +3610,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             children: "Quay lại đăng nhập"
                         }, void 0, false, {
                             fileName: "[project]/src/components/profiles/AuthInterface.js",
-                            lineNumber: 274,
+                            lineNumber: 275,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 273,
+                        lineNumber: 274,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 251,
+                lineNumber: 252,
                 columnNumber: 17
             }, this),
             authStep === 'reset-password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3632,7 +3632,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đặt lại mật khẩu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 286,
+                        lineNumber: 287,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -3645,7 +3645,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mã OTP:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 289,
+                                        lineNumber: 290,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3656,13 +3656,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 290,
+                                        lineNumber: 291,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 288,
+                                lineNumber: 289,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3672,7 +3672,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu mới:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 299,
+                                        lineNumber: 300,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3687,7 +3687,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 301,
+                                                lineNumber: 302,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3698,24 +3698,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.newPassword ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 314,
+                                                    lineNumber: 315,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 309,
+                                                lineNumber: 310,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 300,
+                                        lineNumber: 301,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 298,
+                                lineNumber: 299,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3725,7 +3725,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Xác nhận mật khẩu mới:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 321,
+                                        lineNumber: 322,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3740,7 +3740,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 323,
+                                                lineNumber: 324,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3751,24 +3751,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.confirmNewPassword ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 336,
+                                                    lineNumber: 337,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 331,
+                                                lineNumber: 332,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 322,
+                                        lineNumber: 323,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 320,
+                                lineNumber: 321,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3778,19 +3778,19 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 342,
+                                lineNumber: 343,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 287,
+                        lineNumber: 288,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 285,
+                lineNumber: 286,
                 columnNumber: 17
             }, this),
             authStep === 'register' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3801,7 +3801,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đăng ký"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 354,
+                        lineNumber: 355,
                         columnNumber: 21
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3809,7 +3809,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: error.message || error
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 356,
+                        lineNumber: 357,
                         columnNumber: 25
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -3822,7 +3822,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Họ:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 362,
+                                        lineNumber: 363,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3834,7 +3834,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 363,
+                                        lineNumber: 364,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.firstname && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3842,13 +3842,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.firstname
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 372,
+                                        lineNumber: 373,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 361,
+                                lineNumber: 362,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3858,7 +3858,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Tên:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 376,
+                                        lineNumber: 377,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3870,7 +3870,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 377,
+                                        lineNumber: 378,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.lastname && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3878,13 +3878,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.lastname
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 386,
+                                        lineNumber: 387,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 375,
+                                lineNumber: 376,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3894,7 +3894,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 390,
+                                        lineNumber: 391,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -3906,7 +3906,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 391,
+                                        lineNumber: 392,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3914,13 +3914,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.email
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 400,
+                                        lineNumber: 401,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 389,
+                                lineNumber: 390,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3930,7 +3930,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 404,
+                                        lineNumber: 405,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3945,7 +3945,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 406,
+                                                lineNumber: 407,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -3956,18 +3956,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 419,
+                                                    lineNumber: 420,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 414,
+                                                lineNumber: 415,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 405,
+                                        lineNumber: 406,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.password && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -3975,13 +3975,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.password
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 425,
+                                        lineNumber: 426,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 403,
+                                lineNumber: 404,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -3991,7 +3991,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Nhập lại mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 429,
+                                        lineNumber: 430,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4006,7 +4006,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 431,
+                                                lineNumber: 432,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4017,18 +4017,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.confirmPassword ? __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$externals$5d2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons__$5b$external$5d$__$2840$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2c$__esm_import$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 444,
+                                                    lineNumber: 445,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 439,
+                                                lineNumber: 440,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 430,
+                                        lineNumber: 431,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.confirmPassword && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4036,13 +4036,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.confirmPassword
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 450,
+                                        lineNumber: 451,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 428,
+                                lineNumber: 429,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4052,7 +4052,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Số điện thoại:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 454,
+                                        lineNumber: 455,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -4064,7 +4064,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 455,
+                                        lineNumber: 456,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.phone && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4072,13 +4072,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.phone
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 464,
+                                        lineNumber: 465,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 453,
+                                lineNumber: 454,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4088,7 +4088,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Chọn giới tính:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 468,
+                                        lineNumber: 469,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -4103,7 +4103,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Chọn"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 476,
+                                                lineNumber: 477,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -4111,7 +4111,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Nam"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 477,
+                                                lineNumber: 478,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -4119,7 +4119,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Nữ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 478,
+                                                lineNumber: 479,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -4127,13 +4127,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Khác"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 479,
+                                                lineNumber: 480,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 469,
+                                        lineNumber: 470,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.gender && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4141,13 +4141,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.gender
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 482,
+                                        lineNumber: 483,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 467,
+                                lineNumber: 468,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4157,13 +4157,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang đăng ký...' : 'Đăng ký'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 485,
+                                lineNumber: 486,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 360,
+                        lineNumber: 361,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4177,19 +4177,19 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: "Đăng nhập"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 495,
+                                lineNumber: 496,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 493,
+                        lineNumber: 494,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 353,
+                lineNumber: 354,
                 columnNumber: 17
             }, this),
             authStep === 'otp' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4200,7 +4200,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Xác nhận OTP"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 506,
+                        lineNumber: 507,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -4208,7 +4208,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Mã OTP đã được gửi đến email của bạn."
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 507,
+                        lineNumber: 508,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -4221,7 +4221,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Nhập OTP:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 510,
+                                        lineNumber: 511,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -4232,13 +4232,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 511,
+                                        lineNumber: 512,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 509,
+                                lineNumber: 510,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4248,25 +4248,25 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang xác thực...' : 'Xác thực OTP'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 519,
+                                lineNumber: 520,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 508,
+                        lineNumber: 509,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 505,
+                lineNumber: 506,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/profiles/AuthInterface.js",
-        lineNumber: 179,
+        lineNumber: 180,
         columnNumber: 9
     }, this);
 }
@@ -5629,7 +5629,8 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         onChange: handleProfileChange,
                                                         className: `w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200
                                                 ${validationErrors.phone ? 'border-red-500' : ''}`,
-                                                        placeholder: "Nhập 10 chữ số"
+                                                        placeholder: "Nhập 10 chữ số",
+                                                        required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                         lineNumber: 708,
@@ -5640,7 +5641,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: validationErrors.phone
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 718,
+                                                        lineNumber: 719,
                                                         columnNumber: 49
                                                     }, this)
                                                 ]
@@ -5657,7 +5658,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Giới tính"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 724,
+                                                        lineNumber: 725,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -5671,7 +5672,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 children: "Chọn giới tính"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 733,
+                                                                lineNumber: 734,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -5679,7 +5680,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 children: "Nam"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 734,
+                                                                lineNumber: 735,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -5687,7 +5688,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 children: "Nữ"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 735,
+                                                                lineNumber: 736,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -5695,19 +5696,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                 children: "Khác"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 736,
+                                                                lineNumber: 737,
                                                                 columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 727,
+                                                        lineNumber: 728,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 723,
+                                                lineNumber: 724,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5729,7 +5730,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Hủy"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 742,
+                                                        lineNumber: 743,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5740,13 +5741,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: updateLoading ? 'Đang cập nhật...' : 'Lưu thay đổi'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 758,
+                                                        lineNumber: 759,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 741,
+                                                lineNumber: 742,
                                                 columnNumber: 41
                                             }, this)
                                         ]
@@ -5766,7 +5767,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Họ"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 772,
+                                                        lineNumber: 773,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -5774,13 +5775,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: user.firstname || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 773,
+                                                        lineNumber: 774,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 771,
+                                                lineNumber: 772,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5791,7 +5792,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Tên"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 776,
+                                                        lineNumber: 777,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -5799,13 +5800,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: user.lastname || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 777,
+                                                        lineNumber: 778,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 775,
+                                                lineNumber: 776,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5816,7 +5817,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Email"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 780,
+                                                        lineNumber: 781,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -5824,13 +5825,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: user.email || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 781,
+                                                        lineNumber: 782,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 779,
+                                                lineNumber: 780,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5841,7 +5842,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Số điện thoại"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 784,
+                                                        lineNumber: 785,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -5849,13 +5850,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: user.phone || 'Chưa cập nhật'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 785,
+                                                        lineNumber: 786,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 783,
+                                                lineNumber: 784,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5866,7 +5867,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: "Giới tính"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 788,
+                                                        lineNumber: 789,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -5874,19 +5875,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         children: user.gender === "male" ? "Nam" : user.gender === "female" ? "Nữ" : user.gender === "other" ? "Khác" : "Chưa cập nhật"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 789,
+                                                        lineNumber: 790,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 787,
+                                                lineNumber: 788,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 770,
+                                        lineNumber: 771,
                                         columnNumber: 37
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8 text-gray-500",
@@ -5894,12 +5895,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             children: "Không thể tải thông tin người dùng"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 799,
+                                            lineNumber: 800,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 798,
+                                        lineNumber: 799,
                                         columnNumber: 33
                                     }, this)
                                 ]
@@ -5915,7 +5916,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                         children: "Đơn hàng của tôi"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 808,
+                                        lineNumber: 809,
                                         columnNumber: 29
                                     }, this),
                                     orderLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5924,12 +5925,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             className: "animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 811,
+                                            lineNumber: 812,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 810,
+                                        lineNumber: 811,
                                         columnNumber: 33
                                     }, this) : orders?.data?.orders?.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "space-y-4",
@@ -5938,12 +5939,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 onViewDetail: setSelectedOrder
                                             }, order.id, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 816,
+                                                lineNumber: 817,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 814,
+                                        lineNumber: 815,
                                         columnNumber: 33
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8 text-gray-500",
@@ -5951,12 +5952,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             children: "Bạn chưa có đơn hàng nào"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 825,
+                                            lineNumber: 826,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 824,
+                                        lineNumber: 825,
                                         columnNumber: 33
                                     }, this),
                                     selectedOrder && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(OrderDetail, {
@@ -5964,13 +5965,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                         onClose: ()=>setSelectedOrder(null)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 830,
+                                        lineNumber: 831,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 807,
+                                lineNumber: 808,
                                 columnNumber: 25
                             }, this),
                             selectedTab === 'address' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5983,7 +5984,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Sổ địa chỉ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 842,
+                                                lineNumber: 843,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5995,13 +5996,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Thêm địa chỉ mới"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 843,
+                                                lineNumber: 844,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 841,
+                                        lineNumber: 842,
                                         columnNumber: 29
                                     }, this),
                                     addressLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6010,12 +6011,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                             className: "animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 856,
+                                            lineNumber: 857,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 855,
+                                        lineNumber: 856,
                                         columnNumber: 33
                                     }, this) : addresses.length > 0 ? /* Address List */ /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "space-y-4",
@@ -6035,7 +6036,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: address.address_type === 'home' ? 'Nhà riêng' : address.address_type === 'office' ? 'Văn phòng' : 'Khác'
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 868,
+                                                                            lineNumber: 869,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6045,20 +6046,20 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     className: "w-4 h-4"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 875,
+                                                                                    lineNumber: 876,
                                                                                     columnNumber: 65
                                                                                 }, this),
                                                                                 "Mặc định"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 873,
+                                                                            lineNumber: 874,
                                                                             columnNumber: 61
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 867,
+                                                                    lineNumber: 868,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6072,7 +6073,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Số nhà, Đường:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 884,
+                                                                                    lineNumber: 885,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6080,13 +6081,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.street
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 887,
+                                                                                    lineNumber: 888,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 883,
+                                                                            lineNumber: 884,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6097,7 +6098,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Phường/Xã:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 893,
+                                                                                    lineNumber: 894,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6105,13 +6106,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.ward
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 896,
+                                                                                    lineNumber: 897,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 892,
+                                                                            lineNumber: 893,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6122,7 +6123,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Quận/Huyện:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 902,
+                                                                                    lineNumber: 903,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6130,13 +6131,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.district
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 905,
+                                                                                    lineNumber: 906,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 901,
+                                                                            lineNumber: 902,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6147,7 +6148,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Tỉnh/Thành phố:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 911,
+                                                                                    lineNumber: 912,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6155,13 +6156,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.city
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 914,
+                                                                                    lineNumber: 915,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 910,
+                                                                            lineNumber: 911,
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6172,7 +6173,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: "Quốc gia:"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 920,
+                                                                                    lineNumber: 921,
                                                                                     columnNumber: 61
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
@@ -6180,25 +6181,25 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                     children: address.country
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                    lineNumber: 923,
+                                                                                    lineNumber: 924,
                                                                                     columnNumber: 61
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 919,
+                                                                            lineNumber: 920,
                                                                             columnNumber: 57
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 882,
+                                                                    lineNumber: 883,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 866,
+                                                            lineNumber: 867,
                                                             columnNumber: 49
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6216,12 +6217,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-gray-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 941,
+                                                                        lineNumber: 942,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 932,
+                                                                    lineNumber: 933,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6232,12 +6233,12 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-red-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 949,
+                                                                        lineNumber: 950,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 944,
+                                                                    lineNumber: 945,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 !address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6248,34 +6249,34 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                         className: "w-5 h-5 text-yellow-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                        lineNumber: 958,
+                                                                        lineNumber: 959,
                                                                         columnNumber: 61
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 953,
+                                                                    lineNumber: 954,
                                                                     columnNumber: 57
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 931,
+                                                            lineNumber: 932,
                                                             columnNumber: 49
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 864,
+                                                    lineNumber: 865,
                                                     columnNumber: 45
                                                 }, this)
                                             }, address.id, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 862,
+                                                lineNumber: 863,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 860,
+                                        lineNumber: 861,
                                         columnNumber: 33
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                                         className: "text-center py-8",
@@ -6294,17 +6295,17 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                         d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                        lineNumber: 970,
+                                                        lineNumber: 971,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 969,
+                                                    lineNumber: 970,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 968,
+                                                lineNumber: 969,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -6312,13 +6313,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                 children: "Chưa có địa chỉ nào được lưu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                lineNumber: 974,
+                                                lineNumber: 975,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 967,
+                                        lineNumber: 968,
                                         columnNumber: 33
                                     }, this),
                                     showAddressForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6334,7 +6335,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                             children: selectedAddress ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ mới'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 984,
+                                                            lineNumber: 985,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6355,23 +6356,23 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     d: "M6 18L18 6M6 6l12 12"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 995,
+                                                                    lineNumber: 996,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                lineNumber: 994,
+                                                                lineNumber: 995,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 987,
+                                                            lineNumber: 988,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 983,
+                                                    lineNumber: 984,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("form", {
@@ -6386,7 +6387,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Loại địa chỉ"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1003,
+                                                                    lineNumber: 1004,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -6402,7 +6403,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Nhà riêng"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1015,
+                                                                            lineNumber: 1016,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6410,7 +6411,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Văn phòng"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1016,
+                                                                            lineNumber: 1017,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6418,19 +6419,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Khác"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1017,
+                                                                            lineNumber: 1018,
                                                                             columnNumber: 53
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1006,
+                                                                    lineNumber: 1007,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1002,
+                                                            lineNumber: 1003,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6441,7 +6442,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Số nhà, Đường"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1023,
+                                                                    lineNumber: 1024,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -6455,13 +6456,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1026,
+                                                                    lineNumber: 1027,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1022,
+                                                            lineNumber: 1023,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6472,7 +6473,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Tỉnh/Thành phố"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1041,
+                                                                    lineNumber: 1042,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -6486,7 +6487,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Chọn Tỉnh/Thành phố"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1051,
+                                                                            lineNumber: 1052,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         provinces.map((province)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6494,19 +6495,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                 children: province.name
                                                                             }, province.code, false, {
                                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                lineNumber: 1053,
+                                                                                lineNumber: 1054,
                                                                                 columnNumber: 57
                                                                             }, this))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1044,
+                                                                    lineNumber: 1045,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1040,
+                                                            lineNumber: 1041,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6517,7 +6518,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Quận/Huyện"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1062,
+                                                                    lineNumber: 1063,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -6532,7 +6533,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Chọn Quận/Huyện"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1073,
+                                                                            lineNumber: 1074,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         districts.map((district)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6540,19 +6541,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                 children: district.name
                                                                             }, district.code, false, {
                                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                lineNumber: 1075,
+                                                                                lineNumber: 1076,
                                                                                 columnNumber: 57
                                                                             }, this))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1065,
+                                                                    lineNumber: 1066,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1061,
+                                                            lineNumber: 1062,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6563,7 +6564,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Phường/Xã"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1084,
+                                                                    lineNumber: 1085,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -6578,7 +6579,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             children: "Chọn Phường/Xã"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                            lineNumber: 1095,
+                                                                            lineNumber: 1096,
                                                                             columnNumber: 53
                                                                         }, this),
                                                                         wards.map((ward)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -6586,19 +6587,19 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                                 children: ward.name
                                                                             }, ward.code, false, {
                                                                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                                lineNumber: 1097,
+                                                                                lineNumber: 1098,
                                                                                 columnNumber: 57
                                                                             }, this))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1087,
+                                                                    lineNumber: 1088,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1083,
+                                                            lineNumber: 1084,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6615,7 +6616,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     className: "h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 rounded"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1105,
+                                                                    lineNumber: 1106,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
@@ -6624,13 +6625,13 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Đặt làm địa chỉ mặc định"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1115,
+                                                                    lineNumber: 1116,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1104,
+                                                            lineNumber: 1105,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -6646,7 +6647,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: "Hủy"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1121,
+                                                                    lineNumber: 1122,
                                                                     columnNumber: 49
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -6655,36 +6656,36 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                     children: selectedAddress ? 'Cập nhật' : 'Thêm mới'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                                    lineNumber: 1132,
+                                                                    lineNumber: 1133,
                                                                     columnNumber: 49
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                            lineNumber: 1120,
+                                                            lineNumber: 1121,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                                    lineNumber: 1000,
+                                                    lineNumber: 1001,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                            lineNumber: 981,
+                                            lineNumber: 982,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                        lineNumber: 980,
+                                        lineNumber: 981,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/ProfileInterface.js",
-                                lineNumber: 840,
+                                lineNumber: 841,
                                 columnNumber: 25
                             }, this)
                         ]
@@ -7516,8 +7517,6 @@ function Profile() {
         confirmNewPassword: ''
     });
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
-    const controller = new AbortController();
-    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
     // Mounted effect
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
         setIsMounted(true);
@@ -7669,10 +7668,6 @@ function Profile() {
             setError('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
             return;
         }
-        if (!/^[a-zA-Z]+$/.test(formData.firstname) || !/^[a-zA-Z]+$/.test(formData.lastname)) {
-            setError('Tên và họ chỉ được chứa chữ cái.');
-            return;
-        }
         if (formData.firstname.length < 2 || formData.lastname.length < 2) {
             setError('Tên và họ phải có ít nhất 2 ký tự.');
             return;
@@ -7726,10 +7721,10 @@ function Profile() {
             otp
         }));
         if (result.meta.requestStatus === 'fulfilled') {
-            alert('Verification successful! You can now log in.');
+            alert('Xác minh OTP thành công! Bây giờ bạn có thể đăng nhập.');
             setAuthStep('login');
         } else {
-            alert('Invalid OTP. Please try again.');
+            alert('Xác minh OTP thất bại. Vui lòng thử lại.');
         }
     };
     const togglePasswordVisibility = (field)=>{
@@ -7762,12 +7757,12 @@ function Profile() {
                 error: error
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 299,
+                lineNumber: 293,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/account/profile.js",
-            lineNumber: 298,
+            lineNumber: 292,
             columnNumber: 13
         }, this);
     }
@@ -7783,18 +7778,18 @@ function Profile() {
                 userLoading: loading
             }, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 323,
+                lineNumber: 317,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$RecentlyViewed$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/pages/account/profile.js",
-                lineNumber: 332,
+                lineNumber: 326,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/account/profile.js",
-        lineNumber: 322,
+        lineNumber: 316,
         columnNumber: 9
     }, this);
 }

@@ -1,5 +1,8 @@
 // components/modals/UserFormModal.js
 import React, { memo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 
 const UserFormModal = memo(({
     modalMode,
@@ -14,6 +17,10 @@ const UserFormModal = memo(({
     roleLabels,
     genderLabels
 }) => {
+    const [passwordVisibility, setPasswordVisibility] = React.useState({
+        password: false,
+    });
+
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -88,20 +95,36 @@ const UserFormModal = memo(({
                                 </select>
                             </div>
 
-                            {modalMode === 'create' && (
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                            {/* {modalMode === 'create' && ( */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                                <div className="relative">
                                     <input
-                                        type="password"
+                                        type={passwordVisibility.password ? "text" : "password"}
                                         name="password"
                                         value={formData.password}
                                         onChange={handleInputChange}
-                                        className="mt-1 block w-full border rounded-md shadow-sm p-2"
+                                        className="mt-1 block w-full border rounded-md shadow-sm p-2 pr-10"
                                         required={modalMode === 'create'}
                                         minLength="6"
                                     />
+                                    <button
+                                        type="button"
+                                        className="absolute inset-y-0 right-0 px-3 flex items-center"
+                                        onClick={() => setPasswordVisibility(prev => ({
+                                            ...prev,
+                                            password: !prev.password
+                                        }))}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={passwordVisibility.password ? faEyeSlash : faEye}
+                                            className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                                        />
+                                    </button>
                                 </div>
-                            )}
+                            </div>
+
+                            {/* )} */}
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Vai trò</label>
