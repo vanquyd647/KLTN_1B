@@ -73,24 +73,23 @@ export default function Layout({ children }) {
         };
     }, [dispatch, isCartPage]);
 
-    // Thêm interval để tự động transfer và update
     useEffect(() => {
-        const interval = setInterval(async () => {
+        const updateFavorites = async () => {
             try {
                 await dispatch(transferFavorites()).unwrap();
                 await dispatch(forceUpdateFavorites({ page: 1, limit: 10 })).unwrap();
             } catch (error) {
-                console.error('Failed to auto-update favorites:', error);
+                console.error('Failed to update favorites:', error);
             }
-        }, 300000); // 30 giây
+        };
 
-        return () => clearInterval(interval);
+        updateFavorites();
     }, [dispatch]);
 
     return (
         <div className="min-h-screen flex flex-col">
             <Header isCartPage={isCartPage} />
-            
+
             <main className="flex-grow">
                 {children}
             </main>

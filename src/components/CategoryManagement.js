@@ -17,7 +17,7 @@ const CategoryManagement = () => {
         try {
             setLoading(true);
             const result = await categoriesApi.getAllCategories();
-            
+
             if (result.success) {
                 setCategories(result.data || []);
             } else {
@@ -26,7 +26,7 @@ const CategoryManagement = () => {
         } catch (error) {
             console.error('Lỗi khi lấy danh mục:', error);
             toast.error(
-                error?.message || 
+                error?.message ||
                 (typeof error === 'string' ? error : 'Không thể tải danh sách danh mục')
             );
         } finally {
@@ -62,14 +62,14 @@ const CategoryManagement = () => {
                     toast.error(result.message || 'Có lỗi xảy ra khi thêm danh mục');
                 }
             }
-            
+
             setFormData({ name: '', description: '' });
             setEditingId(null);
             fetchCategories();
         } catch (error) {
             console.error('Lỗi:', error);
             toast.error(
-                error?.message || 
+                error?.message ||
                 (typeof error === 'string' ? error : 'Có lỗi xảy ra khi lưu danh mục')
             );
         }
@@ -91,7 +91,7 @@ const CategoryManagement = () => {
         } catch (error) {
             console.error('Lỗi khi lấy thông tin danh mục:', error);
             toast.error(
-                error?.message || 
+                error?.message ||
                 (typeof error === 'string' ? error : 'Không thể lấy thông tin danh mục')
             );
         }
@@ -99,7 +99,7 @@ const CategoryManagement = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm('Bạn có chắc muốn xóa danh mục này?')) return;
-        
+
         try {
             const result = await categoriesApi.deleteCategory(id);
             if (result.success) {
@@ -110,13 +110,13 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error('Lỗi khi xóa:', error);
-            
+
             // Xử lý cụ thể cho lỗi khi xóa danh mục đang chứa sản phẩm
             if (error?.code === 400 && error?.message) {
                 toast.error(error.message);
             } else {
                 toast.error(
-                    error?.message || 
+                    error?.message ||
                     (typeof error === 'string' ? error : 'Có lỗi xảy ra khi xóa danh mục')
                 );
             }
@@ -131,7 +131,7 @@ const CategoryManagement = () => {
     return (
         <div className="p-6 max-w-full mx-auto">
             <h2 className="text-2xl font-bold text-gray-800">Quản lý danh mục</h2>
-            
+
             <div className="bg-white p-6 rounded-lg shadow mb-6">
                 <h3 className="text-lg font-medium mb-4">
                     {editingId ? 'Sửa danh mục' : 'Thêm danh mục mới'}
@@ -144,9 +144,13 @@ const CategoryManagement = () => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
+                            onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                            onInput={(e) => e.target.setCustomValidity("")}
                             className="w-full border border-gray-300 rounded px-3 py-2"
                             placeholder="Nhập tên danh mục"
+                            required
                         />
+
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 mb-2">Mô tả</label>
@@ -181,7 +185,7 @@ const CategoryManagement = () => {
 
             <div className="bg-white rounded-lg shadow overflow-hidden">
                 <h3 className="text-lg font-medium p-6 border-b">Danh sách danh mục</h3>
-                
+
                 {loading ? (
                     <div className="p-6 text-center">Đang tải dữ liệu...</div>
                 ) : categories.length === 0 ? (
@@ -195,7 +199,7 @@ const CategoryManagement = () => {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên danh mục</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mô tả</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tạo</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
@@ -207,19 +211,45 @@ const CategoryManagement = () => {
                                         <td className="px-6 py-4 text-sm text-gray-500">
                                             {new Date(category.createdAt).toLocaleDateString('vi-VN')}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button
-                                                onClick={() => handleEdit(category.id)}
-                                                className="text-indigo-600 hover:text-indigo-900 mr-3"
-                                            >
-                                                Sửa
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(category.id)}
-                                                className="text-red-600 hover:text-red-900"
-                                            >
-                                                Xóa
-                                            </button>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex items-center space-x-4">
+                                                <button
+                                                    onClick={() => handleEdit(category.id)}
+                                                    className="text-blue-600 hover:text-blue-900"
+                                                >
+                                                    <svg
+                                                        className="w-5 h-5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(category.id)}
+                                                    className="text-red-600 hover:text-red-900"
+                                                >
+                                                    <svg
+                                                        className="w-5 h-5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

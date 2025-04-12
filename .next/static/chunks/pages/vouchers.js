@@ -3,7 +3,8 @@ __turbopack_load_page_chunks__("/vouchers", [
   "static/chunks/node_modules_next_9f837c94._.js",
   "static/chunks/node_modules_react-dom_82bb97c6._.js",
   "static/chunks/node_modules_axios_lib_9aa2336a._.js",
-  "static/chunks/node_modules_1fb2d408._.js",
+  "static/chunks/node_modules_8220eef6._.js",
+  "static/chunks/node_modules_react-toastify_dist_ReactToastify_904beb7c.css",
   "static/chunks/src_pages_vouchers_5771e187._.js",
-  "static/chunks/src_pages_vouchers_ba719b72._.js"
+  "static/chunks/src_pages_vouchers_5c0ecdcf._.js"
 ])

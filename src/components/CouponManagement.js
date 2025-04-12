@@ -35,7 +35,7 @@ const CouponManagement = () => {
 
     useEffect(() => {
         fetchCoupons();
-    }, [currentPage, filters]); 
+    }, [currentPage, filters]);
 
     const fetchCoupons = async () => {
         try {
@@ -381,6 +381,8 @@ const CouponManagement = () => {
                                     onChange={(e) => setFormData({ ...formData, code: e.target.value })}
                                     className="w-full border rounded px-3 py-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
                             <div>
@@ -400,6 +402,8 @@ const CouponManagement = () => {
                                     onChange={(e) => setFormData({ ...formData, discount_amount: e.target.value })}
                                     className="w-full border rounded px-3 py-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
                             <div>
@@ -410,6 +414,8 @@ const CouponManagement = () => {
                                     onChange={(e) => setFormData({ ...formData, min_order_amount: e.target.value })}
                                     className="w-full border rounded px-3 py-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
                             <div>
@@ -420,6 +426,8 @@ const CouponManagement = () => {
                                     onChange={(e) => setFormData({ ...formData, expiry_date: e.target.value })}
                                     className="w-full border rounded px-3 py-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
                             <div>

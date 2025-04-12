@@ -69,6 +69,91 @@ const CheckoutPage = () => {
         return normalizedName;
     };
 
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        street: '',
+        city: '',
+        district: '',
+        ward: '',
+        country: ''
+    });
+
+    // Hàm validate từng trường
+    const validateField = (name, value) => {
+        let error = '';
+
+        switch (name) {
+            case 'name':
+                if (!value) {
+                    error = 'Vui lòng nhập họ và tên';
+                } else if (value.length < 2) {
+                    error = 'Họ tên phải có ít nhất 2 ký tự';
+                } else if (value.length > 50) {
+                    error = 'Họ tên không được vượt quá 50 ký tự';
+                } else if (!/^[a-zA-ZÀ-ỹ\s]+$/.test(value)) {
+                    error = 'Họ tên chỉ được chứa chữ cái';
+                }
+                break;
+
+            case 'email':
+                if (!value) {
+                    error = 'Vui lòng nhập email';
+                } else if (!/\S+@\S+\.\S+/.test(value)) {
+                    error = 'Email không hợp lệ';
+                }
+                break;
+
+            case 'phone':
+                if (!value) {
+                    error = 'Vui lòng nhập số điện thoại';
+                } else if (!/^(0[0-9]{9})$/.test(value)) {
+                    error = 'Số điện thoại không hợp lệ (10 số, bắt đầu bằng số 0)';
+                }
+                break;
+
+            case 'street':
+                if (!value) {
+                    error = 'Vui lòng nhập địa chỉ đường';
+                } else if (!/^(?=.*\d)(?=.*[a-zA-ZÀ-ỹ]).{5,}$/.test(value)) {
+                    error = 'Địa chỉ phải bao gồm số nhà và tên đường (tối thiểu 5 ký tự)';
+                }
+                break;
+
+            case 'city':
+                if (!value) {
+                    error = 'Vui lòng chọn Tỉnh/Thành phố';
+                }
+                break;
+
+            case 'district':
+                if (!value) {
+                    error = 'Vui lòng chọn Quận/Huyện';
+                }
+                break;
+
+            case 'ward':
+                if (!value) {
+                    error = 'Vui lòng chọn Phường/Xã';
+                }
+                break;
+
+            case 'country':
+                if (!value) {
+                    error = 'Vui lòng nhập quốc gia';
+                }
+                break;
+        }
+
+        setValidationErrors(prev => ({
+            ...prev,
+            [name]: error
+        }));
+
+        return error;
+    };
+
     const findLocationInList = (locationList, fullName) => {
         if (!locationList || !fullName) return null;
 
@@ -273,7 +358,12 @@ const CheckoutPage = () => {
 
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        validateField(name, value);
     };
 
     // Hàm xử lý kiểm tra mã giảm giá
@@ -423,6 +513,25 @@ const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        e.preventDefault();
+
+        // Validate tất cả các trường
+        const errors = {};
+        let isValid = true;
+
+        Object.keys(formData).forEach(field => {
+            const error = validateField(field, formData[field]);
+            if (error) {
+                errors[field] = error;
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            setValidationErrors(errors);
+            return;
+        }
 
         if (!selectedCarrier) {
             setErrorMessage('Vui lòng chọn phương thức vận chuyển');
@@ -590,37 +699,50 @@ const CheckoutPage = () => {
                         name="name"
                         value={formData.name}
                         placeholder="Họ và tên"
-                        className="border p-2 w-full"
+                        className={`border p-2 w-full ${validationErrors.name ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
                     />
+                    {validationErrors.name && (
+                        <p className="text-red-500 text-sm mt-1">{validationErrors.name}</p>
+                    )}
                     <input
                         type="email"
                         name="email"
                         value={formData.email}
                         placeholder="Email"
-                        className="border p-2 w-full"
+                        className={`border p-2 w-full ${validationErrors.email ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
                     />
+                    {validationErrors.email && (
+                        <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
+                    )}
                     <input
                         type="text"
                         name="phone"
                         value={formData.phone}
                         placeholder="Số điện thoại"
-                        className="border p-2 w-full"
+                        className={`border p-2 w-full ${validationErrors.phone ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
                     />
+                    {validationErrors.phone && (
+                        <p className="text-red-500 text-sm mt-1">{validationErrors.phone}</p>
+                    )}
+                    {/* Địa chỉ đường */}
                     <input
                         type="text"
                         name="street"
                         value={formData.street}
                         placeholder="Đường"
-                        className="border p-2 w-full"
+                        className={`border p-2 w-full ${validationErrors.street ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
                     />
+                    {validationErrors.street && (
+                        <p className="text-red-500 text-sm mt-1">{validationErrors.street}</p>
+                    )}
                     {/* Tỉnh/Thành phố */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">
@@ -689,11 +811,13 @@ const CheckoutPage = () => {
                         name="country"
                         value={formData.country}
                         placeholder="Quốc gia"
-                        className="border p-2 w-full"
+                        className={`border p-2 w-full ${validationErrors.country ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
                     />
-
+                    {validationErrors.country && (
+                        <p className="text-red-500 text-sm mt-1">{validationErrors.country}</p>
+                    )}
                     <button
                         type="submit"
                         className="bg-red-600 text-white px-4 py-2 rounded w-full"

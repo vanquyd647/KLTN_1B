@@ -2430,44 +2430,6 @@ const menuItems = [
             columnNumber: 15
         }, this),
         path: '/admin'
-    },
-    {
-        id: 'reports',
-        label: 'Báo cáo',
-        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-            className: "w-5 h-5 mr-2",
-            fill: "none",
-            viewBox: "0 0 24 24",
-            stroke: "currentColor",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: 2,
-                d: "M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            }, void 0, false, {
-                fileName: "[project]/src/utils/adminMenuItems.js",
-                lineNumber: 120,
-                columnNumber: 13
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/src/utils/adminMenuItems.js",
-            lineNumber: 119,
-            columnNumber: 15
-        }, this),
-        subItems: [
-            {
-                id: 'sales-report',
-                label: 'Báo cáo doanh số'
-            },
-            {
-                id: 'inventory-report',
-                label: 'Báo cáo kho'
-            },
-            {
-                id: 'customer-report',
-                label: 'Báo cáo khách hàng'
-            }
-        ]
     }
 ];
 const getMenuItemById = (id)=>{
@@ -3301,6 +3263,8 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                     ]
                 }));
             setTempSize('');
+        } else if (!tempSize) {
+            alert('Vui lòng nhập kích thước!');
         }
     };
     // Handler for stock
@@ -3477,7 +3441,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                 children: formTitle
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 355,
+                lineNumber: 357,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3488,7 +3452,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Thông tin cơ bản"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 359,
+                        lineNumber: 361,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3503,7 +3467,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 361,
+                                lineNumber: 363,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3518,7 +3482,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         className: "border rounded-lg p-2 w-full"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 370,
+                                        lineNumber: 372,
                                         columnNumber: 25
                                     }, this),
                                     formData.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3529,13 +3493,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 380,
+                                        lineNumber: 382,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 369,
+                                lineNumber: 371,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3550,7 +3514,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         className: "border rounded-lg p-2 w-full"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 386,
+                                        lineNumber: 388,
                                         columnNumber: 25
                                     }, this),
                                     formData.discount_price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3561,13 +3525,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 396,
+                                        lineNumber: 398,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 385,
+                                lineNumber: 387,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -3578,7 +3542,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 401,
+                                lineNumber: 403,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3594,7 +3558,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: "Còn hàng"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 415,
+                                            lineNumber: 417,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -3602,7 +3566,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: "Hết hàng"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 416,
+                                            lineNumber: 418,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -3610,18 +3574,18 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: "Ngừng kinh doanh"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 417,
+                                            lineNumber: 419,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/ProductForm.js",
-                                    lineNumber: 409,
+                                    lineNumber: 411,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 408,
+                                lineNumber: 410,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3637,14 +3601,14 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 onChange: handleBasicInfoChange
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 422,
+                                                lineNumber: 424,
                                                 columnNumber: 29
                                             }, this),
                                             "Sản phẩm mới"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 421,
+                                        lineNumber: 423,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -3657,32 +3621,32 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 onChange: handleBasicInfoChange
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 431,
+                                                lineNumber: 433,
                                                 columnNumber: 29
                                             }, this),
                                             "Sản phẩm nổi bật"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 430,
+                                        lineNumber: 432,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 420,
+                                lineNumber: 422,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 360,
+                        lineNumber: 362,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 358,
+                lineNumber: 360,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3693,7 +3657,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Danh mục"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 445,
+                        lineNumber: 447,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3712,7 +3676,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: "-- Chọn danh mục --"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 454,
+                                            lineNumber: 456,
                                             columnNumber: 29
                                         }, this),
                                         availableCategories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -3720,13 +3684,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 children: category.name
                                             }, category.id, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 456,
+                                                lineNumber: 458,
                                                 columnNumber: 33
                                             }, this))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/ProductForm.js",
-                                    lineNumber: 448,
+                                    lineNumber: 450,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3737,18 +3701,18 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                     children: "Thêm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ProductForm.js",
-                                    lineNumber: 464,
+                                    lineNumber: 466,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/ProductForm.js",
-                            lineNumber: 447,
+                            lineNumber: 449,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 446,
+                        lineNumber: 448,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3769,24 +3733,24 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 478,
+                                        lineNumber: 480,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 476,
+                                lineNumber: 478,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 474,
+                        lineNumber: 476,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 444,
+                lineNumber: 446,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3797,7 +3761,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Màu sắc"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 497,
+                        lineNumber: 499,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3814,7 +3778,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 499,
+                                lineNumber: 501,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -3828,7 +3792,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 506,
+                                lineNumber: 508,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3847,7 +3811,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         disabled: uploading
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 514,
+                                        lineNumber: 516,
                                         columnNumber: 25
                                     }, this),
                                     uploading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3868,7 +3832,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                         strokeWidth: "4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductForm.js",
-                                                        lineNumber: 534,
+                                                        lineNumber: 536,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -3877,13 +3841,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                         d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductForm.js",
-                                                        lineNumber: 535,
+                                                        lineNumber: 537,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 533,
+                                                lineNumber: 535,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3894,13 +3858,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 537,
+                                                lineNumber: 539,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 532,
+                                        lineNumber: 534,
                                         columnNumber: 29
                                     }, this),
                                     tempColor.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3912,7 +3876,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 className: "w-20 h-20 object-cover rounded"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 542,
+                                                lineNumber: 544,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3926,7 +3890,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                         children: "Xem ảnh"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductForm.js",
-                                                        lineNumber: 548,
+                                                        lineNumber: 550,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3941,31 +3905,31 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                         children: "Xóa ảnh"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductForm.js",
-                                                        lineNumber: 556,
+                                                        lineNumber: 558,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 547,
+                                                lineNumber: 549,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 541,
+                                        lineNumber: 543,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 513,
+                                lineNumber: 515,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 498,
+                        lineNumber: 500,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3975,7 +3939,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Thêm màu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 570,
+                        lineNumber: 572,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3993,7 +3957,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 }
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 581,
+                                                lineNumber: 583,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4001,13 +3965,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 children: color.color
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 585,
+                                                lineNumber: 587,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 580,
+                                        lineNumber: 582,
                                         columnNumber: 29
                                     }, this),
                                     color.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4018,12 +3982,12 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             className: "w-20 h-20 object-cover rounded-lg"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 590,
+                                            lineNumber: 592,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 589,
+                                        lineNumber: 591,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4037,7 +4001,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                 children: "Xem ảnh"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 599,
+                                                lineNumber: 601,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4060,40 +4024,40 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                                         clipRule: "evenodd"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/ProductForm.js",
-                                                        lineNumber: 618,
+                                                        lineNumber: 620,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/ProductForm.js",
-                                                    lineNumber: 617,
+                                                    lineNumber: 619,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ProductForm.js",
-                                                lineNumber: 607,
+                                                lineNumber: 609,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 598,
+                                        lineNumber: 600,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 579,
+                                lineNumber: 581,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 577,
+                        lineNumber: 579,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 496,
+                lineNumber: 498,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4104,7 +4068,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Kích thước"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 629,
+                        lineNumber: 631,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4118,7 +4082,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 631,
+                                lineNumber: 633,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4128,13 +4092,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 children: "Thêm"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 638,
+                                lineNumber: 640,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 630,
+                        lineNumber: 632,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4155,24 +4119,24 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 650,
+                                        lineNumber: 652,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 648,
+                                lineNumber: 650,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 646,
+                        lineNumber: 648,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 628,
+                lineNumber: 630,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4183,7 +4147,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Tồn kho"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 669,
+                        lineNumber: 671,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4202,7 +4166,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "Chọn kích thước"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 676,
+                                        lineNumber: 678,
                                         columnNumber: 25
                                     }, this),
                                     formData.sizes.map((size, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -4210,13 +4174,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: size
                                         }, index, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 678,
+                                            lineNumber: 680,
                                             columnNumber: 29
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 671,
+                                lineNumber: 673,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -4232,7 +4196,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "Chọn màu"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 686,
+                                        lineNumber: 688,
                                         columnNumber: 25
                                     }, this),
                                     formData.colors.map((color, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -4240,13 +4204,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: color.color
                                         }, index, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 688,
+                                            lineNumber: 690,
                                             columnNumber: 29
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 681,
+                                lineNumber: 683,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4261,13 +4225,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 691,
+                                lineNumber: 693,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 670,
+                        lineNumber: 672,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4277,7 +4241,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Thêm tồn kho"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 700,
+                        lineNumber: 702,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4295,7 +4259,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 712,
+                                        lineNumber: 714,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4310,24 +4274,24 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 715,
+                                        lineNumber: 717,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 711,
+                                lineNumber: 713,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 709,
+                        lineNumber: 711,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 668,
+                lineNumber: 670,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4341,7 +4305,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Hủy"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 734,
+                        lineNumber: 736,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4351,13 +4315,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: submitLoading ? 'Đang xử lý...' : product ? 'Cập nhật' : 'Thêm sản phẩm'
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 742,
+                        lineNumber: 744,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 733,
+                lineNumber: 735,
                 columnNumber: 13
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4365,13 +4329,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 752,
+                lineNumber: 754,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ProductForm.js",
-        lineNumber: 354,
+        lineNumber: 356,
         columnNumber: 9
     }, this);
 };
@@ -8536,7 +8500,9 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 value: formData.firstname,
                                                 onChange: handleInputChange,
                                                 className: "mt-1 block w-full border rounded-md shadow-sm p-2",
-                                                required: true
+                                                required: true,
+                                                onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                                onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
                                                 lineNumber: 41,
@@ -8555,7 +8521,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Họ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 51,
+                                                lineNumber: 53,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8563,16 +8529,18 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 value: formData.lastname,
                                                 onChange: handleInputChange,
                                                 className: "mt-1 block w-full border rounded-md shadow-sm p-2",
-                                                required: true
+                                                required: true,
+                                                onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                                onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 52,
+                                                lineNumber: 54,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 50,
+                                        lineNumber: 52,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8582,7 +8550,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 62,
+                                                lineNumber: 66,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8591,16 +8559,18 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 value: formData.email,
                                                 onChange: handleInputChange,
                                                 className: "mt-1 block w-full border rounded-md shadow-sm p-2",
-                                                required: true
+                                                required: true,
+                                                onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                                onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 63,
+                                                lineNumber: 67,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 61,
+                                        lineNumber: 65,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8610,7 +8580,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Số điện thoại"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 74,
+                                                lineNumber: 80,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -8618,16 +8588,18 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 value: formData.phone,
                                                 onChange: handleInputChange,
                                                 className: "mt-1 block w-full border rounded-md shadow-sm p-2",
-                                                required: true
+                                                required: true,
+                                                onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                                onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 75,
+                                                lineNumber: 81,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 73,
+                                        lineNumber: 79,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8637,7 +8609,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Giới tính"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 85,
+                                                lineNumber: 93,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -8650,18 +8622,18 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                         children: label
                                                     }, value, false, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 93,
+                                                        lineNumber: 101,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 86,
+                                                lineNumber: 94,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 84,
+                                        lineNumber: 92,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8671,7 +8643,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Mật khẩu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 100,
+                                                lineNumber: 108,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8684,10 +8656,12 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                         onChange: handleInputChange,
                                                         className: "mt-1 block w-full border rounded-md shadow-sm p-2 pr-10",
                                                         required: modalMode === 'create',
-                                                        minLength: "6"
+                                                        minLength: "6",
+                                                        onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                                        onInput: (e)=>e.target.setCustomValidity("")
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 102,
+                                                        lineNumber: 110,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8702,24 +8676,24 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                             className: "text-gray-500 hover:text-gray-700 cursor-pointer"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/UserFormModal.js",
-                                                            lineNumber: 119,
+                                                            lineNumber: 129,
                                                             columnNumber: 41
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 111,
+                                                        lineNumber: 121,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 101,
+                                                lineNumber: 109,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 99,
+                                        lineNumber: 107,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8729,7 +8703,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                 children: "Vai trò"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 130,
+                                                lineNumber: 138,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8744,31 +8718,31 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 134,
+                                                                lineNumber: 142,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: label
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                                lineNumber: 140,
+                                                                lineNumber: 148,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, role, true, {
                                                         fileName: "[project]/src/components/UserFormModal.js",
-                                                        lineNumber: 133,
+                                                        lineNumber: 141,
                                                         columnNumber: 41
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserFormModal.js",
-                                                lineNumber: 131,
+                                                lineNumber: 139,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 129,
+                                        lineNumber: 137,
                                         columnNumber: 29
                                     }, this)
                                 ]
@@ -8790,7 +8764,7 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                         children: "Hủy"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 148,
+                                        lineNumber: 156,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8800,13 +8774,13 @@ const UserFormModal = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$pr
                                         children: loading ? 'Đang xử lý...' : modalMode === 'create' ? 'Thêm' : 'Cập nhật'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserFormModal.js",
-                                        lineNumber: 158,
+                                        lineNumber: 166,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserFormModal.js",
-                                lineNumber: 147,
+                                lineNumber: 155,
                                 columnNumber: 25
                             }, this)
                         ]
@@ -9144,18 +9118,49 @@ const UserManagement = ()=>{
     const handleSubmit = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "UserManagement.useCallback[handleSubmit]": async (e)=>{
             e.preventDefault();
-            if (!formData.firstname || !formData.lastname || !formData.email || !formData.phone) {
-                setError('Vui lòng điền đầy đủ thông tin');
+            let error = '';
+            // Validate firstname
+            if (!formData.firstname) {
+                setError('Vui lòng nhập họ');
+                return;
+            } else if (formData.firstname.length < 2) {
+                setError('Họ phải có ít nhất 2 ký tự');
+                return;
+            } else if (formData.firstname.length > 20) {
+                setError('Họ không được vượt quá 20 ký tự');
+                return;
+            } else if (!/^[\p{L}\s]+$/u.test(formData.firstname)) {
+                setError('Họ chỉ được chứa chữ cái');
                 return;
             }
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(formData.email)) {
+            // Validate lastname
+            if (!formData.lastname) {
+                setError('Vui lòng nhập tên');
+                return;
+            } else if (formData.lastname.length < 2) {
+                setError('Tên phải có ít nhất 2 ký tự');
+                return;
+            } else if (formData.lastname.length > 20) {
+                setError('Tên không được vượt quá 20 ký tự');
+                return;
+            } else if (!/^[a-zA-ZÀ-ỹ\s]+$/.test(formData.lastname)) {
+                setError('Tên chỉ được chứa chữ cái');
+                return;
+            }
+            // Validate email
+            if (!formData.email) {
+                setError('Vui lòng nhập email');
+                return;
+            } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
                 setError('Email không hợp lệ');
                 return;
             }
-            const phoneRegex = /^[0-9]{10}$/;
-            if (!phoneRegex.test(formData.phone)) {
-                setError('Số điện thoại không hợp lệ');
+            // Validate phone
+            if (!formData.phone) {
+                setError('Vui lòng nhập số điện thoại');
+                return;
+            } else if (!/^\d{10}$/.test(formData.phone)) {
+                setError('Số điện thoại không hợp lệ (10 chữ số)');
                 return;
             }
             const userData = {
@@ -9166,15 +9171,44 @@ const UserManagement = ()=>{
                 gender: formData.gender,
                 roles: formData.roles
             };
-            if (modalMode === 'create') {
-                if (!formData.password || formData.password.length < 6) {
+            // Validate password
+            if (modalMode === 'create' || formData.password) {
+                if (!formData.password) {
+                    setError('Vui lòng nhập mật khẩu');
+                    return;
+                } else if (formData.password.length < 6) {
                     setError('Mật khẩu phải có ít nhất 6 ký tự');
+                    return;
+                } else if (formData.password.length > 20) {
+                    setError('Mật khẩu không được vượt quá 20 ký tự');
+                    return;
+                } else if (formData.password.includes(' ')) {
+                    setError('Mật khẩu không được chứa khoảng trắng');
+                    return;
+                } else if (!/[A-Z]/.test(formData.password)) {
+                    setError('Mật khẩu phải chứa ít nhất một chữ cái viết hoa');
+                    return;
+                } else if (!/[a-z]/.test(formData.password)) {
+                    setError('Mật khẩu phải chứa ít nhất một chữ cái viết thường');
+                    return;
+                } else if (!/[0-9]/.test(formData.password)) {
+                    setError('Mật khẩu phải chứa ít nhất một chữ số');
+                    return;
+                } else if (!/[!@#$%^&*]/.test(formData.password)) {
+                    setError('Mật khẩu phải chứa ít nhất một ký tự đặc biệt');
                     return;
                 }
                 userData.password = formData.password;
-                await handleCreateUser(userData);
-            } else {
-                await handleUpdateUser(selectedUser.id, userData);
+            }
+            try {
+                if (modalMode === 'create') {
+                    await handleCreateUser(userData);
+                } else {
+                    await handleUpdateUser(selectedUser.id, userData);
+                }
+            } catch (error) {
+                console.error('Failed to submit:', error);
+                setError('Đã có lỗi xảy ra. Vui lòng thử lại.');
             }
         }
     }["UserManagement.useCallback[handleSubmit]"], [
@@ -9224,12 +9258,12 @@ const UserManagement = ()=>{
                 className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 247,
+                lineNumber: 310,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/UserManagement.js",
-            lineNumber: 246,
+            lineNumber: 309,
             columnNumber: 13
         }, this);
     }
@@ -9247,7 +9281,7 @@ const UserManagement = ()=>{
                                 children: "Quản lý người dùng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 257,
+                                lineNumber: 320,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -9256,13 +9290,13 @@ const UserManagement = ()=>{
                                 children: "Thêm người dùng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 258,
+                                lineNumber: 321,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 256,
+                        lineNumber: 319,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9277,7 +9311,7 @@ const UserManagement = ()=>{
                                 className: "border rounded-lg px-3 py-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 268,
+                                lineNumber: 331,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -9289,7 +9323,7 @@ const UserManagement = ()=>{
                                 className: "border rounded-lg px-3 py-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 276,
+                                lineNumber: 339,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -9301,13 +9335,13 @@ const UserManagement = ()=>{
                                 className: "border rounded-lg px-3 py-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 284,
+                                lineNumber: 347,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 267,
+                        lineNumber: 330,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9328,18 +9362,18 @@ const UserManagement = ()=>{
                             children: "Đặt lại"
                         }, void 0, false, {
                             fileName: "[project]/src/components/UserManagement.js",
-                            lineNumber: 294,
+                            lineNumber: 357,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 293,
+                        lineNumber: 356,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 255,
+                lineNumber: 318,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9356,7 +9390,7 @@ const UserManagement = ()=>{
                                         children: "ID"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 319,
+                                        lineNumber: 382,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9364,7 +9398,7 @@ const UserManagement = ()=>{
                                         children: "Họ tên"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 320,
+                                        lineNumber: 383,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9372,7 +9406,7 @@ const UserManagement = ()=>{
                                         children: "Email"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 321,
+                                        lineNumber: 384,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9380,7 +9414,7 @@ const UserManagement = ()=>{
                                         children: "Số điện thoại"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 322,
+                                        lineNumber: 385,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9388,7 +9422,7 @@ const UserManagement = ()=>{
                                         children: "Giới tính"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 323,
+                                        lineNumber: 386,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9396,7 +9430,7 @@ const UserManagement = ()=>{
                                         children: "Vai trò"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 324,
+                                        lineNumber: 387,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -9404,18 +9438,18 @@ const UserManagement = ()=>{
                                         children: "Thao tác"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/UserManagement.js",
-                                        lineNumber: 325,
+                                        lineNumber: 388,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 318,
+                                lineNumber: 381,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/UserManagement.js",
-                            lineNumber: 317,
+                            lineNumber: 380,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -9430,7 +9464,7 @@ const UserManagement = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 331,
+                                            lineNumber: 394,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9442,7 +9476,7 @@ const UserManagement = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 332,
+                                            lineNumber: 395,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9450,7 +9484,7 @@ const UserManagement = ()=>{
                                             children: user.email
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 335,
+                                            lineNumber: 398,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9458,7 +9492,7 @@ const UserManagement = ()=>{
                                             children: user.phone
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 336,
+                                            lineNumber: 399,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9466,7 +9500,7 @@ const UserManagement = ()=>{
                                             children: genderLabels[user.gender]
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 337,
+                                            lineNumber: 400,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9478,17 +9512,17 @@ const UserManagement = ()=>{
                                                         children: roleLabels[role]
                                                     }, role, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 343,
+                                                        lineNumber: 406,
                                                         columnNumber: 45
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                lineNumber: 341,
+                                                lineNumber: 404,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 340,
+                                            lineNumber: 403,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -9511,17 +9545,17 @@ const UserManagement = ()=>{
                                                                 d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                                lineNumber: 359,
+                                                                lineNumber: 422,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/UserManagement.js",
-                                                            lineNumber: 358,
+                                                            lineNumber: 421,
                                                             columnNumber: 45
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 354,
+                                                        lineNumber: 417,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -9542,50 +9576,50 @@ const UserManagement = ()=>{
                                                                 d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                                lineNumber: 371,
+                                                                lineNumber: 434,
                                                                 columnNumber: 49
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/UserManagement.js",
-                                                            lineNumber: 370,
+                                                            lineNumber: 433,
                                                             columnNumber: 45
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/UserManagement.js",
-                                                        lineNumber: 363,
+                                                        lineNumber: 426,
                                                         columnNumber: 41
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/UserManagement.js",
-                                                lineNumber: 353,
+                                                lineNumber: 416,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/UserManagement.js",
-                                            lineNumber: 352,
+                                            lineNumber: 415,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, user.id, true, {
                                     fileName: "[project]/src/components/UserManagement.js",
-                                    lineNumber: 330,
+                                    lineNumber: 393,
                                     columnNumber: 29
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/components/UserManagement.js",
-                            lineNumber: 328,
+                            lineNumber: 391,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/UserManagement.js",
-                    lineNumber: 316,
+                    lineNumber: 379,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 315,
+                lineNumber: 378,
                 columnNumber: 13
             }, this),
             totalPages > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9600,7 +9634,7 @@ const UserManagement = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 386,
+                        lineNumber: 449,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9613,7 +9647,7 @@ const UserManagement = ()=>{
                                 children: "Trước"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 390,
+                                lineNumber: 453,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -9623,19 +9657,19 @@ const UserManagement = ()=>{
                                 children: "Sau"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/UserManagement.js",
-                                lineNumber: 400,
+                                lineNumber: 463,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/UserManagement.js",
-                        lineNumber: 389,
+                        lineNumber: 452,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 385,
+                lineNumber: 448,
                 columnNumber: 17
             }, this),
             showModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$UserFormModal$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -9652,7 +9686,7 @@ const UserManagement = ()=>{
                 genderLabels: genderLabels
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 416,
+                lineNumber: 479,
                 columnNumber: 17
             }, this),
             showConfirmDelete && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$DeleteConfirmModal$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -9661,13 +9695,13 @@ const UserManagement = ()=>{
                 loading: loading
             }, void 0, false, {
                 fileName: "[project]/src/components/UserManagement.js",
-                lineNumber: 431,
+                lineNumber: 494,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/UserManagement.js",
-        lineNumber: 253,
+        lineNumber: 316,
         columnNumber: 9
     }, this);
 };
@@ -10611,7 +10645,9 @@ const CouponManagement = ()=>{
                                                     code: e.target.value
                                                 }),
                                             className: "w-full border rounded px-3 py-2",
-                                            required: true
+                                            required: true,
+                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
                                             lineNumber: 378,
@@ -10630,7 +10666,7 @@ const CouponManagement = ()=>{
                                             children: "Mô tả"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 387,
+                                            lineNumber: 389,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -10643,13 +10679,13 @@ const CouponManagement = ()=>{
                                             rows: "3"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 388,
+                                            lineNumber: 390,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 386,
+                                    lineNumber: 388,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10659,7 +10695,7 @@ const CouponManagement = ()=>{
                                             children: "Số tiền giảm"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 396,
+                                            lineNumber: 398,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -10670,16 +10706,18 @@ const CouponManagement = ()=>{
                                                     discount_amount: e.target.value
                                                 }),
                                             className: "w-full border rounded px-3 py-2",
-                                            required: true
+                                            required: true,
+                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 397,
+                                            lineNumber: 399,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 395,
+                                    lineNumber: 397,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10689,7 +10727,7 @@ const CouponManagement = ()=>{
                                             children: "Áp dụng cho đơn hàng từ"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 406,
+                                            lineNumber: 410,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -10700,16 +10738,18 @@ const CouponManagement = ()=>{
                                                     min_order_amount: e.target.value
                                                 }),
                                             className: "w-full border rounded px-3 py-2",
-                                            required: true
+                                            required: true,
+                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 407,
+                                            lineNumber: 411,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 405,
+                                    lineNumber: 409,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10719,7 +10759,7 @@ const CouponManagement = ()=>{
                                             children: "Ngày hết hạn"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 416,
+                                            lineNumber: 422,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -10730,16 +10770,18 @@ const CouponManagement = ()=>{
                                                     expiry_date: e.target.value
                                                 }),
                                             className: "w-full border rounded px-3 py-2",
-                                            required: true
+                                            required: true,
+                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 417,
+                                            lineNumber: 423,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 415,
+                                    lineNumber: 421,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10749,7 +10791,7 @@ const CouponManagement = ()=>{
                                             children: "Số lượng (0 = không giới hạn)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 426,
+                                            lineNumber: 434,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -10763,13 +10805,13 @@ const CouponManagement = ()=>{
                                             min: "0"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 427,
+                                            lineNumber: 435,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 425,
+                                    lineNumber: 433,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10785,20 +10827,20 @@ const CouponManagement = ()=>{
                                             className: "mr-2"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 436,
+                                            lineNumber: 444,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: "Kích hoạt"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 442,
+                                            lineNumber: 450,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 435,
+                                    lineNumber: 443,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10811,7 +10853,7 @@ const CouponManagement = ()=>{
                                             children: "Hủy"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 445,
+                                            lineNumber: 453,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10820,13 +10862,13 @@ const CouponManagement = ()=>{
                                             children: modalMode === 'create' ? 'Thêm' : 'Cập nhật'
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 452,
+                                            lineNumber: 460,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 444,
+                                    lineNumber: 452,
                                     columnNumber: 29
                                 }, this)
                             ]
@@ -12789,8 +12831,11 @@ const CategoryManagement = ()=>{
                                         name: "name",
                                         value: formData.name,
                                         onChange: handleChange,
+                                        onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                        onInput: (e)=>e.target.setCustomValidity(""),
                                         className: "w-full border border-gray-300 rounded px-3 py-2",
-                                        placeholder: "Nhập tên danh mục"
+                                        placeholder: "Nhập tên danh mục",
+                                        required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
                                         lineNumber: 142,
@@ -12810,7 +12855,7 @@ const CategoryManagement = ()=>{
                                         children: "Mô tả"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
-                                        lineNumber: 152,
+                                        lineNumber: 156,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -12822,13 +12867,13 @@ const CategoryManagement = ()=>{
                                         rows: "3"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
-                                        lineNumber: 153,
+                                        lineNumber: 157,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                lineNumber: 151,
+                                lineNumber: 155,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12840,7 +12885,7 @@ const CategoryManagement = ()=>{
                                         children: editingId ? 'Cập nhật' : 'Thêm mới'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
-                                        lineNumber: 163,
+                                        lineNumber: 167,
                                         columnNumber: 25
                                     }, this),
                                     editingId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12850,13 +12895,13 @@ const CategoryManagement = ()=>{
                                         children: "Hủy"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
-                                        lineNumber: 170,
+                                        lineNumber: 174,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                lineNumber: 162,
+                                lineNumber: 166,
                                 columnNumber: 21
                             }, this)
                         ]
@@ -12879,7 +12924,7 @@ const CategoryManagement = ()=>{
                         children: "Danh sách danh mục"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CategoryManagement.js",
-                        lineNumber: 183,
+                        lineNumber: 187,
                         columnNumber: 17
                     }, this),
                     loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12887,14 +12932,14 @@ const CategoryManagement = ()=>{
                         children: "Đang tải dữ liệu..."
                     }, void 0, false, {
                         fileName: "[project]/src/components/CategoryManagement.js",
-                        lineNumber: 186,
+                        lineNumber: 190,
                         columnNumber: 21
                     }, this) : categories.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "p-6 text-center text-gray-500",
                         children: "Chưa có danh mục nào"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CategoryManagement.js",
-                        lineNumber: 188,
+                        lineNumber: 192,
                         columnNumber: 21
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "overflow-x-auto",
@@ -12910,7 +12955,7 @@ const CategoryManagement = ()=>{
                                                 children: "ID"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                                lineNumber: 194,
+                                                lineNumber: 198,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12918,7 +12963,7 @@ const CategoryManagement = ()=>{
                                                 children: "Tên danh mục"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                                lineNumber: 195,
+                                                lineNumber: 199,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12926,7 +12971,7 @@ const CategoryManagement = ()=>{
                                                 children: "Mô tả"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                                lineNumber: 196,
+                                                lineNumber: 200,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12934,26 +12979,26 @@ const CategoryManagement = ()=>{
                                                 children: "Ngày tạo"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                                lineNumber: 197,
+                                                lineNumber: 201,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                className: "px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                                                 children: "Thao tác"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CategoryManagement.js",
-                                                lineNumber: 198,
+                                                lineNumber: 202,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CategoryManagement.js",
-                                        lineNumber: 193,
+                                        lineNumber: 197,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                    lineNumber: 192,
+                                    lineNumber: 196,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -12965,7 +13010,7 @@ const CategoryManagement = ()=>{
                                                     children: category.id
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                                    lineNumber: 204,
+                                                    lineNumber: 208,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12973,7 +13018,7 @@ const CategoryManagement = ()=>{
                                                     children: category.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                                    lineNumber: 205,
+                                                    lineNumber: 209,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12981,7 +13026,7 @@ const CategoryManagement = ()=>{
                                                     children: category.description || '—'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                                    lineNumber: 206,
+                                                    lineNumber: 210,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12989,62 +13034,107 @@ const CategoryManagement = ()=>{
                                                     children: new Date(category.createdAt).toLocaleDateString('vi-VN')
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                                    lineNumber: 207,
+                                                    lineNumber: 211,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                    className: "px-6 py-4 whitespace-nowrap text-right text-sm font-medium",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>handleEdit(category.id),
-                                                            className: "text-indigo-600 hover:text-indigo-900 mr-3",
-                                                            children: "Sửa"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/CategoryManagement.js",
-                                                            lineNumber: 211,
-                                                            columnNumber: 45
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>handleDelete(category.id),
-                                                            className: "text-red-600 hover:text-red-900",
-                                                            children: "Xóa"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/CategoryManagement.js",
-                                                            lineNumber: 217,
-                                                            columnNumber: 45
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
+                                                    className: "px-6 py-4 whitespace-nowrap",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex items-center space-x-4",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                onClick: ()=>handleEdit(category.id),
+                                                                className: "text-blue-600 hover:text-blue-900",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                    className: "w-5 h-5",
+                                                                    fill: "none",
+                                                                    stroke: "currentColor",
+                                                                    viewBox: "0 0 24 24",
+                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                        strokeLinecap: "round",
+                                                                        strokeLinejoin: "round",
+                                                                        strokeWidth: 2,
+                                                                        d: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/CategoryManagement.js",
+                                                                        lineNumber: 226,
+                                                                        columnNumber: 57
+                                                                    }, this)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/CategoryManagement.js",
+                                                                    lineNumber: 220,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CategoryManagement.js",
+                                                                lineNumber: 216,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                onClick: ()=>handleDelete(category.id),
+                                                                className: "text-red-600 hover:text-red-900",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                    className: "w-5 h-5",
+                                                                    fill: "none",
+                                                                    stroke: "currentColor",
+                                                                    viewBox: "0 0 24 24",
+                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                        strokeLinecap: "round",
+                                                                        strokeLinejoin: "round",
+                                                                        strokeWidth: 2,
+                                                                        d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/CategoryManagement.js",
+                                                                        lineNumber: 244,
+                                                                        columnNumber: 57
+                                                                    }, this)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/CategoryManagement.js",
+                                                                    lineNumber: 238,
+                                                                    columnNumber: 53
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CategoryManagement.js",
+                                                                lineNumber: 234,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CategoryManagement.js",
+                                                        lineNumber: 215,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, void 0, false, {
                                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                                    lineNumber: 210,
+                                                    lineNumber: 214,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, category.id, true, {
                                             fileName: "[project]/src/components/CategoryManagement.js",
-                                            lineNumber: 203,
+                                            lineNumber: 207,
                                             columnNumber: 37
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CategoryManagement.js",
-                                    lineNumber: 201,
+                                    lineNumber: 205,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CategoryManagement.js",
-                            lineNumber: 191,
+                            lineNumber: 195,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/CategoryManagement.js",
-                        lineNumber: 190,
+                        lineNumber: 194,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CategoryManagement.js",
-                lineNumber: 182,
+                lineNumber: 186,
                 columnNumber: 13
             }, this)
         ]

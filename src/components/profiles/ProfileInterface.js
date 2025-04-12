@@ -473,6 +473,14 @@ export default function ProfileInterface({
     // Handle form submission
     const handleAddressSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate địa chỉ đường
+        const streetRegex = /^(?=.*\d)(?=.*[a-zA-Z]).+$/; // Phải chứa ít nhất 1 số và 1 chữ
+        if (!streetRegex.test(addressFormData.street)) {
+            alert('Địa chỉ phải bao gồm số nhà và tên đường');
+            return;
+        }
+
         try {
             if (selectedAddress) {
                 await addressApi.updateAddress(selectedAddress.id, addressFormData);
@@ -666,6 +674,8 @@ export default function ProfileInterface({
                                                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200 
                                                 ${validationErrors.firstname ? 'border-red-500' : ''}`}
                                                 required
+                                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                                onInput={(e) => e.target.setCustomValidity("")}
                                             />
                                             {validationErrors.firstname && (
                                                 <p className="text-red-500 text-xs mt-1">{validationErrors.firstname}</p>
@@ -685,6 +695,8 @@ export default function ProfileInterface({
                                                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200
                                                 ${validationErrors.lastname ? 'border-red-500' : ''}`}
                                                 required
+                                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                                onInput={(e) => e.target.setCustomValidity("")}
                                             />
                                             {validationErrors.lastname && (
                                                 <p className="text-red-500 text-xs mt-1">{validationErrors.lastname}</p>
@@ -714,6 +726,8 @@ export default function ProfileInterface({
                                                 ${validationErrors.phone ? 'border-red-500' : ''}`}
                                                 placeholder="Nhập 10 chữ số"
                                                 required
+                                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                                onInput={(e) => e.target.setCustomValidity("")}
                                             />
                                             {validationErrors.phone && (
                                                 <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
@@ -1027,14 +1041,33 @@ export default function ProfileInterface({
                                                 <input
                                                     type="text"
                                                     value={addressFormData.street}
-                                                    onChange={(e) => setAddressFormData({
-                                                        ...addressFormData,
-                                                        street: e.target.value
-                                                    })}
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        setAddressFormData({
+                                                            ...addressFormData,
+                                                            street: value
+                                                        });
+                                                        // Reset custom validity khi người dùng nhập
+                                                        e.target.setCustomValidity("");
+                                                    }}
+                                                    onInvalid={(e) => {
+                                                        const value = e.target.value;
+                                                        if (!value) {
+                                                            e.target.setCustomValidity("Không được để trống");
+                                                        } else if (!/^(?=.*\d)(?=.*[a-zA-Z]).+$/.test(value)) {
+                                                            e.target.setCustomValidity("Địa chỉ phải bao gồm số nhà và tên đường");
+                                                        }
+                                                    }}
+                                                    onInput={(e) => e.target.setCustomValidity("")}
+                                                    pattern="^(?=.*\d)(?=.*[a-zA-Z]).+$"
                                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none 
-                                                                focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                                                     required
+                                                    placeholder="Ví dụ: 123 Đường Nguyễn Văn A"
                                                 />
+                                                <p className="text-xs text-gray-500">
+                                                    *Địa chỉ phải bao gồm số nhà và tên đường
+                                                </p>
                                             </div>
 
                                             {/* City */}

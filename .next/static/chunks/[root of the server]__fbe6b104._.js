@@ -750,6 +750,7 @@ __turbopack_context__.s({
     "apiClient": (()=>apiClient),
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
+    "categoriesApi": (()=>categoriesApi),
     "colorsApi": (()=>colorsApi),
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
@@ -1296,6 +1297,37 @@ const productsByCategoryApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    },
+    // Cập nhật danh mục cho sản phẩm
+    updateProductCategories: async (productId, categoryIds)=>{
+        try {
+            // Validate input
+            if (!Array.isArray(categoryIds)) {
+                throw new Error('categoryIds phải là một mảng');
+            }
+            if (categoryIds.length === 0) {
+                throw new Error('Phải có ít nhất một danh mục');
+            }
+            const response = await apiClient.put(`products-by-category/product/${productId}/categories`, {
+                categoryIds
+            });
+            return response.data;
+        } catch (error) {
+            // Xử lý các loại lỗi cụ thể
+            if (error.response) {
+                switch(error.response.status){
+                    case 400:
+                        throw new Error(error.response.data.message || 'Dữ liệu đầu vào không hợp lệ');
+                    case 404:
+                        throw new Error(error.response.data.message || 'Không tìm thấy sản phẩm hoặc danh mục');
+                    case 500:
+                        throw new Error(error.response.data.message || 'Lỗi máy chủ khi cập nhật danh mục sản phẩm');
+                    default:
+                        throw new Error(error.response.data.message || 'Lỗi không xác định');
+                }
+            }
+            throw error;
         }
     }
 };
@@ -1903,6 +1935,53 @@ const invoiceApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
+        }
+    }
+};
+const categoriesApi = {
+    // Lấy tất cả danh mục
+    getAllCategories: async ()=>{
+        try {
+            const response = await apiClient.get('categories');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách danh mục.';
+        }
+    },
+    // Lấy danh mục theo ID
+    getCategoryById: async (id)=>{
+        try {
+            const response = await apiClient.get(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin danh mục.';
+        }
+    },
+    // Tạo danh mục mới (Admin only)
+    createCategory: async (categoryData)=>{
+        try {
+            const response = await apiClient.post('categories', categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo danh mục mới.';
+        }
+    },
+    // Cập nhật danh mục (Admin only)
+    updateCategory: async (id, categoryData)=>{
+        try {
+            const response = await apiClient.put(`categories/${id}`, categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật danh mục.';
+        }
+    },
+    // Xóa danh mục (Admin only) 
+    deleteCategory: async (id)=>{
+        try {
+            const response = await apiClient.delete(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa danh mục.';
         }
     }
 };
@@ -3369,18 +3448,6 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                             className: "hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/vouchers",
-                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
-                                    style: {
-                                        fontSize: '15px'
-                                    },
-                                    children: "Ưu đãi"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 306,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/onsale",
                                     className: "text-black hover:underline transition-colors duration-200 font-sans",
                                     style: {
@@ -3389,7 +3456,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Sale"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 313,
+                                    lineNumber: 306,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3401,7 +3468,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Thời trang nam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 320,
+                                    lineNumber: 313,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3411,6 +3478,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                         fontSize: '15px'
                                     },
                                     children: "Thời trang nữ"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 320,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/vouchers",
+                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Ưu đãi"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
                                     lineNumber: 327,
@@ -4519,11 +4598,10 @@ function Layout({ children }) {
         dispatch,
         isCartPage
     ]);
-    // Thêm interval để tự động transfer và update
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Layout.useEffect": ()=>{
-            const interval = setInterval({
-                "Layout.useEffect.interval": async ()=>{
+            const updateFavorites = {
+                "Layout.useEffect.updateFavorites": async ()=>{
                     try {
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
@@ -4531,13 +4609,11 @@ function Layout({ children }) {
                             limit: 10
                         })).unwrap();
                     } catch (error) {
-                        console.error('Failed to auto-update favorites:', error);
+                        console.error('Failed to update favorites:', error);
                     }
                 }
-            }["Layout.useEffect.interval"], 300000); // 30 giây
-            return ({
-                "Layout.useEffect": ()=>clearInterval(interval)
-            })["Layout.useEffect"];
+            }["Layout.useEffect.updateFavorites"];
+            updateFavorites();
         }
     }["Layout.useEffect"], [
         dispatch
@@ -4549,7 +4625,7 @@ function Layout({ children }) {
                 isCartPage: isCartPage
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 92,
+                lineNumber: 91,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -4557,28 +4633,28 @@ function Layout({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 94,
+                lineNumber: 93,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BackToTop$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 97,
+                lineNumber: 96,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ServiceFeatures$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 98,
+                lineNumber: 97,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 99,
+                lineNumber: 98,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Layout.js",
-        lineNumber: 91,
+        lineNumber: 90,
         columnNumber: 9
     }, this);
 }

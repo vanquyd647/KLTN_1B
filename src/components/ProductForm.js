@@ -187,6 +187,8 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 sizes: [...prev.sizes, tempSize]
             }));
             setTempSize('');
+        } else if (!tempSize) {
+            alert('Vui lòng nhập kích thước!');
         }
     };
 

@@ -16,6 +16,7 @@ import { fetchReviewsByProduct, fetchAverageRating, createReview } from '../../s
 import Layout from '../../components/Layout';
 import ProductReviews from '../../components/slugs/ProductReviews';
 import ProductDescription from '../../components/slugs/ProductDescription';
+import NotFound from '../../components/NotFound';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 import {
@@ -40,6 +41,7 @@ import {
     selectFavoriteStatuses
 } from '../../store/slices/favoriteSlice';
 import RecentlyViewed from '@/components/RecentlyViewed';
+
 
 const RECENTLY_VIEWED_KEY = 'recently_viewed_products';
 const MAX_RECENT_PRODUCTS = 10;
@@ -398,7 +400,16 @@ export default function Slug() {
 
     // Loading States
     if (productLoading || stocksLoading) return <div>Đang tải...</div>;
-    if (productError) return <div>Đã xảy ra lỗi: {productError}</div>;
+    if (productError || !currentProduct) {
+        return (
+            <Layout>
+                <NotFound 
+                    message="Không tìm thấy sản phẩm" 
+                    description="Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
+                />
+            </Layout>
+        );
+    }
     if (stocksError) return <div>Lỗi khi tải dữ liệu tồn kho: {stocksError}</div>;
     if (!currentProduct) return <div>Không tìm thấy sản phẩm.</div>;
 

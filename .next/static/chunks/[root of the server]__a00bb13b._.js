@@ -3339,18 +3339,6 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                             className: "hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/vouchers",
-                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
-                                    style: {
-                                        fontSize: '15px'
-                                    },
-                                    children: "Ưu đãi"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 306,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/onsale",
                                     className: "text-black hover:underline transition-colors duration-200 font-sans",
                                     style: {
@@ -3359,7 +3347,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Sale"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 313,
+                                    lineNumber: 306,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3371,7 +3359,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Thời trang nam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 320,
+                                    lineNumber: 313,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3381,6 +3369,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                         fontSize: '15px'
                                     },
                                     children: "Thời trang nữ"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 320,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/vouchers",
+                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Ưu đãi"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
                                     lineNumber: 327,
@@ -4489,11 +4489,10 @@ function Layout({ children }) {
         dispatch,
         isCartPage
     ]);
-    // Thêm interval để tự động transfer và update
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Layout.useEffect": ()=>{
-            const interval = setInterval({
-                "Layout.useEffect.interval": async ()=>{
+            const updateFavorites = {
+                "Layout.useEffect.updateFavorites": async ()=>{
                     try {
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
@@ -4501,13 +4500,11 @@ function Layout({ children }) {
                             limit: 10
                         })).unwrap();
                     } catch (error) {
-                        console.error('Failed to auto-update favorites:', error);
+                        console.error('Failed to update favorites:', error);
                     }
                 }
-            }["Layout.useEffect.interval"], 300000); // 30 giây
-            return ({
-                "Layout.useEffect": ()=>clearInterval(interval)
-            })["Layout.useEffect"];
+            }["Layout.useEffect.updateFavorites"];
+            updateFavorites();
         }
     }["Layout.useEffect"], [
         dispatch
@@ -4519,7 +4516,7 @@ function Layout({ children }) {
                 isCartPage: isCartPage
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 92,
+                lineNumber: 91,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -4527,28 +4524,28 @@ function Layout({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 94,
+                lineNumber: 93,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BackToTop$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 97,
+                lineNumber: 96,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ServiceFeatures$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 98,
+                lineNumber: 97,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 99,
+                lineNumber: 98,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Layout.js",
-        lineNumber: 91,
+        lineNumber: 90,
         columnNumber: 9
     }, this);
 }
@@ -4575,9 +4572,17 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Layout.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-toastify/dist/index.mjs [client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+;
+;
 ;
 ;
 function VouchersPage() {
+    _s();
+    const [copiedCode, setCopiedCode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const vouchersData = {
         "table": "coupons",
         "rows": [
@@ -4585,10 +4590,11 @@ function VouchersPage() {
                 "id": 1,
                 "code": "SALE50",
                 "description": "giảm 50,000 đơn từ 250,000",
-                "discount_amount": 50000.00,
+                "discount_amount": 50000,
+                "min_order_amount": 250000,
                 "expiry_date": "2026-01-01 07:00:00",
                 "total_quantity": 0,
-                "used_quantity": 3,
+                "used_quantity": 0,
                 "is_active": 1,
                 "created_at": "2025-03-12 20:06:02",
                 "updated_at": "2025-03-13 16:35:04"
@@ -4597,7 +4603,8 @@ function VouchersPage() {
                 "id": 2,
                 "code": "SALE20",
                 "description": "giảm 20000 đơn từ 100,000",
-                "discount_amount": 20000.00,
+                "discount_amount": 20000,
+                "min_order_amount": 100000,
                 "expiry_date": "2026-01-01 07:00:00",
                 "total_quantity": 0,
                 "used_quantity": 0,
@@ -4609,7 +4616,8 @@ function VouchersPage() {
                 "id": 3,
                 "code": "SALE5",
                 "description": "giảm 5000 đơn từ 50,000",
-                "discount_amount": 5000.00,
+                "discount_amount": 5000,
+                "min_order_amount": 50000,
                 "expiry_date": "2025-12-31 07:00:00",
                 "total_quantity": 0,
                 "used_quantity": 0,
@@ -4632,185 +4640,234 @@ function VouchersPage() {
     // Copy mã giảm giá
     const copyVoucherCode = (code)=>{
         navigator.clipboard.writeText(code);
-        alert('Đã sao chép mã: ' + code);
+        setCopiedCode(code);
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].success(`Đã sao chép mã: ${code}`, {
+            position: "top-center",
+            autoClose: 2000
+        });
+        setTimeout(()=>setCopiedCode(null), 2000);
+    };
+    // Tách giá trị đơn tối thiểu từ mô tả
+    const extractMinOrderValue = (description)=>{
+        const match = description.match(/từ\s+([\d,.]+)/i);
+        return match ? match[1] : null;
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "container mx-auto px-4 py-8",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-bold mb-6",
-                    children: "Mã giảm giá của bạn"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/vouchers.js",
-                    lineNumber: 66,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
-                    children: vouchersData.rows.map((voucher)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-black-50 p-4 border-b",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex justify-between items-center",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "font-bold text-lg text-black-700",
-                                            children: voucher.code
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/vouchers.js",
-                                            lineNumber: 76,
-                                            columnNumber: 37
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/pages/vouchers.js",
-                                        lineNumber: 75,
-                                        columnNumber: 33
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/vouchers.js",
-                                    lineNumber: 74,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "p-4",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "mb-4",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["ToastContainer"], {}, void 0, false, {
+                fileName: "[project]/src/pages/vouchers.js",
+                lineNumber: 86,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "container mx-auto px-4 py-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                        className: "text-2xl font-bold mb-6 text-center",
+                        children: "Mã giảm giá của bạn"
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/vouchers.js",
+                        lineNumber: 88,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+                        children: vouchersData.rows.map((voucher)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "border border-gray-200 rounded-lg overflow-hidden",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "relative",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-[#1a56db] text-white p-4 text-center",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-gray-600",
-                                                    children: voucher.description
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/pages/vouchers.js",
-                                                    lineNumber: 83,
-                                                    columnNumber: 37
-                                                }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "mt-2 text-2xl font-bold text-red-600",
+                                                    className: "absolute top-2 left-2 bg-white text-[#1a56db] text-xs font-medium px-2 py-1 rounded-md",
                                                     children: [
-                                                        "-",
-                                                        voucher.discount_amount.toLocaleString(),
-                                                        "đ"
+                                                        "Mã: ",
+                                                        voucher.code
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/vouchers.js",
-                                                    lineNumber: 84,
+                                                    lineNumber: 99,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "my-3 pt-2",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-3xl font-bold",
+                                                            children: [
+                                                                voucher.discount_amount.toLocaleString(),
+                                                                "đ"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/pages/vouchers.js",
+                                                            lineNumber: 104,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-sm mt-1",
+                                                            children: [
+                                                                "Đơn tối thiểu ",
+                                                                extractMinOrderValue(voucher.description),
+                                                                "đ"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/pages/vouchers.js",
+                                                            lineNumber: 107,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/pages/vouchers.js",
+                                                    lineNumber: 103,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/vouchers.js",
-                                            lineNumber: 82,
+                                            lineNumber: 98,
                                             columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-2 text-sm text-gray-500",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex justify-between text-red-500 font-medium",
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/vouchers.js",
+                                        lineNumber: 97,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-4 bg-white",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                className: "font-medium mb-2",
+                                                children: "Chi tiết ưu đãi:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/vouchers.js",
+                                                lineNumber: 116,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-gray-600 text-sm",
+                                                children: voucher.description
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/vouchers.js",
+                                                lineNumber: 117,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex justify-between items-center mt-4 text-sm text-gray-500",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        children: "Hết hạn:"
+                                                        children: "Hạn sử dụng:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/vouchers.js",
-                                                        lineNumber: 92,
-                                                        columnNumber: 41
+                                                        lineNumber: 120,
+                                                        columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: formatDateTime(voucher.expiry_date)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/vouchers.js",
-                                                        lineNumber: 93,
-                                                        columnNumber: 41
+                                                        lineNumber: 121,
+                                                        columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/vouchers.js",
-                                                lineNumber: 91,
-                                                columnNumber: 37
+                                                lineNumber: 119,
+                                                columnNumber: 33
                                             }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/vouchers.js",
+                                        lineNumber: 115,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-4 bg-gray-50",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            className: `w-full py-2 rounded-md text-center font-medium transition-colors ${copiedCode === voucher.code ? 'bg-green-500 text-white' : 'bg-[#1a56db] text-white hover:bg-[#164bbd]'}`,
+                                            onClick: ()=>copyVoucherCode(voucher.code),
+                                            children: copiedCode === voucher.code ? 'Đã sao chép ✓' : 'Sao chép mã'
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/vouchers.js",
-                                            lineNumber: 90,
+                                            lineNumber: 127,
                                             columnNumber: 33
                                         }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/vouchers.js",
-                                    lineNumber: 81,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-gray-50 p-4 border-t",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                        className: "w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors",
-                                        onClick: ()=>copyVoucherCode(voucher.code),
-                                        children: "Sao chép mã"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/vouchers.js",
-                                        lineNumber: 100,
+                                        lineNumber: 126,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, voucher.id, true, {
+                                fileName: "[project]/src/pages/vouchers.js",
+                                lineNumber: 92,
+                                columnNumber: 25
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/vouchers.js",
+                        lineNumber: 90,
+                        columnNumber: 17
+                    }, this),
+                    vouchersData.rows.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-center py-12",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-gray-300 text-5xl mb-4",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    className: "h-20 w-20 mx-auto",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    stroke: "currentColor",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                        strokeWidth: 1.5,
+                                        d: "M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/vouchers.js",
+                                        lineNumber: 146,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/vouchers.js",
-                                    lineNumber: 99,
+                                    lineNumber: 145,
                                     columnNumber: 29
                                 }, this)
-                            ]
-                        }, voucher.id, true, {
-                            fileName: "[project]/src/pages/vouchers.js",
-                            lineNumber: 69,
-                            columnNumber: 25
-                        }, this))
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/vouchers.js",
-                    lineNumber: 67,
-                    columnNumber: 17
-                }, this),
-                vouchersData.rows.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-center py-12",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-gray-400 text-5xl mb-4",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
-                                className: "fas fa-ticket-alt"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/vouchers.js",
-                                lineNumber: 114,
-                                columnNumber: 29
+                                lineNumber: 144,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-500 text-lg",
+                                children: "Bạn chưa có mã giảm giá nào"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/vouchers.js",
+                                lineNumber: 149,
+                                columnNumber: 25
                             }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/vouchers.js",
-                            lineNumber: 113,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-gray-500 text-lg",
-                            children: "Bạn chưa có mã giảm giá nào"
-                        }, void 0, false, {
-                            fileName: "[project]/src/pages/vouchers.js",
-                            lineNumber: 116,
-                            columnNumber: 25
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/pages/vouchers.js",
-                    lineNumber: 112,
-                    columnNumber: 21
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/pages/vouchers.js",
-            lineNumber: 65,
-            columnNumber: 13
-        }, this)
-    }, void 0, false, {
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/vouchers.js",
+                        lineNumber: 143,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/vouchers.js",
+                lineNumber: 87,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/src/pages/vouchers.js",
-        lineNumber: 64,
+        lineNumber: 85,
         columnNumber: 9
     }, this);
 }
+_s(VouchersPage, "+rbbokKfOObQlaF8o0GLfbqs0e4=");
 _c = VouchersPage;
 var _c;
 __turbopack_context__.k.register(_c, "VouchersPage");

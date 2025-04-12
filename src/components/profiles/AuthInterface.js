@@ -30,7 +30,7 @@ export default function AuthInterface({
         phone: '',
         gender: '',
     });
-    
+
 
     // Validate từng trường khi người dùng thay đổi giá trị
     useEffect(() => {
@@ -41,6 +41,9 @@ export default function AuthInterface({
             validateField('password', formData.password);
             validateField('confirmPassword', formData.confirmPassword);
             validateField('phone', formData.phone);
+        } else if (authStep === 'reset-password') {
+            validateField('newPassword', formData.newPassword);
+            validateField('confirmNewPassword', formData.confirmNewPassword);
         }
     }, [formData, authStep]);
 
@@ -94,6 +97,28 @@ export default function AuthInterface({
                     error = 'Mật khẩu không khớp';
                 }
                 break;
+            case 'newPassword':
+                if (value && value.length < 6) {
+                    error = 'Mật khẩu phải có ít nhất 6 ký tự';
+                } else if (value && value.length > 20) {
+                    error = 'Mật khẩu không được vượt quá 20 ký tự';
+                } else if (value && value.includes(' ')) {
+                    error = 'Mật khẩu không được chứa khoảng trắng';
+                } else if (value && !/[A-Z]/.test(value)) {
+                    error = 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa';
+                } else if (value && !/[a-z]/.test(value)) {
+                    error = 'Mật khẩu phải chứa ít nhất một chữ cái viết thường';
+                } else if (value && !/[0-9]/.test(value)) {
+                    error = 'Mật khẩu phải chứa ít nhất một chữ số';
+                } else if (value && !/[!@#$%^&*]/.test(value)) {
+                    error = 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt';
+                }
+                break;
+            case 'confirmNewPassword':
+                if (value !== formData.newPassword) {
+                    error = 'Mật khẩu không khớp';
+                }
+                break;
             case 'phone':
                 if (value && !/^\d{10}$/.test(value)) {
                     error = 'Số điện thoại không hợp lệ (10 chữ số)';
@@ -116,52 +141,68 @@ export default function AuthInterface({
         let isValid = true;
         const errors = {};
 
-        // Validate firstname
-        const firstnameError = validateField('firstname', formData.firstname);
-        if (firstnameError) {
-            errors.firstname = firstnameError;
-            isValid = false;
-        }
+        if (authStep === 'register') {
+            // Validate firstname
+            const firstnameError = validateField('firstname', formData.firstname);
+            if (firstnameError) {
+                errors.firstname = firstnameError;
+                isValid = false;
+            }
 
-        // Validate lastname
-        const lastnameError = validateField('lastname', formData.lastname);
-        if (lastnameError) {
-            errors.lastname = lastnameError;
-            isValid = false;
-        }
+            // Validate lastname
+            const lastnameError = validateField('lastname', formData.lastname);
+            if (lastnameError) {
+                errors.lastname = lastnameError;
+                isValid = false;
+            }
 
-        // Validate email
-        const emailError = validateField('email', formData.email);
-        if (emailError) {
-            errors.email = emailError;
-            isValid = false;
-        }
+            // Validate email
+            const emailError = validateField('email', formData.email);
+            if (emailError) {
+                errors.email = emailError;
+                isValid = false;
+            }
 
-        // Validate password
-        const passwordError = validateField('password', formData.password);
-        if (passwordError) {
-            errors.password = passwordError;
-            isValid = false;
-        }
+            // Validate password
+            const passwordError = validateField('password', formData.password);
+            if (passwordError) {
+                errors.password = passwordError;
+                isValid = false;
+            }
 
-        // Validate confirm password
-        const confirmPasswordError = validateField('confirmPassword', formData.confirmPassword);
-        if (confirmPasswordError) {
-            errors.confirmPassword = confirmPasswordError;
-            isValid = false;
-        }
+            // Validate confirm password
+            const confirmPasswordError = validateField('confirmPassword', formData.confirmPassword);
+            if (confirmPasswordError) {
+                errors.confirmPassword = confirmPasswordError;
+                isValid = false;
+            }
 
-        // Validate phone
-        const phoneError = validateField('phone', formData.phone);
-        if (phoneError) {
-            errors.phone = phoneError;
-            isValid = false;
-        }
+            // Validate phone
+            const phoneError = validateField('phone', formData.phone);
+            if (phoneError) {
+                errors.phone = phoneError;
+                isValid = false;
+            }
 
-        // Validate gender
-        if (!formData.gender) {
-            errors.gender = 'Vui lòng chọn giới tính';
-            isValid = false;
+            // Validate gender
+            if (!formData.gender) {
+                errors.gender = 'Vui lòng chọn giới tính';
+                isValid = false;
+            }
+        } else if (authStep === 'reset-password') {
+            // Validate newPassword
+            const newPasswordError = validateField('newPassword', formData.newPassword);
+            if (newPasswordError) {
+                errors.newPassword = newPasswordError;
+                isValid = false;
+            }
+
+            // Validate confirmNewPassword
+            const confirmNewPasswordError = validateField('confirmNewPassword', formData.confirmNewPassword);
+            if (confirmNewPasswordError) {
+                errors.confirmNewPassword = confirmNewPasswordError;
+                isValid = false;
+            }
         }
 
         setValidationErrors(errors);
@@ -198,6 +239,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className="w-full border p-2 rounded"
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                         </div>
                         <div className="mb-4">
@@ -210,6 +253,8 @@ export default function AuthInterface({
                                     onChange={handleChange}
                                     className="w-full border p-2 rounded"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                                 <button
                                     type="button"
@@ -261,6 +306,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className="w-full border p-2 rounded"
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                         </div>
                         <button
@@ -294,6 +341,8 @@ export default function AuthInterface({
                                 onChange={(e) => setOtp(e.target.value)}
                                 className="w-full border p-2 rounded"
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                         </div>
                         <div className="mb-4">
@@ -304,19 +353,22 @@ export default function AuthInterface({
                                     name="newPassword"
                                     value={formData.newPassword}
                                     onChange={handleChange}
-                                    className="w-full border p-2 rounded"
+                                    className={`w-full border p-2 rounded ${validationErrors.newPassword ? 'border-red-500' : ''}`}
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                                 <button
                                     type="button"
                                     className="absolute right-2 top-2 text-gray-600"
                                     onClick={() => togglePasswordVisibility('newPassword')}
                                 >
-                                    <FontAwesomeIcon
-                                        icon={passwordVisibility.newPassword ? faEyeSlash : faEye}
-                                    />
+                                    <FontAwesomeIcon icon={passwordVisibility.newPassword ? faEyeSlash : faEye} />
                                 </button>
                             </div>
+                            {validationErrors.newPassword && (
+                                <p className="text-red-500 text-sm mt-1">{validationErrors.newPassword}</p>
+                            )}
                         </div>
                         <div className="mb-4">
                             <label>Xác nhận mật khẩu mới:</label>
@@ -326,19 +378,22 @@ export default function AuthInterface({
                                     name="confirmNewPassword"
                                     value={formData.confirmNewPassword}
                                     onChange={handleChange}
-                                    className="w-full border p-2 rounded"
+                                    className={`w-full border p-2 rounded ${validationErrors.confirmNewPassword ? 'border-red-500' : ''}`}
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                                 <button
                                     type="button"
                                     className="absolute right-2 top-2 text-gray-600"
                                     onClick={() => togglePasswordVisibility('confirmNewPassword')}
                                 >
-                                    <FontAwesomeIcon
-                                        icon={passwordVisibility.confirmNewPassword ? faEyeSlash : faEye}
-                                    />
+                                    <FontAwesomeIcon icon={passwordVisibility.confirmNewPassword ? faEyeSlash : faEye} />
                                 </button>
                             </div>
+                            {validationErrors.confirmNewPassword && (
+                                <p className="text-red-500 text-sm mt-1">{validationErrors.confirmNewPassword}</p>
+                            )}
                         </div>
                         <button
                             type="submit"
@@ -368,6 +423,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className={`w-full border p-2 rounded ${validationErrors.firstname ? 'border-red-500' : ''}`}
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                             {validationErrors.firstname && (
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.firstname}</p>
@@ -382,6 +439,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className={`w-full border p-2 rounded ${validationErrors.lastname ? 'border-red-500' : ''}`}
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                             {validationErrors.lastname && (
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.lastname}</p>
@@ -396,6 +455,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className={`w-full border p-2 rounded ${validationErrors.email ? 'border-red-500' : ''}`}
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                             {validationErrors.email && (
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
@@ -411,6 +472,8 @@ export default function AuthInterface({
                                     onChange={handleChange}
                                     className={`w-full border p-2 rounded ${validationErrors.password ? 'border-red-500' : ''}`}
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                                 <button
                                     type="button"
@@ -436,6 +499,8 @@ export default function AuthInterface({
                                     onChange={handleChange}
                                     className={`w-full border p-2 rounded ${validationErrors.confirmPassword ? 'border-red-500' : ''}`}
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                                 <button
                                     type="button"
@@ -460,6 +525,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className={`w-full border p-2 rounded ${validationErrors.phone ? 'border-red-500' : ''}`}
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                             {validationErrors.phone && (
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.phone}</p>
@@ -473,6 +540,8 @@ export default function AuthInterface({
                                 onChange={handleChange}
                                 className={`w-full border p-2 rounded ${validationErrors.gender ? 'border-red-500' : ''}`}
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             >
                                 <option value="">Chọn</option>
                                 <option value="male">Nam</option>
@@ -515,6 +584,8 @@ export default function AuthInterface({
                                 onChange={(e) => setOtp(e.target.value)}
                                 className="w-full border p-2 rounded"
                                 required
+                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                onInput={(e) => e.target.setCustomValidity("")}
                             />
                         </div>
                         <button

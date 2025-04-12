@@ -171,21 +171,53 @@ const UserManagement = () => {
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
+        let error = '';
 
-        if (!formData.firstname || !formData.lastname || !formData.email || !formData.phone) {
-            setError('Vui lòng điền đầy đủ thông tin');
+        // Validate firstname
+        if (!formData.firstname) {
+            setError('Vui lòng nhập họ');
+            return;
+        } else if (formData.firstname.length < 2) {
+            setError('Họ phải có ít nhất 2 ký tự');
+            return;
+        } else if (formData.firstname.length > 20) {
+            setError('Họ không được vượt quá 20 ký tự');
+            return;
+        } else if (!/^[\p{L}\s]+$/u.test(formData.firstname)) {
+            setError('Họ chỉ được chứa chữ cái');
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
+        // Validate lastname
+        if (!formData.lastname) {
+            setError('Vui lòng nhập tên');
+            return;
+        } else if (formData.lastname.length < 2) {
+            setError('Tên phải có ít nhất 2 ký tự');
+            return;
+        } else if (formData.lastname.length > 20) {
+            setError('Tên không được vượt quá 20 ký tự');
+            return;
+        } else if (!/^[a-zA-ZÀ-ỹ\s]+$/.test(formData.lastname)) {
+            setError('Tên chỉ được chứa chữ cái');
+            return;
+        }
+
+        // Validate email
+        if (!formData.email) {
+            setError('Vui lòng nhập email');
+            return;
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
             setError('Email không hợp lệ');
             return;
         }
 
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(formData.phone)) {
-            setError('Số điện thoại không hợp lệ');
+        // Validate phone
+        if (!formData.phone) {
+            setError('Vui lòng nhập số điện thoại');
+            return;
+        } else if (!/^\d{10}$/.test(formData.phone)) {
+            setError('Số điện thoại không hợp lệ (10 chữ số)');
             return;
         }
 
@@ -198,17 +230,48 @@ const UserManagement = () => {
             roles: formData.roles
         };
 
-        if (modalMode === 'create') {
-            if (!formData.password || formData.password.length < 6) {
+        // Validate password
+        if (modalMode === 'create' || formData.password) {
+            if (!formData.password) {
+                setError('Vui lòng nhập mật khẩu');
+                return;
+            } else if (formData.password.length < 6) {
                 setError('Mật khẩu phải có ít nhất 6 ký tự');
+                return;
+            } else if (formData.password.length > 20) {
+                setError('Mật khẩu không được vượt quá 20 ký tự');
+                return;
+            } else if (formData.password.includes(' ')) {
+                setError('Mật khẩu không được chứa khoảng trắng');
+                return;
+            } else if (!/[A-Z]/.test(formData.password)) {
+                setError('Mật khẩu phải chứa ít nhất một chữ cái viết hoa');
+                return;
+            } else if (!/[a-z]/.test(formData.password)) {
+                setError('Mật khẩu phải chứa ít nhất một chữ cái viết thường');
+                return;
+            } else if (!/[0-9]/.test(formData.password)) {
+                setError('Mật khẩu phải chứa ít nhất một chữ số');
+                return;
+            } else if (!/[!@#$%^&*]/.test(formData.password)) {
+                setError('Mật khẩu phải chứa ít nhất một ký tự đặc biệt');
                 return;
             }
             userData.password = formData.password;
-            await handleCreateUser(userData);
-        } else {
-            await handleUpdateUser(selectedUser.id, userData);
+        }
+
+        try {
+            if (modalMode === 'create') {
+                await handleCreateUser(userData);
+            } else {
+                await handleUpdateUser(selectedUser.id, userData);
+            }
+        } catch (error) {
+            console.error('Failed to submit:', error);
+            setError('Đã có lỗi xảy ra. Vui lòng thử lại.');
         }
     }, [formData, modalMode, selectedUser]);
+
 
     const openCreateModal = useCallback(() => {
         setModalMode('create');

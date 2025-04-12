@@ -304,13 +304,6 @@ const Header = memo(function Header({ isCartPage }) {
                     {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide">
                         <Link
-                            href="/vouchers"
-                            className="text-black hover:underline transition-colors duration-200 font-sans"
-                            style={{ fontSize: '15px' }}
-                        >
-                            Ưu đãi
-                        </Link>
-                        <Link
                             href="/onsale"
                             className="text-black hover:underline transition-colors duration-200 font-sans"
                             style={{ fontSize: '15px' }}
@@ -330,6 +323,13 @@ const Header = memo(function Header({ isCartPage }) {
                             style={{ fontSize: '15px' }}
                         >
                             Thời trang nữ
+                        </Link>
+                        <Link
+                            href="/vouchers"
+                            className="text-black hover:underline transition-colors duration-200 font-sans"
+                            style={{ fontSize: '15px' }}
+                        >
+                            Ưu đãi
                         </Link>
                         <Link
                             href="/store-locations"

@@ -13,6 +13,15 @@
       "static/chunks/src_pages_index_5771e187._.js",
       "static/chunks/src_pages_index_3fb8ea44._.js"
     ],
+    "/TrackOrder": [
+      "static/chunks/[root of the server]__682e6764._.js",
+      "static/chunks/node_modules_next_74ee7233._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_192e28d6._.js",
+      "static/chunks/src_pages_TrackOrder_5771e187._.js",
+      "static/chunks/src_pages_TrackOrder_9dc024a1._.js"
+    ],
     "/_app": [
       "static/chunks/[root of the server]__4a536f3f._.js",
       "static/chunks/node_modules_next_b090c39e._.js",
@@ -54,18 +63,108 @@
       "static/chunks/src_pages_admin_index_5771e187.js",
       "static/chunks/src_pages_admin_index_27d180fa.js"
     ],
-    "/favorites": [
-      "static/chunks/[root of the server]__fe643a24._.js",
+    "/cart": [
+      "static/chunks/[root of the server]__1d9c18f6._.js",
+      "static/chunks/node_modules_next_74ee7233._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_1fb2d408._.js",
+      "static/chunks/src_pages_cart_5771e187._.js",
+      "static/chunks/src_pages_cart_1564750d._.js"
+    ],
+    "/category/productsByCategory": [
+      "static/chunks/[root of the server]__fbe6b104._.js",
+      "static/chunks/node_modules_next_74ee7233._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_d582eaad._.js",
+      "static/chunks/src_pages_category_productsByCategory_5771e187.js",
+      "static/chunks/src_pages_category_productsByCategory_2a99b20e.js"
+    ],
+    "/checkout": [
+      "static/chunks/[root of the server]__35650fd0._.js",
+      "static/chunks/node_modules_next_fae83b26._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_dc8186f7._.js",
+      "static/chunks/src_pages_checkout_5771e187._.js",
+      "static/chunks/src_pages_checkout_d77cf469._.js"
+    ],
+    "/featured-products": [
+      "static/chunks/[root of the server]__dca799b8._.js",
+      "static/chunks/node_modules_next_7307bde6._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_d582eaad._.js",
+      "static/chunks/src_pages_featured-products_5771e187._.js",
+      "static/chunks/src_pages_featured-products_0ebfa3e8._.js"
+    ],
+    "/new-products": [
+      "static/chunks/[root of the server]__3ae54ca7._.js",
+      "static/chunks/node_modules_next_7307bde6._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_d582eaad._.js",
+      "static/chunks/src_pages_new-products_5771e187._.js",
+      "static/chunks/src_pages_new-products_c5404f31._.js"
+    ],
+    "/onsale": [
+      "static/chunks/[root of the server]__155ff6bb._.js",
+      "static/chunks/node_modules_next_7307bde6._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_d582eaad._.js",
+      "static/chunks/src_pages_onsale_5771e187._.js",
+      "static/chunks/src_pages_onsale_a2ee8080._.js"
+    ],
+    "/payment": [
+      "static/chunks/[root of the server]__30eee123._.js",
+      "static/chunks/node_modules_next_297cb59f._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_ddebaed9._.js",
+      "static/chunks/src_pages_payment_5771e187._.js",
+      "static/chunks/src_pages_payment_fb7c64f4._.js"
+    ],
+    "/payment/cancel": [
+      "static/chunks/node_modules_next_ce022631._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_1093a444._.js",
+      "static/chunks/[root of the server]__2ccfc1e4._.js",
+      "static/chunks/src_pages_payment_cancel_5771e187.js",
+      "static/chunks/src_pages_payment_cancel_fc797836.js"
+    ],
+    "/payment/success": [
+      "static/chunks/node_modules_next_ce022631._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_1093a444._.js",
+      "static/chunks/[root of the server]__f498fd53._.js",
+      "static/chunks/src_pages_payment_success_5771e187.js",
+      "static/chunks/src_pages_payment_success_daf08b0b.js"
+    ],
+    "/productdetail/[slug]": [
+      "static/chunks/[root of the server]__89adf5dd._.js",
+      "static/chunks/node_modules_next_fae83b26._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_axios_lib_9aa2336a._.js",
+      "static/chunks/node_modules_react-icons_fa_index_mjs_bad01e3f._.js",
+      "static/chunks/node_modules_react-icons_bs_index_mjs_4da0ce50._.js",
+      "static/chunks/node_modules_react-icons_lib_75a63dfe._.js",
+      "static/chunks/node_modules_f1fb1b6a._.js",
+      "static/chunks/src_pages_productdetail_[slug]_5771e187.js",
+      "static/chunks/src_pages_productdetail_[slug]_b65acb20.js"
+    ],
+    "/vouchers": [
+      "static/chunks/[root of the server]__a00bb13b._.js",
       "static/chunks/node_modules_next_9f837c94._.js",
       "static/chunks/node_modules_react-dom_82bb97c6._.js",
       "static/chunks/node_modules_axios_lib_9aa2336a._.js",
-      "static/chunks/node_modules_react-icons_gi_index_mjs_e0b0011d._.js",
-      "static/chunks/node_modules_react-icons_fa_index_mjs_bad01e3f._.js",
-      "static/chunks/node_modules_react-icons_io5_index_mjs_e310718a._.js",
-      "static/chunks/node_modules_react-icons_lib_75a63dfe._.js",
-      "static/chunks/node_modules_717dd41d._.js",
-      "static/chunks/src_pages_favorites_5771e187._.js",
-      "static/chunks/src_pages_favorites_23ad8d75._.js"
+      "static/chunks/node_modules_8220eef6._.js",
+      "static/chunks/node_modules_react-toastify_dist_ReactToastify_904beb7c.css",
+      "static/chunks/src_pages_vouchers_5771e187._.js",
+      "static/chunks/src_pages_vouchers_5c0ecdcf._.js"
     ]
   },
   "devFiles": [],

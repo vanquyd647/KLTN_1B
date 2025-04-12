@@ -124,6 +124,8 @@ const TrackOrder = () => {
                             }}
                             className={`w-full px-3 py-2 border rounded ${errors.orderId ? 'border-red-500' : ''}`}
                             required
+                            onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                            onInput={(e) => e.target.setCustomValidity("")}
                         />
                         {errors.orderId && (
                             <p className="text-red-500 text-sm mt-1">{errors.orderId}</p>
@@ -141,6 +143,8 @@ const TrackOrder = () => {
                             }}
                             className={`w-full px-3 py-2 border rounded ${errors.identifier ? 'border-red-500' : ''}`}
                             required
+                            onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                            onInput={(e) => e.target.setCustomValidity("")}
                         />
                         {errors.identifier && (
                             <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>

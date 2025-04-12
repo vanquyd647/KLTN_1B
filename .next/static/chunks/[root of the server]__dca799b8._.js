@@ -750,6 +750,7 @@ __turbopack_context__.s({
     "apiClient": (()=>apiClient),
     "carrierApi": (()=>carrierApi),
     "cartApi": (()=>cartApi),
+    "categoriesApi": (()=>categoriesApi),
     "colorsApi": (()=>colorsApi),
     "couponApi": (()=>couponApi),
     "favoriteApi": (()=>favoriteApi),
@@ -1296,6 +1297,37 @@ const productsByCategoryApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || 'Failed to fetch products by category.';
+        }
+    },
+    // Cập nhật danh mục cho sản phẩm
+    updateProductCategories: async (productId, categoryIds)=>{
+        try {
+            // Validate input
+            if (!Array.isArray(categoryIds)) {
+                throw new Error('categoryIds phải là một mảng');
+            }
+            if (categoryIds.length === 0) {
+                throw new Error('Phải có ít nhất một danh mục');
+            }
+            const response = await apiClient.put(`products-by-category/product/${productId}/categories`, {
+                categoryIds
+            });
+            return response.data;
+        } catch (error) {
+            // Xử lý các loại lỗi cụ thể
+            if (error.response) {
+                switch(error.response.status){
+                    case 400:
+                        throw new Error(error.response.data.message || 'Dữ liệu đầu vào không hợp lệ');
+                    case 404:
+                        throw new Error(error.response.data.message || 'Không tìm thấy sản phẩm hoặc danh mục');
+                    case 500:
+                        throw new Error(error.response.data.message || 'Lỗi máy chủ khi cập nhật danh mục sản phẩm');
+                    default:
+                        throw new Error(error.response.data.message || 'Lỗi không xác định');
+                }
+            }
+            throw error;
         }
     }
 };
@@ -1903,6 +1935,53 @@ const invoiceApi = {
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
+        }
+    }
+};
+const categoriesApi = {
+    // Lấy tất cả danh mục
+    getAllCategories: async ()=>{
+        try {
+            const response = await apiClient.get('categories');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy danh sách danh mục.';
+        }
+    },
+    // Lấy danh mục theo ID
+    getCategoryById: async (id)=>{
+        try {
+            const response = await apiClient.get(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thông tin danh mục.';
+        }
+    },
+    // Tạo danh mục mới (Admin only)
+    createCategory: async (categoryData)=>{
+        try {
+            const response = await apiClient.post('categories', categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể tạo danh mục mới.';
+        }
+    },
+    // Cập nhật danh mục (Admin only)
+    updateCategory: async (id, categoryData)=>{
+        try {
+            const response = await apiClient.put(`categories/${id}`, categoryData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể cập nhật danh mục.';
+        }
+    },
+    // Xóa danh mục (Admin only) 
+    deleteCategory: async (id)=>{
+        try {
+            const response = await apiClient.delete(`categories/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể xóa danh mục.';
         }
     }
 };
@@ -3134,29 +3213,36 @@ function AnnouncementBar() {
     };
     if (!isVisible) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-gray-800 text-white relative",
+        className: "bg-gray-800 text-white relative overflow-hidden",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-center py-2 px-4",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "mr-2",
-                        children: "🚚"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/AnnouncementBar.js",
-                        lineNumber: 24,
-                        columnNumber: 17
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-sm font-medium text-center",
-                        children: "MIỄN PHÍ VẬN CHUYỂN CHO ĐƠN HÀNG TỪ 200K"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/AnnouncementBar.js",
-                        lineNumber: 25,
-                        columnNumber: 17
-                    }, this)
-                ]
-            }, void 0, true, {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "whitespace-nowrap animate-marquee",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            className: "mr-2",
+                            children: "🚚"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AnnouncementBar.js",
+                            lineNumber: 25,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-sm font-medium inline-block",
+                            children: "MIỄN PHÍ VẬN CHUYỂN CHO ĐƠN HÀNG TỪ 200K"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/AnnouncementBar.js",
+                            lineNumber: 26,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/AnnouncementBar.js",
+                    lineNumber: 24,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/src/components/AnnouncementBar.js",
                 lineNumber: 23,
                 columnNumber: 13
@@ -3176,17 +3262,17 @@ function AnnouncementBar() {
                         clipRule: "evenodd"
                     }, void 0, false, {
                         fileName: "[project]/src/components/AnnouncementBar.js",
-                        lineNumber: 33,
+                        lineNumber: 37,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/AnnouncementBar.js",
-                    lineNumber: 32,
+                    lineNumber: 36,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/AnnouncementBar.js",
-                lineNumber: 27,
+                lineNumber: 31,
                 columnNumber: 13
             }, this)
         ]
@@ -3658,9 +3744,27 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/",
-                            className: "text-2xl font-bold flex-shrink-0 text-black",
-                            children: "Fashion Store"
-                        }, void 0, false, {
+                            className: "flex items-center space-x-2 font-bold flex-shrink-0",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    src: "https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FDALL%C2%B7E%202025-01-20%2014.48.34%20-%20A%20minimalistic%20logo%20for%20a%20Fashion%20Store%2C%20designed%20for%20use%20as%20a%20website%20favicon.%20The%20logo%20features%20a%20sleek%20and%20modern%20design%20with%20an%20abstract%20represent.webp?alt=media&token=da1ff9d9-3a6e-44ca-ba4c-6de1a45b80fc",
+                                    alt: "Fashion Store Logo",
+                                    className: "h-8 w-8 object-contain"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 295,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-2xl text-black",
+                                    children: "Fashion Store"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 300,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/src/components/Header.js",
                             lineNumber: 294,
                             columnNumber: 21
@@ -3668,18 +3772,6 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
                             className: "hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/vouchers",
-                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
-                                    style: {
-                                        fontSize: '15px'
-                                    },
-                                    children: "Ưu đãi"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 300,
-                                    columnNumber: 25
-                                }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/onsale",
                                     className: "text-black hover:underline transition-colors duration-200 font-sans",
@@ -3689,7 +3781,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Sale"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 307,
+                                    lineNumber: 306,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3701,7 +3793,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Thời trang nam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 314,
+                                    lineNumber: 313,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3713,7 +3805,19 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Thời trang nữ"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 321,
+                                    lineNumber: 320,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/vouchers",
+                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Ưu đãi"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 327,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3725,7 +3829,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Hệ thống cửa hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 328,
+                                    lineNumber: 334,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3737,13 +3841,13 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Tra cứu đơn hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 335,
+                                    lineNumber: 341,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 299,
+                            lineNumber: 305,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -3760,17 +3864,17 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                 className: "h-6 w-6 text-black"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Header.js",
-                                                lineNumber: 353,
+                                                lineNumber: 359,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 352,
+                                            lineNumber: 358,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 351,
+                                        lineNumber: 357,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -3783,7 +3887,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     className: "h-6 w-6 text-black"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 360,
+                                                    lineNumber: 366,
                                                     columnNumber: 37
                                                 }, this),
                                                 favoriteCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3791,18 +3895,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     children: favoriteCount
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 362,
+                                                    lineNumber: 368,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 359,
+                                            lineNumber: 365,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 358,
+                                        lineNumber: 364,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -3815,7 +3919,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     className: "h-6 w-6 text-black"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 372,
+                                                    lineNumber: 378,
                                                     columnNumber: 37
                                                 }, this),
                                                 totalItems > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3823,29 +3927,29 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                                     children: totalItems
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Header.js",
-                                                    lineNumber: 374,
+                                                    lineNumber: 380,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Header.js",
-                                            lineNumber: 371,
+                                            lineNumber: 377,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Header.js",
-                                        lineNumber: 370,
+                                        lineNumber: 376,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 346,
+                                lineNumber: 352,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 345,
+                            lineNumber: 351,
                             columnNumber: 21
                         }, this)
                     ]
@@ -3864,7 +3968,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                 onClick: toggleDrawer
             }, void 0, false, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 386,
+                lineNumber: 392,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3886,17 +3990,17 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                 d: "M6 18L18 6M6 6l12 12"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Header.js",
-                                lineNumber: 408,
+                                lineNumber: 414,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 400,
+                            lineNumber: 406,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 396,
+                        lineNumber: 402,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3905,18 +4009,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                             isMobile: true
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.js",
-                            lineNumber: 418,
+                            lineNumber: 424,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Header.js",
-                        lineNumber: 417,
+                        lineNumber: 423,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Header.js",
-                lineNumber: 391,
+                lineNumber: 397,
                 columnNumber: 13
             }, this)
         ]
@@ -5776,7 +5880,7 @@ function NewProducts() {
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                                                                    href: "/category/productsByCategory?categoryId=32&categoryName=Áo%20Nam",
+                                                                                    href: "/category/productsByCategory?categoryId=33&categoryName=Áo%20Nam",
                                                                                     className: "text-gray-500 hover:text-black text-sm",
                                                                                     children: "Áo Nam"
                                                                                 }, void 0, false, {
@@ -5791,7 +5895,7 @@ function NewProducts() {
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                                                                    href: "/category/productsByCategory?categoryId=33&categoryName=Áo%20Nữ",
+                                                                                    href: "/category/productsByCategory?categoryId=32&categoryName=Áo%20Nữ",
                                                                                     className: "text-gray-500 hover:text-black text-sm",
                                                                                     children: "Áo Nữ"
                                                                                 }, void 0, false, {

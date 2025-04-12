@@ -44,6 +44,8 @@ const UserFormModal = memo(({
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full border rounded-md shadow-sm p-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
 
@@ -55,6 +57,8 @@ const UserFormModal = memo(({
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full border rounded-md shadow-sm p-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
 
@@ -67,6 +71,8 @@ const UserFormModal = memo(({
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full border rounded-md shadow-sm p-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
 
@@ -78,6 +84,8 @@ const UserFormModal = memo(({
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full border rounded-md shadow-sm p-2"
                                     required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
 
@@ -107,6 +115,8 @@ const UserFormModal = memo(({
                                         className="mt-1 block w-full border rounded-md shadow-sm p-2 pr-10"
                                         required={modalMode === 'create'}
                                         minLength="6"
+                                        onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                        onInput={(e) => e.target.setCustomValidity("")}
                                     />
                                     <button
                                         type="button"
@@ -123,8 +133,6 @@ const UserFormModal = memo(({
                                     </button>
                                 </div>
                             </div>
-
-                            {/* )} */}
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Vai trò</label>
