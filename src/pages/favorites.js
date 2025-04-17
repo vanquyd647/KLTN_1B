@@ -35,7 +35,6 @@ export default function Favorites() {
     useEffect(() => {
         loadFavorites();
         loadStocks();
-
         // Tải thông tin giỏ hàng nếu có
         const cartId = getCartId();
         if (cartId) {
@@ -84,10 +83,20 @@ export default function Favorites() {
     const handleRemoveFavorite = async (productId) => {
         try {
             await dispatch(removeFromFavorite(productId)).unwrap();
+
+            // Sau khi xóa thành công:
+            setCurrentPage(1); // Reset về trang 1
+            setAllFavorites([]); // Xóa danh sách cũ
+            setHasMore(true); // Reset trạng thái hasMore
+
+            // Load lại danh sách từ đầu
+            await loadFavorites(1);
+
         } catch (error) {
             console.error('Error removing favorite:', error);
         }
     };
+
 
     const handleProductClick = (slug) => {
         router.push(`/productdetail/${slug}`);

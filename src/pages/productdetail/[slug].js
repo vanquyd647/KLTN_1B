@@ -16,6 +16,7 @@ import { fetchReviewsByProduct, fetchAverageRating, createReview } from '../../s
 import Layout from '../../components/Layout';
 import ProductReviews from '../../components/slugs/ProductReviews';
 import ProductDescription from '../../components/slugs/ProductDescription';
+import SizeGuide from '../../components/SizeGuide';
 import NotFound from '../../components/NotFound';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
@@ -64,6 +65,7 @@ export default function Slug() {
     const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
 
     // Local state
+    const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -403,8 +405,8 @@ export default function Slug() {
     if (productError || !currentProduct) {
         return (
             <Layout>
-                <NotFound 
-                    message="Không tìm thấy sản phẩm" 
+                <NotFound
+                    message="Không tìm thấy sản phẩm"
                     description="Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
                 />
             </Layout>
@@ -516,6 +518,13 @@ export default function Slug() {
                         {/* Sizes */}
                         <div className="mb-4">
                             <h2 className="text-lg font-semibold mb-2">KÍCH THƯỚC:</h2>
+                            <button
+                                type="button"
+                                onClick={() => setIsSizeGuideOpen(true)}
+                                className="text-sm text-black-600 hover:text-black-800 underline mb-2"
+                            >
+                                Hướng dẫn chọn size
+                            </button>
                             <div className="flex gap-2">
                                 {currentProduct.productSizes.map((size) => {
                                     const isAvailable = selectedColor && isSizeAvailable(size.id);
@@ -768,6 +777,10 @@ export default function Slug() {
                 </div>
             </div>
             <RecentlyViewed />
+            <SizeGuide
+                isOpen={isSizeGuideOpen}
+                closeModal={() => setIsSizeGuideOpen(false)}
+            />
         </Layout>
     );
 }

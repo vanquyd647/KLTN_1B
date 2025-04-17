@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
+import { userApi } from '@/utils/apiClient';
 
 export default function AuthInterface({
     authStep,
@@ -30,6 +31,9 @@ export default function AuthInterface({
         phone: '',
         gender: '',
     });
+    const [countdown, setCountdown] = useState(60);
+    const [canResend, setCanResend] = useState(false);
+
 
 
     // Validate từng trường khi người dùng thay đổi giá trị
@@ -46,6 +50,31 @@ export default function AuthInterface({
             validateField('confirmNewPassword', formData.confirmNewPassword);
         }
     }, [formData, authStep]);
+
+    // Thêm useEffect để xử lý đếm ngược
+    useEffect(() => {
+        let timer;
+        if (authStep === 'otp' && countdown > 0) {
+            timer = setInterval(() => {
+                setCountdown(prev => prev - 1);
+            }, 1000);
+        }
+        if (countdown === 0) {
+            setCanResend(true);
+        }
+        return () => clearInterval(timer);
+    }, [countdown, authStep]);
+
+    // Thêm hàm xử lý gửi lại OTP
+    const handleResendOtp = async () => {
+        try {
+            setCanResend(false);
+            setCountdown(60);
+            await userApi.resend_otp(formData.email);
+        } catch (error) {
+            console.error('Lỗi khi gửi lại OTP:', error);
+        }
+    };
 
     // Hàm validate từng trường
     const validateField = (fieldName, value) => {
@@ -584,18 +613,34 @@ export default function AuthInterface({
                                 onChange={(e) => setOtp(e.target.value)}
                                 className="w-full border p-2 rounded"
                                 required
+                                maxLength={6}
                                 onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
                                 onInput={(e) => e.target.setCustomValidity("")}
                             />
                         </div>
                         <button
                             type="submit"
-                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
+                            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full mb-3"
                             disabled={loading}
                         >
                             {loading ? 'Đang xác thực...' : 'Xác thực OTP'}
                         </button>
                     </form>
+
+                    <div className="text-center mt-4">
+                        {canResend ? (
+                            <button
+                                onClick={handleResendOtp}
+                                className="text-blue-600 hover:text-blue-800 transition"
+                            >
+                                Gửi lại mã OTP
+                            </button>
+                        ) : (
+                            <p className="text-gray-600">
+                                Gửi lại mã sau: {countdown}s
+                            </p>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

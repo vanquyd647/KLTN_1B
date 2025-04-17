@@ -40,8 +40,8 @@ const UserManagement = () => {
 
     // Memoized constants
     const roleLabels = useMemo(() => ({
-        'superadmin': 'Super Admin',
-        'admin': 'Admin',
+        'superadmin': 'Quản trị viên',
+        'admin': 'Nhân viên',
         'customer': 'Khách hàng'
     }), []);
 

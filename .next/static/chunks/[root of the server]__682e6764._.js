@@ -867,6 +867,16 @@ const userApi = {
             throw error;
         }
     },
+    resend_otp: async (email)=>{
+        try {
+            const response = await apiClient.post('users/resend-otp', {
+                email
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     // Verify OTP for registration
     verifyOtp: async (otpData)=>{
         try {
@@ -4591,6 +4601,13 @@ const OrderStatus = {
     in_progress: 'Đang xử lý',
     shipping: 'Đang giao hàng'
 };
+const PaymentStatus = {
+    pending: 'Chờ thanh toán',
+    paid: 'Đã thanh toán',
+    cancelled: 'Đã hủy',
+    failed: 'Thất bại',
+    processing: 'Đang xử lý'
+};
 const StatusBadge = ({ status })=>{
     const getStatusColor = (status)=>{
         switch(status){
@@ -4617,7 +4634,7 @@ const StatusBadge = ({ status })=>{
         children: OrderStatus[status]
     }, void 0, false, {
         fileName: "[project]/src/pages/TrackOrder.js",
-        lineNumber: 41,
+        lineNumber: 48,
         columnNumber: 9
     }, this);
 };
@@ -4686,7 +4703,7 @@ const TrackOrder = ()=>{
                     children: "Tra Cứu Đơn Hàng"
                 }, void 0, false, {
                     fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 113,
+                    lineNumber: 120,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -4701,7 +4718,7 @@ const TrackOrder = ()=>{
                                     children: "Mã đơn hàng"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 117,
+                                    lineNumber: 124,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4720,7 +4737,7 @@ const TrackOrder = ()=>{
                                     onInput: (e)=>e.target.setCustomValidity("")
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 118,
+                                    lineNumber: 125,
                                     columnNumber: 25
                                 }, this),
                                 errors.orderId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4728,13 +4745,13 @@ const TrackOrder = ()=>{
                                     children: errors.orderId
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 131,
+                                    lineNumber: 138,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 116,
+                            lineNumber: 123,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4745,7 +4762,7 @@ const TrackOrder = ()=>{
                                     children: "Email hoặc Số điện thoại"
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 136,
+                                    lineNumber: 143,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4764,7 +4781,7 @@ const TrackOrder = ()=>{
                                     onInput: (e)=>e.target.setCustomValidity("")
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 137,
+                                    lineNumber: 144,
                                     columnNumber: 25
                                 }, this),
                                 errors.identifier && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4772,13 +4789,13 @@ const TrackOrder = ()=>{
                                     children: errors.identifier
                                 }, void 0, false, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 150,
+                                    lineNumber: 157,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 135,
+                            lineNumber: 142,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4788,13 +4805,13 @@ const TrackOrder = ()=>{
                             children: loading ? 'Đang tra cứu...' : 'Tra cứu'
                         }, void 0, false, {
                             fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 154,
+                            lineNumber: 161,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 115,
+                    lineNumber: 122,
                     columnNumber: 17
                 }, this),
                 orderData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4808,7 +4825,7 @@ const TrackOrder = ()=>{
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 165,
+                            lineNumber: 172,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4826,109 +4843,54 @@ const TrackOrder = ()=>{
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-gray-600 mb-1",
-                                                                children: "Trạng thái:"
+                                                                children: "Trạng thái đơn hàng:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 176,
+                                                                lineNumber: 184,
                                                                 columnNumber: 45
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusBadge, {
                                                                 status: orderData.orderInfo.orderStatus
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 177,
+                                                                lineNumber: 185,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 175,
+                                                        lineNumber: 183,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-gray-600 mb-1",
-                                                                children: "Ngày đặt:"
+                                                                children: "Trạng thái thanh toán:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 180,
+                                                                lineNumber: 190,
                                                                 columnNumber: 45
                                                             }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: new Date(orderData.orderInfo.orderDate).toLocaleDateString('vi-VN')
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: `px-3 py-1 rounded-full text-sm font-medium ${orderData.orderInfo.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`,
+                                                                children: PaymentStatus[orderData.orderInfo.paymentStatus]
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 181,
+                                                                lineNumber: 191,
                                                                 columnNumber: 45
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 179,
+                                                        lineNumber: 189,
                                                         columnNumber: 41
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-gray-600 mb-1",
-                                                                children: "Gía sản phẩm:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 186,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.originalPrice).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 187,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 185,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    orderData.orderInfo.discountAmount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Giảm giá:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 193,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.discountAmount).toLocaleString('vi-VN'),
-                                                                    "đ",
-                                                                    orderData.orderInfo.discountCode && ` (${orderData.orderInfo.discountCode})`
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 194,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 192,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Phí giao hàng:"
+                                                                children: "Ngày đặt hàng:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
                                                                 lineNumber: 201,
@@ -4936,11 +4898,8 @@ const TrackOrder = ()=>{
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "font-medium",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.shippingFee).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
+                                                                children: new Date(orderData.orderInfo.orderDate).toLocaleString('vi-VN')
+                                                            }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
                                                                 lineNumber: 202,
                                                                 columnNumber: 45
@@ -4951,15 +4910,223 @@ const TrackOrder = ()=>{
                                                         lineNumber: 200,
                                                         columnNumber: 41
                                                     }, this),
+                                                    orderData.orderInfo.paymentDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Thời gian thanh toán:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 209,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium",
+                                                                children: new Date(orderData.orderInfo.paymentDate).toLocaleString('vi-VN')
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 210,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 208,
+                                                        columnNumber: 45
+                                                    }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Phương thức thanh toán:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 218,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium uppercase",
+                                                                children: orderData.orderInfo.paymentMethod
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 219,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 217,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    orderData.orderInfo.transactionId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Mã giao dịch:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 226,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium",
+                                                                children: orderData.orderInfo.transactionId
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 227,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 225,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Giá sản phẩm:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 235,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium",
+                                                                children: [
+                                                                    Number(orderData.orderInfo.originalPrice).toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 236,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 234,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    Number(orderData.orderInfo.discountAmount) > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Giảm giá:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 243,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium text-green-600",
+                                                                children: [
+                                                                    "-",
+                                                                    Number(orderData.orderInfo.discountAmount).toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 244,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 242,
+                                                        columnNumber: 45
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Phí vận chuyển:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 251,
+                                                                columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium",
+                                                                children: [
+                                                                    Number(orderData.orderInfo.shippingFee).toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 252,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 250,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "pt-2 border-t",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-gray-600 mb-1",
                                                                 children: "Tổng thanh toán:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 207,
+                                                                lineNumber: 258,
                                                                 columnNumber: 45
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium text-xl text-red-600",
+                                                                children: [
+                                                                    Number(orderData.orderInfo.finalPrice).toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 259,
+                                                                columnNumber: 45
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 257,
+                                                        columnNumber: 41
+                                                    }, this),
+                                                    orderData.orderInfo.paymentStatus === 'paid' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Số tiền đã thanh toán:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 267,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "font-medium text-green-600",
+                                                                children: [
+                                                                    Number(orderData.orderInfo.paymentAmount).toLocaleString('vi-VN'),
+                                                                    "đ"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 268,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/pages/TrackOrder.js",
+                                                        lineNumber: 266,
+                                                        columnNumber: 45
+                                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-600 mb-1",
+                                                                children: "Số tiền cần thanh toán:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/pages/TrackOrder.js",
+                                                                lineNumber: 274,
+                                                                columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "font-medium text-red-600",
@@ -4969,24 +5136,24 @@ const TrackOrder = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 208,
-                                                                columnNumber: 45
+                                                                lineNumber: 275,
+                                                                columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 206,
-                                                        columnNumber: 41
+                                                        lineNumber: 273,
+                                                        columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                lineNumber: 174,
+                                                lineNumber: 181,
                                                 columnNumber: 37
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 173,
+                                            lineNumber: 180,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4996,7 +5163,7 @@ const TrackOrder = ()=>{
                                                     children: "Thông tin người nhận"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 217,
+                                                    lineNumber: 285,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5006,10 +5173,10 @@ const TrackOrder = ()=>{
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     className: "text-gray-600",
-                                                                    children: "Họ tên:"
+                                                                    children: "Họ và tên:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 219,
+                                                                    lineNumber: 287,
                                                                     columnNumber: 44
                                                                 }, this),
                                                                 " ",
@@ -5017,7 +5184,7 @@ const TrackOrder = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 219,
+                                                            lineNumber: 287,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5027,7 +5194,7 @@ const TrackOrder = ()=>{
                                                                     children: "Email:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 220,
+                                                                    lineNumber: 288,
                                                                     columnNumber: 44
                                                                 }, this),
                                                                 " ",
@@ -5035,7 +5202,7 @@ const TrackOrder = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 220,
+                                                            lineNumber: 288,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5045,7 +5212,7 @@ const TrackOrder = ()=>{
                                                                     children: "Số điện thoại:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 221,
+                                                                    lineNumber: 289,
                                                                     columnNumber: 44
                                                                 }, this),
                                                                 " ",
@@ -5053,7 +5220,7 @@ const TrackOrder = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 221,
+                                                            lineNumber: 289,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5063,7 +5230,7 @@ const TrackOrder = ()=>{
                                                                     children: "Địa chỉ:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 222,
+                                                                    lineNumber: 290,
                                                                     columnNumber: 44
                                                                 }, this),
                                                                 " ",
@@ -5075,25 +5242,25 @@ const TrackOrder = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 222,
+                                                            lineNumber: 290,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 218,
+                                                    lineNumber: 286,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 216,
+                                            lineNumber: 284,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 171,
+                                    lineNumber: 178,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5104,7 +5271,7 @@ const TrackOrder = ()=>{
                                             children: "Sản phẩm đã đặt"
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 234,
+                                            lineNumber: 302,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5122,7 +5289,7 @@ const TrackOrder = ()=>{
                                                                 className: "w-20 h-20 object-cover rounded"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 244,
+                                                                lineNumber: 312,
                                                                 columnNumber: 53
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5133,7 +5300,7 @@ const TrackOrder = ()=>{
                                                                         children: item.product.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 250,
+                                                                        lineNumber: 318,
                                                                         columnNumber: 57
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5146,7 +5313,7 @@ const TrackOrder = ()=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 251,
+                                                                        lineNumber: 319,
                                                                         columnNumber: 57
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5158,7 +5325,7 @@ const TrackOrder = ()=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 255,
+                                                                        lineNumber: 323,
                                                                         columnNumber: 57
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5170,59 +5337,59 @@ const TrackOrder = ()=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 259,
+                                                                        lineNumber: 327,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 249,
+                                                                lineNumber: 317,
                                                                 columnNumber: 53
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 243,
+                                                        lineNumber: 311,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, index, false, {
                                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 242,
+                                                    lineNumber: 310,
                                                     columnNumber: 45
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 235,
+                                            lineNumber: 303,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 233,
+                                    lineNumber: 301,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 169,
+                            lineNumber: 176,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 164,
+                    lineNumber: 171,
                     columnNumber: 21
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/pages/TrackOrder.js",
-            lineNumber: 112,
+            lineNumber: 119,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/pages/TrackOrder.js",
-        lineNumber: 111,
+        lineNumber: 118,
         columnNumber: 9
     }, this);
 };

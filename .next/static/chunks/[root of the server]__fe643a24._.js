@@ -867,6 +867,16 @@ const userApi = {
             throw error;
         }
     },
+    resend_otp: async (email)=>{
+        try {
+            const response = await apiClient.post('users/resend-otp', {
+                email
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     // Verify OTP for registration
     verifyOtp: async (otpData)=>{
         try {
@@ -3339,18 +3349,6 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                             className: "hidden md:flex space-x-8 ml-auto text-base font-medium tracking-wide",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/vouchers",
-                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
-                                    style: {
-                                        fontSize: '15px'
-                                    },
-                                    children: "Ưu đãi"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 306,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/onsale",
                                     className: "text-black hover:underline transition-colors duration-200 font-sans",
                                     style: {
@@ -3359,7 +3357,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Sale"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 313,
+                                    lineNumber: 306,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3371,7 +3369,7 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                     children: "Thời trang nam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
-                                    lineNumber: 320,
+                                    lineNumber: 313,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
@@ -3381,6 +3379,18 @@ const Header = /*#__PURE__*/ _s((0, __TURBOPACK__imported__module__$5b$project$5
                                         fontSize: '15px'
                                     },
                                     children: "Thời trang nữ"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.js",
+                                    lineNumber: 320,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/vouchers",
+                                    className: "text-black hover:underline transition-colors duration-200 font-sans",
+                                    style: {
+                                        fontSize: '15px'
+                                    },
+                                    children: "Ưu đãi"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.js",
                                     lineNumber: 327,
@@ -4489,11 +4499,10 @@ function Layout({ children }) {
         dispatch,
         isCartPage
     ]);
-    // Thêm interval để tự động transfer và update
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Layout.useEffect": ()=>{
-            const interval = setInterval({
-                "Layout.useEffect.interval": async ()=>{
+            const updateFavorites = {
+                "Layout.useEffect.updateFavorites": async ()=>{
                     try {
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["transferFavorites"])()).unwrap();
                         await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["forceUpdateFavorites"])({
@@ -4501,13 +4510,11 @@ function Layout({ children }) {
                             limit: 10
                         })).unwrap();
                     } catch (error) {
-                        console.error('Failed to auto-update favorites:', error);
+                        console.error('Failed to update favorites:', error);
                     }
                 }
-            }["Layout.useEffect.interval"], 300000); // 30 giây
-            return ({
-                "Layout.useEffect": ()=>clearInterval(interval)
-            })["Layout.useEffect"];
+            }["Layout.useEffect.updateFavorites"];
+            updateFavorites();
         }
     }["Layout.useEffect"], [
         dispatch
@@ -4519,7 +4526,7 @@ function Layout({ children }) {
                 isCartPage: isCartPage
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 92,
+                lineNumber: 91,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -4527,28 +4534,28 @@ function Layout({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 94,
+                lineNumber: 93,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$BackToTop$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 97,
+                lineNumber: 96,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ServiceFeatures$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 98,
+                lineNumber: 97,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Footer$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/components/Layout.js",
-                lineNumber: 99,
+                lineNumber: 98,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Layout.js",
-        lineNumber: 91,
+        lineNumber: 90,
         columnNumber: 9
     }, this);
 }
@@ -5120,6 +5127,12 @@ function Favorites() {
     const handleRemoveFavorite = async (productId)=>{
         try {
             await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeFromFavorite"])(productId)).unwrap();
+            // Sau khi xóa thành công:
+            setCurrentPage(1); // Reset về trang 1
+            setAllFavorites([]); // Xóa danh sách cũ
+            setHasMore(true); // Reset trạng thái hasMore
+            // Load lại danh sách từ đầu
+            await loadFavorites(1);
         } catch (error) {
             console.error('Error removing favorite:', error);
         }
@@ -5268,7 +5281,7 @@ function Favorites() {
                                 children: productModal.product_name
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 274,
+                                lineNumber: 283,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5277,13 +5290,13 @@ function Favorites() {
                                 children: "×"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 275,
+                                lineNumber: 284,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 273,
+                        lineNumber: 282,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5294,12 +5307,12 @@ function Favorites() {
                             className: "w-full h-64 object-contain rounded mb-4 border"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/favorites.js",
-                            lineNumber: 285,
+                            lineNumber: 294,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 284,
+                        lineNumber: 293,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5310,7 +5323,7 @@ function Favorites() {
                                 children: "Chọn màu:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 293,
+                                lineNumber: 302,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5334,29 +5347,29 @@ function Favorites() {
                                                 className: "w-full h-0.5 bg-gray-400 transform rotate-45"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 311,
+                                                lineNumber: 320,
                                                 columnNumber: 49
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/favorites.js",
-                                            lineNumber: 310,
+                                            lineNumber: 319,
                                             columnNumber: 45
                                         }, this)
                                     }, color.id, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 298,
+                                        lineNumber: 307,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 294,
+                                lineNumber: 303,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 292,
+                        lineNumber: 301,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5367,7 +5380,7 @@ function Favorites() {
                                 children: "Chọn kích thước:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 321,
+                                lineNumber: 330,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5386,24 +5399,24 @@ function Favorites() {
                                             children: size.size
                                         }, void 0, false, {
                                             fileName: "[project]/src/pages/favorites.js",
-                                            lineNumber: 336,
+                                            lineNumber: 345,
                                             columnNumber: 41
                                         }, this)
                                     }, size.id, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 326,
+                                        lineNumber: 335,
                                         columnNumber: 37
                                     }, this);
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 322,
+                                lineNumber: 331,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 320,
+                        lineNumber: 329,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5414,7 +5427,7 @@ function Favorites() {
                                 children: "Số lượng:"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 344,
+                                lineNumber: 353,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5427,7 +5440,7 @@ function Favorites() {
                                         children: "-"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 346,
+                                        lineNumber: 355,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -5439,7 +5452,7 @@ function Favorites() {
                                         readOnly: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 353,
+                                        lineNumber: 362,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5449,19 +5462,19 @@ function Favorites() {
                                         children: "+"
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 361,
+                                        lineNumber: 370,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 345,
+                                lineNumber: 354,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 343,
+                        lineNumber: 352,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5474,7 +5487,7 @@ function Favorites() {
                                 children: "Thêm vào giỏ hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 372,
+                                lineNumber: 381,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5484,24 +5497,24 @@ function Favorites() {
                                 children: "Mua ngay"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 379,
+                                lineNumber: 388,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 371,
+                        lineNumber: 380,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 272,
+                lineNumber: 281,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/favorites.js",
-            lineNumber: 271,
+            lineNumber: 280,
             columnNumber: 13
         }, this);
     };
@@ -5514,17 +5527,17 @@ function Favorites() {
                     children: "Đang tải..."
                 }, void 0, false, {
                     fileName: "[project]/src/pages/favorites.js",
-                    lineNumber: 396,
+                    lineNumber: 405,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 395,
+                lineNumber: 404,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/favorites.js",
-            lineNumber: 394,
+            lineNumber: 403,
             columnNumber: 13
         }, this);
     }
@@ -5537,17 +5550,17 @@ function Favorites() {
                     children: error
                 }, void 0, false, {
                     fileName: "[project]/src/pages/favorites.js",
-                    lineNumber: 406,
+                    lineNumber: 415,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 405,
+                lineNumber: 414,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/pages/favorites.js",
-            lineNumber: 404,
+            lineNumber: 413,
             columnNumber: 13
         }, this);
     }
@@ -5557,7 +5570,7 @@ function Favorites() {
                 title: "Sản phẩm yêu thích"
             }, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 414,
+                lineNumber: 423,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5569,17 +5582,17 @@ function Favorites() {
                             className: "hidden md:flex justify-center gap-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Sidebar2$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 419,
+                                lineNumber: 428,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/pages/favorites.js",
-                            lineNumber: 418,
+                            lineNumber: 427,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 417,
+                        lineNumber: 426,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -5589,7 +5602,7 @@ function Favorites() {
                                 className: "w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"
                             }, void 0, false, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 424,
+                                lineNumber: 433,
                                 columnNumber: 21
                             }, this),
                             "Sản phẩm yêu thích (",
@@ -5598,7 +5611,7 @@ function Favorites() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 423,
+                        lineNumber: 432,
                         columnNumber: 17
                     }, this),
                     items.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5606,7 +5619,7 @@ function Favorites() {
                         children: "Bạn chưa có sản phẩm yêu thích nào"
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 429,
+                        lineNumber: 438,
                         columnNumber: 21
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 px-4",
@@ -5626,7 +5639,7 @@ function Favorites() {
                                                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 445,
+                                                lineNumber: 454,
                                                 columnNumber: 41
                                             }, this),
                                             item.product.discount_price < item.product.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5638,14 +5651,14 @@ function Favorites() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 454,
+                                                lineNumber: 463,
                                                 columnNumber: 45
                                             }, this) : item.product.is_new ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold",
                                                 children: "NEW"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 458,
+                                                lineNumber: 467,
                                                 columnNumber: 45
                                             }, this) : null,
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5658,18 +5671,18 @@ function Favorites() {
                                                     className: "h-6 w-6 text-red-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/pages/favorites.js",
-                                                    lineNumber: 469,
+                                                    lineNumber: 478,
                                                     columnNumber: 45
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 462,
+                                                lineNumber: 471,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 444,
+                                        lineNumber: 453,
                                         columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -5677,7 +5690,7 @@ function Favorites() {
                                         children: item.product.product_name
                                     }, void 0, false, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 472,
+                                        lineNumber: 481,
                                         columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5693,12 +5706,12 @@ function Favorites() {
                                                         title: color.color
                                                     }, color.id, false, {
                                                         fileName: "[project]/src/pages/favorites.js",
-                                                        lineNumber: 477,
+                                                        lineNumber: 486,
                                                         columnNumber: 49
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 475,
+                                                lineNumber: 484,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5716,7 +5729,7 @@ function Favorites() {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/favorites.js",
-                                                                    lineNumber: 489,
+                                                                    lineNumber: 498,
                                                                     columnNumber: 57
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5727,7 +5740,7 @@ function Favorites() {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/pages/favorites.js",
-                                                                    lineNumber: 492,
+                                                                    lineNumber: 501,
                                                                     columnNumber: 57
                                                                 }, this)
                                                             ]
@@ -5739,12 +5752,12 @@ function Favorites() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 497,
+                                                            lineNumber: 506,
                                                             columnNumber: 53
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/favorites.js",
-                                                        lineNumber: 486,
+                                                        lineNumber: 495,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5757,36 +5770,36 @@ function Favorites() {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/pages/favorites.js",
-                                                            lineNumber: 511,
+                                                            lineNumber: 520,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/pages/favorites.js",
-                                                        lineNumber: 504,
+                                                        lineNumber: 513,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/pages/favorites.js",
-                                                lineNumber: 485,
+                                                lineNumber: 494,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/pages/favorites.js",
-                                        lineNumber: 474,
+                                        lineNumber: 483,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, item.id, true, {
                                 fileName: "[project]/src/pages/favorites.js",
-                                lineNumber: 439,
+                                lineNumber: 448,
                                 columnNumber: 33
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 433,
+                        lineNumber: 442,
                         columnNumber: 21
                     }, this),
                     items.length > 0 && hasMore && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5798,29 +5811,29 @@ function Favorites() {
                             children: loading ? "Đang tải..." : "Xem thêm sản phẩm"
                         }, void 0, false, {
                             fileName: "[project]/src/pages/favorites.js",
-                            lineNumber: 524,
+                            lineNumber: 533,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/pages/favorites.js",
-                        lineNumber: 523,
+                        lineNumber: 532,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 416,
+                lineNumber: 425,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
                 fileName: "[project]/src/pages/favorites.js",
-                lineNumber: 540,
+                lineNumber: 549,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/pages/favorites.js",
-        lineNumber: 413,
+        lineNumber: 422,
         columnNumber: 9
     }, this);
 }

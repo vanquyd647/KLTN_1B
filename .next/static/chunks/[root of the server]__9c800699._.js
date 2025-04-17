@@ -867,6 +867,16 @@ const userApi = {
             throw error;
         }
     },
+    resend_otp: async (email)=>{
+        try {
+            const response = await apiClient.post('users/resend-otp', {
+                email
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     // Verify OTP for registration
     verifyOtp: async (otpData)=>{
         try {
@@ -8961,8 +8971,8 @@ const UserManagement = ()=>{
     // Memoized constants
     const roleLabels = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "UserManagement.useMemo[roleLabels]": ()=>({
-                'superadmin': 'Super Admin',
-                'admin': 'Admin',
+                'superadmin': 'Quản trị viên',
+                'admin': 'Nhân viên',
                 'customer': 'Khách hàng'
             })
     }["UserManagement.useMemo[roleLabels]"], []);
@@ -11777,6 +11787,15 @@ const Dashboard = ({ setActiveTab })=>{
     const handleViewAllOrders = ()=>{
         setActiveTab('orders');
     };
+    const handleViewAllProducts = ()=>{
+        setActiveTab('products');
+    };
+    const handleViewAllUsers = ()=>{
+        setActiveTab('users');
+    };
+    const handleViewAllRevenue = ()=>{
+        setActiveTab('statistics');
+    };
     // Function để chuyển đổi trạng thái đơn hàng sang tiếng Việt
     const getOrderStatusText = (status)=>{
         switch(status){
@@ -11897,7 +11916,7 @@ const Dashboard = ({ setActiveTab })=>{
                 children: "Tổng quan hệ thống"
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 223,
+                lineNumber: 235,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11913,40 +11932,40 @@ const Dashboard = ({ setActiveTab })=>{
                                         className: "h-4 bg-gray-200 rounded w-1/3"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 232,
+                                        lineNumber: 244,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-10 h-10 bg-gray-200 rounded-full"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 233,
+                                        lineNumber: 245,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 231,
+                                lineNumber: 243,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-8 bg-gray-200 rounded w-1/2 mb-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 235,
+                                lineNumber: 247,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-3 bg-gray-200 rounded w-1/4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 236,
+                                lineNumber: 248,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, index, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 230,
+                        lineNumber: 242,
                         columnNumber: 25
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
                     children: [
@@ -11958,14 +11977,15 @@ const Dashboard = ({ setActiveTab })=>{
                             }).format(revenue.totalRevenue),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CurrencyIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 247,
+                                lineNumber: 259,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${revenue.count} đơn thành công`,
-                            color: "bg-gradient-to-r from-blue-500 to-blue-600"
+                            color: "bg-gradient-to-r from-blue-500 to-blue-600",
+                            onClick: handleViewAllRevenue
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 241,
+                            lineNumber: 253,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -11973,14 +11993,15 @@ const Dashboard = ({ setActiveTab })=>{
                             value: orders.length.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 255,
+                                lineNumber: 268,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${orders.filter((o)=>o.status === 'completed').length} hoàn thành`,
-                            color: "bg-gradient-to-r from-green-500 to-green-600"
+                            color: "bg-gradient-to-r from-green-500 to-green-600",
+                            onClick: handleViewAllOrders
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 252,
+                            lineNumber: 265,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -11988,14 +12009,15 @@ const Dashboard = ({ setActiveTab })=>{
                             value: users.length.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 263,
+                                lineNumber: 277,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${users.filter((u)=>u.roles.includes('customer')).length} khách hàng`,
-                            color: "bg-gradient-to-r from-purple-500 to-purple-600"
+                            color: "bg-gradient-to-r from-purple-500 to-purple-600",
+                            onClick: handleViewAllUsers
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 260,
+                            lineNumber: 274,
                             columnNumber: 25
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardCard, {
@@ -12003,21 +12025,22 @@ const Dashboard = ({ setActiveTab })=>{
                             value: products.total.toString(),
                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductIcon, {}, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 271,
+                                lineNumber: 286,
                                 columnNumber: 35
                             }, void 0),
                             trend: `${products.newCount} sản phẩm mới`,
-                            color: "bg-gradient-to-r from-orange-500 to-orange-600"
+                            color: "bg-gradient-to-r from-orange-500 to-orange-600",
+                            onClick: handleViewAllProducts
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 268,
+                            lineNumber: 283,
                             columnNumber: 25
                         }, this)
                     ]
                 }, void 0, true)
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 226,
+                lineNumber: 238,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12033,7 +12056,7 @@ const Dashboard = ({ setActiveTab })=>{
                                     children: "Đơn hàng gần đây"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 283,
+                                    lineNumber: 299,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12054,24 +12077,24 @@ const Dashboard = ({ setActiveTab })=>{
                                                 d: "M9 5l7 7-7 7"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 288,
+                                                lineNumber: 304,
                                                 columnNumber: 33
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 287,
+                                            lineNumber: 303,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 284,
+                                    lineNumber: 300,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 282,
+                            lineNumber: 298,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12088,7 +12111,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                     children: "Mã ĐH"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 296,
+                                                    lineNumber: 312,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12096,7 +12119,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                     children: "Khách hàng"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 297,
+                                                    lineNumber: 313,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12104,7 +12127,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                     children: "Tổng tiền"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 298,
+                                                    lineNumber: 314,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12112,7 +12135,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                     children: "Trạng thái"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 299,
+                                                    lineNumber: 315,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12120,18 +12143,18 @@ const Dashboard = ({ setActiveTab })=>{
                                                     children: "Ngày đặt"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 300,
+                                                    lineNumber: 316,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 295,
+                                            lineNumber: 311,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 294,
+                                        lineNumber: 310,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -12145,17 +12168,17 @@ const Dashboard = ({ setActiveTab })=>{
                                                         className: "h-4 bg-gray-200 rounded animate-pulse"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 309,
+                                                        lineNumber: 325,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                    lineNumber: 308,
+                                                    lineNumber: 324,
                                                     columnNumber: 45
                                                 }, this)
                                             }, index, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 307,
+                                                lineNumber: 323,
                                                 columnNumber: 41
                                             }, this)) : orders.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12164,12 +12187,12 @@ const Dashboard = ({ setActiveTab })=>{
                                                 children: "Không có đơn hàng nào"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 315,
+                                                lineNumber: 331,
                                                 columnNumber: 41
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Dashboard.js",
-                                            lineNumber: 314,
+                                            lineNumber: 330,
                                             columnNumber: 37
                                         }, this) : orders.map((order)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].tr, {
                                                 className: "hover:bg-gray-50 transition-colors",
@@ -12191,7 +12214,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 328,
+                                                        lineNumber: 344,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12204,25 +12227,25 @@ const Dashboard = ({ setActiveTab })=>{
                                                                     children: order.shipping.recipient.name.charAt(0)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                                    lineNumber: 331,
+                                                                    lineNumber: 347,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: order.shipping.recipient.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/Dashboard.js",
-                                                                    lineNumber: 334,
+                                                                    lineNumber: 350,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/Dashboard.js",
-                                                            lineNumber: 330,
+                                                            lineNumber: 346,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 329,
+                                                        lineNumber: 345,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12233,7 +12256,7 @@ const Dashboard = ({ setActiveTab })=>{
                                                         }).format(order.pricing.final_price)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 337,
+                                                        lineNumber: 353,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12243,12 +12266,12 @@ const Dashboard = ({ setActiveTab })=>{
                                                             children: getOrderStatusText(order.status)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/Dashboard.js",
-                                                            lineNumber: 344,
+                                                            lineNumber: 360,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 343,
+                                                        lineNumber: 359,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12256,40 +12279,40 @@ const Dashboard = ({ setActiveTab })=>{
                                                         children: new Date(order.dates.created_at).toLocaleDateString('vi-VN')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Dashboard.js",
-                                                        lineNumber: 348,
+                                                        lineNumber: 364,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, order.id, true, {
                                                 fileName: "[project]/src/components/Dashboard.js",
-                                                lineNumber: 321,
+                                                lineNumber: 337,
                                                 columnNumber: 41
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 303,
+                                        lineNumber: 319,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 293,
+                                lineNumber: 309,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Dashboard.js",
-                            lineNumber: 292,
+                            lineNumber: 308,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Dashboard.js",
-                    lineNumber: 281,
+                    lineNumber: 297,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 280,
+                lineNumber: 296,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12303,7 +12326,7 @@ const Dashboard = ({ setActiveTab })=>{
                                 children: "Doanh thu theo tháng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 363,
+                                lineNumber: 379,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12314,12 +12337,12 @@ const Dashboard = ({ setActiveTab })=>{
                                         className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 367,
+                                        lineNumber: 383,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 366,
+                                    lineNumber: 382,
                                     columnNumber: 29
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Bar"], {
                                     data: getRevenueChartData(orders),
@@ -12351,18 +12374,18 @@ const Dashboard = ({ setActiveTab })=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 370,
+                                    lineNumber: 386,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 364,
+                                lineNumber: 380,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 362,
+                        lineNumber: 378,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12373,7 +12396,7 @@ const Dashboard = ({ setActiveTab })=>{
                                 children: "Phân bổ đơn hàng"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 404,
+                                lineNumber: 420,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12384,12 +12407,12 @@ const Dashboard = ({ setActiveTab })=>{
                                         className: "w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 408,
+                                        lineNumber: 424,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 407,
+                                    lineNumber: 423,
                                     columnNumber: 29
                                 }, this) : orders.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$chartjs$2d$2$2f$dist$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Doughnut"], {
                                     data: getOrderStatusDistribution(orders),
@@ -12424,44 +12447,44 @@ const Dashboard = ({ setActiveTab })=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 411,
+                                    lineNumber: 427,
                                     columnNumber: 29
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "h-full flex items-center justify-center text-gray-500",
                                     children: "Không có dữ liệu"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 444,
+                                    lineNumber: 460,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 405,
+                                lineNumber: 421,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 403,
+                        lineNumber: 419,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 361,
+                lineNumber: 377,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 222,
+        lineNumber: 234,
         columnNumber: 9
     }, this);
 };
 _s(Dashboard, "8G8CuAO3xbfpHZ4dhjqWWUTVgU8=");
 _c = Dashboard;
 // Components
-const DashboardCard = ({ title, value, icon, trend, color })=>{
+const DashboardCard = ({ title, value, icon, trend, color, onClick })=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["motion"].div, {
         className: "bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100",
         whileHover: {
@@ -12471,6 +12494,7 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
             type: "spring",
             stiffness: 300
         },
+        onClick: onClick,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between mb-4",
@@ -12480,7 +12504,7 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: title
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 464,
+                        lineNumber: 481,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12488,13 +12512,13 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: icon
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 465,
+                        lineNumber: 482,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 463,
+                lineNumber: 480,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12505,7 +12529,7 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                         children: value
                     }, void 0, false, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 470,
+                        lineNumber: 487,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12526,36 +12550,36 @@ const DashboardCard = ({ title, value, icon, trend, color })=>{
                                         d: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Dashboard.js",
-                                        lineNumber: 474,
+                                        lineNumber: 491,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Dashboard.js",
-                                    lineNumber: 473,
+                                    lineNumber: 490,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Dashboard.js",
-                                lineNumber: 472,
+                                lineNumber: 489,
                                 columnNumber: 21
                             }, this),
                             trend
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Dashboard.js",
-                        lineNumber: 471,
+                        lineNumber: 488,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Dashboard.js",
-                lineNumber: 469,
+                lineNumber: 486,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 458,
+        lineNumber: 474,
         columnNumber: 9
     }, this);
 };
@@ -12573,12 +12597,12 @@ const CurrencyIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$pr
             d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 487,
+            lineNumber: 504,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 486,
+        lineNumber: 503,
         columnNumber: 5
     }, this);
 _c2 = CurrencyIcon;
@@ -12594,12 +12618,12 @@ const OrderIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
             d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 493,
+            lineNumber: 510,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 492,
+        lineNumber: 509,
         columnNumber: 5
     }, this);
 _c3 = OrderIcon;
@@ -12615,12 +12639,12 @@ const UserIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
             d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 499,
+            lineNumber: 516,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 498,
+        lineNumber: 515,
         columnNumber: 5
     }, this);
 _c4 = UserIcon;
@@ -12636,12 +12660,12 @@ const ProductIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$pro
             d: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
         }, void 0, false, {
             fileName: "[project]/src/components/Dashboard.js",
-            lineNumber: 505,
+            lineNumber: 522,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Dashboard.js",
-        lineNumber: 504,
+        lineNumber: 521,
         columnNumber: 5
     }, this);
 _c5 = ProductIcon;

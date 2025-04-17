@@ -14,6 +14,13 @@ const OrderStatus = {
     shipping: 'Đang giao hàng'
 };
 
+const PaymentStatus = {
+    pending: 'Chờ thanh toán',
+    paid: 'Đã thanh toán',
+    cancelled: 'Đã hủy',
+    failed: 'Thất bại',
+    processing: 'Đang xử lý',
+};
 
 const StatusBadge = ({ status }) => {
     const getStatusColor = (status) => {
@@ -172,43 +179,104 @@ const TrackOrder = () => {
                                 {/* Thông tin đơn hàng */}
                                 <div className="mb-8">
                                     <div className="space-y-4">
+                                        {/* Trạng thái đơn hàng */}
                                         <div>
-                                            <p className="text-gray-600 mb-1">Trạng thái:</p>
+                                            <p className="text-gray-600 mb-1">Trạng thái đơn hàng:</p>
                                             <StatusBadge status={orderData.orderInfo.orderStatus} />
                                         </div>
+
+                                        {/* Trạng thái thanh toán */}
                                         <div>
-                                            <p className="text-gray-600 mb-1">Ngày đặt:</p>
+                                            <p className="text-gray-600 mb-1">Trạng thái thanh toán:</p>
+                                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${orderData.orderInfo.paymentStatus === 'paid'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-yellow-100 text-yellow-800'
+                                                }`}>
+                                                {PaymentStatus[orderData.orderInfo.paymentStatus]}
+                                            </span>
+                                        </div>
+
+                                        {/* Thông tin thời gian */}
+                                        <div>
+                                            <p className="text-gray-600 mb-1">Ngày đặt hàng:</p>
                                             <p className="font-medium">
-                                                {new Date(orderData.orderInfo.orderDate).toLocaleDateString('vi-VN')}
+                                                {new Date(orderData.orderInfo.orderDate).toLocaleString('vi-VN')}
                                             </p>
                                         </div>
+
+                                        {orderData.orderInfo.paymentDate && (
+                                            <div>
+                                                <p className="text-gray-600 mb-1">Thời gian thanh toán:</p>
+                                                <p className="font-medium">
+                                                    {new Date(orderData.orderInfo.paymentDate).toLocaleString('vi-VN')}
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {/* Thông tin thanh toán */}
                                         <div>
-                                            <p className="text-gray-600 mb-1">Gía sản phẩm:</p>
+                                            <p className="text-gray-600 mb-1">Phương thức thanh toán:</p>
+                                            <p className="font-medium uppercase">
+                                                {orderData.orderInfo.paymentMethod}
+                                            </p>
+                                        </div>
+
+                                        {orderData.orderInfo.transactionId && (
+                                            <div>
+                                                <p className="text-gray-600 mb-1">Mã giao dịch:</p>
+                                                <p className="font-medium">
+                                                    {orderData.orderInfo.transactionId}
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {/* Thông tin giá */}
+                                        <div>
+                                            <p className="text-gray-600 mb-1">Giá sản phẩm:</p>
                                             <p className="font-medium">
                                                 {Number(orderData.orderInfo.originalPrice).toLocaleString('vi-VN')}đ
                                             </p>
                                         </div>
-                                        {orderData.orderInfo.discountAmount > 0 && (
+
+                                        {Number(orderData.orderInfo.discountAmount) > 0 && (
                                             <div>
                                                 <p className="text-gray-600 mb-1">Giảm giá:</p>
-                                                <p className="font-medium">
-                                                    {Number(orderData.orderInfo.discountAmount).toLocaleString('vi-VN')}đ
-                                                    {orderData.orderInfo.discountCode && ` (${orderData.orderInfo.discountCode})`}
+                                                <p className="font-medium text-green-600">
+                                                    -{Number(orderData.orderInfo.discountAmount).toLocaleString('vi-VN')}đ
                                                 </p>
                                             </div>
                                         )}
+
                                         <div>
-                                            <p className="text-gray-600 mb-1">Phí giao hàng:</p>
+                                            <p className="text-gray-600 mb-1">Phí vận chuyển:</p>
                                             <p className="font-medium">
                                                 {Number(orderData.orderInfo.shippingFee).toLocaleString('vi-VN')}đ
                                             </p>
                                         </div>
-                                        <div>
+
+                                        <div className="pt-2 border-t">
                                             <p className="text-gray-600 mb-1">Tổng thanh toán:</p>
-                                            <p className="font-medium text-red-600">
+                                            <p className="font-medium text-xl text-red-600">
                                                 {Number(orderData.orderInfo.finalPrice).toLocaleString('vi-VN')}đ
                                             </p>
                                         </div>
+
+                                        {/* Hiển thị số tiền thanh toán dựa theo trạng thái */}
+                                        {orderData.orderInfo.paymentStatus === 'paid' ? (
+                                            <div>
+                                                <p className="text-gray-600 mb-1">Số tiền đã thanh toán:</p>
+                                                <p className="font-medium text-green-600">
+                                                    {Number(orderData.orderInfo.paymentAmount).toLocaleString('vi-VN')}đ
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <p className="text-gray-600 mb-1">Số tiền cần thanh toán:</p>
+                                                <p className="font-medium text-red-600">
+                                                    {Number(orderData.orderInfo.finalPrice).toLocaleString('vi-VN')}đ
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 
@@ -216,7 +284,7 @@ const TrackOrder = () => {
                                 <div>
                                     <h3 className="font-semibold mb-4">Thông tin người nhận</h3>
                                     <div className="bg-gray-50 p-4 rounded space-y-2">
-                                        <p><span className="text-gray-600">Họ tên:</span> {orderData.customerInfo.name}</p>
+                                        <p><span className="text-gray-600">Họ và tên:</span> {orderData.customerInfo.name}</p>
                                         <p><span className="text-gray-600">Email:</span> {orderData.customerInfo.email}</p>
                                         <p><span className="text-gray-600">Số điện thoại:</span> {orderData.customerInfo.phone}</p>
                                         <p><span className="text-gray-600">Địa chỉ:</span> {`${orderData.customerInfo.address.street}, 

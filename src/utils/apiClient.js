@@ -144,6 +144,15 @@ const userApi = {
         }
     },
 
+    resend_otp: async (email) => {
+        try {
+            const response = await apiClient.post('users/resend-otp', { email });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     // Verify OTP for registration
     verifyOtp: async (otpData) => {
         try {

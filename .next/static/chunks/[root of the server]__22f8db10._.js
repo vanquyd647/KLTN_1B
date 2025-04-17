@@ -678,6 +678,16 @@ const userApi = {
             throw error;
         }
     },
+    resend_otp: async (email)=>{
+        try {
+            const response = await apiClient.post('users/resend-otp', {
+                email
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     // Verify OTP for registration
     verifyOtp: async (otpData)=>{
         try {
@@ -2002,8 +2012,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$react$2d$fontawesome$2f$index$2e$es$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@fortawesome/react-fontawesome/index.es.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@fortawesome/free-solid-svg-icons/index.mjs [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
+;
 ;
 ;
 ;
@@ -2019,6 +2031,8 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
         phone: '',
         gender: ''
     });
+    const [countdown, setCountdown] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(60);
+    const [canResend, setCanResend] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
     // Validate từng trường khi người dùng thay đổi giá trị
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AuthInterface.useEffect": ()=>{
@@ -2038,6 +2052,40 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
         formData,
         authStep
     ]);
+    // Thêm useEffect để xử lý đếm ngược
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "AuthInterface.useEffect": ()=>{
+            let timer;
+            if (authStep === 'otp' && countdown > 0) {
+                timer = setInterval({
+                    "AuthInterface.useEffect": ()=>{
+                        setCountdown({
+                            "AuthInterface.useEffect": (prev)=>prev - 1
+                        }["AuthInterface.useEffect"]);
+                    }
+                }["AuthInterface.useEffect"], 1000);
+            }
+            if (countdown === 0) {
+                setCanResend(true);
+            }
+            return ({
+                "AuthInterface.useEffect": ()=>clearInterval(timer)
+            })["AuthInterface.useEffect"];
+        }
+    }["AuthInterface.useEffect"], [
+        countdown,
+        authStep
+    ]);
+    // Thêm hàm xử lý gửi lại OTP
+    const handleResendOtp = async ()=>{
+        try {
+            setCanResend(false);
+            setCountdown(60);
+            await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["userApi"].resend_otp(formData.email);
+        } catch (error) {
+            console.error('Lỗi khi gửi lại OTP:', error);
+        }
+    };
     // Hàm validate từng trường
     const validateField = (fieldName, value)=>{
         let error = '';
@@ -2204,7 +2252,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đăng nhập"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 224,
+                        lineNumber: 253,
                         columnNumber: 21
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2212,7 +2260,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: error.message === "User not found" || error.message === "Invalid password" ? "Tài khoản hoặc mật khẩu không đúng" : error.message
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 226,
+                        lineNumber: 255,
                         columnNumber: 25
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2225,7 +2273,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 234,
+                                        lineNumber: 263,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2239,13 +2287,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 235,
+                                        lineNumber: 264,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 233,
+                                lineNumber: 262,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2255,7 +2303,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 247,
+                                        lineNumber: 276,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2272,7 +2320,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 249,
+                                                lineNumber: 278,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2283,24 +2331,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 264,
+                                                    lineNumber: 293,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 259,
+                                                lineNumber: 288,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 248,
+                                        lineNumber: 277,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 246,
+                                lineNumber: 275,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2310,13 +2358,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang đăng nhập...' : 'Đăng nhập'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 268,
+                                lineNumber: 297,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 232,
+                        lineNumber: 261,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2330,7 +2378,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: "Đăng ký"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 278,
+                                lineNumber: 307,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2340,24 +2388,24 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                     children: "Quên mật khẩu?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                    lineNumber: 285,
+                                    lineNumber: 314,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 284,
+                                lineNumber: 313,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 276,
+                        lineNumber: 305,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 223,
+                lineNumber: 252,
                 columnNumber: 17
             }, this),
             authStep === 'forgot-password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2368,7 +2416,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Quên mật khẩu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 298,
+                        lineNumber: 327,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2381,7 +2429,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 301,
+                                        lineNumber: 330,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2395,13 +2443,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 302,
+                                        lineNumber: 331,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 300,
+                                lineNumber: 329,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2411,13 +2459,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang gửi...' : 'Gửi mã OTP'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 313,
+                                lineNumber: 342,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 299,
+                        lineNumber: 328,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2428,18 +2476,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                             children: "Quay lại đăng nhập"
                         }, void 0, false, {
                             fileName: "[project]/src/components/profiles/AuthInterface.js",
-                            lineNumber: 322,
+                            lineNumber: 351,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 321,
+                        lineNumber: 350,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 297,
+                lineNumber: 326,
                 columnNumber: 17
             }, this),
             authStep === 'reset-password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2450,7 +2498,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đặt lại mật khẩu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 334,
+                        lineNumber: 363,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2463,7 +2511,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mã OTP:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 337,
+                                        lineNumber: 366,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2476,13 +2524,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 338,
+                                        lineNumber: 367,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 336,
+                                lineNumber: 365,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2492,7 +2540,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu mới:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 349,
+                                        lineNumber: 378,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2509,7 +2557,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 351,
+                                                lineNumber: 380,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2520,18 +2568,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.newPassword ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 366,
+                                                    lineNumber: 395,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 361,
+                                                lineNumber: 390,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 350,
+                                        lineNumber: 379,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.newPassword && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2539,13 +2587,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.newPassword
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 370,
+                                        lineNumber: 399,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 348,
+                                lineNumber: 377,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2555,7 +2603,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Xác nhận mật khẩu mới:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 374,
+                                        lineNumber: 403,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2572,7 +2620,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 376,
+                                                lineNumber: 405,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2583,18 +2631,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.confirmNewPassword ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 391,
+                                                    lineNumber: 420,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 386,
+                                                lineNumber: 415,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 375,
+                                        lineNumber: 404,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.confirmNewPassword && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2602,13 +2650,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.confirmNewPassword
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 395,
+                                        lineNumber: 424,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 373,
+                                lineNumber: 402,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2618,19 +2666,19 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 398,
+                                lineNumber: 427,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 335,
+                        lineNumber: 364,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 333,
+                lineNumber: 362,
                 columnNumber: 17
             }, this),
             authStep === 'register' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2641,7 +2689,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Đăng ký"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 410,
+                        lineNumber: 439,
                         columnNumber: 21
                     }, this),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2649,7 +2697,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: error.message || error
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 412,
+                        lineNumber: 441,
                         columnNumber: 25
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2662,7 +2710,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Họ:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 418,
+                                        lineNumber: 447,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2676,7 +2724,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 419,
+                                        lineNumber: 448,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.firstname && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2684,13 +2732,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.firstname
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 430,
+                                        lineNumber: 459,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 417,
+                                lineNumber: 446,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2700,7 +2748,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Tên:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 434,
+                                        lineNumber: 463,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2714,7 +2762,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 435,
+                                        lineNumber: 464,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.lastname && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2722,13 +2770,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.lastname
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 446,
+                                        lineNumber: 475,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 433,
+                                lineNumber: 462,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2738,7 +2786,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 450,
+                                        lineNumber: 479,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2752,7 +2800,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 451,
+                                        lineNumber: 480,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2760,13 +2808,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.email
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 462,
+                                        lineNumber: 491,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 449,
+                                lineNumber: 478,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2776,7 +2824,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 466,
+                                        lineNumber: 495,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2793,7 +2841,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 468,
+                                                lineNumber: 497,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2804,18 +2852,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.password ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 483,
+                                                    lineNumber: 512,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 478,
+                                                lineNumber: 507,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 467,
+                                        lineNumber: 496,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.password && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2823,13 +2871,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.password
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 489,
+                                        lineNumber: 518,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 465,
+                                lineNumber: 494,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2839,7 +2887,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Nhập lại mật khẩu:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 493,
+                                        lineNumber: 522,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2856,7 +2904,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 onInput: (e)=>e.target.setCustomValidity("")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 495,
+                                                lineNumber: 524,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2867,18 +2915,18 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                     icon: passwordVisibility.confirmPassword ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEyeSlash"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$fortawesome$2f$free$2d$solid$2d$svg$2d$icons$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["faEye"]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                    lineNumber: 510,
+                                                    lineNumber: 539,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 505,
+                                                lineNumber: 534,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 494,
+                                        lineNumber: 523,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.confirmPassword && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2886,13 +2934,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.confirmPassword
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 516,
+                                        lineNumber: 545,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 492,
+                                lineNumber: 521,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2902,7 +2950,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Số điện thoại:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 520,
+                                        lineNumber: 549,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2916,7 +2964,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 521,
+                                        lineNumber: 550,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.phone && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2924,13 +2972,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.phone
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 532,
+                                        lineNumber: 561,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 519,
+                                lineNumber: 548,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2940,7 +2988,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Chọn giới tính:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 536,
+                                        lineNumber: 565,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2957,7 +3005,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Chọn"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 546,
+                                                lineNumber: 575,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2965,7 +3013,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Nam"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 547,
+                                                lineNumber: 576,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2973,7 +3021,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Nữ"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 548,
+                                                lineNumber: 577,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2981,13 +3029,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                                 children: "Khác"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                                lineNumber: 549,
+                                                lineNumber: 578,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 537,
+                                        lineNumber: 566,
                                         columnNumber: 29
                                     }, this),
                                     validationErrors.gender && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2995,13 +3043,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: validationErrors.gender
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 552,
+                                        lineNumber: 581,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 535,
+                                lineNumber: 564,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3011,13 +3059,13 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: loading ? 'Đang đăng ký...' : 'Đăng ký'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 555,
+                                lineNumber: 584,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 416,
+                        lineNumber: 445,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3031,19 +3079,19 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                 children: "Đăng nhập"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 565,
+                                lineNumber: 594,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 563,
+                        lineNumber: 592,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 409,
+                lineNumber: 438,
                 columnNumber: 17
             }, this),
             authStep === 'otp' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3054,7 +3102,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Xác nhận OTP"
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 576,
+                        lineNumber: 605,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3062,7 +3110,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                         children: "Mã OTP đã được gửi đến email của bạn."
                     }, void 0, false, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 577,
+                        lineNumber: 606,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3075,7 +3123,7 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         children: "Nhập OTP:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 580,
+                                        lineNumber: 609,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -3084,49 +3132,77 @@ function AuthInterface({ authStep, setAuthStep, formData, setFormData, handleCha
                                         onChange: (e)=>setOtp(e.target.value),
                                         className: "w-full border p-2 rounded",
                                         required: true,
+                                        maxLength: 6,
                                         onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
                                         onInput: (e)=>e.target.setCustomValidity("")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                        lineNumber: 581,
+                                        lineNumber: 610,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 579,
+                                lineNumber: 608,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 type: "submit",
-                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full",
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full mb-3",
                                 disabled: loading,
                                 children: loading ? 'Đang xác thực...' : 'Xác thực OTP'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                                lineNumber: 591,
+                                lineNumber: 621,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/profiles/AuthInterface.js",
-                        lineNumber: 578,
+                        lineNumber: 607,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-center mt-4",
+                        children: canResend ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handleResendOtp,
+                            className: "text-blue-600 hover:text-blue-800 transition",
+                            children: "Gửi lại mã OTP"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/profiles/AuthInterface.js",
+                            lineNumber: 632,
+                            columnNumber: 29
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-gray-600",
+                            children: [
+                                "Gửi lại mã sau: ",
+                                countdown,
+                                "s"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/profiles/AuthInterface.js",
+                            lineNumber: 639,
+                            columnNumber: 29
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/profiles/AuthInterface.js",
+                        lineNumber: 630,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/profiles/AuthInterface.js",
-                lineNumber: 575,
+                lineNumber: 604,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/profiles/AuthInterface.js",
-        lineNumber: 221,
+        lineNumber: 250,
         columnNumber: 9
     }, this);
 }
-_s(AuthInterface, "cFuvnj+UOfwr0qTatzpbACIY1MA=");
+_s(AuthInterface, "LeY+tdsBlOtSO5uq68WFyYX/3Xw=");
 _c = AuthInterface;
 var _c;
 __turbopack_context__.k.register(_c, "AuthInterface");
@@ -3529,7 +3605,7 @@ const OrderDetail = ({ order, onClose })=>{
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-sm text-gray-600",
-                                                    children: "Họ tên"
+                                                    children: "Họ và tên"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/profiles/ProfileInterface.js",
                                                     lineNumber: 204,

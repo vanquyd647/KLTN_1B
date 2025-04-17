@@ -201,7 +201,7 @@ const OrderDetail = ({ order, onClose }) => {
                         <h4 className="font-medium mb-3">Thông tin người nhận</h4>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-sm text-gray-600">Họ tên</p>
+                                <p className="text-sm text-gray-600">Họ và tên</p>
                                 <p className="font-medium">{order.shipping.recipient.name}</p>
                             </div>
                             <div>

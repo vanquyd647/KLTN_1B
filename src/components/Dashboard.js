@@ -122,6 +122,18 @@ const Dashboard = ({ setActiveTab }) => {
         setActiveTab('orders');
     };
 
+    const handleViewAllProducts = () => {
+        setActiveTab('products');
+    };
+
+    const handleViewAllUsers = () => {
+        setActiveTab('users');
+    };
+
+    const handleViewAllRevenue = () => {
+        setActiveTab('statistics');
+    };
+
     // Function để chuyển đổi trạng thái đơn hàng sang tiếng Việt
     const getOrderStatusText = (status) => {
         switch (status) {
@@ -247,6 +259,7 @@ const Dashboard = ({ setActiveTab }) => {
                             icon={<CurrencyIcon />}
                             trend={`${revenue.count} đơn thành công`}
                             color="bg-gradient-to-r from-blue-500 to-blue-600"
+                            onClick={handleViewAllRevenue}
                         />
 
                         <DashboardCard
@@ -255,6 +268,7 @@ const Dashboard = ({ setActiveTab }) => {
                             icon={<OrderIcon />}
                             trend={`${orders.filter(o => o.status === 'completed').length} hoàn thành`}
                             color="bg-gradient-to-r from-green-500 to-green-600"
+                            onClick={handleViewAllOrders}
                         />
 
                         <DashboardCard
@@ -263,6 +277,7 @@ const Dashboard = ({ setActiveTab }) => {
                             icon={<UserIcon />}
                             trend={`${users.filter(u => u.roles.includes('customer')).length} khách hàng`}
                             color="bg-gradient-to-r from-purple-500 to-purple-600"
+                            onClick={handleViewAllUsers}
                         />
 
                         <DashboardCard
@@ -271,6 +286,7 @@ const Dashboard = ({ setActiveTab }) => {
                             icon={<ProductIcon />}
                             trend={`${products.newCount} sản phẩm mới`}
                             color="bg-gradient-to-r from-orange-500 to-orange-600"
+                            onClick={handleViewAllProducts}
                         />
                     </>
                 )}
@@ -453,12 +469,13 @@ const Dashboard = ({ setActiveTab }) => {
 };
 
 // Components
-const DashboardCard = ({ title, value, icon, trend, color }) => {
+const DashboardCard = ({ title, value, icon, trend, color, onClick }) => {
     return (
         <motion.div
             className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={onClick}
         >
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-gray-600 text-sm font-medium">{title}</h3>
