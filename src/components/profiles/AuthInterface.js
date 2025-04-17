@@ -54,7 +54,7 @@ export default function AuthInterface({
     // Thêm useEffect để xử lý đếm ngược
     useEffect(() => {
         let timer;
-        if (authStep === 'otp' && countdown > 0) {
+        if ((authStep === 'otp' || authStep === 'reset-password') && countdown > 0) {
             timer = setInterval(() => {
                 setCountdown(prev => prev - 1);
             }, 1000);
@@ -70,7 +70,9 @@ export default function AuthInterface({
         try {
             setCanResend(false);
             setCountdown(60);
+            console.log('formData.email', formData.email);
             await userApi.resend_otp(formData.email);
+            
         } catch (error) {
             console.error('Lỗi khi gửi lại OTP:', error);
         }
@@ -364,16 +366,36 @@ export default function AuthInterface({
                     <form onSubmit={handleResetPassword}>
                         <div className="mb-4">
                             <label>Mã OTP:</label>
-                            <input
-                                type="text"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                className="w-full border p-2 rounded"
-                                required
-                                onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
-                                onInput={(e) => e.target.setCustomValidity("")}
-                            />
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value)}
+                                    className="w-full border p-2 rounded"
+                                    required
+                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    onInput={(e) => e.target.setCustomValidity("")}
+                                />
+                                {/* Add resend OTP button and countdown */}
+                                <div className="mt-2 text-sm">
+                                    {canResend ? (
+                                        <button
+                                            type="button"
+                                            onClick={handleResendOtp}
+                                            className="text-blue-600 hover:text-blue-800"
+                                        >
+                                            Gửi lại mã OTP
+                                        </button>
+                                    ) : (
+                                        <span className="text-gray-500">
+                                            Gửi lại mã sau {countdown} giây
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Rest of the form remains the same */}
                         <div className="mb-4">
                             <label>Mật khẩu mới:</label>
                             <div className="relative">
@@ -399,6 +421,7 @@ export default function AuthInterface({
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.newPassword}</p>
                             )}
                         </div>
+
                         <div className="mb-4">
                             <label>Xác nhận mật khẩu mới:</label>
                             <div className="relative">
@@ -424,6 +447,7 @@ export default function AuthInterface({
                                 <p className="text-red-500 text-sm mt-1">{validationErrors.confirmNewPassword}</p>
                             )}
                         </div>
+
                         <button
                             type="submit"
                             className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full"
@@ -434,6 +458,7 @@ export default function AuthInterface({
                     </form>
                 </div>
             )}
+
             {authStep === 'register' && (
                 <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
                     <h2 className="text-2xl font-bold mb-4 text-center">Đăng ký</h2>
