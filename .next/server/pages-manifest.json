@@ -3,6 +3,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/account/profile": "pages/account/profile.js",
+  "/admin": "pages/admin.js",
   "/cart": "pages/cart.js",
   "/category/productsByCategory": "pages/category/productsByCategory.js",
   "/checkout": "pages/checkout.js",
