@@ -189,10 +189,13 @@ const TrackOrder = () => {
                                         <div>
                                             <p className="text-gray-600 mb-1">Trạng thái thanh toán:</p>
                                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${orderData.orderInfo.paymentStatus === 'paid'
-                                                ? 'bg-green-100 text-green-800'
-                                                : 'bg-yellow-100 text-yellow-800'
+                                                    ? 'bg-green-100 text-green-800'
+                                                    : 'bg-yellow-100 text-yellow-800'
                                                 }`}>
-                                                {PaymentStatus[orderData.orderInfo.paymentStatus]}
+                                                {orderData.orderInfo.paymentStatus
+                                                    ? PaymentStatus[orderData.orderInfo.paymentStatus] || 'Chờ thanh toán'
+                                                    : 'Chờ thanh toán'
+                                                }
                                             </span>
                                         </div>
 

@@ -1,8 +1,11 @@
 {
   "/": "pages/index.js",
+  "/TrackOrder": "pages/TrackOrder.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/account/profile": "pages/account/profile.js",
+  "/admin": "pages/admin.js",
+  "/cart": "pages/cart.js",
   "/onsale": "pages/onsale.js",
   "/productdetail/[slug]": "pages/productdetail/[slug].js"
 }

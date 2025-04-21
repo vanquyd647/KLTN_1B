@@ -92,6 +92,8 @@ const UserManagement = () => {
     }, []);
 
     const handleRoleChange = useCallback((role) => {
+
+        
         setFormData(prev => ({
             ...prev,
             roles: prev.roles.includes(role)
@@ -172,6 +174,11 @@ const UserManagement = () => {
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         let error = '';
+
+        if (formData.roles.length === 0) {
+            setError('Vui lòng chọn ít nhất một vai trò');
+            return;
+        }
 
         // Validate firstname
         if (!formData.firstname) {
