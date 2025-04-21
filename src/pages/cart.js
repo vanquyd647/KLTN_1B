@@ -21,6 +21,12 @@ const CartPage = () => {
     const [items, setItems] = useState([]); // Local state để quản lý items
     const [stocks, setStocks] = useState([]); // State để lưu trữ thông tin tồn kho
     const [outOfStockItems, setOutOfStockItems] = useState(new Set());
+    const [notification, setNotification] = useState({
+        show: false,
+        message: '',
+        type: ''
+    });
+
 
 
     // Đồng bộ items từ redux store khi có thay đổi
@@ -160,7 +166,10 @@ const CartPage = () => {
             stock.color_id === item.color.id
         );
 
-        if (!stockItem || newQuantity <= 0) return;
+        if (!stockItem || newQuantity <= 0) {
+            showNotification('Không thể cập nhật số lượng', 'error');
+            return;
+        }
 
         // Giới hạn số lượng không vượt quá stock
         const finalQuantity = Math.min(newQuantity, stockItem.quantity);
@@ -178,29 +187,27 @@ const CartPage = () => {
         dispatch(updateCartItemQuantity({ itemId, quantity: finalQuantity }))
             .unwrap()
             .then(() => {
-                console.log('Quantity updated successfully');
+                showNotification('Cập nhật số lượng thành công', 'success');
             })
             .catch((err) => {
                 console.error('Failed to update quantity:', err);
+                showNotification('Lỗi khi cập nhật số lượng', 'error');
                 setItems(cartItems);
             });
     }, [dispatch, cartItems, items, stocks]);
 
     const handleRemoveItem = useCallback((itemId) => {
-        // Cập nhật state local trước
         setItems(prevItems => prevItems.filter(item => item.id !== itemId));
-        // Xóa khỏi selected items
         setSelectedItems(prev => prev.filter(id => id !== itemId));
 
-        // Sau đó gọi API
         dispatch(removeCartItem(itemId))
             .unwrap()
             .then(() => {
-                console.log('Item removed successfully');
+                showNotification('Đã xóa sản phẩm khỏi giỏ hàng', 'success');
             })
             .catch((err) => {
                 console.error('Failed to remove item:', err);
-                // Rollback nếu API fail
+                showNotification('Lỗi khi xóa sản phẩm', 'error');
                 setItems(cartItems);
                 setSelectedItems(prev => [...prev, itemId]);
             });
@@ -245,8 +252,36 @@ const CartPage = () => {
 
     if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
 
+    const showNotification = (message, type = 'warning') => {
+        setNotification({ show: true, message, type });
+        setTimeout(() => {
+            setNotification({ show: false, message: '', type: '' });
+        }, 3000);
+    };
+
+
+    const Notification = ({ message, type, onClose }) => {
+        return (
+            <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 
+                ${type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-yellow-500'}`}>
+                <div className="flex items-center gap-2 text-white">
+                    <span>{message}</span>
+                    <button onClick={onClose} className="ml-2 hover:opacity-80">×</button>
+                </div>
+            </div>
+        );
+    };
+
+
     return (
         <Layout>
+            {notification.show && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={() => setNotification({ show: false, message: '', type: '' })}
+                />
+            )}
             <div className="container mx-auto px-4 py-6 flex flex-col lg:flex-row lg:gap-8">
                 {/* Cart Items */}
                 <div className="lg:w-2/3">
@@ -336,10 +371,18 @@ const CartPage = () => {
                                             </div>
 
                                             {/* Quantity Controls */}
+                                            {/* Quantity Controls */}
                                             <div className="flex items-center gap-1">
                                                 <button
-                                                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base"
+                                                    onClick={() => {
+                                                        if (item.quantity <= 1) {
+                                                            showNotification('Số lượng không thể nhỏ hơn 1', 'warning');
+                                                            return;
+                                                        }
+                                                        handleQuantityChange(item.id, item.quantity - 1);
+                                                    }}
+                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base
+                                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                                     disabled={item.quantity <= 1 || isOutOfStock}
                                                 >
                                                     -
@@ -348,14 +391,23 @@ const CartPage = () => {
                                                     {item.quantity}
                                                 </span>
                                                 <button
-                                                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base"
+                                                    onClick={() => {
+                                                        if (stockItem && item.quantity >= stockItem.quantity) {
+                                                            showNotification(
+                                                                `Số lượng không thể vượt quá ${stockItem.quantity} (số lượng trong kho)`,
+                                                                'warning'
+                                                            );
+                                                            return;
+                                                        }
+                                                        handleQuantityChange(item.id, item.quantity + 1);
+                                                    }}
+                                                    className="bg-gray-200 px-2 sm:px-3 py-1 rounded hover:bg-gray-300 min-w-[24px] text-sm sm:text-base
+                                                                disabled:opacity-50 disabled:cursor-not-allowed"
                                                     disabled={isOutOfStock || (stockItem && item.quantity >= stockItem.quantity)}
                                                 >
                                                     +
                                                 </button>
                                             </div>
-
 
                                             {/* Remove Button */}
                                             <button
@@ -423,7 +475,7 @@ const CartPage = () => {
                     </button>
                 </div>
             </div>
-            
+
         </Layout>
     );
 };

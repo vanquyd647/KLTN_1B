@@ -737,21 +737,27 @@ export default function ProfileInterface({
                                         {/* Giới tính */}
                                         <div className="space-y-2">
                                             <label className="block text-sm font-medium text-gray-700">
-                                                Giới tính
+                                                Giới tính <span className="text-red-500">*</span>
                                             </label>
                                             <select
                                                 name="gender"
                                                 value={profileData.gender}
                                                 onChange={handleProfileChange}
-                                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200"
+                                                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gray-200 transition-colors duration-200
+                                                            ${!profileData.gender ? 'border-red-500' : 'border-gray-300'}`}
+                                                required
                                             >
-                                                <option value="">Chọn giới tính</option>
+                                                <option value="" disabled>Chọn giới tính</option>
                                                 <option value="male">Nam</option>
                                                 <option value="female">Nữ</option>
                                                 <option value="other">Khác</option>
                                             </select>
+                                            {!profileData.gender && (
+                                                <p className="text-red-500 text-sm mt-1 animate-[slideDown_0.2s_ease-in-out]">
+                                                    Vui lòng chọn giới tính
+                                                </p>
+                                            )}
                                         </div>
-
                                         {/* Buttons */}
                                         <div className="md:col-span-2 flex justify-end gap-4">
                                             <button

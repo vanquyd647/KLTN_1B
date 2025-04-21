@@ -970,6 +970,10 @@ img, video {
   animation: 1s linear infinite spin;
 }
 
+.animate-\[slideDown_0\.2s_ease-in-out\] {
+  animation: .2s ease-in-out slideDown;
+}
+
 .cursor-not-allowed {
   cursor: not-allowed;
 }
@@ -1466,6 +1470,11 @@ img, video {
 .bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-25 {
@@ -2290,6 +2299,10 @@ img, video {
 
 .hover\:underline:hover {
   text-decoration-line: underline;
+}
+
+.hover\:opacity-80:hover {
+  opacity: .8;
 }
 
 .hover\:shadow-lg:hover {
