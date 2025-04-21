@@ -885,7 +885,7 @@ export default function ProfileInterface({
                                                                 address.address_type === 'office' ? 'Văn phòng' : 'Khác'}
                                                         </span>
                                                         {address.is_default && (
-                                                            <span className="bg-gray-100 text-gray-800 text-xs px-2.5 py-1 rounded-full 
+                                                            <span className="bg-gray-100 text-yellow-600 text-xs px-2.5 py-1 rounded-full 
                                                                 font-medium flex items-center gap-1">
                                                                 <MdStars className="w-4 h-4" />
                                                                 Mặc định

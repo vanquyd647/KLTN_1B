@@ -5025,7 +5025,7 @@ function ProfileInterface({ user, userLoading, handleLogout, selectedTab, setSel
                                                                             columnNumber: 57
                                                                         }, this),
                                                                         address.is_default && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "bg-gray-100 text-gray-800 text-xs px-2.5 py-1 rounded-full    font-medium flex items-center gap-1",
+                                                                            className: "bg-gray-100 text-yellow-600 text-xs px-2.5 py-1 rounded-full    font-medium flex items-center gap-1",
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$md$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["MdStars"], {
                                                                                     className: "w-4 h-4"
