@@ -242,6 +242,11 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 alert('Giá sản phẩm phải lớn hơn hoặc bằng 2.000đ!');
                 return;
             }
+
+            if(!formData.discount_price) {
+                formData.discount_price = formData.price; // Đặt giá khuyến mãi = price nếu không có giá khuyến mãi
+            }
+
             // Validate giá khuyến mãi nếu có
             if (formData.discount_price) {
                 const discountPrice = Number(formData.discount_price);
@@ -254,7 +259,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                     return;
                 }
             }
-            if (!formData.product_name || formData.price <= 0) {
+            if (!formData.product_name || formData.price <= 0 || formData.discount_price < 0) {
                 alert('Vui lòng điền đầy đủ thông tin sản phẩm!');
                 return;
             }

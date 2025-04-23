@@ -694,11 +694,14 @@ const CheckoutPage = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <AddressSelection />
 
+                    <label className="block text-sm font-medium text-gray-700">
+                        Họ và tên
+                    </label>
                     <input
                         type="text"
                         name="name"
                         value={formData.name}
-                        placeholder="Họ và tên"
+                        placeholder="Nhập Họ và tên"
                         className={`border p-2 w-full ${validationErrors.name ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
@@ -706,11 +709,14 @@ const CheckoutPage = () => {
                     {validationErrors.name && (
                         <p className="text-red-500 text-sm mt-1">{validationErrors.name}</p>
                     )}
+                    <label className="block text-sm font-medium text-gray-700">
+                        Email
+                    </label>
                     <input
                         type="email"
                         name="email"
                         value={formData.email}
-                        placeholder="Email"
+                        placeholder="Nhập Email"
                         className={`border p-2 w-full ${validationErrors.email ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
@@ -718,11 +724,14 @@ const CheckoutPage = () => {
                     {validationErrors.email && (
                         <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
                     )}
+                    <label className="block text-sm font-medium text-gray-700">
+                        Số điện thoại
+                    </label>
                     <input
                         type="text"
                         name="phone"
                         value={formData.phone}
-                        placeholder="Số điện thoại"
+                        placeholder="Nhập Số điện thoại"
                         className={`border p-2 w-full ${validationErrors.phone ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required
@@ -731,11 +740,14 @@ const CheckoutPage = () => {
                         <p className="text-red-500 text-sm mt-1">{validationErrors.phone}</p>
                     )}
                     {/* Địa chỉ đường */}
+                    <label className="block text-sm font-medium text-gray-700">
+                        Số nhà, Đường
+                    </label>
                     <input
                         type="text"
                         name="street"
                         value={formData.street}
-                        placeholder="Đường"
+                        placeholder="Nhập Số nhà, Đường"
                         className={`border p-2 w-full ${validationErrors.street ? 'border-red-500' : ''}`}
                         onChange={handleChange}
                         required

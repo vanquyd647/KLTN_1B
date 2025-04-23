@@ -922,6 +922,10 @@ img, video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.animate-\[slideDown_0\.2s_ease-in-out\] {
+  animation: .2s ease-in-out slideDown;
+}
+
 @keyframes blink {
   0%, 100% {
     opacity: 1;
@@ -968,10 +972,6 @@ img, video {
 
 .animate-spin {
   animation: 1s linear infinite spin;
-}
-
-.animate-\[slideDown_0\.2s_ease-in-out\] {
-  animation: .2s ease-in-out slideDown;
 }
 
 .cursor-not-allowed {

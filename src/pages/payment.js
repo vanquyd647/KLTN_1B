@@ -226,7 +226,7 @@ const PaymentPage = () => {
                         Thông tin giao hàng
                     </Link>
                     <span className="mx-2">/</span>
-                    <span className="text-gray-900">Đặt hàng</span>
+                    <span className="text-gray-900">Thanh toán</span>
                 </div>
                 <h1 className="text-2xl font-bold mb-6">Thanh toán đơn hàng</h1>
 
