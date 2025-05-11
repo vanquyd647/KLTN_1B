@@ -265,6 +265,10 @@ const OrderDetail = ({ order, onClose }) => {
                             </p>
                             <p className="text-sm text-gray-600">Trạng thái</p>
                             <PaymentStatusBadge status={order.payment.status} />
+                            <p className="text-sm text-gray-600">Ngày thanh toán</p>
+                            <p className="font-medium">
+                                {order.payment.status === 'paid' ? formatDate(order.payment.payment_date) : 'Chưa thanh toán'}
+                            </p>
                         </div>
                     </div>
 

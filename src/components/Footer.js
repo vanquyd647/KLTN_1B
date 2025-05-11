@@ -63,11 +63,36 @@ export default function Footer() {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Hỗ trợ khách hàng</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="hover:text-blue-400">Hướng dẫn mua hàng</a></li>
-                            <li><a href="#" className="hover:text-blue-400">Hướng dẫn sử dụng</a></li>
-                            <li><a href="#" className="hover:text-blue-400">Chi tiết kích cỡ</a></li>
-                            <li><a href="#" className="hover:text-blue-400">Chính sách đổi trả & bảo hành</a></li>
-                            <li><a href="#" className="hover:text-blue-400">Quy trình giao nhận và thanh toán</a></li>
+                            <li>
+                                <Link href="/shopping-guide" className="hover:text-blue-400">
+                                    Hướng dẫn mua hàng
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/usage-guide" className="hover:text-blue-400">
+                                    Hướng dẫn sử dụng
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/size-guide" className="hover:text-blue-400">
+                                    Chi tiết kích cỡ
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/warranty-policy" className="hover:text-blue-400">
+                                    Chính sách đổi trả & bảo hành
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/privacy-policy" className="hover:text-blue-400">
+                                    Chính sách bảo mật
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/shipping-payment" className="hover:text-blue-400">
+                                    Quy trình giao nhận và thanh toán
+                                </Link>
+                            </li>
                             <li>
                                 <Link href="/TrackOrder" className="hover:text-blue-400">Tra cứu đơn hàng</Link>
                             </li>

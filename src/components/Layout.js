@@ -6,7 +6,10 @@ import { forceUpdateFavorites, transferFavorites } from '../store/slices/favorit
 import { getCartId } from '../utils/storage';
 import Header from './Header';
 import Footer from './Footer';
+import ContactLinks from './ContactLinks';
 import BackToTop from './BackToTop';
+import FloatingButtons from './FloatingButtons';
+
 import ServiceFeatures from './ServiceFeatures';
 
 export default function Layout({ children }) {
@@ -93,7 +96,8 @@ export default function Layout({ children }) {
             <main className="flex-grow">
                 {children}
             </main>
-            <BackToTop />
+
+            <FloatingButtons />
             <ServiceFeatures />
             <Footer />
         </div>
