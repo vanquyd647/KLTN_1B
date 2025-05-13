@@ -399,10 +399,14 @@ const CouponManagement = () => {
                                 <input
                                     type="number"
                                     value={formData.discount_amount}
-                                    onChange={(e) => setFormData({ ...formData, discount_amount: e.target.value })}
+                                    onChange={(e) => {
+                                        const value = Math.max(0, Number(e.target.value));
+                                        setFormData({ ...formData, discount_amount: value });
+                                    }}
                                     className="w-full border rounded px-3 py-2"
                                     required
-                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    min="0"
+                                    onInvalid={(e) => e.target.setCustomValidity("Giá trị không hợp lệ")}
                                     onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>
@@ -411,10 +415,14 @@ const CouponManagement = () => {
                                 <input
                                     type="number"
                                     value={formData.min_order_amount}
-                                    onChange={(e) => setFormData({ ...formData, min_order_amount: e.target.value })}
+                                    onChange={(e) => {
+                                        const value = Math.max(0, Number(e.target.value));
+                                        setFormData({ ...formData, min_order_amount: value });
+                                    }}
                                     className="w-full border rounded px-3 py-2"
                                     required
-                                    onInvalid={(e) => e.target.setCustomValidity("Không được để trống")}
+                                    min="0"
+                                    onInvalid={(e) => e.target.setCustomValidity("Giá trị không hợp lệ")}
                                     onInput={(e) => e.target.setCustomValidity("")}
                                 />
                             </div>

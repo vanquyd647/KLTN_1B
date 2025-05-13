@@ -219,7 +219,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://bb20-118-71-93-178.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -11480,13 +11480,17 @@ const CouponManagement = ()=>{
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                             type: "number",
                                             value: formData.discount_amount,
-                                            onChange: (e)=>setFormData({
+                                            onChange: (e)=>{
+                                                const value = Math.max(0, Number(e.target.value));
+                                                setFormData({
                                                     ...formData,
-                                                    discount_amount: e.target.value
-                                                }),
+                                                    discount_amount: value
+                                                });
+                                            },
                                             className: "w-full border rounded px-3 py-2",
                                             required: true,
-                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            min: "0",
+                                            onInvalid: (e)=>e.target.setCustomValidity("Giá trị không hợp lệ"),
                                             onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
@@ -11506,29 +11510,33 @@ const CouponManagement = ()=>{
                                             children: "Áp dụng cho đơn hàng từ"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 410,
+                                            lineNumber: 414,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
                                             type: "number",
                                             value: formData.min_order_amount,
-                                            onChange: (e)=>setFormData({
+                                            onChange: (e)=>{
+                                                const value = Math.max(0, Number(e.target.value));
+                                                setFormData({
                                                     ...formData,
-                                                    min_order_amount: e.target.value
-                                                }),
+                                                    min_order_amount: value
+                                                });
+                                            },
                                             className: "w-full border rounded px-3 py-2",
                                             required: true,
-                                            onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
+                                            min: "0",
+                                            onInvalid: (e)=>e.target.setCustomValidity("Giá trị không hợp lệ"),
                                             onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 411,
+                                            lineNumber: 415,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 409,
+                                    lineNumber: 413,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -11538,7 +11546,7 @@ const CouponManagement = ()=>{
                                             children: "Ngày hết hạn"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 422,
+                                            lineNumber: 430,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -11554,13 +11562,13 @@ const CouponManagement = ()=>{
                                             onInput: (e)=>e.target.setCustomValidity("")
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 423,
+                                            lineNumber: 431,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 421,
+                                    lineNumber: 429,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -11570,7 +11578,7 @@ const CouponManagement = ()=>{
                                             children: "Số lượng (0 = không giới hạn)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 434,
+                                            lineNumber: 442,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -11584,13 +11592,13 @@ const CouponManagement = ()=>{
                                             min: "0"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 435,
+                                            lineNumber: 443,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 433,
+                                    lineNumber: 441,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -11606,20 +11614,20 @@ const CouponManagement = ()=>{
                                             className: "mr-2"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 444,
+                                            lineNumber: 452,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("label", {
                                             children: "Kích hoạt"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 450,
+                                            lineNumber: 458,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 443,
+                                    lineNumber: 451,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -11632,7 +11640,7 @@ const CouponManagement = ()=>{
                                             children: "Hủy"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 453,
+                                            lineNumber: 461,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -11641,13 +11649,13 @@ const CouponManagement = ()=>{
                                             children: modalMode === 'create' ? 'Thêm' : 'Cập nhật'
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CouponManagement.js",
-                                            lineNumber: 460,
+                                            lineNumber: 468,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CouponManagement.js",
-                                    lineNumber: 452,
+                                    lineNumber: 460,
                                     columnNumber: 29
                                 }, this)
                             ]
