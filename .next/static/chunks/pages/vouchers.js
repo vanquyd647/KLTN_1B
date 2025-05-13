@@ -1,11 +1,12 @@
 __turbopack_load_page_chunks__("/vouchers", [
-  "static/chunks/[root of the server]__a0a6618f._.js",
+  "static/chunks/[root of the server]__1a65c8cd._.js",
   "static/chunks/node_modules_next_9f837c94._.js",
   "static/chunks/node_modules_react-dom_82bb97c6._.js",
   "static/chunks/node_modules_axios_lib_9aa2336a._.js",
   "static/chunks/node_modules_react-icons_fa_index_mjs_bad01e3f._.js",
   "static/chunks/node_modules_react-icons_lib_75a63dfe._.js",
-  "static/chunks/node_modules_1fb2d408._.js",
-  "static/chunks/src_pages_warranty-policy_5771e187._.js",
-  "static/chunks/src_pages_warranty-policy_559ddf74._.js"
+  "static/chunks/node_modules_8220eef6._.js",
+  "static/chunks/node_modules_react-toastify_dist_ReactToastify_904beb7c.css",
+  "static/chunks/src_pages_vouchers_5771e187._.js",
+  "static/chunks/src_pages_vouchers_e7d058cc._.js"
 ])
