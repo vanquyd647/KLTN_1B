@@ -1,12 +1,5 @@
 {
   "/": "pages/index.js",
-  "/TrackOrder": "pages/TrackOrder.js",
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/account/profile": "pages/account/profile.js",
-  "/admin": "pages/admin.js",
-  "/cart": "pages/cart.js",
-  "/category/productsByCategory": "pages/category/productsByCategory.js",
-  "/privacy-policy": "pages/privacy-policy.js",
-  "/productdetail/[slug]": "pages/productdetail/[slug].js"
+  "/_document": "pages/_document.js"
 }

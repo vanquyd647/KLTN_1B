@@ -23,7 +23,7 @@ import { resetAuthState } from '../store/slices/userSlice';
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5551/v1/api/',
+    baseURL: 'https://3291-27-64-50-79.ngrok-free.app/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
