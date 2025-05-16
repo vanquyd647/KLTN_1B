@@ -4798,13 +4798,34 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                         className: "flex gap-2",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
-                                type: "text",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
                                 value: tempSize,
                                 onChange: (e)=>setTempSize(e.target.value),
-                                placeholder: "Thêm kích thước",
-                                className: "border rounded-lg p-2"
-                            }, void 0, false, {
+                                className: "border rounded-lg p-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                        value: "",
+                                        children: "Chọn kích thước"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/ProductForm.js",
+                                        lineNumber: 643,
+                                        columnNumber: 25
+                                    }, this),
+                                    [
+                                        'S',
+                                        'M',
+                                        'L',
+                                        'XL'
+                                    ].filter((size)=>!formData.sizes.includes(size)).map((size)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
+                                            value: size,
+                                            children: size
+                                        }, size, false, {
+                                            fileName: "[project]/src/components/ProductForm.js",
+                                            lineNumber: 645,
+                                            columnNumber: 29
+                                        }, this))
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
                                 lineNumber: 638,
                                 columnNumber: 21
@@ -4812,11 +4833,12 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
                                 type: "button",
                                 onClick: handleAddSize,
-                                className: "px-4 py-2 bg-blue-500 text-white rounded-lg",
+                                className: "px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600",
+                                disabled: !tempSize,
                                 children: "Thêm"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 645,
+                                lineNumber: 650,
                                 columnNumber: 21
                             }, this)
                         ]
@@ -4828,7 +4850,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
                         className: "flex flex-wrap gap-2",
                         children: formData.sizes.map((size, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
-                                className: "px-3 py-1 bg-gray-100 rounded-full",
+                                className: "px-3 py-1 bg-gray-100 rounded-full flex items-center",
                                 children: [
                                     size,
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4836,25 +4858,27 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         onClick: ()=>{
                                             setFormData((prev)=>({
                                                     ...prev,
-                                                    sizes: prev.sizes.filter((_, i)=>i !== index)
+                                                    sizes: prev.sizes.filter((_, i)=>i !== index),
+                                                    // Xóa các stock liên quan đến size này
+                                                    stock: prev.stock.filter((item)=>item.size !== size)
                                                 }));
                                         },
-                                        className: "ml-2 text-red-500",
+                                        className: "ml-2 text-red-500 hover:text-red-700",
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 657,
+                                        lineNumber: 663,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 655,
+                                lineNumber: 661,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 653,
+                        lineNumber: 659,
                         columnNumber: 17
                     }, this)
                 ]
@@ -4871,7 +4895,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Tồn kho"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 676,
+                        lineNumber: 684,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4890,7 +4914,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "Chọn kích thước"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 683,
+                                        lineNumber: 691,
                                         columnNumber: 25
                                     }, this),
                                     formData.sizes.map((size, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -4898,13 +4922,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: size
                                         }, index, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 685,
+                                            lineNumber: 693,
                                             columnNumber: 29
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 678,
+                                lineNumber: 686,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -4920,7 +4944,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "Chọn màu"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 693,
+                                        lineNumber: 701,
                                         columnNumber: 25
                                     }, this),
                                     formData.colors.map((color, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("option", {
@@ -4928,13 +4952,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                             children: color.color
                                         }, index, false, {
                                             fileName: "[project]/src/components/ProductForm.js",
-                                            lineNumber: 695,
+                                            lineNumber: 703,
                                             columnNumber: 29
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 688,
+                                lineNumber: 696,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -4949,13 +4973,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                 className: "border rounded-lg p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 698,
+                                lineNumber: 706,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 677,
+                        lineNumber: 685,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4965,7 +4989,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Thêm tồn kho"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 707,
+                        lineNumber: 715,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -4983,7 +5007,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 719,
+                                        lineNumber: 727,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -4998,24 +5022,24 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ProductForm.js",
-                                        lineNumber: 722,
+                                        lineNumber: 730,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/components/ProductForm.js",
-                                lineNumber: 718,
+                                lineNumber: 726,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 716,
+                        lineNumber: 724,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 675,
+                lineNumber: 683,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5029,7 +5053,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: "Hủy"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 741,
+                        lineNumber: 749,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -5039,13 +5063,13 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                         children: submitLoading ? 'Đang xử lý...' : product ? 'Cập nhật' : 'Thêm sản phẩm'
                     }, void 0, false, {
                         fileName: "[project]/src/components/ProductForm.js",
-                        lineNumber: 749,
+                        lineNumber: 757,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 740,
+                lineNumber: 748,
                 columnNumber: 13
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -5053,7 +5077,7 @@ const ProductForm = ({ product, onSuccess, onCancel })=>{
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/components/ProductForm.js",
-                lineNumber: 759,
+                lineNumber: 767,
                 columnNumber: 17
             }, this)
         ]

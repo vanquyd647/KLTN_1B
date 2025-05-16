@@ -243,7 +243,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 return;
             }
 
-            if(!formData.discount_price) {
+            if (!formData.discount_price) {
                 formData.discount_price = formData.price; // Đặt giá khuyến mãi = price nếu không có giá khuyến mãi
             }
 
@@ -635,34 +635,42 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
             <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Kích thước</h3>
                 <div className="flex gap-2">
-                    <input
-                        type="text"
+                    <select
                         value={tempSize}
                         onChange={(e) => setTempSize(e.target.value)}
-                        placeholder="Thêm kích thước"
                         className="border rounded-lg p-2"
-                    />
+                    >
+                        <option value="">Chọn kích thước</option>
+                        {['S', 'M', 'L', 'XL'].filter(size => !formData.sizes.includes(size)).map((size) => (
+                            <option key={size} value={size}>
+                                {size}
+                            </option>
+                        ))}
+                    </select>
                     <button
                         type="button"
                         onClick={handleAddSize}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                        disabled={!tempSize}
                     >
                         Thêm
                     </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                     {formData.sizes.map((size, index) => (
-                        <span key={index} className="px-3 py-1 bg-gray-100 rounded-full">
+                        <span key={index} className="px-3 py-1 bg-gray-100 rounded-full flex items-center">
                             {size}
                             <button
                                 type="button"
                                 onClick={() => {
                                     setFormData(prev => ({
                                         ...prev,
-                                        sizes: prev.sizes.filter((_, i) => i !== index)
+                                        sizes: prev.sizes.filter((_, i) => i !== index),
+                                        // Xóa các stock liên quan đến size này
+                                        stock: prev.stock.filter(item => item.size !== size)
                                     }));
                                 }}
-                                className="ml-2 text-red-500"
+                                className="ml-2 text-red-500 hover:text-red-700"
                             >
                                 ×
                             </button>

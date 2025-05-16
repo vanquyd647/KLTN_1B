@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__c662ff7f._.js", {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__29668b7c._.js", {
 
 "[turbopack]/browser/dev/hmr-client/hmr-client.ts [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -1996,6 +1996,392 @@ const categoriesApi = {
     }
 };
 ;
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/store/slices/productSlice.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
+{
+__turbopack_context__.s({
+    "clearProductState": (()=>clearProductState),
+    "createProduct": (()=>createProduct),
+    "default": (()=>__TURBOPACK__default__export__),
+    "deleteProduct": (()=>deleteProduct),
+    "fetchFeaturedProductsByPagination": (()=>fetchFeaturedProductsByPagination),
+    "fetchNewProductsByPagination": (()=>fetchNewProductsByPagination),
+    "fetchProductDetail": (()=>fetchProductDetail),
+    "fetchProducts": (()=>fetchProducts),
+    "fetchProductsByPagination": (()=>fetchProductsByPagination),
+    "searchProductsByNameAndColor": (()=>searchProductsByNameAndColor),
+    "setVisibleFeaturedProducts": (()=>setVisibleFeaturedProducts),
+    "setVisibleNewProducts": (()=>setVisibleNewProducts),
+    "updateProduct": (()=>updateProduct)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [client] (ecmascript)"); // Import API client
+;
+;
+const fetchProducts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProducts', async (_, { rejectWithValue })=>{
+    try {
+        const products = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProducts();
+        return products;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to fetch products');
+    }
+});
+const fetchProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductsByPagination', async (params, { rejectWithValue })=>{
+    try {
+        console.log('Calling fetchProductsByPagination with params:', params);
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductsByPagination(params);
+        console.log('API Response:', response);
+        return response;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to fetch products with pagination');
+    }
+});
+const fetchNewProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchNewProductsByPagination', async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
+    try {
+        const newProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getNewProductsByPagination(page, limit, sort, priceRange, colorIds);
+        return newProducts;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to fetch new products');
+    }
+});
+const fetchFeaturedProductsByPagination = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchFeaturedProductsByPagination', async ({ page, limit, sort, priceRange, colorIds }, { rejectWithValue })=>{
+    try {
+        const featuredProducts = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getFeaturedProductsByPagination(page, limit, sort, priceRange, colorIds);
+        return featuredProducts;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to fetch featured products');
+    }
+});
+const fetchProductDetail = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/fetchProductDetail', async (slug, { rejectWithValue })=>{
+    try {
+        const product = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].getProductDetail(slug);
+        return product;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to fetch product details');
+    }
+});
+const createProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/createProduct', async (productData, { rejectWithValue })=>{
+    try {
+        const newProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].createProduct(productData);
+        return newProduct;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to create product');
+    }
+});
+const updateProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/updateProduct', async ({ slug, productData }, { rejectWithValue })=>{
+    try {
+        const updatedProduct = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].updateProduct(slug, productData);
+        return updatedProduct;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to update product');
+    }
+});
+const deleteProduct = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/deleteProduct', async (slug, { rejectWithValue })=>{
+    try {
+        const result = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].deleteProduct(slug);
+        return result;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Failed to delete product');
+    }
+});
+const searchProductsByNameAndColor = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createAsyncThunk"])('products/searchProductsByNameAndColor', async ({ keyword, page, limit, sort }, { rejectWithValue })=>{
+    try {
+        const searchResults = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["productApi"].searchProductsByNameAndColor(keyword, {
+            page,
+            limit,
+            sort
+        });
+        return searchResults;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Không thể tìm kiếm sản phẩm');
+    }
+});
+// **Slice**
+const productSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
+    name: 'products',
+    initialState: {
+        newProducts: {
+            items: [],
+            pagination: {
+                totalItems: 0,
+                totalPages: 0,
+                currentPage: 1,
+                pageSize: 10
+            }
+        },
+        visibleNewProducts: [],
+        featuredProducts: {
+            items: [],
+            pagination: {
+                totalItems: 0,
+                totalPages: 0,
+                currentPage: 1,
+                pageSize: 10
+            }
+        },
+        searchResults: {
+            items: [],
+            pagination: {
+                totalItems: 0,
+                totalPages: 0,
+                currentPage: 1,
+                pageSize: 10
+            }
+        },
+        pagination: {
+            items: [],
+            totalItems: 0,
+            totalPages: 0,
+            currentPage: 1,
+            pageSize: 10,
+            filters: {
+                name: '',
+                categories: null,
+                colors: null,
+                sizes: null,
+                priceRange: null,
+                sort: 'newest'
+            }
+        },
+        visibleFeaturedProducts: [],
+        loading: false,
+        fetchLoading: false,
+        submitLoading: false,
+        error: null
+    },
+    reducers: {
+        // Set visible products for index page
+        setVisibleNewProducts: (state, action)=>{
+            state.visibleNewProducts = action.payload;
+        },
+        setVisibleFeaturedProducts: (state, action)=>{
+            state.visibleFeaturedProducts = action.payload;
+        },
+        // Clear product state
+        clearProductState: (state)=>{
+            state.newProducts = {
+                items: [],
+                pagination: {
+                    totalItems: 0,
+                    totalPages: 0,
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            };
+            state.visibleNewProducts = [];
+            state.featuredProducts = {
+                items: [],
+                pagination: {
+                    totalItems: 0,
+                    totalPages: 0,
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            };
+            state.searchResults = {
+                items: [],
+                pagination: {
+                    totalItems: 0,
+                    totalPages: 0,
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            };
+            state.visibleFeaturedProducts = [];
+            state.loading = false;
+            state.error = null;
+        },
+        updateFilters: (state, action)=>{
+            state.pagination.filters = {
+                ...state.pagination.filters,
+                ...action.payload
+            };
+        }
+    },
+    extraReducers: (builder)=>{
+        // Fetch all products
+        builder.addCase(fetchProducts.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(fetchProducts.fulfilled, (state, action)=>{
+            state.items = action.payload;
+            state.loading = false;
+        }).addCase(fetchProducts.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Fetch products with pagination
+        builder.addCase(fetchProductsByPagination.pending, (state)=>{
+            state.fetchLoading = true;
+            state.error = null;
+        }).addCase(fetchProductsByPagination.fulfilled, (state, action)=>{
+            const { products, pagination } = action.payload.data;
+            state.pagination = {
+                ...state.pagination,
+                items: products || [],
+                totalItems: pagination.totalItems || 0,
+                totalPages: pagination.totalPages || 0,
+                currentPage: pagination.currentPage || 1,
+                pageSize: pagination.pageSize || 10
+            };
+            state.fetchLoading = false;
+        }).addCase(fetchProductsByPagination.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.fetchLoading = false;
+        });
+        // Fetch new products with pagination
+        builder.addCase(fetchNewProductsByPagination.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(fetchNewProductsByPagination.fulfilled, (state, action)=>{
+            const { products, pagination } = action.payload.data;
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.newProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.newProducts.items.some((existing)=>existing.id === product.id));
+                state.newProducts.items = [
+                    ...state.newProducts.items,
+                    ...uniqueProducts
+                ];
+            }
+            state.newProducts.pagination = {
+                totalItems: pagination.totalItems || 0,
+                totalPages: pagination.totalPages || 0,
+                currentPage: pagination.currentPage || 1,
+                pageSize: pagination.pageSize || 10
+            };
+            // Cập nhật sản phẩm hiển thị (có thể không cần thiết nếu không dùng `visibleNewProducts`)
+            state.visibleNewProducts = state.newProducts.items.slice(0, state.newProducts.pagination.pageSize);
+            state.loading = false;
+        }).addCase(fetchNewProductsByPagination.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Fetch featured products with pagination
+        builder.addCase(fetchFeaturedProductsByPagination.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(fetchFeaturedProductsByPagination.fulfilled, (state, action)=>{
+            const { products, pagination } = action.payload.data;
+            if (pagination.currentPage === 1) {
+                // Thay thế toàn bộ danh sách sản phẩm nếu là trang đầu tiên
+                state.featuredProducts.items = products;
+            } else {
+                // Thêm sản phẩm mới nếu không phải trang đầu tiên
+                const uniqueProducts = products.filter((product)=>!state.featuredProducts.items.some((existing)=>existing.id === product.id));
+                state.featuredProducts.items = [
+                    ...state.featuredProducts.items,
+                    ...uniqueProducts
+                ];
+            }
+            state.featuredProducts.pagination = {
+                totalItems: pagination.totalItems || 0,
+                totalPages: pagination.totalPages || 0,
+                currentPage: pagination.currentPage || 1,
+                pageSize: pagination.pageSize || 10
+            };
+            // Cập nhật sản phẩm hiển thị (nếu cần)
+            state.visibleFeaturedProducts = state.featuredProducts.items.slice(0, state.featuredProducts.pagination.pageSize);
+            state.loading = false;
+        }).addCase(fetchFeaturedProductsByPagination.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Fetch product details
+        builder.addCase(fetchProductDetail.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(fetchProductDetail.fulfilled, (state, action)=>{
+            state.currentProduct = action.payload;
+            state.loading = false;
+        }).addCase(fetchProductDetail.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Create product
+        builder.addCase(createProduct.pending, (state)=>{
+            state.submitLoading = true;
+            state.error = null;
+        }).addCase(createProduct.fulfilled, (state, action)=>{
+            // Kiểm tra cấu trúc response và cập nhật state phù hợp
+            const newProduct = Array.isArray(action.payload.data) ? action.payload.data[0] : action.payload.data;
+            if (state.items) {
+                state.items.push(newProduct);
+            } else {
+                state.items = [
+                    newProduct
+                ];
+            }
+            state.submitLoading = false;
+            state.error = null;
+        }).addCase(createProduct.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.submitLoading = false;
+        });
+        // Update product
+        builder.addCase(updateProduct.pending, (state)=>{
+            state.submitLoading = true;
+            state.error = null;
+        }).addCase(updateProduct.fulfilled, (state, action)=>{
+            // Cập nhật sản phẩm trong danh sách
+            if (state.pagination && state.pagination.items) {
+                const index = state.pagination.items.findIndex((item)=>item.slug === action.payload.data.slug);
+                if (index !== -1) {
+                    state.pagination.items[index] = action.payload.data;
+                }
+            }
+            state.submitLoading = false;
+            state.error = null;
+        }).addCase(updateProduct.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.submitLoading = false;
+        });
+        // Delete product
+        builder.addCase(deleteProduct.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(deleteProduct.fulfilled, (state, action)=>{
+            // Kiểm tra và cập nhật pagination.items thay vì items
+            if (state.pagination && state.pagination.items) {
+                state.pagination.items = state.pagination.items.filter((item)=>item.slug !== action.meta.arg);
+            }
+            state.loading = false;
+        }).addCase(deleteProduct.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+        // Trong phần extraReducers, thêm các cases xử lý search
+        builder.addCase(searchProductsByNameAndColor.pending, (state)=>{
+            state.loading = true;
+            state.error = null;
+        }).addCase(searchProductsByNameAndColor.fulfilled, (state, action)=>{
+            const { products, pagination } = action.payload.data;
+            state.searchResults = {
+                items: products,
+                pagination: {
+                    totalItems: pagination.totalItems || 0,
+                    totalPages: pagination.totalPages || 0,
+                    currentPage: pagination.currentPage || 1,
+                    pageSize: pagination.pageSize || 10
+                }
+            };
+            state.loading = false;
+        }).addCase(searchProductsByNameAndColor.rejected, (state, action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        });
+    }
+});
+const { setVisibleNewProducts, setVisibleFeaturedProducts, clearProductState } = productSlice.actions;
+const __TURBOPACK__default__export__ = productSlice.reducer;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -4767,846 +5153,1031 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[project]/src/pages/TrackOrder.js [client] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/Banner.js [client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
-// pages/TrackOrder.jsx
 __turbopack_context__.s({
-    "default": (()=>__TURBOPACK__default__export__)
+    "default": (()=>Banner)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-toastify/dist/index.mjs [client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+;
+const images = [
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Fslide_1_img.webp?alt=media&token=cf8df529-e70a-4bb3-8b02-885929d11191',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Fms_banner_img2.webp?alt=media&token=08b2caf2-4860-499e-9322-899097d13c2d',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Ftask_1109_1910x770__pc___1_.webp?alt=media&token=c5af3dfb-e564-4665-a0ce-711102dfdc4c'
+];
+function Banner() {
+    _s();
+    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Banner.useEffect": ()=>{
+            const interval = setInterval({
+                "Banner.useEffect.interval": ()=>{
+                    setCurrentIndex({
+                        "Banner.useEffect.interval": (prevIndex)=>(prevIndex + 1) % images.length
+                    }["Banner.useEffect.interval"]);
+                }
+            }["Banner.useEffect.interval"], 3000); // Change image every 3 seconds
+            return ({
+                "Banner.useEffect": ()=>clearInterval(interval)
+            })["Banner.useEffect"]; // Cleanup on unmount
+        }
+    }["Banner.useEffect"], []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "relative w-screen h-[15rem] sm:h-[20rem] md:h-[35rem] lg:h-[60rem] overflow-hidden -mx-[calc(50vw-50%)] left-[calc(50%-50vw)]",
+        children: [
+            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                        src: image,
+                        alt: `Banner ${index + 1}`,
+                        className: "w-full h-full object-cover"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 33,
+                        columnNumber: 21
+                    }, this)
+                }, index, false, {
+                    fileName: "[project]/src/components/Banner.js",
+                    lineNumber: 23,
+                    columnNumber: 17
+                }, this)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
+                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setCurrentIndex(index),
+                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
+                    }, index, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 44,
+                        columnNumber: 21
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/src/components/Banner.js",
+                lineNumber: 42,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/Banner.js",
+        lineNumber: 21,
+        columnNumber: 9
+    }, this);
+}
+_s(Banner, "tPjzCc9H5UuFdWNuAHYoD0K4UOk=");
+_c = Banner;
+var _c;
+__turbopack_context__.k.register(_c, "Banner");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/src/pages/search.js [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { g: global, __dirname, k: __turbopack_refresh__, m: module } = __turbopack_context__;
+{
+// pages/search.js
+__turbopack_context__.s({
+    "default": (()=>SearchPage)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/router.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-redux/dist/react-redux.mjs [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/productSlice.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Layout.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Banner.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/outline/esm/HeartIcon.js [client] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/solid/esm/HeartIcon.js [client] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/outline/esm/ShoppingBagIcon.js [client] (ecmascript) <export default as ShoppingBagIcon>"); // Thêm icon giỏ hàng
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/favoriteSlice.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [client] (ecmascript)"); // Thêm import stockApi
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/storage.js [client] (ecmascript)"); // Thêm import getToken và getCartId
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/cartSlice.js [client] (ecmascript)"); // Thêm import từ cartSlice
 ;
 var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
 ;
-const OrderStatus = {
-    pending: 'Chờ xác nhận',
-    completed: 'Hoàn thành',
-    cancelled: 'Đã hủy',
-    failed: 'Thất bại',
-    in_payment: 'Đang thanh toán',
-    in_progress: 'Đang xử lý',
-    shipping: 'Đang giao hàng'
-};
-const PaymentStatus = {
-    pending: 'Chờ thanh toán',
-    paid: 'Đã thanh toán',
-    cancelled: 'Đã hủy',
-    failed: 'Thất bại',
-    processing: 'Đang xử lý'
-};
-const StatusBadge = ({ status })=>{
-    const getStatusColor = (status)=>{
-        switch(status){
-            case 'pending':
-                return 'bg-yellow-100 text-yellow-800';
-            case 'completed':
-                return 'bg-green-100 text-green-800';
-            case 'cancelled':
-                return 'bg-red-100 text-red-800';
-            case 'failed':
-                return 'bg-red-100 text-red-800';
-            case 'in_payment':
-                return 'bg-blue-100 text-blue-800';
-            case 'in_progress':
-                return 'bg-purple-100 text-purple-800';
-            case 'shipping':
-                return 'bg-indigo-100 text-indigo-800';
-            default:
-                return 'bg-gray-100 text-gray-800';
-        }
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-        className: `px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(status)}`,
-        children: OrderStatus[status]
-    }, void 0, false, {
-        fileName: "[project]/src/pages/TrackOrder.js",
-        lineNumber: 48,
-        columnNumber: 9
-    }, this);
-};
-_c = StatusBadge;
-const TrackOrder = ()=>{
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+function SearchPage() {
     _s();
-    const [orderId, setOrderId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [identifier, setIdentifier] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [orderData, setOrderData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [errors, setErrors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])({
-        orderId: '',
-        identifier: ''
-    });
-    const validateForm = ()=>{
-        let isValid = true;
-        const newErrors = {
-            orderId: '',
-            identifier: ''
-        };
-        // Validate mã đơn hàng
-        if (!orderId.trim()) {
-            newErrors.orderId = 'Vui lòng nhập mã đơn hàng';
-            isValid = false;
-        }
-        // Validate email hoặc số điện thoại
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-        if (!identifier.trim()) {
-            newErrors.identifier = 'Vui lòng nhập email hoặc số điện thoại';
-            isValid = false;
-        } else if (!emailRegex.test(identifier) && !phoneRegex.test(identifier)) {
-            newErrors.identifier = 'Email hoặc số điện thoại không hợp lệ';
-            isValid = false;
-        }
-        setErrors(newErrors);
-        return isValid;
-    };
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
-        if (!validateForm()) {
-            return;
-        }
-        setLoading(true);
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"])();
+    const [products, setProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [loadingMore, setLoadingMore] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
+    const [hasMore, setHasMore] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [totalProducts, setTotalProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const { keyword } = router.query;
+    const ITEMS_PER_PAGE = 12;
+    const favorites = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["selectFavoriteStatuses"]);
+    // Thêm states cho chức năng thêm vào giỏ hàng
+    const [stocks, setStocks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [productModal, setProductModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])(1);
+    const favoriteStatuses = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["selectFavoriteStatuses"]);
+    const { items: cartItems } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"])({
+        "SearchPage.useSelector": (state)=>state.cart
+    }["SearchPage.useSelector"]); // Thêm cartItems
+    // Thêm hàm fetch stocks
+    const fetchStocks = async ()=>{
         try {
-            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["orderTrackingApi"].trackOrder(orderId, identifier);
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$client$5d$__$28$ecmascript$29$__["stockApi"].getProductStocks();
             if (response.success) {
-                setOrderData(response.data);
-                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].success(response.message);
+                setStocks(response.data);
             } else {
-                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error(response.message);
+                console.error('Lỗi khi tải dữ liệu tồn kho');
+            }
+        } catch (err) {
+            console.error('Error fetching stocks:', err);
+        }
+    };
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SearchPage.useEffect": ()=>{
+            const fetchProducts = {
+                "SearchPage.useEffect.fetchProducts": async ()=>{
+                    if (keyword) {
+                        setLoading(true);
+                        try {
+                            const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["searchProductsByNameAndColor"])({
+                                keyword,
+                                page: 1,
+                                limit: ITEMS_PER_PAGE,
+                                sort: 'newest'
+                            }));
+                            if (result.payload?.data) {
+                                setProducts(result.payload.data.products);
+                                setTotalProducts(result.payload.data.pagination.totalItems);
+                                setHasMore(result.payload.data.products.length >= ITEMS_PER_PAGE);
+                            }
+                            // Fetch stocks khi có dữ liệu sản phẩm
+                            await fetchStocks();
+                            // Tải thông tin giỏ hàng nếu có
+                            const cartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])();
+                            if (cartId) {
+                                dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])(cartId));
+                            }
+                        } catch (error) {
+                            console.error('Error fetching products:', error);
+                        }
+                        setLoading(false);
+                    }
+                }
+            }["SearchPage.useEffect.fetchProducts"];
+            setProducts([]);
+            setCurrentPage(1);
+            setHasMore(true);
+            setTotalProducts(0);
+            fetchProducts();
+        }
+    }["SearchPage.useEffect"], [
+        keyword,
+        dispatch
+    ]);
+    const loadMore = async ()=>{
+        if (loadingMore) return;
+        setLoadingMore(true);
+        try {
+            const nextPage = currentPage + 1;
+            const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["searchProductsByNameAndColor"])({
+                keyword,
+                page: nextPage,
+                limit: ITEMS_PER_PAGE,
+                sort: 'newest'
+            }));
+            if (result.payload?.data) {
+                const newProducts = result.payload.data.products;
+                setProducts((prev)=>[
+                        ...prev,
+                        ...newProducts
+                    ]);
+                setCurrentPage(nextPage);
+                setHasMore(newProducts.length >= ITEMS_PER_PAGE);
             }
         } catch (error) {
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$index$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["toast"].error('Không thể tra cứu đơn hàng');
-            setOrderData(null);
-        } finally{
-            setLoading(false);
+            console.error('Error loading more products:', error);
+        }
+        setLoadingMore(false);
+    };
+    const handleProductClick = (slug)=>{
+        router.push(`/productdetail/${slug}`);
+    };
+    const handleFavoriteClick = async (e, productId)=>{
+        e.stopPropagation();
+        try {
+            if (favoriteStatuses[productId]) {
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["removeFromFavorite"])(productId)).unwrap();
+            } else {
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["addToFavorite"])(productId)).unwrap();
+            }
+        } catch (error) {
+            console.error('Error handling favorite:', error);
         }
     };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "container mx-auto px-4 py-8",
+    // Thêm các hàm quản lý stock từ [slug].js và index.js
+    const getStockQuantity = (productId, colorId, sizeId)=>{
+        const stock = stocks.find((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId);
+        return stock ? stock.quantity : 0;
+    };
+    const getCartItemQuantity = (productId, colorId, sizeId)=>{
+        const existingItem = cartItems?.find((item)=>item.product_id === productId && item.color_id === colorId && item.size_id === sizeId);
+        return existingItem?.quantity || 0;
+    };
+    const isColorAvailable = (productId, colorId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.quantity > 0);
+    };
+    const isSizeAvailable = (productId, colorId, sizeId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId && stock.quantity > 0);
+    };
+    const getMaxAvailableQuantity = (productId)=>{
+        if (!selectedColor || !selectedSize) return 0;
+        const stockQuantity = getStockQuantity(productId, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productId, selectedColor.id, selectedSize.id);
+        return Math.max(0, stockQuantity - cartQuantity);
+    };
+    // Cập nhật trạng thái khi chọn sản phẩm
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SearchPage.useEffect": ()=>{
+            if (productModal && stocks.length > 0) {
+                const firstAvailableColor = productModal.productColors.find({
+                    "SearchPage.useEffect.firstAvailableColor": (color)=>isColorAvailable(productModal.id, color.id)
+                }["SearchPage.useEffect.firstAvailableColor"]);
+                setSelectedColor(firstAvailableColor || null);
+                setSelectedSize(null);
+                setQuantity(1);
+            }
+        }
+    }["SearchPage.useEffect"], [
+        productModal,
+        stocks
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SearchPage.useEffect": ()=>{
+            if (selectedColor && productModal?.productSizes && stocks.length > 0) {
+                const firstAvailableSize = productModal.productSizes.find({
+                    "SearchPage.useEffect.firstAvailableSize": (size)=>isSizeAvailable(productModal.id, selectedColor.id, size.id)
+                }["SearchPage.useEffect.firstAvailableSize"]);
+                setSelectedSize(firstAvailableSize || null);
+                setQuantity(1);
+            }
+        }
+    }["SearchPage.useEffect"], [
+        selectedColor,
+        productModal,
+        stocks
+    ]);
+    // Các hàm xử lý thêm giỏ hàng và mua ngay
+    const handleAddToCart = async (showAlert = true)=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Vui lòng chọn màu và kích thước.');
+            return;
+        }
+        const stockQuantity = getStockQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        if (cartQuantity + quantity > stockQuantity) {
+            const remainingQuantity = stockQuantity - cartQuantity;
+            if (remainingQuantity <= 0) {
+                alert('Sản phẩm đã hết hàng hoặc đã có trong giỏ hàng với số lượng tối đa.');
+                return;
+            }
+            alert(`Chỉ còn ${remainingQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForUser"])()).unwrap() : await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["createCartForGuest"])()).unwrap();
+                activeCartId = cartResponse?.id;
+            }
+            await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["addItemToCart"])({
+                cartId: activeCartId,
+                itemData: {
+                    product_id: productModal.id,
+                    color_id: selectedColor.id,
+                    size_id: selectedSize.id,
+                    quantity
+                }
+            })).unwrap();
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$client$5d$__$28$ecmascript$29$__["getCartItems"])(activeCartId));
+            localStorage.setItem('cartId', activeCartId);
+            setProductModal(null); // Đóng modal
+            if (showAlert) {
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+            console.error(error);
+        }
+    };
+    const handleBuyNow = async ()=>{
+        try {
+            await handleAddToCart(false);
+            router.push('/cart');
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+        }
+    };
+    const increaseQuantity = ()=>{
+        const availableQuantity = getMaxAvailableQuantity(productModal?.id);
+        if (quantity >= availableQuantity) {
+            alert(`Chỉ còn ${availableQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        setQuantity((prev)=>prev + 1);
+    };
+    const decreaseQuantity = ()=>setQuantity((prev)=>prev > 1 ? prev - 1 : 1);
+    const openProductModal = (product)=>{
+        setProductModal(product);
+    };
+    // Component ProductCard và ProductModal
+    const ProductCard = ({ product })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group",
+            onClick: ()=>handleProductClick(product.slug),
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                    className: "text-2xl font-bold text-center mb-8",
-                    children: "Tra Cứu Đơn Hàng"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 120,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                    onSubmit: handleSubmit,
-                    className: "max-w-md mx-auto mb-8",
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "relative overflow-hidden aspect-[3/4]",
+                    onClick: ()=>handleProductClick(product.slug),
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mb-4",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-gray-700 mb-2",
-                                    children: "Mã đơn hàng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 124,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: orderId,
-                                    onChange: (e)=>{
-                                        setOrderId(e.target.value);
-                                        if (errors.orderId) setErrors({
-                                            ...errors,
-                                            orderId: ''
-                                        });
-                                    },
-                                    className: `w-full px-3 py-2 border rounded ${errors.orderId ? 'border-red-500' : ''}`,
-                                    required: true,
-                                    onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
-                                    onInput: (e)=>e.target.setCustomValidity("")
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 125,
-                                    columnNumber: 25
-                                }, this),
-                                errors.orderId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-red-500 text-sm mt-1",
-                                    children: errors.orderId
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 138,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 123,
+                        product ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: product.productColors[0]?.ProductColor?.image,
+                            alt: product.product_name,
+                            className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 304,
+                            columnNumber: 21
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-gray-200 w-full h-full flex items-center justify-center",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-gray-400",
+                                children: "No image"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 311,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 310,
                             columnNumber: 21
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mb-4",
+                        product.discount_price < product.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-gray-700 mb-2",
-                                    children: "Email hoặc Số điện thoại"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 143,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: identifier,
-                                    onChange: (e)=>{
-                                        setIdentifier(e.target.value);
-                                        if (errors.identifier) setErrors({
-                                            ...errors,
-                                            identifier: ''
-                                        });
-                                    },
-                                    className: `w-full px-3 py-2 border rounded ${errors.identifier ? 'border-red-500' : ''}`,
-                                    required: true,
-                                    onInvalid: (e)=>e.target.setCustomValidity("Không được để trống"),
-                                    onInput: (e)=>e.target.setCustomValidity("")
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 144,
-                                    columnNumber: 25
-                                }, this),
-                                errors.identifier && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-red-500 text-sm mt-1",
-                                    children: errors.identifier
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 157,
-                                    columnNumber: 29
-                                }, this)
+                                "-",
+                                Math.round((product.price - product.discount_price) / product.price * 100),
+                                "%"
                             ]
                         }, void 0, true, {
-                            fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 142,
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 317,
                             columnNumber: 21
+                        }, this) : product.is_new ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold",
+                            children: "NEW"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 321,
+                            columnNumber: 21
+                        }, this) : null
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 302,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex justify-between items-start",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                            className: "text-sm md:text-base font-medium mb-1 line-clamp-1 hover:text-red-500 cursor-pointer",
+                            onClick: ()=>handleProductClick(product.slug),
+                            children: product.product_name
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 327,
+                            columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            type: "submit",
-                            disabled: loading,
-                            className: "w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-900 disabled:bg-gray-400",
-                            children: loading ? 'Đang tra cứu...' : 'Tra cứu'
+                            className: "text-gray-700 hover:text-red-500 transition",
+                            onClick: (e)=>handleFavoriteClick(e, product.id),
+                            children: favorites[product.id] ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                className: "h-5 w-5 text-red-500"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 339,
+                                columnNumber: 25
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                className: "h-5 w-5"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 341,
+                                columnNumber: 25
+                            }, this)
                         }, void 0, false, {
-                            fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 161,
-                            columnNumber: 21
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 334,
+                            columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 122,
-                    columnNumber: 17
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 326,
+                    columnNumber: 13
                 }, this),
-                orderData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "max-w-6xl mx-auto bg-white rounded-lg shadow",
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex items-center gap-2 mb-2",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex gap-1 overflow-hidden",
+                        children: [
+                            product.productColors && product.productColors.length > 0 ? product.productColors.slice(0, 3).map((color, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "w-4 h-4 rounded-full border",
+                                    style: {
+                                        backgroundColor: color.hex_code
+                                    },
+                                    title: color.color
+                                }, index, false, {
+                                    fileName: "[project]/src/pages/search.js",
+                                    lineNumber: 350,
+                                    columnNumber: 29
+                                }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-xs text-gray-500",
+                                children: "No colors available"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 358,
+                                columnNumber: 25
+                            }, this),
+                            product.productColors && product.productColors.length > 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-xs",
+                                children: [
+                                    "+",
+                                    product.productColors.length - 3
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 361,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 347,
+                        columnNumber: 17
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 345,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex items-end justify-between",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-semibold p-6 border-b",
-                            children: [
-                                "Thông tin đơn hàng #",
-                                orderData.orderInfo.orderId
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 172,
-                            columnNumber: 25
-                        }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-1 md:grid-cols-2 gap-6",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "p-6 border-r",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "mb-8",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "space-y-4",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Trạng thái đơn hàng:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 184,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusBadge, {
-                                                                status: orderData.orderInfo.orderStatus
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 185,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 183,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Trạng thái thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 190,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: `px-3 py-1 rounded-full text-sm font-medium ${orderData.orderInfo.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`,
-                                                                children: orderData.orderInfo.paymentStatus ? PaymentStatus[orderData.orderInfo.paymentStatus] || 'Chờ thanh toán' : 'Chờ thanh toán'
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 191,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 189,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Ngày đặt hàng:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 204,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: new Date(orderData.orderInfo.orderDate).toLocaleString('vi-VN')
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 205,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 203,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    orderData.orderInfo.paymentDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Thời gian thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 212,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: new Date(orderData.orderInfo.paymentDate).toLocaleString('vi-VN')
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 213,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 211,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Phương thức thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 221,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium uppercase",
-                                                                children: orderData.orderInfo.paymentMethod
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 222,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 220,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    orderData.orderInfo.transactionId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Mã giao dịch:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 229,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: orderData.orderInfo.transactionId
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 230,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 228,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Giá sản phẩm:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 238,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.originalPrice).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 239,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 237,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    Number(orderData.orderInfo.discountAmount) > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Giảm giá:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 246,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium text-green-600",
-                                                                children: [
-                                                                    "-",
-                                                                    Number(orderData.orderInfo.discountAmount).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 247,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 245,
-                                                        columnNumber: 45
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Phí vận chuyển:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 254,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.shippingFee).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 255,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 253,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "pt-2 border-t",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Tổng thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 261,
-                                                                columnNumber: 45
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium text-xl text-red-600",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.finalPrice).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 262,
-                                                                columnNumber: 45
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 260,
-                                                        columnNumber: 41
-                                                    }, this),
-                                                    orderData.orderInfo.paymentStatus === 'paid' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Số tiền đã thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 270,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium text-green-600",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.paymentAmount).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 271,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 269,
-                                                        columnNumber: 45
-                                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600 mb-1",
-                                                                children: "Số tiền cần thanh toán:"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 277,
-                                                                columnNumber: 49
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-medium text-red-600",
-                                                                children: [
-                                                                    Number(orderData.orderInfo.finalPrice).toLocaleString('vi-VN'),
-                                                                    "đ"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 278,
-                                                                columnNumber: 49
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 276,
-                                                        columnNumber: 45
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                lineNumber: 181,
-                                                columnNumber: 37
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 180,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                    className: "font-semibold mb-4",
-                                                    children: "Thông tin người nhận"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 288,
-                                                    columnNumber: 37
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "bg-gray-50 p-4 rounded space-y-2",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-gray-600",
-                                                                    children: "Họ và tên:"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 290,
-                                                                    columnNumber: 44
-                                                                }, this),
-                                                                " ",
-                                                                orderData.customerInfo.name
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 290,
-                                                            columnNumber: 41
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-gray-600",
-                                                                    children: "Email:"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 291,
-                                                                    columnNumber: 44
-                                                                }, this),
-                                                                " ",
-                                                                orderData.customerInfo.email
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 291,
-                                                            columnNumber: 41
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-gray-600",
-                                                                    children: "Số điện thoại:"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 292,
-                                                                    columnNumber: 44
-                                                                }, this),
-                                                                " ",
-                                                                orderData.customerInfo.phone
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 292,
-                                                            columnNumber: 41
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-gray-600",
-                                                                    children: "Địa chỉ:"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                                    lineNumber: 293,
-                                                                    columnNumber: 44
-                                                                }, this),
-                                                                " ",
-                                                                `${orderData.customerInfo.address.street}, 
-                                            ${orderData.customerInfo.address.ward}, 
-                                            ${orderData.customerInfo.address.district}, 
-                                            ${orderData.customerInfo.address.city}, 
-                                            ${orderData.customerInfo.address.country}`
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                                            lineNumber: 293,
-                                                            columnNumber: 41
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 289,
-                                                    columnNumber: 37
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 287,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 178,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "p-6",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "font-semibold mb-4",
-                                            children: "Sản phẩm đã đặt"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 305,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-4",
-                                            children: orderData.items.map((item, index)=>{
-                                                const selectedColorImage = item.product.availableColors.find((color)=>color.id === item.selectedColor.id)?.image;
-                                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "border-b pb-4",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-center gap-4",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                                src: selectedColorImage,
-                                                                alt: item.product.name,
-                                                                className: "w-20 h-20 object-cover rounded"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 315,
-                                                                columnNumber: 53
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "flex-1",
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "font-medium",
-                                                                        children: item.product.name
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 321,
-                                                                        columnNumber: 57
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "text-sm text-gray-600",
-                                                                        children: [
-                                                                            "Màu: ",
-                                                                            item.selectedColor.color,
-                                                                            " | Size: ",
-                                                                            item.selectedSize.size
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 322,
-                                                                        columnNumber: 57
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "text-sm",
-                                                                        children: [
-                                                                            Number(item.orderedPrice).toLocaleString('vi-VN'),
-                                                                            "đ x",
-                                                                            item.orderedQuantity
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 326,
-                                                                        columnNumber: 57
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "text-sm font-medium text-red-600",
-                                                                        children: [
-                                                                            "= ",
-                                                                            (Number(item.orderedPrice) * item.orderedQuantity).toLocaleString('vi-VN'),
-                                                                            "đ"
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                                        lineNumber: 330,
-                                                                        columnNumber: 57
-                                                                    }, this)
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/pages/TrackOrder.js",
-                                                                lineNumber: 320,
-                                                                columnNumber: 53
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/pages/TrackOrder.js",
-                                                        lineNumber: 314,
-                                                        columnNumber: 49
-                                                    }, this)
-                                                }, index, false, {
-                                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                                    lineNumber: 313,
-                                                    columnNumber: 45
-                                                }, this);
-                                            })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/TrackOrder.js",
-                                            lineNumber: 306,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/TrackOrder.js",
-                                    lineNumber: 304,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/TrackOrder.js",
-                            lineNumber: 176,
-                            columnNumber: 25
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-red-500 font-bold text-sm md:text-base",
+                                        children: [
+                                            product.discount_price != null ? product.discount_price.toLocaleString('vi-VN') : 0,
+                                            " đ"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 369,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-500 line-through text-xs",
+                                        children: [
+                                            product.price != null ? product.price.toLocaleString('vi-VN') : 0,
+                                            " đ"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 374,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 368,
+                                columnNumber: 21
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 366,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            className: "text-gray-700 hover:text-red-500 transition",
+                            onClick: (e)=>{
+                                e.stopPropagation();
+                                openProductModal(product);
+                            },
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__["ShoppingBagIcon"], {
+                                className: "h-5 w-5"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 390,
+                                columnNumber: 21
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 383,
+                            columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "[project]/src/pages/TrackOrder.js",
-                    lineNumber: 171,
-                    columnNumber: 21
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 365,
+                    columnNumber: 13
                 }, this)
             ]
         }, void 0, true, {
-            fileName: "[project]/src/pages/TrackOrder.js",
-            lineNumber: 119,
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 297,
+            columnNumber: 9
+        }, this);
+    // Modal để chọn màu, kích thước và số lượng
+    const ProductModal = ()=>{
+        if (!productModal) return null;
+        // Tìm đối tượng màu đang được chọn hoặc sử dụng màu đầu tiên nếu chưa chọn màu nào
+        const currentColorObject = selectedColor ? productModal.productColors.find((c)=>c.id === selectedColor.id) : productModal.productColors[0];
+        // Lấy ảnh từ productColor
+        const currentImage = currentColorObject?.ProductColor?.image || 'https://via.placeholder.com/150';
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-bold",
+                                children: productModal.product_name
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 412,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setProductModal(null),
+                                className: "text-gray-500 hover:text-gray-700",
+                                children: "×"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 413,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 411,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: currentImage,
+                            alt: `${productModal.product_name} - ${currentColorObject?.color || 'Màu mặc định'}`,
+                            className: "w-full h-64 object-contain rounded mb-4 border"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 423,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 422,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn màu:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 431,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productColors.map((color)=>{
+                                    const hasStock = isColorAvailable(productModal.id, color.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: `
+                                            w-8 h-8 rounded-full border relative
+                                            ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500' : ''}
+                                            ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
+                                        `,
+                                        style: {
+                                            backgroundColor: color.hex_code
+                                        },
+                                        title: `${color.color}${!hasStock ? ' (Hết hàng)' : ''}`,
+                                        onClick: ()=>hasStock && setSelectedColor(color),
+                                        children: !hasStock && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "absolute inset-0 flex items-center justify-center",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "w-full h-0.5 bg-gray-400 transform rotate-45"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/search.js",
+                                                lineNumber: 449,
+                                                columnNumber: 49
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/search.js",
+                                            lineNumber: 448,
+                                            columnNumber: 45
+                                        }, this)
+                                    }, color.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 436,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 432,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 430,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn kích thước:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 459,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productSizes.map((size)=>{
+                                    const isAvailable = selectedColor && isSizeAvailable(productModal.id, selectedColor.id, size.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: `
+                                            px-4 py-1 border rounded relative
+                                            ${selectedSize?.id === size.id ? 'bg-gray-100' : ''}
+                                            ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}
+                                        `,
+                                        onClick: ()=>isAvailable && setSelectedSize(size),
+                                        disabled: !isAvailable,
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            children: size.size
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/search.js",
+                                            lineNumber: 474,
+                                            columnNumber: 41
+                                        }, this)
+                                    }, size.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 464,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 460,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 458,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Số lượng:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 482,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: decreaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "-"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 484,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "number",
+                                        className: "w-16 px-2 py-1 border rounded text-center",
+                                        min: "1",
+                                        max: getMaxAvailableQuantity(productModal.id),
+                                        value: quantity,
+                                        readOnly: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 491,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: increaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "+"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 499,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 483,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 481,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-2 mt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full sm:w-auto",
+                                onClick: ()=>handleAddToCart(),
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Thêm vào giỏ hàng"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 510,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition w-full sm:w-auto",
+                                onClick: handleBuyNow,
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Mua ngay"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 517,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 509,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 410,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 409,
             columnNumber: 13
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/src/pages/TrackOrder.js",
-        lineNumber: 118,
+        }, this);
+    };
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 533,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "container mx-auto px-4 py-8",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-center items-center h-64",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 536,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 535,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 534,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 532,
+            columnNumber: 13
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 545,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "container mx-auto px-4 py-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                        className: "text-2xl font-bold mb-6 uppercase flex items-center mt-4 ml-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 549,
+                                columnNumber: 21
+                            }, this),
+                            'Kết quả tìm kiếm cho "',
+                            keyword,
+                            '" (',
+                            totalProducts,
+                            " sản phẩm)"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 548,
+                        columnNumber: 17
+                    }, this),
+                    products.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-center py-8",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-gray-500",
+                            children: "Không tìm thấy sản phẩm phù hợp"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 555,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 554,
+                        columnNumber: 21
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
+                                children: products.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductCard, {
+                                        product: product
+                                    }, product.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 561,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 559,
+                                columnNumber: 25
+                            }, this),
+                            hasMore && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex justify-center mt-8",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: loadMore,
+                                    disabled: loadingMore,
+                                    className: "px-6 py-2.5 rounded-md   bg-white text-gray-600    border border-gray-600   hover:bg-gray-50    transition duration-300    font-medium",
+                                    children: loadingMore ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "flex items-center",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                                                xmlns: "http://www.w3.org/2000/svg",
+                                                fill: "none",
+                                                viewBox: "0 0 24 24",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
+                                                        className: "opacity-25",
+                                                        cx: "12",
+                                                        cy: "12",
+                                                        r: "10",
+                                                        stroke: "currentColor",
+                                                        strokeWidth: "4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/search.js",
+                                                        lineNumber: 580,
+                                                        columnNumber: 49
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                        className: "opacity-75",
+                                                        fill: "currentColor",
+                                                        d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/search.js",
+                                                        lineNumber: 581,
+                                                        columnNumber: 49
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/pages/search.js",
+                                                lineNumber: 579,
+                                                columnNumber: 45
+                                            }, this),
+                                            "Đang tải..."
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 578,
+                                        columnNumber: 41
+                                    }, this) : 'Xem thêm sản phẩm'
+                                }, void 0, false, {
+                                    fileName: "[project]/src/pages/search.js",
+                                    lineNumber: 567,
+                                    columnNumber: 33
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 566,
+                                columnNumber: 29
+                            }, this)
+                        ]
+                    }, void 0, true)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 546,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 596,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/pages/search.js",
+        lineNumber: 544,
         columnNumber: 9
     }, this);
-};
-_s(TrackOrder, "JCSeVn9R8Xopa2DgcJDtMxaTgkk=");
-_c1 = TrackOrder;
-const __TURBOPACK__default__export__ = TrackOrder;
-var _c, _c1;
-__turbopack_context__.k.register(_c, "StatusBadge");
-__turbopack_context__.k.register(_c1, "TrackOrder");
+}
+_s(SearchPage, "P9w87GilP3xN8uBGW20MMPwu+SI=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useDispatch"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__["useSelector"]
+    ];
+});
+_c = SearchPage;
+var _c;
+__turbopack_context__.k.register(_c, "SearchPage");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
 }}),
-"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/TrackOrder.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
+"[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/search.js [client] (ecmascript)\" } [client] (ecmascript)": (function(__turbopack_context__) {
 
 var { g: global, __dirname, m: module, e: exports } = __turbopack_context__;
 {
-const PAGE_PATH = "/TrackOrder";
+const PAGE_PATH = "/search";
 (window.__NEXT_P = window.__NEXT_P || []).push([
     PAGE_PATH,
     ()=>{
-        return __turbopack_context__.r("[project]/src/pages/TrackOrder.js [client] (ecmascript)");
+        return __turbopack_context__.r("[project]/src/pages/search.js [client] (ecmascript)");
     }
 ]);
 // @ts-expect-error module.hot exists
@@ -5619,13 +6190,13 @@ if (module.hot) {
     });
 }
 }}),
-"[project]/src/pages/TrackOrder (hmr-entry)": ((__turbopack_context__) => {
+"[project]/src/pages/search (hmr-entry)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, m: module } = __turbopack_context__;
 {
-__turbopack_context__.r("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/TrackOrder.js [client] (ecmascript)\" } [client] (ecmascript)");
+__turbopack_context__.r("[next]/entry/page-loader.ts { PAGE => \"[project]/src/pages/search.js [client] (ecmascript)\" } [client] (ecmascript)");
 }}),
 }]);
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__c662ff7f._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__29668b7c._.js.map

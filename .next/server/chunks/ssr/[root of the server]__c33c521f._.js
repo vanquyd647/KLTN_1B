@@ -5486,191 +5486,980 @@ function Layout({ children }) {
 }
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
-"[project]/src/pages/warranty-policy.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/components/Banner.js [ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { g: global, __dirname } = __turbopack_context__;
+{
+__turbopack_context__.s({
+    "default": (()=>Banner)
+});
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/react [external] (react, cjs)");
+;
+;
+const images = [
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Fslide_1_img.webp?alt=media&token=cf8df529-e70a-4bb3-8b02-885929d11191',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Fms_banner_img2.webp?alt=media&token=08b2caf2-4860-499e-9322-899097d13c2d',
+    'https://firebasestorage.googleapis.com/v0/b/red89-f8933.appspot.com/o/KLTN%2FBanner%2Ftask_1109_1910x770__pc___1_.webp?alt=media&token=c5af3dfb-e564-4665-a0ce-711102dfdc4c'
+];
+function Banner() {
+    const [currentIndex, setCurrentIndex] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const interval = setInterval(()=>{
+            setCurrentIndex((prevIndex)=>(prevIndex + 1) % images.length);
+        }, 3000); // Change image every 3 seconds
+        return ()=>clearInterval(interval); // Cleanup on unmount
+    }, []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+        className: "relative w-screen h-[15rem] sm:h-[20rem] md:h-[35rem] lg:h-[60rem] overflow-hidden -mx-[calc(50vw-50%)] left-[calc(50%-50vw)]",
+        children: [
+            images.map((image, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: `absolute inset-0 w-full h-full transition-transform duration-700 ease-in-out transform ${index === currentIndex ? 'translate-x-0' : index < currentIndex ? '-translate-x-full' : 'translate-x-full'}`,
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                        src: image,
+                        alt: `Banner ${index + 1}`,
+                        className: "w-full h-full object-cover"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 33,
+                        columnNumber: 21
+                    }, this)
+                }, index, false, {
+                    fileName: "[project]/src/components/Banner.js",
+                    lineNumber: 23,
+                    columnNumber: 17
+                }, this)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2",
+                children: images.map((_, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setCurrentIndex(index),
+                        className: `w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`
+                    }, index, false, {
+                        fileName: "[project]/src/components/Banner.js",
+                        lineNumber: 44,
+                        columnNumber: 21
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/src/components/Banner.js",
+                lineNumber: 42,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/Banner.js",
+        lineNumber: 21,
+        columnNumber: 9
+    }, this);
+}
+}}),
+"[project]/src/pages/search.js [ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname, a: __turbopack_async_module__ } = __turbopack_context__;
 __turbopack_async_module__(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+// pages/search.js
 __turbopack_context__.s({
-    "default": (()=>WarrantyPolicy)
+    "default": (()=>SearchPage)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/react/jsx-dev-runtime [external] (react/jsx-dev-runtime, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/react [external] (react, cjs)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/router.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__ = __turbopack_context__.i("[externals]/react-redux [external] (react-redux, esm_import)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/productSlice.js [ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Layout.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Banner.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/outline/esm/HeartIcon.js [ssr] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/solid/esm/HeartIcon.js [ssr] (ecmascript) <export default as HeartIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/outline/esm/ShoppingBagIcon.js [ssr] (ecmascript) <export default as ShoppingBagIcon>"); // Thêm icon giỏ hàng
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/favoriteSlice.js [ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/apiClient.js [ssr] (ecmascript)"); // Thêm import stockApi
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/storage.js [ssr] (ecmascript)"); // Thêm import getToken và getCartId
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/slices/cartSlice.js [ssr] (ecmascript)"); // Thêm import từ cartSlice
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
-    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__
 ]);
-([__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
+([__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__);
 ;
 ;
-function WarrantyPolicy() {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-            className: "container mx-auto px-4 py-8",
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+function SearchPage() {
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$router$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const dispatch = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useDispatch"])();
+    const [products, setProducts] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(true);
+    const [loadingMore, setLoadingMore] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(false);
+    const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    const [hasMore, setHasMore] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(true);
+    const [totalProducts, setTotalProducts] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(0);
+    const { keyword } = router.query;
+    const ITEMS_PER_PAGE = 12;
+    const favorites = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["selectFavoriteStatuses"]);
+    // Thêm states cho chức năng thêm vào giỏ hàng
+    const [stocks, setStocks] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])([]);
+    const [productModal, setProductModal] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [selectedColor, setSelectedColor] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [selectedSize, setSelectedSize] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
+    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(1);
+    const favoriteStatuses = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["selectFavoriteStatuses"]);
+    const { items: cartItems } = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$redux__$5b$external$5d$__$28$react$2d$redux$2c$__esm_import$29$__["useSelector"])((state)=>state.cart); // Thêm cartItems
+    // Thêm hàm fetch stocks
+    const fetchStocks = async ()=>{
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["stockApi"].getProductStocks();
+            if (response.success) {
+                setStocks(response.data);
+            } else {
+                console.error('Lỗi khi tải dữ liệu tồn kho');
+            }
+        } catch (err) {
+            console.error('Error fetching stocks:', err);
+        }
+    };
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        const fetchProducts = async ()=>{
+            if (keyword) {
+                setLoading(true);
+                try {
+                    const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["searchProductsByNameAndColor"])({
+                        keyword,
+                        page: 1,
+                        limit: ITEMS_PER_PAGE,
+                        sort: 'newest'
+                    }));
+                    if (result.payload?.data) {
+                        setProducts(result.payload.data.products);
+                        setTotalProducts(result.payload.data.pagination.totalItems);
+                        setHasMore(result.payload.data.products.length >= ITEMS_PER_PAGE);
+                    }
+                    // Fetch stocks khi có dữ liệu sản phẩm
+                    await fetchStocks();
+                    // Tải thông tin giỏ hàng nếu có
+                    const cartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+                    if (cartId) {
+                        dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(cartId));
+                    }
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+                setLoading(false);
+            }
+        };
+        setProducts([]);
+        setCurrentPage(1);
+        setHasMore(true);
+        setTotalProducts(0);
+        fetchProducts();
+    }, [
+        keyword,
+        dispatch
+    ]);
+    const loadMore = async ()=>{
+        if (loadingMore) return;
+        setLoadingMore(true);
+        try {
+            const nextPage = currentPage + 1;
+            const result = await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$productSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["searchProductsByNameAndColor"])({
+                keyword,
+                page: nextPage,
+                limit: ITEMS_PER_PAGE,
+                sort: 'newest'
+            }));
+            if (result.payload?.data) {
+                const newProducts = result.payload.data.products;
+                setProducts((prev)=>[
+                        ...prev,
+                        ...newProducts
+                    ]);
+                setCurrentPage(nextPage);
+                setHasMore(newProducts.length >= ITEMS_PER_PAGE);
+            }
+        } catch (error) {
+            console.error('Error loading more products:', error);
+        }
+        setLoadingMore(false);
+    };
+    const handleProductClick = (slug)=>{
+        router.push(`/productdetail/${slug}`);
+    };
+    const handleFavoriteClick = async (e, productId)=>{
+        e.stopPropagation();
+        try {
+            if (favoriteStatuses[productId]) {
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["removeFromFavorite"])(productId)).unwrap();
+            } else {
+                await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$favoriteSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["addToFavorite"])(productId)).unwrap();
+            }
+        } catch (error) {
+            console.error('Error handling favorite:', error);
+        }
+    };
+    // Thêm các hàm quản lý stock từ [slug].js và index.js
+    const getStockQuantity = (productId, colorId, sizeId)=>{
+        const stock = stocks.find((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId);
+        return stock ? stock.quantity : 0;
+    };
+    const getCartItemQuantity = (productId, colorId, sizeId)=>{
+        const existingItem = cartItems?.find((item)=>item.product_id === productId && item.color_id === colorId && item.size_id === sizeId);
+        return existingItem?.quantity || 0;
+    };
+    const isColorAvailable = (productId, colorId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.quantity > 0);
+    };
+    const isSizeAvailable = (productId, colorId, sizeId)=>{
+        return stocks.some((stock)=>stock.product_id === productId && stock.color_id === colorId && stock.size_id === sizeId && stock.quantity > 0);
+    };
+    const getMaxAvailableQuantity = (productId)=>{
+        if (!selectedColor || !selectedSize) return 0;
+        const stockQuantity = getStockQuantity(productId, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productId, selectedColor.id, selectedSize.id);
+        return Math.max(0, stockQuantity - cartQuantity);
+    };
+    // Cập nhật trạng thái khi chọn sản phẩm
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (productModal && stocks.length > 0) {
+            const firstAvailableColor = productModal.productColors.find((color)=>isColorAvailable(productModal.id, color.id));
+            setSelectedColor(firstAvailableColor || null);
+            setSelectedSize(null);
+            setQuantity(1);
+        }
+    }, [
+        productModal,
+        stocks
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
+        if (selectedColor && productModal?.productSizes && stocks.length > 0) {
+            const firstAvailableSize = productModal.productSizes.find((size)=>isSizeAvailable(productModal.id, selectedColor.id, size.id));
+            setSelectedSize(firstAvailableSize || null);
+            setQuantity(1);
+        }
+    }, [
+        selectedColor,
+        productModal,
+        stocks
+    ]);
+    // Các hàm xử lý thêm giỏ hàng và mua ngay
+    const handleAddToCart = async (showAlert = true)=>{
+        if (!selectedColor || !selectedSize) {
+            alert('Vui lòng chọn màu và kích thước.');
+            return;
+        }
+        const stockQuantity = getStockQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        const cartQuantity = getCartItemQuantity(productModal.id, selectedColor.id, selectedSize.id);
+        if (cartQuantity + quantity > stockQuantity) {
+            const remainingQuantity = stockQuantity - cartQuantity;
+            if (remainingQuantity <= 0) {
+                alert('Sản phẩm đã hết hàng hoặc đã có trong giỏ hàng với số lượng tối đa.');
+                return;
+            }
+            alert(`Chỉ còn ${remainingQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        try {
+            let activeCartId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartId"])();
+            if (!activeCartId) {
+                const cartResponse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$storage$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getToken"])() ? await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["createCartForUser"])()).unwrap() : await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["createCartForGuest"])()).unwrap();
+                activeCartId = cartResponse?.id;
+            }
+            await dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["addItemToCart"])({
+                cartId: activeCartId,
+                itemData: {
+                    product_id: productModal.id,
+                    color_id: selectedColor.id,
+                    size_id: selectedSize.id,
+                    quantity
+                }
+            })).unwrap();
+            dispatch((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$slices$2f$cartSlice$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["getCartItems"])(activeCartId));
+            localStorage.setItem('cartId', activeCartId);
+            setProductModal(null); // Đóng modal
+            if (showAlert) {
+                alert('Sản phẩm đã được thêm vào giỏ hàng!');
+            }
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+            console.error(error);
+        }
+    };
+    const handleBuyNow = async ()=>{
+        try {
+            await handleAddToCart(false);
+            router.push('/cart');
+        } catch (error) {
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+        }
+    };
+    const increaseQuantity = ()=>{
+        const availableQuantity = getMaxAvailableQuantity(productModal?.id);
+        if (quantity >= availableQuantity) {
+            alert(`Chỉ còn ${availableQuantity} sản phẩm có thể thêm vào giỏ hàng.`);
+            return;
+        }
+        setQuantity((prev)=>prev + 1);
+    };
+    const decreaseQuantity = ()=>setQuantity((prev)=>prev > 1 ? prev - 1 : 1);
+    const openProductModal = (product)=>{
+        setProductModal(product);
+    };
+    // Component ProductCard và ProductModal
+    const ProductCard = ({ product })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "bg-white rounded shadow p-4 hover:shadow-lg transition cursor-pointer relative flex flex-col h-full group",
+            onClick: ()=>handleProductClick(product.slug),
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
-                    className: "text-3xl font-bold mb-6",
-                    children: "Chính sách đổi trả & bảo hành"
-                }, void 0, false, {
-                    fileName: "[project]/src/pages/warranty-policy.js",
-                    lineNumber: 6,
-                    columnNumber: 17
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "relative overflow-hidden aspect-[3/4]",
+                    onClick: ()=>handleProductClick(product.slug),
+                    children: [
+                        product ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                            src: product.productColors[0]?.ProductColor?.image,
+                            alt: product.product_name,
+                            className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 304,
+                            columnNumber: 21
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "bg-gray-200 w-full h-full flex items-center justify-center",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                className: "text-gray-400",
+                                children: "No image"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 311,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 310,
+                            columnNumber: 21
+                        }, this),
+                        product.discount_price < product.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold",
+                            children: [
+                                "-",
+                                Math.round((product.price - product.discount_price) / product.price * 100),
+                                "%"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 317,
+                            columnNumber: 21
+                        }, this) : product.is_new ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "absolute top-2 left-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold",
+                            children: "NEW"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 321,
+                            columnNumber: 21
+                        }, this) : null
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 302,
+                    columnNumber: 13
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                    className: "prose max-w-none",
+                    className: "flex justify-between items-start",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-semibold mt-6 mb-4",
-                            children: "Điều kiện đổi trả"
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                            className: "text-sm md:text-base font-medium mb-1 line-clamp-1 hover:text-red-500 cursor-pointer",
+                            onClick: ()=>handleProductClick(product.slug),
+                            children: product.product_name
                         }, void 0, false, {
-                            fileName: "[project]/src/pages/warranty-policy.js",
-                            lineNumber: 8,
-                            columnNumber: 21
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 327,
+                            columnNumber: 17
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ul", {
-                            className: "space-y-3",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Sản phẩm còn nguyên tem mác, chưa qua sử dụng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 10,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Thời gian đổi trả trong vòng 7 ngày kể từ ngày nhận hàng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 11,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Sản phẩm không bị hư hỏng, bẩn, có mùi lạ"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 12,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/warranty-policy.js",
-                            lineNumber: 9,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-                            className: "text-xl font-semibold mt-8 mb-4",
-                            children: "Quy trình đổi trả"
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                            className: "text-gray-700 hover:text-red-500 transition",
+                            onClick: (e)=>handleFavoriteClick(e, product.id),
+                            children: favorites[product.id] ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$solid$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                className: "h-5 w-5 text-red-500"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 339,
+                                columnNumber: 25
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$HeartIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HeartIcon$3e$__["HeartIcon"], {
+                                className: "h-5 w-5"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 341,
+                                columnNumber: 25
+                            }, this)
                         }, void 0, false, {
-                            fileName: "[project]/src/pages/warranty-policy.js",
-                            lineNumber: 15,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("ol", {
-                            className: "list-decimal pl-6 space-y-3",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Liên hệ với FASHION STORE qua hotline hoặc email"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 17,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Cung cấp mã đơn hàng và lý do đổi trả"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 18,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Nhận hướng dẫn đóng gói và gửi hàng"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 19,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("li", {
-                                    children: "Hoàn tiền hoặc đổi sản phẩm mới"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 20,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/warranty-policy.js",
-                            lineNumber: 16,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                            className: "mt-8",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h2", {
-                                    className: "text-xl font-semibold mb-4",
-                                    children: "Thông tin liên hệ"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 24,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                                    className: "bg-gray-100 p-4 rounded-lg",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                            className: "font-medium",
-                                            children: "FASHION STORE"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/warranty-policy.js",
-                                            lineNumber: 26,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                            children: "Văn phòng: Tp. HCM"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/warranty-policy.js",
-                                            lineNumber: 27,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                            children: "Hotline: 0999 999 999"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/warranty-policy.js",
-                                            lineNumber: 28,
-                                            columnNumber: 29
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
-                                            children: "Email: cskh@fashionstore.vn"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/pages/warranty-policy.js",
-                                            lineNumber: 29,
-                                            columnNumber: 29
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/pages/warranty-policy.js",
-                                    lineNumber: 25,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/pages/warranty-policy.js",
-                            lineNumber: 23,
-                            columnNumber: 21
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 334,
+                            columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "[project]/src/pages/warranty-policy.js",
-                    lineNumber: 7,
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 326,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "flex items-center gap-2 mb-2",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex gap-1 overflow-hidden",
+                        children: [
+                            product.productColors && product.productColors.length > 0 ? product.productColors.slice(0, 3).map((color, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                    className: "w-4 h-4 rounded-full border",
+                                    style: {
+                                        backgroundColor: color.hex_code
+                                    },
+                                    title: color.color
+                                }, index, false, {
+                                    fileName: "[project]/src/pages/search.js",
+                                    lineNumber: 350,
+                                    columnNumber: 29
+                                }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                className: "text-xs text-gray-500",
+                                children: "No colors available"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 358,
+                                columnNumber: 25
+                            }, this),
+                            product.productColors && product.productColors.length > 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                className: "text-xs",
+                                children: [
+                                    "+",
+                                    product.productColors.length - 3
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 361,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 347,
+                        columnNumber: 17
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 345,
+                    columnNumber: 13
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "flex items-end justify-between",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-red-500 font-bold text-sm md:text-base",
+                                        children: [
+                                            product.discount_price != null ? product.discount_price.toLocaleString('vi-VN') : 0,
+                                            " đ"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 369,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                                        className: "text-gray-500 line-through text-xs",
+                                        children: [
+                                            product.price != null ? product.price.toLocaleString('vi-VN') : 0,
+                                            " đ"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 374,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 368,
+                                columnNumber: 21
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 366,
+                            columnNumber: 17
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                            className: "text-gray-700 hover:text-red-500 transition",
+                            onClick: (e)=>{
+                                e.stopPropagation();
+                                openProductModal(product);
+                            },
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$ShoppingBagIcon$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingBagIcon$3e$__["ShoppingBagIcon"], {
+                                className: "h-5 w-5"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 390,
+                                columnNumber: 21
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 383,
+                            columnNumber: 17
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 365,
+                    columnNumber: 13
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 297,
+            columnNumber: 9
+        }, this);
+    // Modal để chọn màu, kích thước và số lượng
+    const ProductModal = ()=>{
+        if (!productModal) return null;
+        // Tìm đối tượng màu đang được chọn hoặc sử dụng màu đầu tiên nếu chưa chọn màu nào
+        const currentColorObject = selectedColor ? productModal.productColors.find((c)=>c.id === selectedColor.id) : productModal.productColors[0];
+        // Lấy ảnh từ productColor
+        const currentImage = currentColorObject?.ProductColor?.image || 'https://via.placeholder.com/150';
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-bold",
+                                children: productModal.product_name
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 412,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setProductModal(null),
+                                className: "text-gray-500 hover:text-gray-700",
+                                children: "×"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 413,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 411,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                            src: currentImage,
+                            alt: `${productModal.product_name} - ${currentColorObject?.color || 'Màu mặc định'}`,
+                            className: "w-full h-64 object-contain rounded mb-4 border"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 423,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 422,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn màu:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 431,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productColors.map((color)=>{
+                                    const hasStock = isColorAvailable(productModal.id, color.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                        className: `
+                                            w-8 h-8 rounded-full border relative
+                                            ${selectedColor?.id === color.id ? 'ring-2 ring-gray-500' : ''}
+                                            ${!hasStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}
+                                        `,
+                                        style: {
+                                            backgroundColor: color.hex_code
+                                        },
+                                        title: `${color.color}${!hasStock ? ' (Hết hàng)' : ''}`,
+                                        onClick: ()=>hasStock && setSelectedColor(color),
+                                        children: !hasStock && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                            className: "absolute inset-0 flex items-center justify-center",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                className: "w-full h-0.5 bg-gray-400 transform rotate-45"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/pages/search.js",
+                                                lineNumber: 449,
+                                                columnNumber: 49
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/search.js",
+                                            lineNumber: 448,
+                                            columnNumber: 45
+                                        }, this)
+                                    }, color.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 436,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 432,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 430,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Chọn kích thước:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 459,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2",
+                                children: productModal.productSizes.map((size)=>{
+                                    const isAvailable = selectedColor && isSizeAvailable(productModal.id, selectedColor.id, size.id);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: `
+                                            px-4 py-1 border rounded relative
+                                            ${selectedSize?.id === size.id ? 'bg-gray-100' : ''}
+                                            ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}
+                                        `,
+                                        onClick: ()=>isAvailable && setSelectedSize(size),
+                                        disabled: !isAvailable,
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                            children: size.size
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/pages/search.js",
+                                            lineNumber: 474,
+                                            columnNumber: 41
+                                        }, this)
+                                    }, size.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 464,
+                                        columnNumber: 37
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 460,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 458,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h4", {
+                                className: "font-semibold mb-2",
+                                children: "Số lượng:"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 482,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex items-center gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: decreaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "-"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 484,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
+                                        type: "number",
+                                        className: "w-16 px-2 py-1 border rounded text-center",
+                                        min: "1",
+                                        max: getMaxAvailableQuantity(productModal.id),
+                                        value: quantity,
+                                        readOnly: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 491,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                        className: "px-3 py-1 bg-gray-200 rounded hover:bg-gray-300",
+                                        onClick: increaseQuantity,
+                                        disabled: !selectedSize || !selectedColor,
+                                        children: "+"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 499,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 483,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 481,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-2 mt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition w-full sm:w-auto",
+                                onClick: ()=>handleAddToCart(),
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Thêm vào giỏ hàng"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 510,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                className: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition w-full sm:w-auto",
+                                onClick: handleBuyNow,
+                                disabled: !selectedSize || !selectedColor || getMaxAvailableQuantity(productModal.id) === 0,
+                                children: "Mua ngay"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 517,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 509,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 410,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 409,
+            columnNumber: 13
+        }, this);
+    };
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 533,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                    className: "container mx-auto px-4 py-8",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "flex justify-center items-center h-64",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                            className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 536,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 535,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/pages/search.js",
+                    lineNumber: 534,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
-            fileName: "[project]/src/pages/warranty-policy.js",
-            lineNumber: 5,
+            fileName: "[project]/src/pages/search.js",
+            lineNumber: 532,
             columnNumber: 13
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/src/pages/warranty-policy.js",
-        lineNumber: 4,
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Layout$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 545,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "container mx-auto px-4 py-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h1", {
+                        className: "text-2xl font-bold mb-6 uppercase flex items-center mt-4 ml-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                className: "w-4 h-4 bg-red-500 rounded-full mr-3 inline-block animate-blink"
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 549,
+                                columnNumber: 21
+                            }, this),
+                            'Kết quả tìm kiếm cho "',
+                            keyword,
+                            '" (',
+                            totalProducts,
+                            " sản phẩm)"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 548,
+                        columnNumber: 17
+                    }, this),
+                    products.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "text-center py-8",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
+                            className: "text-gray-500",
+                            children: "Không tìm thấy sản phẩm phù hợp"
+                        }, void 0, false, {
+                            fileName: "[project]/src/pages/search.js",
+                            lineNumber: 555,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/pages/search.js",
+                        lineNumber: 554,
+                        columnNumber: 21
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["Fragment"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8",
+                                children: products.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(ProductCard, {
+                                        product: product
+                                    }, product.id, false, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 561,
+                                        columnNumber: 33
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 559,
+                                columnNumber: 25
+                            }, this),
+                            hasMore && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                className: "flex justify-center mt-8",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
+                                    onClick: loadMore,
+                                    disabled: loadingMore,
+                                    className: "px-6 py-2.5 rounded-md   bg-white text-gray-600    border border-gray-600   hover:bg-gray-50    transition duration-300    font-medium",
+                                    children: loadingMore ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
+                                        className: "flex items-center",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("svg", {
+                                                className: "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                                                xmlns: "http://www.w3.org/2000/svg",
+                                                fill: "none",
+                                                viewBox: "0 0 24 24",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("circle", {
+                                                        className: "opacity-25",
+                                                        cx: "12",
+                                                        cy: "12",
+                                                        r: "10",
+                                                        stroke: "currentColor",
+                                                        strokeWidth: "4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/search.js",
+                                                        lineNumber: 580,
+                                                        columnNumber: 49
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("path", {
+                                                        className: "opacity-75",
+                                                        fill: "currentColor",
+                                                        d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/pages/search.js",
+                                                        lineNumber: 581,
+                                                        columnNumber: 49
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/pages/search.js",
+                                                lineNumber: 579,
+                                                columnNumber: 45
+                                            }, this),
+                                            "Đang tải..."
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/pages/search.js",
+                                        lineNumber: 578,
+                                        columnNumber: 41
+                                    }, this) : 'Xem thêm sản phẩm'
+                                }, void 0, false, {
+                                    fileName: "[project]/src/pages/search.js",
+                                    lineNumber: 567,
+                                    columnNumber: 33
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/pages/search.js",
+                                lineNumber: 566,
+                                columnNumber: 29
+                            }, this)
+                        ]
+                    }, void 0, true)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 546,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(ProductModal, {}, void 0, false, {
+                fileName: "[project]/src/pages/search.js",
+                lineNumber: 596,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/pages/search.js",
+        lineNumber: 544,
         columnNumber: 9
     }, this);
 }
@@ -5679,4 +6468,4 @@ __turbopack_async_result__();
 
 };
 
-//# sourceMappingURL=%5Broot%20of%20the%20server%5D__f7446e0f._.js.map
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__c33c521f._.js.map
