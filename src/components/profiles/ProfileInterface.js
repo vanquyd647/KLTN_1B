@@ -40,6 +40,8 @@ const StatusBadge = ({ status }) => {
                 return 'Hoàn thành';
             case 'cancelled':
                 return 'Đã hủy';
+            case 'in_payment':
+                return 'Đang thanh toán';
             default:
                 return 'Không xác định';
         }
