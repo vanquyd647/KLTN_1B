@@ -7976,7 +7976,7 @@ const Statistics = ()=>{
                     label: 'Doanh thu theo tháng',
                     data: sortedMonths.map((month)=>monthlyData[month]),
                     borderColor: 'rgb(59, 130, 246)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    backgroundColor: '#1e40af',
                     tension: 0.1,
                     fill: true
                 }
