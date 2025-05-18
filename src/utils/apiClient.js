@@ -1327,6 +1327,29 @@ const revenueApi = {
         } catch (error) {
             throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
         }
+    },
+
+    getSalesStatistics: async () => {
+        try {
+            const response = await apiClient.get('statistics/sales');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê bán hàng.';
+        }
+    },
+
+    getSalesByDateRange: async (startDate, endDate) => {
+        try {
+            const response = await apiClient.get('statistics/sales/by-date', {
+                params: {
+                    startDate,
+                    endDate
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê bán hàng theo ngày.';
+        }
     }
 };
 

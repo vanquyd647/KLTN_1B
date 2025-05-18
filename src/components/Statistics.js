@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { revenueApi } from '../utils/apiClient';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
@@ -17,6 +18,7 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
@@ -26,6 +28,10 @@ const Statistics = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [viewMode, setViewMode] = useState('all'); // all, daily, monthly
+    const [salesStats, setSalesStats] = useState({
+        overall: [],
+        byDate: []
+    });
 
     const [stats, setStats] = useState({
         overall: {
@@ -57,7 +63,6 @@ const Statistics = () => {
         };
     });
 
-
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [selectedMonth, setSelectedMonth] = useState({
         year: new Date().getFullYear(),
@@ -87,6 +92,7 @@ const Statistics = () => {
         'payos': 'PayOS'
     };
 
+    // Fetch functions
     const fetchAllStats = async () => {
         try {
             setLoading(true);
@@ -134,9 +140,7 @@ const Statistics = () => {
                         startDate: dateFilter.startDate,
                         endDate: dateFilter.endDate
                     });
-                    console.log('API Response:', responses); // Kiểm tra response
                     if (responses.data.code === 200) {
-                        console.log('Response data:', responses.data.data); // Kiểm tra data
                         setStats(prev => ({
                             ...prev,
                             overall: {
@@ -147,8 +151,6 @@ const Statistics = () => {
                         }));
                     }
                     break;
-
-
             }
         } catch (error) {
             console.error('Error fetching stats:', error);
@@ -158,8 +160,32 @@ const Statistics = () => {
         }
     };
 
+    const fetchSalesStats = async () => {
+        try {
+            if (viewMode === 'all') {
+                const response = await revenueApi.getSalesStatistics();
+                setSalesStats(prev => ({
+                    ...prev,
+                    overall: response.data || []
+                }));
+            } else {
+                const response = await revenueApi.getSalesByDateRange(
+                    dateFilter.startDate,
+                    dateFilter.endDate
+                );
+                setSalesStats(prev => ({
+                    ...prev,
+                    byDate: response.data || []
+                }));
+            }
+        } catch (error) {
+            console.error('Error fetching sales stats:', error);
+            setError(error.message);
+        }
+    };
+
     useEffect(() => {
-        fetchAllStats();
+        Promise.all([fetchAllStats(), fetchSalesStats()]);
     }, [viewMode, dateFilter, selectedDate, selectedMonth]);
 
     const handleFilterChange = (e) => {
@@ -181,19 +207,7 @@ const Statistics = () => {
         });
     };
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return <div className="text-red-500 p-4">{error}</div>;
-    }
-
-    // Prepare chart data based on view mode
+    // Chart data functions
     const getChartData = () => {
         let data;
         switch (viewMode) {
@@ -220,9 +234,132 @@ const Statistics = () => {
         };
     };
 
+    const getMonthlyChartData = () => {
+        const monthlyData = {};
+        
+        stats.overall.revenues.forEach(revenue => {
+            const date = new Date(revenue.created_at);
+            const monthKey = `${date.getFullYear()}-${date.getMonth() + 1}`;
+            
+            if (!monthlyData[monthKey]) {
+                monthlyData[monthKey] = 0;
+            }
+            monthlyData[monthKey] += parseFloat(revenue.amount);
+        });
+
+        const sortedMonths = Object.keys(monthlyData).sort();
+
+        return {
+            labels: sortedMonths.map(month => {
+                const [year, monthNum] = month.split('-');
+                return `Tháng ${monthNum}/${year}`;
+            }),
+            datasets: [{
+                label: 'Doanh thu theo tháng',
+                data: sortedMonths.map(month => monthlyData[month]),
+                borderColor: 'rgb(59, 130, 246)',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.1,
+                fill: true
+            }]
+        };
+    };
+
+    // Component for Sales Statistics
+    const SalesStatisticsSection = () => {
+        const data = viewMode === 'all' ? salesStats.overall : salesStats.byDate;
+
+        return (
+            <div className="bg-white rounded-lg shadow overflow-hidden mt-6">
+                <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Thống kê sản phẩm bán chạy</h3>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Sản phẩm
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Danh mục
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Màu sắc
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Kích thước
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Số lượng bán
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Doanh thu
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {data.map((item, index) => (
+                                    <tr key={`${item.product_id}-${item.color.name}-${item.size}`} 
+                                        className="hover:bg-gray-50">
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center">
+                                                {item.color.image && (
+                                                    <img 
+                                                        src={item.color.image} 
+                                                        alt={item.product_name}
+                                                        className="w-12 h-12 object-cover rounded mr-3"
+                                                    />
+                                                )}
+                                                <div>
+                                                    <div className="font-medium">{item.product_name}</div>
+                                                    <div className="text-sm text-gray-500">{item.product_slug}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {item.categories.join(', ')}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center">
+                                                <div 
+                                                    className="w-4 h-4 rounded-full mr-2" 
+                                                    style={{ backgroundColor: item.color.hex_code }}
+                                                />
+                                                {item.color.name}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">{item.size}</td>
+                                        <td className="px-6 py-4 font-medium">
+                                            {item.total_quantity}
+                                        </td>
+                                        <td className="px-6 py-4 font-medium">
+                                            {formatCurrency(item.total_revenue)}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="text-red-500 p-4">{error}</div>;
+    }
+
     return (
         <div className="space-y-6 p-6">
-            {/* Tabs chọn chế độ xem */}
+            {/* View Mode Tabs */}
             <div className="flex space-x-4 mb-6">
                 <button
                     onClick={() => setViewMode('all')}
@@ -244,7 +381,7 @@ const Statistics = () => {
                 </button>
             </div>
 
-            {/* Filters based on view mode */}
+            {/* Filters */}
             {viewMode === 'all' && (
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <h2 className="text-2xl font-bold">Thống kê doanh thu</h2>
@@ -330,12 +467,12 @@ const Statistics = () => {
                     <p className="text-sm text-gray-500 mt-2">
                         {viewMode === 'daily' ? `${stats.daily.count} đơn hàng` :
                             viewMode === 'monthly' ? `${stats.monthly.count} đơn hàng` :
-                                `Tổng ${stats.overall.count} đơn hàng`}
+                                `${stats.overall.count} đơn hàng`}
                     </p>
                 </div>
             </div>
 
-            {/* Revenue Chart */}
+            {/* Revenue Charts */}
             <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-lg font-semibold mb-4">Biểu đồ doanh thu</h3>
                 <div className="h-[400px]">
@@ -357,7 +494,7 @@ const Statistics = () => {
                                 y: {
                                     beginAtZero: true,
                                     ticks: {
-                                        callback: function (value) {
+                                        callback: function(value) {
                                             return formatCurrency(value);
                                         }
                                     }
@@ -368,7 +505,45 @@ const Statistics = () => {
                 </div>
             </div>
 
-            {/* Transaction Details Table */}
+            {/* Monthly Revenue Chart (Only for 'all' view) */}
+            {viewMode === 'all' && (
+                <div className="bg-white p-6 rounded-lg shadow">
+                    <h3 className="text-lg font-semibold mb-4">Biểu đồ doanh thu theo tháng</h3>
+                    <div className="h-[400px]">
+                        <Bar
+                            data={getMonthlyChartData()}
+                            options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu theo tháng'
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function(value) {
+                                                return formatCurrency(value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Sales Statistics Section */}
+            <SalesStatisticsSection />
+
+            {/* Transaction Details */}
             <div className="bg-white rounded-lg shadow overflow-hidden">
                 <div className="flex justify-between items-center p-6">
                     <h3 className="text-lg font-semibold">Chi tiết giao dịch</h3>
@@ -418,7 +593,7 @@ const Statistics = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className={`px-2 py-1 text-xs font-semibold rounded-full 
-                                            ${revenue.payment?.payment_status === 'paid'
+                                                    ${revenue.payment?.payment_status === 'paid'
                                                         ? 'bg-green-100 text-green-800'
                                                         : 'bg-yellow-100 text-yellow-800'
                                                     }`}>

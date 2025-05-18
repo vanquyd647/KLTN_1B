@@ -219,7 +219,7 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 // https://kltn-1a.onrender.com hihi, http://localhost:5551/v1/api/, https://c918-118-71-16-139.ngrok-free.app
 const apiClient = __TURBOPACK__imported__module__$5b$externals$5d2f$axios__$5b$external$5d$__$28$axios$2c$__esm_import$29$__["default"].create({
-    baseURL: 'https://533d-113-161-54-208.ngrok-free.app/v1/api/',
+    baseURL: 'http://localhost:5551/v1/api/',
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -1360,6 +1360,27 @@ const revenueApi = {
             return response;
         } catch (error) {
             throw error.response?.data || 'Không thể lấy doanh thu theo tháng.';
+        }
+    },
+    getSalesStatistics: async ()=>{
+        try {
+            const response = await apiClient.get('statistics/sales');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê bán hàng.';
+        }
+    },
+    getSalesByDateRange: async (startDate, endDate)=>{
+        try {
+            const response = await apiClient.get('statistics/sales/by-date', {
+                params: {
+                    startDate,
+                    endDate
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || 'Không thể lấy thống kê bán hàng theo ngày.';
         }
     }
 };
@@ -7738,11 +7759,15 @@ var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
 ;
 ;
 ;
-__TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Chart"].register(__TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["CategoryScale"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["LinearScale"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["PointElement"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["LineElement"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Title"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Tooltip"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Legend"]);
+__TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Chart"].register(__TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["CategoryScale"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["LinearScale"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["PointElement"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["LineElement"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["BarElement"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Title"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Tooltip"], __TURBOPACK__imported__module__$5b$externals$5d2f$chart$2e$js__$5b$external$5d$__$28$chart$2e$js$2c$__esm_import$29$__["Legend"]);
 const Statistics = ()=>{
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(true);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])(null);
     const [viewMode, setViewMode] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])('all'); // all, daily, monthly
+    const [salesStats, setSalesStats] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
+        overall: [],
+        byDate: []
+    });
     const [stats, setStats] = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useState"])({
         overall: {
             revenues: [],
@@ -7796,6 +7821,7 @@ const Statistics = ()=>{
         'cash_on_delivery': 'Thanh toán khi nhận hàng',
         'payos': 'PayOS'
     };
+    // Fetch functions
     const fetchAllStats = async ()=>{
         try {
             setLoading(true);
@@ -7836,9 +7862,7 @@ const Statistics = ()=>{
                         startDate: dateFilter.startDate,
                         endDate: dateFilter.endDate
                     });
-                    console.log('API Response:', responses); // Kiểm tra response
                     if (responses.data.code === 200) {
-                        console.log('Response data:', responses.data.data); // Kiểm tra data
                         setStats((prev)=>({
                                 ...prev,
                                 overall: {
@@ -7857,8 +7881,31 @@ const Statistics = ()=>{
             setLoading(false);
         }
     };
+    const fetchSalesStats = async ()=>{
+        try {
+            if (viewMode === 'all') {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["revenueApi"].getSalesStatistics();
+                setSalesStats((prev)=>({
+                        ...prev,
+                        overall: response.data || []
+                    }));
+            } else {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$apiClient$2e$js__$5b$ssr$5d$__$28$ecmascript$29$__["revenueApi"].getSalesByDateRange(dateFilter.startDate, dateFilter.endDate);
+                setSalesStats((prev)=>({
+                        ...prev,
+                        byDate: response.data || []
+                    }));
+            }
+        } catch (error) {
+            console.error('Error fetching sales stats:', error);
+            setError(error.message);
+        }
+    };
     (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react__$5b$external$5d$__$28$react$2c$__cjs$29$__["useEffect"])(()=>{
-        fetchAllStats();
+        Promise.all([
+            fetchAllStats(),
+            fetchSalesStats()
+        ]);
     }, [
         viewMode,
         dateFilter,
@@ -7881,33 +7928,7 @@ const Statistics = ()=>{
             return newFilter;
         });
     };
-    if (loading) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-            className: "flex items-center justify-center min-h-screen",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-                className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
-            }, void 0, false, {
-                fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 187,
-                columnNumber: 17
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/src/components/Statistics.js",
-            lineNumber: 186,
-            columnNumber: 13
-        }, this);
-    }
-    if (error) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
-            className: "text-red-500 p-4",
-            children: error
-        }, void 0, false, {
-            fileName: "[project]/src/components/Statistics.js",
-            lineNumber: 193,
-            columnNumber: 16
-        }, this);
-    }
-    // Prepare chart data based on view mode
+    // Chart data functions
     const getChartData = ()=>{
         let data;
         switch(viewMode){
@@ -7934,6 +7955,291 @@ const Statistics = ()=>{
             ]
         };
     };
+    const getMonthlyChartData = ()=>{
+        const monthlyData = {};
+        stats.overall.revenues.forEach((revenue)=>{
+            const date = new Date(revenue.created_at);
+            const monthKey = `${date.getFullYear()}-${date.getMonth() + 1}`;
+            if (!monthlyData[monthKey]) {
+                monthlyData[monthKey] = 0;
+            }
+            monthlyData[monthKey] += parseFloat(revenue.amount);
+        });
+        const sortedMonths = Object.keys(monthlyData).sort();
+        return {
+            labels: sortedMonths.map((month)=>{
+                const [year, monthNum] = month.split('-');
+                return `Tháng ${monthNum}/${year}`;
+            }),
+            datasets: [
+                {
+                    label: 'Doanh thu theo tháng',
+                    data: sortedMonths.map((month)=>monthlyData[month]),
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                }
+            ]
+        };
+    };
+    // Component for Sales Statistics
+    const SalesStatisticsSection = ()=>{
+        const data = viewMode === 'all' ? salesStats.overall : salesStats.byDate;
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "bg-white rounded-lg shadow overflow-hidden mt-6",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "p-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-4",
+                        children: "Thống kê sản phẩm bán chạy"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 275,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "overflow-x-auto",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("table", {
+                            className: "min-w-full divide-y divide-gray-200",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("thead", {
+                                    className: "bg-gray-50",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tr", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Sản phẩm"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 280,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Danh mục"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 283,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Màu sắc"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 286,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Kích thước"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 289,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Số lượng bán"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 292,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
+                                                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase",
+                                                children: "Doanh thu"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Statistics.js",
+                                                lineNumber: 295,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/Statistics.js",
+                                        lineNumber: 279,
+                                        columnNumber: 33
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Statistics.js",
+                                    lineNumber: 278,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tbody", {
+                                    className: "bg-white divide-y divide-gray-200",
+                                    children: data.map((item, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tr", {
+                                            className: "hover:bg-gray-50",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                        className: "flex items-center",
+                                                        children: [
+                                                            item.color.image && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("img", {
+                                                                src: item.color.image,
+                                                                alt: item.product_name,
+                                                                className: "w-12 h-12 object-cover rounded mr-3"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/Statistics.js",
+                                                                lineNumber: 307,
+                                                                columnNumber: 53
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                                        className: "font-medium",
+                                                                        children: item.product_name
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/Statistics.js",
+                                                                        lineNumber: 314,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                                        className: "text-sm text-gray-500",
+                                                                        children: item.product_slug
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/Statistics.js",
+                                                                        lineNumber: 315,
+                                                                        columnNumber: 53
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/Statistics.js",
+                                                                lineNumber: 313,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/Statistics.js",
+                                                        lineNumber: 305,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 304,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4",
+                                                    children: item.categories.join(', ')
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 319,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                        className: "flex items-center",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                                                                className: "w-4 h-4 rounded-full mr-2",
+                                                                style: {
+                                                                    backgroundColor: item.color.hex_code
+                                                                }
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/Statistics.js",
+                                                                lineNumber: 324,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            item.color.name
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/Statistics.js",
+                                                        lineNumber: 323,
+                                                        columnNumber: 45
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 322,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4",
+                                                    children: item.size
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 331,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 font-medium",
+                                                    children: item.total_quantity
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 332,
+                                                    columnNumber: 41
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
+                                                    className: "px-6 py-4 font-medium",
+                                                    children: formatCurrency(item.total_revenue)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Statistics.js",
+                                                    lineNumber: 335,
+                                                    columnNumber: 41
+                                                }, this)
+                                            ]
+                                        }, `${item.product_id}-${item.color.name}-${item.size}`, true, {
+                                            fileName: "[project]/src/components/Statistics.js",
+                                            lineNumber: 302,
+                                            columnNumber: 37
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Statistics.js",
+                                    lineNumber: 300,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 277,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 276,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 274,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/components/Statistics.js",
+            lineNumber: 273,
+            columnNumber: 13
+        }, this);
+    };
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "flex items-center justify-center min-h-screen",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+            }, void 0, false, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 351,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/components/Statistics.js",
+            lineNumber: 350,
+            columnNumber: 13
+        }, this);
+    }
+    if (error) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+            className: "text-red-500 p-4",
+            children: error
+        }, void 0, false, {
+            fileName: "[project]/src/components/Statistics.js",
+            lineNumber: 357,
+            columnNumber: 16
+        }, this);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
         className: "space-y-6 p-6",
         children: [
@@ -7946,7 +8252,7 @@ const Statistics = ()=>{
                         children: "Tổng quan"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 227,
+                        lineNumber: 364,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -7955,7 +8261,7 @@ const Statistics = ()=>{
                         children: "Theo ngày"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 233,
+                        lineNumber: 370,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("button", {
@@ -7964,13 +8270,13 @@ const Statistics = ()=>{
                         children: "Theo tháng"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 239,
+                        lineNumber: 376,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 226,
+                lineNumber: 363,
                 columnNumber: 13
             }, this),
             viewMode === 'all' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -7981,7 +8287,7 @@ const Statistics = ()=>{
                         children: "Thống kê doanh thu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 250,
+                        lineNumber: 387,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -7995,7 +8301,7 @@ const Statistics = ()=>{
                                         children: "Từ ngày"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 253,
+                                        lineNumber: 390,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -8006,13 +8312,13 @@ const Statistics = ()=>{
                                         className: "border rounded-lg px-3 py-2"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 254,
+                                        lineNumber: 391,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 252,
+                                lineNumber: 389,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8023,7 +8329,7 @@ const Statistics = ()=>{
                                         children: "Đến ngày"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 263,
+                                        lineNumber: 400,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -8034,25 +8340,25 @@ const Statistics = ()=>{
                                         className: "border rounded-lg px-3 py-2"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 264,
+                                        lineNumber: 401,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 262,
+                                lineNumber: 399,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 251,
+                        lineNumber: 388,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 249,
+                lineNumber: 386,
                 columnNumber: 17
             }, this),
             viewMode === 'daily' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8063,7 +8369,7 @@ const Statistics = ()=>{
                         children: "Chọn ngày:"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 278,
+                        lineNumber: 415,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("input", {
@@ -8073,13 +8379,13 @@ const Statistics = ()=>{
                         className: "border rounded px-3 py-2"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 279,
+                        lineNumber: 416,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 277,
+                lineNumber: 414,
                 columnNumber: 17
             }, this),
             viewMode === 'monthly' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8092,7 +8398,7 @@ const Statistics = ()=>{
                                 children: "Năm:"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 291,
+                                lineNumber: 428,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -8109,18 +8415,18 @@ const Statistics = ()=>{
                                         children: year
                                     }, year, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 298,
+                                        lineNumber: 435,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 292,
+                                lineNumber: 429,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 290,
+                        lineNumber: 427,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8130,7 +8436,7 @@ const Statistics = ()=>{
                                 children: "Tháng:"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 303,
+                                lineNumber: 440,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("select", {
@@ -8147,24 +8453,24 @@ const Statistics = ()=>{
                                         children: month
                                     }, month, false, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 310,
+                                        lineNumber: 447,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 304,
+                                lineNumber: 441,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 302,
+                        lineNumber: 439,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 289,
+                lineNumber: 426,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8177,7 +8483,7 @@ const Statistics = ()=>{
                             children: viewMode === 'daily' ? 'Doanh thu ngày' : viewMode === 'monthly' ? `Doanh thu tháng ${selectedMonth.month}/${selectedMonth.year}` : 'Tổng doanh thu'
                         }, void 0, false, {
                             fileName: "[project]/src/components/Statistics.js",
-                            lineNumber: 320,
+                            lineNumber: 457,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -8185,26 +8491,26 @@ const Statistics = ()=>{
                             children: viewMode === 'daily' ? formatCurrency(stats.daily.totalAmount) : viewMode === 'monthly' ? formatCurrency(stats.monthly.totalAmount) : formatCurrency(stats.overall.totalRevenue)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Statistics.js",
-                            lineNumber: 325,
+                            lineNumber: 462,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
                             className: "text-sm text-gray-500 mt-2",
-                            children: viewMode === 'daily' ? `${stats.daily.count} đơn hàng` : viewMode === 'monthly' ? `${stats.monthly.count} đơn hàng` : `Tổng ${stats.overall.count} đơn hàng`
+                            children: viewMode === 'daily' ? `${stats.daily.count} đơn hàng` : viewMode === 'monthly' ? `${stats.monthly.count} đơn hàng` : `${stats.overall.count} đơn hàng`
                         }, void 0, false, {
                             fileName: "[project]/src/components/Statistics.js",
-                            lineNumber: 330,
+                            lineNumber: 467,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Statistics.js",
-                    lineNumber: 319,
+                    lineNumber: 456,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 318,
+                lineNumber: 455,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8215,7 +8521,7 @@ const Statistics = ()=>{
                         children: "Biểu đồ doanh thu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 340,
+                        lineNumber: 477,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8247,18 +8553,77 @@ const Statistics = ()=>{
                             }
                         }, void 0, false, {
                             fileName: "[project]/src/components/Statistics.js",
-                            lineNumber: 342,
+                            lineNumber: 479,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 341,
+                        lineNumber: 478,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 339,
+                lineNumber: 476,
+                columnNumber: 13
+            }, this),
+            viewMode === 'all' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                className: "bg-white p-6 rounded-lg shadow",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-4",
+                        children: "Biểu đồ doanh thu theo tháng"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 511,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
+                        className: "h-[400px]",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$externals$5d2f$react$2d$chartjs$2d$2__$5b$external$5d$__$28$react$2d$chartjs$2d$2$2c$__esm_import$29$__["Bar"], {
+                            data: getMonthlyChartData(),
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu theo tháng'
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function(value) {
+                                                return formatCurrency(value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Statistics.js",
+                            lineNumber: 513,
+                            columnNumber: 25
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/Statistics.js",
+                        lineNumber: 512,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 510,
+                columnNumber: 17
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])(SalesStatisticsSection, {}, void 0, false, {
+                fileName: "[project]/src/components/Statistics.js",
+                lineNumber: 544,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8272,7 +8637,7 @@ const Statistics = ()=>{
                                 children: "Chi tiết giao dịch"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 374,
+                                lineNumber: 549,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("p", {
@@ -8280,13 +8645,13 @@ const Statistics = ()=>{
                                 children: viewMode === 'daily' ? `${stats.daily.revenues.length} giao dịch` : viewMode === 'monthly' ? `${stats.monthly.revenues.length} giao dịch` : `${stats.overall.revenues.length} giao dịch`
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Statistics.js",
-                                lineNumber: 375,
+                                lineNumber: 550,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 373,
+                        lineNumber: 548,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("div", {
@@ -8303,7 +8668,7 @@ const Statistics = ()=>{
                                                 children: "Thời gian"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Statistics.js",
-                                                lineNumber: 385,
+                                                lineNumber: 560,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
@@ -8311,7 +8676,7 @@ const Statistics = ()=>{
                                                 children: "Mã đơn hàng"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Statistics.js",
-                                                lineNumber: 388,
+                                                lineNumber: 563,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
@@ -8319,7 +8684,7 @@ const Statistics = ()=>{
                                                 children: "Số tiền"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Statistics.js",
-                                                lineNumber: 391,
+                                                lineNumber: 566,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
@@ -8327,7 +8692,7 @@ const Statistics = ()=>{
                                                 children: "Phương thức"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Statistics.js",
-                                                lineNumber: 394,
+                                                lineNumber: 569,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("th", {
@@ -8335,18 +8700,18 @@ const Statistics = ()=>{
                                                 children: "Trạng thái"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Statistics.js",
-                                                lineNumber: 397,
+                                                lineNumber: 572,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Statistics.js",
-                                        lineNumber: 384,
+                                        lineNumber: 559,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Statistics.js",
-                                    lineNumber: 383,
+                                    lineNumber: 558,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("tbody", {
@@ -8359,7 +8724,7 @@ const Statistics = ()=>{
                                                     children: formatDate(revenue.created_at)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Statistics.js",
-                                                    lineNumber: 407,
+                                                    lineNumber: 582,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
@@ -8370,7 +8735,7 @@ const Statistics = ()=>{
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/Statistics.js",
-                                                    lineNumber: 410,
+                                                    lineNumber: 585,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
@@ -8378,7 +8743,7 @@ const Statistics = ()=>{
                                                     children: formatCurrency(revenue.amount)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Statistics.js",
-                                                    lineNumber: 413,
+                                                    lineNumber: 588,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
@@ -8386,57 +8751,57 @@ const Statistics = ()=>{
                                                     children: paymentMethodLabels[revenue.payment?.payment_method] || 'N/A'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Statistics.js",
-                                                    lineNumber: 416,
+                                                    lineNumber: 591,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("td", {
                                                     className: "px-6 py-4 whitespace-nowrap",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$externals$5d2f$react$2f$jsx$2d$dev$2d$runtime__$5b$external$5d$__$28$react$2f$jsx$2d$dev$2d$runtime$2c$__cjs$29$__["jsxDEV"])("span", {
                                                         className: `px-2 py-1 text-xs font-semibold rounded-full 
-                                            ${revenue.payment?.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`,
+                                                    ${revenue.payment?.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`,
                                                         children: revenue.payment?.payment_status === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/Statistics.js",
-                                                        lineNumber: 420,
+                                                        lineNumber: 595,
                                                         columnNumber: 49
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/Statistics.js",
-                                                    lineNumber: 419,
+                                                    lineNumber: 594,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, revenue.id, true, {
                                             fileName: "[project]/src/components/Statistics.js",
-                                            lineNumber: 406,
+                                            lineNumber: 581,
                                             columnNumber: 41
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Statistics.js",
-                                    lineNumber: 402,
+                                    lineNumber: 577,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Statistics.js",
-                            lineNumber: 382,
+                            lineNumber: 557,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Statistics.js",
-                        lineNumber: 381,
+                        lineNumber: 556,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Statistics.js",
-                lineNumber: 372,
+                lineNumber: 547,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Statistics.js",
-        lineNumber: 224,
+        lineNumber: 361,
         columnNumber: 9
     }, this);
 };
