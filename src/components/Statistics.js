@@ -322,7 +322,7 @@ const Statistics = () => {
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
                                                 <div 
-                                                    className="w-4 h-4 rounded-full mr-2" 
+                                                    className="w-4 h-4 rounded-full mr-2 border" 
                                                     style={{ backgroundColor: item.color.hex_code }}
                                                 />
                                                 {item.color.name}

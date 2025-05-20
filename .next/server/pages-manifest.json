@@ -2,5 +2,10 @@
   "/": "pages/index.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/admin": "pages/admin.js"
+  "/account/profile": "pages/account/profile.js",
+  "/admin": "pages/admin.js",
+  "/category/productsByCategory": "pages/category/productsByCategory.js",
+  "/new-products": "pages/new-products.js",
+  "/store-locations": "pages/store-locations.js",
+  "/vouchers": "pages/vouchers.js"
 }
